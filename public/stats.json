@@ -1,0 +1,17 @@
+{
+  "lastUpdated": "2024-01-01T00:00:00Z",
+  "projects": {
+    "firecord": {
+      "stats": {
+        "stars": 0,
+        "commits": 0,
+        "branches": 0,
+        "lastCommit": "N/A"
+      },
+      "loc": {
+        "total": 0,
+        "byLanguage": {}
+      }
+    }
+  }
+}

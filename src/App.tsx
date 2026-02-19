@@ -1,6 +1,7 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { projects, getAggregateStats, getLOCAggregateByLanguage } from '@/config/projects';
 import type { Project, ProjectCategory } from '@/types/project';
+import { fetchStats, mergeStatsWithProjects } from '@/lib/stats';
 import { categoryLabels, aiUsageLabels, aiUsageColors, aiUsageDescriptions } from '@/types/project';
 import { ProjectCard } from '@/components/ProjectCard';
 import { ProjectDetailModal } from '@/components/ProjectDetailModal';
@@ -63,16 +64,29 @@ function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<ProjectCategory | 'all'>('all');
+  const [projectsWithStats, setProjectsWithStats] = useState<Project[]>(projects);
+
+  // Fetch and merge stats on component mount
+  useEffect(() => {
+    const loadStats = async () => {
+      const stats = await fetchStats();
+      const mergedProjects = mergeStatsWithProjects(projects, stats);
+      setProjectsWithStats(mergedProjects);
+      console.log('[v0] Stats loaded and merged with projects');
+    };
+
+    loadStats();
+  }, []);
 
   // Get unique categories from projects
   const categories = useMemo(() => {
-    const cats = new Set(projects.map(p => p.category));
+    const cats = new Set(projectsWithStats.map(p => p.category));
     return ['all', ...Array.from(cats)] as (ProjectCategory | 'all')[];
-  }, []);
+  }, [projectsWithStats]);
 
   // Filter projects based on search and category
   const filteredProjects = useMemo(() => {
-    return projects.filter(project => {
+    return projectsWithStats.filter(project => {
       const matchesSearch = 
         searchQuery === '' ||
         project.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -86,11 +100,26 @@ function App() {
       
       return matchesSearch && matchesCategory;
     });
-  }, [searchQuery, selectedCategory]);
+  }, [projectsWithStats, searchQuery, selectedCategory]);
 
-  // Get aggregate stats
-  const aggregateStats = useMemo(() => getAggregateStats(), []);
-  const locByLanguage = useMemo(() => getLOCAggregateByLanguage(), []);
+  // Get aggregate stats from projects with stats
+  const aggregateStats = useMemo(() => {
+    const totalStars = projectsWithStats.reduce((sum, p) => sum + (p.stats?.stars || 0), 0);
+    const totalCommits = projectsWithStats.reduce((sum, p) => sum + (p.stats?.commits || 0), 0);
+    return { totalStars, totalCommits };
+  }, [projectsWithStats]);
+
+  const locByLanguage = useMemo(() => {
+    const languages: Record<string, number> = {};
+    projectsWithStats.forEach(p => {
+      if (p.loc?.byLanguage) {
+        Object.entries(p.loc.byLanguage).forEach(([lang, count]) => {
+          languages[lang] = (languages[lang] || 0) + count;
+        });
+      }
+    });
+    return languages;
+  }, [projectsWithStats]);
   const totalLOC = Object.values(locByLanguage).reduce((sum, count) => sum + count, 0);
 
   const handleProjectClick = (project: Project) => {
@@ -243,7 +272,7 @@ function App() {
           <div className="flex items-center justify-between mb-6">
             <p className="text-sm text-muted-foreground">
               Showing <span className="font-medium text-foreground">{filteredProjects.length}</span> of{' '}
-              <span className="font-medium text-foreground">{projects.length}</span> projects
+              <span className="font-medium text-foreground">{projectsWithStats.length}</span> projects
             </p>
           </div>
 
