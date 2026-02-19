@@ -127,6 +127,13 @@ function App() {
     setIsModalOpen(true);
   };
 
+  const handleProjectSelect = (projectId: string) => {
+    const project = projectsWithStats.find(p => p.id === projectId);
+    if (project) {
+      setSelectedProject(project);
+    }
+  };
+
   const handleCloseModal = () => {
     setIsModalOpen(false);
     setTimeout(() => setSelectedProject(null), 300);
@@ -372,6 +379,8 @@ function App() {
           project={selectedProject}
           isOpen={isModalOpen}
           onClose={handleCloseModal}
+          onProjectSelect={handleProjectSelect}
+          allProjects={projectsWithStats}
         />
       </div>
     </TooltipProvider>

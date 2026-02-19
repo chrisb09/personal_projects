@@ -16,7 +16,9 @@ import type { Project } from '@/types/project';
  * - Strengths and limitations
  * - Installation and usage instructions
  * - Future roadmap items
- * - Links (demo, repo, docs)
+ * - Links (demo, repos, mirrors, docs)
+ * - repos: Primary repository URLs with type (github, gitlab, etc.)
+ * - mirrors: Mirror repositories (linked from primary repo)
  * - Screenshots (add paths to your images)
  * - Logo (add path to your logo image)
  * - Related projects
@@ -93,7 +95,8 @@ state.setData("Hello, distributed world!");
     ],
     
     demoUrl: undefined,
-    repoUrl: undefined,
+    repos: [],
+    mirrors: [],
     docsUrl: undefined,
     screenshots: [],
     logo: undefined,
@@ -102,23 +105,6 @@ state.setData("Hello, distributed world!");
       { name: 'Redisson', relation: 'Inspiration and alternative to', url: 'https://redisson.org/' },
       { name: 'Redis', relation: 'Built on top of', url: 'https://redis.io/' },
     ],
-    
-    // Dummy stats - would be populated by external script
-    stats: {
-      stars: 12,
-      commits: 47,
-      branches: 3,
-      lastCommit: '2024-01-15',
-    },
-    loc: {
-      total: 8500,
-      byLanguage: {
-        Java: 7200,
-        'XML': 800,
-        YAML: 300,
-        Markdown: 200,
-      },
-    },
   },
   
   {
@@ -180,7 +166,8 @@ curl -X POST -F "file=@project.pdn" https://your-server.com/api/view`,
     ],
     
     demoUrl: 'https://christian-f-brinkmann.de/pdn',
-    repoUrl: undefined,
+    repos: [],
+    mirrors: [],
     docsUrl: undefined,
     screenshots: [],
     logo: undefined,
@@ -189,23 +176,6 @@ curl -X POST -F "file=@project.pdn" https://your-server.com/api/view`,
       { name: 'pdnexport', relation: 'Uses for file conversion' },
       { name: 'Paint.net', relation: 'File format support for', url: 'https://www.getpaint.net/' },
     ],
-    
-    stats: {
-      stars: 28,
-      commits: 89,
-      branches: 2,
-      lastCommit: '2023-08-20',
-    },
-    loc: {
-      total: 4200,
-      byLanguage: {
-        Python: 1800,
-        HTML: 800,
-        JavaScript: 1200,
-        CSS: 300,
-        Markdown: 100,
-      },
-    },
   },
   
   {
@@ -267,28 +237,14 @@ python analyze.py --export csv`,
     ],
     
     demoUrl: undefined,
-    repoUrl: undefined,
+    repos: [],
+    mirrors: [],
     screenshots: [],
     logo: undefined,
     
     relatedProjects: [
       { name: 'tor-python', relation: 'Modified version used' },
     ],
-    
-    stats: {
-      stars: 5,
-      commits: 34,
-      branches: 1,
-      lastCommit: '2021-06-12',
-    },
-    loc: {
-      total: 2800,
-      byLanguage: {
-        Python: 2500,
-        Markdown: 200,
-        SQL: 100,
-      },
-    },
   },
   
   {
@@ -364,7 +320,8 @@ zfs list`,
     ],
     
     demoUrl: undefined,
-    repoUrl: undefined,
+    repos: [],
+    mirrors: [],
     screenshots: [],
     logo: undefined,
     
@@ -373,23 +330,6 @@ zfs list`,
       { name: 'Jellyfin', relation: 'Hosts', url: 'https://jellyfin.org/' },
       { name: 'openZFS', relation: 'Uses', url: 'https://openzfs.org/' },
     ],
-    
-    stats: {
-      stars: 8,
-      commits: 156,
-      branches: 4,
-      lastCommit: '2024-02-10',
-    },
-    loc: {
-      total: 6500,
-      byLanguage: {
-        YAML: 2500,
-        Bash: 2000,
-        Python: 1200,
-        Markdown: 600,
-        Docker: 200,
-      },
-    },
   },
 
   {
@@ -449,28 +389,16 @@ pacstall -R package-name`,
     ],
     
     demoUrl: 'https://pacstall.dev',
-    repoUrl: 'https://github.com/pacstall/pacstall',
+    repos: [
+      { name: 'pacstall', url: 'https://github.com/pacstall/pacstall', type: 'github' }
+    ],
+    mirrors: [],
     screenshots: [],
     logo: undefined,
     
     relatedProjects: [
       { name: 'AUR', relation: 'Inspired by', url: 'https://aur.archlinux.org/' },
     ],
-    
-    // Contribution stats - my contributions only
-    stats: {
-      stars: 0, // Not my repo
-      commits: 12,
-      branches: 2,
-      lastCommit: '2024-01-28',
-    },
-    loc: {
-      total: 450,
-      byLanguage: {
-        Bash: 400,
-        Markdown: 50,
-      },
-    },
   },
   
   {
@@ -538,7 +466,8 @@ System.out.println(result.getTranslatedText()); // "Hallo, Welt!"`,
     ],
     
     demoUrl: undefined,
-    repoUrl: undefined,
+    repos: [],
+    mirrors: [],
     docsUrl: undefined,
     screenshots: [],
     logo: undefined,
@@ -546,21 +475,6 @@ System.out.println(result.getTranslatedText()); // "Hallo, Welt!"`,
     relatedProjects: [
       { name: 'LibreTranslate', relation: 'Client for', url: 'https://libretranslate.com/' },
     ],
-    
-    stats: {
-      stars: 15,
-      commits: 38,
-      branches: 2,
-      lastCommit: '2024-01-20',
-    },
-    loc: {
-      total: 3200,
-      byLanguage: {
-        Java: 2800,
-        'XML': 250,
-        Markdown: 150,
-      },
-    },
   },
   
   {
@@ -623,24 +537,10 @@ python host-files.py --port 8080 --directory ./files`,
     ],
 
     demoUrl: undefined,
-    repoUrl: undefined,
+    repos: [],
+    mirrors: [],
     screenshots: [],
     logo: undefined,
-    
-    stats: {
-      stars: 3,
-      commits: 67,
-      branches: 5,
-      lastCommit: '2023-11-15',
-    },
-    loc: {
-      total: 1800,
-      byLanguage: {
-        Python: 1200,
-        Bash: 500,
-        Markdown: 100,
-      },
-    },
   },
 ];
 

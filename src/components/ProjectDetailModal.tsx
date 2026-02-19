@@ -54,6 +54,8 @@ interface ProjectDetailModalProps {
   project: Project | null;
   isOpen: boolean;
   onClose: () => void;
+  onProjectSelect?: (projectId: string) => void;
+  allProjects?: Project[];
 }
 
 // Simple donut chart component for LOC
@@ -158,13 +160,15 @@ function AIUsageLegend() {
   );
 }
 
-export function ProjectDetailModal({ project, isOpen, onClose }: ProjectDetailModalProps) {
+export function ProjectDetailModal({ project, isOpen, onClose, onProjectSelect, allProjects = [] }: ProjectDetailModalProps) {
   if (!project) return null;
 
   const hasScreenshots = project.screenshots && project.screenshots.length > 0;
   const hasRelatedProjects = project.relatedProjects && project.relatedProjects.length > 0;
   const hasStats = project.stats && Object.keys(project.stats).length > 0;
   const hasLOC = project.loc && project.loc.total > 0;
+  const hasRepos = project.repos && project.repos.length > 0;
+  const hasMirrors = project.mirrors && project.mirrors.length > 0;
 
   return (
     <TooltipProvider>
@@ -248,14 +252,22 @@ export function ProjectDetailModal({ project, isOpen, onClose }: ProjectDetailMo
                   </a>
                 </Button>
               )}
-              {project.repoUrl && (
-                <Button size="sm" variant="outline" className="gap-2" asChild>
-                  <a href={project.repoUrl} target="_blank" rel="noopener noreferrer">
+              {hasRepos && project.repos?.map((repo, i) => (
+                <Button key={i} size="sm" variant="outline" className="gap-2" asChild>
+                  <a href={repo.url} target="_blank" rel="noopener noreferrer">
                     <Github className="w-4 h-4" />
-                    Repository
+                    {repo.name || 'Repository'}
                   </a>
                 </Button>
-              )}
+              ))}
+              {hasMirrors && project.mirrors?.map((mirror, i) => (
+                <Button key={i} size="sm" variant="outline" className="gap-2" asChild>
+                  <a href={mirror.url} target="_blank" rel="noopener noreferrer">
+                    <Github className="w-4 h-4" />
+                    {mirror.name} (Mirror)
+                  </a>
+                </Button>
+              ))}
               {project.docsUrl && (
                 <Button size="sm" variant="outline" className="gap-2" asChild>
                   <a href={project.docsUrl} target="_blank" rel="noopener noreferrer">
@@ -295,6 +307,14 @@ export function ProjectDetailModal({ project, isOpen, onClose }: ProjectDetailMo
                 >
                   Stats & Metrics
                 </TabsTrigger>
+                {(hasRepos || hasMirrors) && (
+                  <TabsTrigger 
+                    value="repositories" 
+                    className="px-4 py-2.5 rounded-lg text-sm font-medium data-[state=active]:bg-primary/10 data-[state=active]:text-primary data-[state=active]:shadow-none data-[state=inactive]:bg-transparent data-[state=inactive]:text-muted-foreground hover:data-[state=inactive]:text-foreground transition-colors whitespace-nowrap"
+                  >
+                    Repositories
+                  </TabsTrigger>
+                )}
                 {(hasScreenshots || hasRelatedProjects) && (
                   <TabsTrigger 
                     value="media" 
@@ -508,6 +528,66 @@ export function ProjectDetailModal({ project, isOpen, onClose }: ProjectDetailMo
                   </section>
                 </TabsContent>
 
+                {/* Repositories Tab */}
+                {(hasRepos || hasMirrors) && (
+                  <TabsContent value="repositories" className="mt-0 space-y-6 focus-visible:outline-none">
+                    {hasRepos && (
+                      <section>
+                        <h4 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-3 flex items-center gap-2">
+                          <Github className="w-4 h-4" />
+                          Primary Repositories
+                        </h4>
+                        <div className="space-y-2">
+                          {project.repos?.map((repo, i) => (
+                            <a 
+                              key={i}
+                              href={repo.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-center justify-between p-3 rounded-lg bg-muted/30 border border-border/30 hover:bg-muted/50 hover:border-primary/30 transition-colors group"
+                            >
+                              <div className="min-w-0">
+                                <p className="font-medium text-foreground/90 group-hover:text-foreground transition-colors">{repo.name}</p>
+                                <p className="text-xs text-muted-foreground">{repo.type || 'git'}</p>
+                              </div>
+                              <ExternalLink className="w-4 h-4 text-primary flex-shrink-0 ml-2" />
+                            </a>
+                          ))}
+                        </div>
+                      </section>
+                    )}
+
+                    {hasRepos && hasMirrors && <Separator />}
+
+                    {hasMirrors && (
+                      <section>
+                        <h4 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-3 flex items-center gap-2">
+                          <GitBranch className="w-4 h-4" />
+                          Mirror Repositories
+                        </h4>
+                        <p className="text-sm text-muted-foreground mb-3">Mirrors for visibility and accessibility. Stats are counted from primary repository.</p>
+                        <div className="space-y-2">
+                          {project.mirrors?.map((mirror, i) => (
+                            <a 
+                              key={i}
+                              href={mirror.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-center justify-between p-3 rounded-lg bg-muted/20 border border-border/20 hover:bg-muted/40 hover:border-primary/30 transition-colors group"
+                            >
+                              <div className="min-w-0">
+                                <p className="font-medium text-foreground/90 group-hover:text-foreground transition-colors">{mirror.name}</p>
+                                <p className="text-xs text-muted-foreground">{mirror.description || mirror.type || 'git'}</p>
+                              </div>
+                              <ExternalLink className="w-4 h-4 text-muted-foreground group-hover:text-primary flex-shrink-0 ml-2 transition-colors" />
+                            </a>
+                          ))}
+                        </div>
+                      </section>
+                    )}
+                  </TabsContent>
+                )}
+
                 {/* Media Tab */}
                 {(hasScreenshots || hasRelatedProjects) && (
                   <TabsContent value="media" className="mt-0 space-y-6 focus-visible:outline-none">
@@ -543,28 +623,42 @@ export function ProjectDetailModal({ project, isOpen, onClose }: ProjectDetailMo
                           Related Projects
                         </h4>
                         <div className="space-y-2">
-                          {project.relatedProjects?.map((related, i) => (
-                            <div 
-                              key={i}
-                              className="flex items-center justify-between p-3 rounded-lg bg-muted/30 border border-border/30 hover:bg-muted/50 transition-colors"
-                            >
-                              <div>
-                                <p className="font-medium text-foreground/90">{related.name}</p>
-                                <p className="text-sm text-muted-foreground">{related.relation}</p>
+                          {project.relatedProjects?.map((related, i) => {
+                            const isInternalProject = related.projectId && allProjects.some(p => p.id === related.projectId);
+                            
+                            return (
+                              <div 
+                                key={i}
+                                className="flex items-center justify-between p-3 rounded-lg bg-muted/30 border border-border/30 hover:bg-muted/50 transition-colors"
+                              >
+                                <div>
+                                  <p className="font-medium text-foreground/90">{related.name}</p>
+                                  <p className="text-sm text-muted-foreground">{related.relation}</p>
+                                </div>
+                                {isInternalProject && onProjectSelect ? (
+                                  <button 
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      onProjectSelect(related.projectId!);
+                                    }}
+                                    className="text-primary hover:text-primary/80 transition-colors cursor-pointer"
+                                  >
+                                    <ArrowUpRight className="w-5 h-5" />
+                                  </button>
+                                ) : related.url ? (
+                                  <a 
+                                    href={related.url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-primary hover:text-primary/80 transition-colors"
+                                    onClick={(e) => e.stopPropagation()}
+                                  >
+                                    <ArrowUpRight className="w-5 h-5" />
+                                  </a>
+                                ) : null}
                               </div>
-                              {related.url && (
-                                <a 
-                                  href={related.url}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="text-primary hover:text-primary/80 transition-colors"
-                                  onClick={(e) => e.stopPropagation()}
-                                >
-                                  <ArrowUpRight className="w-5 h-5" />
-                                </a>
-                              )}
-                            </div>
-                          ))}
+                            );
+                          })}
                         </div>
                       </section>
                     )}

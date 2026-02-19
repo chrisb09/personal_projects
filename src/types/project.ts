@@ -34,30 +34,41 @@ export interface Project {
   
   // Links & media
   demoUrl?: string;
-  repoUrl?: string;
+  repos?: {
+    name: string;
+    url: string;
+    type?: 'github' | 'gitlab' | 'gitea' | 'other';
+  }[];
+  mirrors?: {
+    name: string;
+    url: string;
+    type?: 'github' | 'gitlab' | 'gitea' | 'other';
+    description?: string;
+  }[];
   docsUrl?: string;
   screenshots?: string[];
   logo?: string;
   
-  // Related projects
+  // Related projects (both external links and internal project IDs)
   relatedProjects?: {
     name: string;
     relation: string;
     url?: string;
+    projectId?: string; // Reference to another project on this page by ID
   }[];
   
-  // GitHub/GitLab stats (would be populated by external script)
+  // GitHub/GitLab stats (populated by external script via stats.json)
   stats?: {
-    stars: number;
-    commits: number;
-    branches: number;
-    lastCommit: string;
+    stars?: number;
+    commits?: number;
+    branches?: number;
+    lastCommit?: string;
   };
   
-  // Lines of code per language (would be populated by external script)
+  // Lines of code per language (populated by external script via stats.json)
   loc?: {
-    total: number;
-    byLanguage: Record<string, number>;
+    total?: number;
+    byLanguage?: Record<string, number>;
   };
 }
 
