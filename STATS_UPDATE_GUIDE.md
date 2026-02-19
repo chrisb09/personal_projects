@@ -13,17 +13,26 @@ The website uses a simple file-based stats system:
 
 ## Getting Project Metadata
 
-Your external script can read the static project configuration to know which projects need stats:
+Your external script can read the source project configuration directly from the repository:
 
 ```javascript
-// Read src/config/projects.ts to get:
+// The src/config/projects.ts file is still in your repo after compilation
+// (compilation doesn't delete source files, only creates dist/ folder)
+// 
+// You can read it directly to get:
 // - Project IDs
 // - Repository URLs
 // - Documentation URLs
 // - Demo URLs
 
-// Example: Extract project info
-const projects = require('./src/config/projects.ts').projects;
+import fs from 'fs';
+
+// Read and parse the TypeScript file
+const projectsSource = fs.readFileSync('./src/config/projects.ts', 'utf-8');
+// Extract the projects array (you'll need a simple regex or parser)
+// Or better: export as JSON for easier scripting
+
+// Then filter for projects that need stats
 const projectsToUpdate = projects
   .filter(p => p.repoUrl)
   .map(p => ({
@@ -72,8 +81,14 @@ import fs from 'fs';
 import path from 'path';
 
 async function updateStats() {
-  // Load project IDs and repo URLs
-  const projects = JSON.parse(fs.readFileSync('./src/config/projects.json', 'utf-8'));
+  // Load project IDs and repo URLs from source
+  // You'll need to read src/config/projects.ts and extract the projects array
+  // One simple approach: add a separate projects.json export in your src/ folder
+  // Or use a regex to parse the TypeScript file
+  
+  // For now, assuming you've extracted projects to src/config/projects.json
+  const projectsData = fs.readFileSync('./src/config/projects.json', 'utf-8');
+  const projects = JSON.parse(projectsData);
   
   const stats = {
     lastUpdated: new Date().toISOString(),
