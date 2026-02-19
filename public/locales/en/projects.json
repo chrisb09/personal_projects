@@ -1,0 +1,44 @@
+{
+  "firecord": {
+    "name": "firecord",
+    "tagline": "Experimental Redisson Alternative",
+    "description": "Redis-based automatic, reference-based object synchronization for Java. A lightweight alternative to Redisson focused on performance and minimal network overhead.",
+    "purpose": "To provide a more efficient solution for distributed object synchronization in Java applications, reducing latency and network load compared to existing solutions."
+  },
+  "pdnwebview": {
+    "name": "pdnwebview",
+    "tagline": "Web Viewer for Paint.net Project Files",
+    "description": "A web-based viewer for Paint.net (.pdn) project files. Allows users to view and share their Paint.net projects directly in the browser without needing the desktop application.",
+    "purpose": "To make Paint.net project files accessible and shareable on the web, enabling artists to showcase their work and collaborate without requiring everyone to have Paint.net installed."
+  },
+  "userbenchmark-scraper": {
+    "name": "Userbenchmark Web Scraper",
+    "tagline": "Experimental Hardware Benchmark Data Extractor",
+    "description": "An automated web scraper for extracting hardware benchmark data from Userbenchmark. Built with Python and featuring a custom job scheduler and Tor integration for anonymity.",
+    "purpose": "To collect large-scale hardware benchmark data for analysis and research purposes, building a dataset of approximately 40,000 benchmarks."
+  },
+  "homeserver": {
+    "name": "Private Homeserver",
+    "tagline": "Self-Hosted Infrastructure for Personal Use",
+    "description": "A comprehensive self-hosted server infrastructure providing web hosting, cloud storage, and AI applications for private use. Serving approximately 20 active users with 100+ TB of storage.",
+    "purpose": "To create a privacy-focused, self-controlled alternative to commercial cloud services, providing reliable hosting for personal data and applications."
+  },
+  "pacstall": {
+    "name": "Pacstall",
+    "tagline": "Package Manager for Ubuntu/Debian",
+    "description": "Contributing to Pacstall, an AUR-inspired package manager for Ubuntu and Debian systems. Helps bridge the gap between bleeding-edge software and stable distributions.",
+    "purpose": "To make newer software versions accessible on stable Ubuntu/Debian systems without compromising system stability or waiting for official repository updates."
+  },
+  "libretranslate-java": {
+    "name": "libretranslate-java",
+    "tagline": "Java Client for LibreTranslate",
+    "description": "A Java client library for the LibreTranslate API. Provides easy integration of translation capabilities into Java applications with a clean, idiomatic API.",
+    "purpose": "To provide Java developers with a simple, well-documented client for self-hosted or public LibreTranslate instances, enabling translation features without external service dependencies."
+  },
+  "small-projects": {
+    "name": "Small Projects & Scripts",
+    "tagline": "Utility Tools and Helper Scripts",
+    "description": "A collection of small but useful utility projects and scripts for various tasks including Redis data management, secure downloading, duplicate file detection, and simple file hosting.",
+    "purpose": "To solve specific, recurring problems with focused, lightweight tools that are easy to understand, use, and modify."
+  }
+}

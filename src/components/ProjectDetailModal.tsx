@@ -1,13 +1,19 @@
+import { useTranslation } from 'react-i18next';
 import type { Project } from '@/types/project';
 import { 
   categoryLabels, 
   statusLabels, 
+  roleLabels,
+  sourceTypeLabels,
   categoryColors, 
+  roleColors,
+  sourceTypeColors,
   aiUsageLabels, 
   aiUsageColors,
   aiUsageDescriptions,
-  projectTypeLabels,
-  projectTypeColors,
+  aiUtilizationLabels,
+  aiUtilizationColors,
+  aiUtilizationDescriptions,
   languageColors,
 } from '@/types/project';
 import {

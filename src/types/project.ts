@@ -3,14 +3,20 @@ export interface Project {
   name: string;
   tagline: string;
   year: string;
-  category: 'backend' | 'frontend' | 'devops' | 'opensource' | 'utility' | 'scraper';
+  category: 'backend' | 'frontend' | 'devops-infrastructure' | 'data-scraping' | 'library' | 'package-management' | 'cli' | 'fullstack' | 'utility' | 'other';
   status: 'active' | 'experimental' | 'maintenance' | 'archived';
   
-  // Project type - distinguishes full projects from contributions
-  projectType: 'full' | 'contribution';
+  // Role - your involvement with the project
+  role: 'main-author' | 'contributor' | 'fork-maintainer';
   
-  // AI Usage level
+  // Source type - open or closed source (displayed as label)
+  sourceType: 'open-source' | 'closed-source';
+  
+  // AI Usage level - how it was built
   aiUsage: 'none' | 'minor' | 'major' | 'full';
+  
+  // AI Utilization - does the project itself use AI
+  aiUtilization: 'ai-powered' | 'ai-enhanced' | 'no-ai';
   
   // Overview
   description: string;
@@ -74,16 +80,22 @@ export interface Project {
 
 export type ProjectCategory = Project['category'];
 export type ProjectStatus = Project['status'];
-export type ProjectType = Project['projectType'];
+export type ProjectRole = Project['role'];
+export type ProjectSourceType = Project['sourceType'];
 export type AIUsage = Project['aiUsage'];
+export type AIUtilization = Project['aiUtilization'];
 
 export const categoryLabels: Record<ProjectCategory, string> = {
   backend: 'Backend',
   frontend: 'Frontend',
-  devops: 'DevOps & Infrastructure',
-  opensource: 'Open Source',
+  'devops-infrastructure': 'DevOps & Infrastructure',
+  'data-scraping': 'Data & Scraping',
+  library: 'Library',
+  'package-management': 'Package Management',
+  cli: 'CLI Tool',
+  fullstack: 'Full Stack',
   utility: 'Utility & Tools',
-  scraper: 'Data & Scraping',
+  other: 'Other',
 };
 
 export const statusLabels: Record<ProjectStatus, string> = {
@@ -93,9 +105,15 @@ export const statusLabels: Record<ProjectStatus, string> = {
   archived: 'Archived',
 };
 
-export const projectTypeLabels: Record<ProjectType, string> = {
-  full: 'Full Project',
-  contribution: 'Contribution',
+export const roleLabels: Record<ProjectRole, string> = {
+  'main-author': 'Main Author',
+  contributor: 'Contributor',
+  'fork-maintainer': 'Fork Maintainer',
+};
+
+export const sourceTypeLabels: Record<ProjectSourceType, string> = {
+  'open-source': 'Open Source',
+  'closed-source': 'Closed Source',
 };
 
 export const aiUsageLabels: Record<AIUsage, string> = {
@@ -112,25 +130,53 @@ export const aiUsageDescriptions: Record<AIUsage, string> = {
   full: 'Primarily or entirely built using AI tools',
 };
 
-export const categoryColors: Record<ProjectCategory, string> = {
-  backend: 'bg-blue-500/10 text-blue-600 border-blue-500/20',
-  frontend: 'bg-purple-500/10 text-purple-600 border-purple-500/20',
-  devops: 'bg-green-500/10 text-green-600 border-green-500/20',
-  opensource: 'bg-orange-500/10 text-orange-600 border-orange-500/20',
-  utility: 'bg-cyan-500/10 text-cyan-600 border-cyan-500/20',
-  scraper: 'bg-pink-500/10 text-pink-600 border-pink-500/20',
+export const aiUtilizationLabels: Record<AIUtilization, string> = {
+  'ai-powered': 'AI Powered',
+  'ai-enhanced': 'AI Enhanced',
+  'no-ai': 'No AI Features',
 };
 
-export const projectTypeColors: Record<ProjectType, string> = {
-  full: 'bg-emerald-500/10 text-emerald-600 border-emerald-500/20',
-  contribution: 'bg-amber-500/10 text-amber-600 border-amber-500/20',
+export const aiUtilizationDescriptions: Record<AIUtilization, string> = {
+  'ai-powered': 'Core functionality relies on AI/ML models',
+  'ai-enhanced': 'Uses AI to augment certain features',
+  'no-ai': 'Does not use AI or machine learning',
+};
+
+export const categoryColors: Record<ProjectCategory, string> = {
+  backend: 'bg-blue-500/10 text-blue-600 border-blue-500/20 dark:text-blue-400',
+  frontend: 'bg-purple-500/10 text-purple-600 border-purple-500/20 dark:text-purple-400',
+  'devops-infrastructure': 'bg-green-500/10 text-green-600 border-green-500/20 dark:text-green-400',
+  'data-scraping': 'bg-pink-500/10 text-pink-600 border-pink-500/20 dark:text-pink-400',
+  library: 'bg-indigo-500/10 text-indigo-600 border-indigo-500/20 dark:text-indigo-400',
+  'package-management': 'bg-teal-500/10 text-teal-600 border-teal-500/20 dark:text-teal-400',
+  cli: 'bg-amber-500/10 text-amber-600 border-amber-500/20 dark:text-amber-400',
+  fullstack: 'bg-cyan-500/10 text-cyan-600 border-cyan-500/20 dark:text-cyan-400',
+  utility: 'bg-cyan-500/10 text-cyan-600 border-cyan-500/20 dark:text-cyan-400',
+  other: 'bg-slate-500/10 text-slate-600 border-slate-500/20 dark:text-slate-400',
+};
+
+export const roleColors: Record<ProjectRole, string> = {
+  'main-author': 'bg-emerald-500/10 text-emerald-600 border-emerald-500/20 dark:text-emerald-400',
+  contributor: 'bg-amber-500/10 text-amber-600 border-amber-500/20 dark:text-amber-400',
+  'fork-maintainer': 'bg-sky-500/10 text-sky-600 border-sky-500/20 dark:text-sky-400',
+};
+
+export const sourceTypeColors: Record<ProjectSourceType, string> = {
+  'open-source': 'bg-green-500/10 text-green-600 border-green-500/20 dark:text-green-400',
+  'closed-source': 'bg-red-500/10 text-red-600 border-red-500/20 dark:text-red-400',
 };
 
 export const aiUsageColors: Record<AIUsage, string> = {
-  none: 'bg-slate-500/10 text-slate-600 border-slate-500/20',
-  minor: 'bg-violet-500/10 text-violet-600 border-violet-500/20',
-  major: 'bg-fuchsia-500/10 text-fuchsia-600 border-fuchsia-500/20',
-  full: 'bg-rose-500/10 text-rose-600 border-rose-500/20',
+  none: 'bg-slate-500/10 text-slate-600 border-slate-500/20 dark:text-slate-400',
+  minor: 'bg-violet-500/10 text-violet-600 border-violet-500/20 dark:text-violet-400',
+  major: 'bg-fuchsia-500/10 text-fuchsia-600 border-fuchsia-500/20 dark:text-fuchsia-400',
+  full: 'bg-rose-500/10 text-rose-600 border-rose-500/20 dark:text-rose-400',
+};
+
+export const aiUtilizationColors: Record<AIUtilization, string> = {
+  'ai-powered': 'bg-orange-500/10 text-orange-600 border-orange-500/20 dark:text-orange-400',
+  'ai-enhanced': 'bg-yellow-500/10 text-yellow-600 border-yellow-500/20 dark:text-yellow-400',
+  'no-ai': 'bg-slate-500/10 text-slate-600 border-slate-500/20 dark:text-slate-400',
 };
 
 // Language colors for LOC charts

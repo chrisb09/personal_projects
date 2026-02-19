@@ -1,10 +1,22 @@
 import { useState, useMemo, useEffect } from 'react';
-import { projects, getAggregateStats, getLOCAggregateByLanguage } from '@/config/projects';
+import { useTranslation } from 'react-i18next';
+import { projects } from '@/config/projects';
 import type { Project, ProjectCategory } from '@/types/project';
 import { fetchStats, mergeStatsWithProjects } from '@/lib/stats';
-import { categoryLabels, aiUsageLabels, aiUsageColors, aiUsageDescriptions } from '@/types/project';
+import { initializeTheme } from '@/lib/theme';
+import { 
+  categoryLabels, 
+  aiUsageLabels, 
+  aiUsageColors, 
+  aiUsageDescriptions,
+  aiUtilizationLabels,
+  aiUtilizationColors,
+  aiUtilizationDescriptions,
+} from '@/types/project';
 import { ProjectCard } from '@/components/ProjectCard';
 import { ProjectDetailModal } from '@/components/ProjectDetailModal';
+import { ThemeToggle } from '@/components/ThemeToggle';
+import { LanguageSelector } from '@/components/LanguageSelector';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { 
@@ -26,45 +38,78 @@ import {
   GitCommit,
   Code,
   Sparkles,
+  Cpu,
   ExternalLink
 } from 'lucide-react';
 
-// AI Usage Legend Component
-function AIUsageLegend() {
-  const levels: Array<'none' | 'minor' | 'major' | 'full'> = ['none', 'minor', 'major', 'full'];
+// AI Legend Component - shows both AI Usage (how it was built) and AI Utilization (does it use AI)
+function AILegend() {
+  const { t } = useTranslation();
+  const usageLevels: Array<'none' | 'minor' | 'major' | 'full'> = ['none', 'minor', 'major', 'full'];
+  const utilizationLevels: Array<'ai-powered' | 'ai-enhanced' | 'no-ai'> = ['ai-powered', 'ai-enhanced', 'no-ai'];
   
   return (
-    <div className="bg-muted/30 rounded-lg p-4 border border-border/50">
-      <h4 className="text-sm font-medium mb-3 flex items-center gap-2">
-        <Sparkles className="w-4 h-4" />
-        AI Usage Levels
-      </h4>
-      <div className="flex flex-wrap gap-2">
-        {levels.map((level) => (
-          <Tooltip key={level}>
-            <TooltipTrigger asChild>
-              <span 
-                className={`${aiUsageColors[level]} px-2 py-1 rounded-full text-xs font-medium border cursor-help`}
-              >
-                {aiUsageLabels[level]}
-              </span>
-            </TooltipTrigger>
-            <TooltipContent side="top">
-              <p className="text-xs max-w-xs">{aiUsageDescriptions[level]}</p>
-            </TooltipContent>
-          </Tooltip>
-        ))}
+    <div className="bg-muted/30 rounded-lg p-4 border border-border/50 space-y-4">
+      <div>
+        <h4 className="text-sm font-medium mb-3 flex items-center gap-2">
+          <Sparkles className="w-4 h-4" />
+          {t('labels.built_with', 'Built with')} - AI Usage Levels
+        </h4>
+        <div className="flex flex-wrap gap-2">
+          {usageLevels.map((level) => (
+            <Tooltip key={level}>
+              <TooltipTrigger asChild>
+                <span 
+                  className={`${aiUsageColors[level]} px-2 py-1 rounded-full text-xs font-medium border cursor-help`}
+                >
+                  {t(`ai_usage.${level}`, aiUsageLabels[level])}
+                </span>
+              </TooltipTrigger>
+              <TooltipContent side="top">
+                <p className="text-xs max-w-xs">{t(`ai_usage_descriptions.${level}`, aiUsageDescriptions[level])}</p>
+              </TooltipContent>
+            </Tooltip>
+          ))}
+        </div>
+      </div>
+      <div>
+        <h4 className="text-sm font-medium mb-3 flex items-center gap-2">
+          <Cpu className="w-4 h-4" />
+          {t('labels.features', 'Features')} - AI Utilization
+        </h4>
+        <div className="flex flex-wrap gap-2">
+          {utilizationLevels.map((level) => (
+            <Tooltip key={level}>
+              <TooltipTrigger asChild>
+                <span 
+                  className={`${aiUtilizationColors[level]} px-2 py-1 rounded-full text-xs font-medium border cursor-help`}
+                >
+                  {t(`ai_utilization.${level}`, aiUtilizationLabels[level])}
+                </span>
+              </TooltipTrigger>
+              <TooltipContent side="top">
+                <p className="text-xs max-w-xs">{t(`ai_utilization_descriptions.${level}`, aiUtilizationDescriptions[level])}</p>
+              </TooltipContent>
+            </Tooltip>
+          ))}
+        </div>
       </div>
     </div>
   );
 }
 
 function App() {
+  const { t } = useTranslation();
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<ProjectCategory | 'all'>('all');
   const [projectsWithStats, setProjectsWithStats] = useState<Project[]>(projects);
+
+  // Initialize theme on mount
+  useEffect(() => {
+    initializeTheme();
+  }, []);
 
   // Fetch and merge stats on component mount
   useEffect(() => {
@@ -149,7 +194,13 @@ function App() {
           <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
           <div className="absolute bottom-0 left-0 w-64 h-64 bg-primary/3 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
           
-          <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+          {/* Top bar with theme and language controls */}
+          <div className="relative flex items-center justify-end gap-1 px-4 sm:px-6 lg:px-8 pt-3 max-w-6xl mx-auto">
+            <LanguageSelector />
+            <ThemeToggle />
+          </div>
+          
+          <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-12 pt-6 md:pb-16 md:pt-8">
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
               <div className="space-y-3">
                 <div className="flex items-center gap-2 text-muted-foreground">
@@ -210,21 +261,21 @@ function App() {
                     <Star className="w-5 h-5" />
                     <p className="text-3xl font-bold">{aggregateStats.totalStars}</p>
                   </div>
-                  <p className="text-sm text-muted-foreground">Total Stars</p>
+                  <p className="text-sm text-muted-foreground">{t('stats.total_stars', 'Total Stars')}</p>
                 </div>
                 <div className="text-center md:text-right">
                   <div className="flex items-center md:justify-end gap-1.5 text-primary">
                     <GitCommit className="w-5 h-5" />
                     <p className="text-3xl font-bold">{aggregateStats.totalCommits}</p>
                   </div>
-                  <p className="text-sm text-muted-foreground">Total Commits</p>
+                  <p className="text-sm text-muted-foreground">{t('stats.total_commits', 'Total Commits')}</p>
                 </div>
                 <div className="text-center md:text-right">
                   <div className="flex items-center md:justify-end gap-1.5 text-primary">
                     <Code className="w-5 h-5" />
                     <p className="text-3xl font-bold">{(totalLOC / 1000).toFixed(1)}k</p>
                   </div>
-                  <p className="text-sm text-muted-foreground">Lines of Code</p>
+                  <p className="text-sm text-muted-foreground">{t('stats.total_loc', 'Lines of Code')}</p>
                 </div>
               </div>
             </div>
@@ -240,7 +291,7 @@ function App() {
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
               <Input
                 type="text"
-                placeholder="Search projects by name, description, or technology..."
+                placeholder={t('header.search_placeholder', 'Search projects by name, description, or technology...')}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="pl-10 pr-10"
@@ -269,7 +320,7 @@ function App() {
                     }
                   `}
                 >
-                  {category === 'all' ? 'All Projects' : categoryLabels[category]}
+                  {category === 'all' ? t('filters.all', 'All Projects') : t(`categories.${category}`, categoryLabels[category])}
                 </button>
               ))}
             </div>
@@ -278,8 +329,8 @@ function App() {
           {/* Results count */}
           <div className="flex items-center justify-between mb-6">
             <p className="text-sm text-muted-foreground">
-              Showing <span className="font-medium text-foreground">{filteredProjects.length}</span> of{' '}
-              <span className="font-medium text-foreground">{projectsWithStats.length}</span> projects
+              {t('header.showing', 'Showing')} <span className="font-medium text-foreground">{filteredProjects.length}</span> {t('header.of', 'of')}{' '}
+              <span className="font-medium text-foreground">{projectsWithStats.length}</span> {t('header.projects', 'projects')}
             </p>
           </div>
 
@@ -318,7 +369,7 @@ function App() {
 
           {/* AI Usage Legend - at bottom of main content */}
           <div className="mt-12">
-            <AIUsageLegend />
+            <AILegend />
           </div>
         </main>
 

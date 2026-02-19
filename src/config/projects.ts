@@ -9,8 +9,10 @@ import type { Project } from '@/types/project';
  * 
  * Each project supports:
  * - Basic info (name, tagline, year, category, status)
- * - projectType: 'full' for your own projects, 'contribution' for minor contributions
- * - aiUsage: 'none' | 'minor' | 'major' | 'full' - indicates AI involvement level
+ * - role: 'main-author' | 'contributor' | 'fork-maintainer'
+ * - sourceType: 'open-source' | 'closed-source'
+ * - aiUsage: 'none' | 'minor' | 'major' | 'full' - indicates AI involvement in building
+ * - aiUtilization: 'ai-powered' | 'ai-enhanced' | 'no-ai' - indicates if the project uses AI
  * - Description and purpose
  * - Technologies, dependencies, expertise
  * - Strengths and limitations
@@ -34,8 +36,10 @@ export const projects: Project[] = [
     year: '2023',
     category: 'backend',
     status: 'experimental',
-    projectType: 'full',
+    role: 'main-author',
+    sourceType: 'open-source',
     aiUsage: 'minor',
+    aiUtilization: 'no-ai',
     
     description: 'Redis-based automatic, reference-based object synchronization for Java. A lightweight alternative to Redisson focused on performance and minimal network overhead.',
     purpose: 'To provide a more efficient solution for distributed object synchronization in Java applications, reducing latency and network load compared to existing solutions.',
@@ -114,8 +118,10 @@ state.setData("Hello, distributed world!");
     year: '2022',
     category: 'frontend',
     status: 'active',
-    projectType: 'full',
+    role: 'main-author',
+    sourceType: 'open-source',
     aiUsage: 'none',
+    aiUtilization: 'no-ai',
     
     description: 'A web-based viewer for Paint.net (.pdn) project files. Allows users to view and share their Paint.net projects directly in the browser without needing the desktop application.',
     purpose: 'To make Paint.net project files accessible and shareable on the web, enabling artists to showcase their work and collaborate without requiring everyone to have Paint.net installed.',
@@ -183,10 +189,12 @@ curl -X POST -F "file=@project.pdn" https://your-server.com/api/view`,
     name: 'Userbenchmark Web Scraper',
     tagline: 'Experimental Hardware Benchmark Data Extractor',
     year: '2020 - 2021',
-    category: 'scraper',
+    category: 'data-scraping',
     status: 'archived',
-    projectType: 'full',
+    role: 'main-author',
+    sourceType: 'open-source',
     aiUsage: 'none',
+    aiUtilization: 'no-ai',
     
     description: 'An automated web scraper for extracting hardware benchmark data from Userbenchmark. Built with Python and featuring a custom job scheduler and Tor integration for anonymity.',
     purpose: 'To collect large-scale hardware benchmark data for analysis and research purposes, building a dataset of approximately 40,000 benchmarks.',
@@ -252,10 +260,12 @@ python analyze.py --export csv`,
     name: 'Private Homeserver',
     tagline: 'Self-Hosted Infrastructure for Personal Use',
     year: '2018 - Present',
-    category: 'devops',
+    category: 'devops-infrastructure',
     status: 'active',
-    projectType: 'full',
+    role: 'main-author',
+    sourceType: 'open-source',
     aiUsage: 'minor',
+    aiUtilization: 'no-ai',
     
     description: 'A comprehensive self-hosted server infrastructure providing web hosting, cloud storage, and AI applications for private use. Serving approximately 20 active users with 100+ TB of storage.',
     purpose: 'To create a privacy-focused, self-controlled alternative to commercial cloud services, providing reliable hosting for personal data and applications.',
@@ -337,10 +347,12 @@ zfs list`,
     name: 'Pacstall',
     tagline: 'Package Manager for Ubuntu/Debian',
     year: '2023 - Present',
-    category: 'opensource',
+    category: 'package-management',
     status: 'active',
-    projectType: 'contribution',
+    role: 'contributor',
+    sourceType: 'open-source',
     aiUsage: 'none',
+    aiUtilization: 'no-ai',
     
     description: 'Contributing to Pacstall, an AUR-inspired package manager for Ubuntu and Debian systems. Helps bridge the gap between bleeding-edge software and stable distributions.',
     purpose: 'To make newer software versions accessible on stable Ubuntu/Debian systems without compromising system stability or waiting for official repository updates.',
@@ -406,10 +418,12 @@ pacstall -R package-name`,
     name: 'libretranslate-java',
     tagline: 'Java Client for LibreTranslate',
     year: '2023 - Present',
-    category: 'opensource',
+    category: 'library',
     status: 'active',
-    projectType: 'full',
+    role: 'main-author',
+    sourceType: 'open-source',
     aiUsage: 'minor',
+    aiUtilization: 'no-ai',
     
     description: 'A Java client library for the LibreTranslate API. Provides easy integration of translation capabilities into Java applications with a clean, idiomatic API.',
     purpose: 'To provide Java developers with a simple, well-documented client for self-hosted or public LibreTranslate instances, enabling translation features without external service dependencies.',
@@ -484,8 +498,10 @@ System.out.println(result.getTranslatedText()); // "Hallo, Welt!"`,
     year: 'Various',
     category: 'utility',
     status: 'active',
-    projectType: 'full',
+    role: 'main-author',
+    sourceType: 'open-source',
     aiUsage: 'none',
+    aiUtilization: 'no-ai',
     
     description: 'A collection of small but useful utility projects and scripts for various tasks including Redis data management, secure downloading, duplicate file detection, and simple file hosting.',
     purpose: 'To solve specific, recurring problems with focused, lightweight tools that are easy to understand, use, and modify.',
@@ -565,27 +581,32 @@ export function getAllCategories() {
   return [...new Set(projects.map(p => p.category))];
 }
 
-// Get full projects only (not contributions)
-export function getFullProjects() {
-  return projects.filter(p => p.projectType === 'full');
+// Get projects by role
+export function getProjectsByRole(role: string) {
+  return projects.filter(p => p.role === role);
 }
 
-// Calculate aggregate stats for full projects only
+// Get main author projects only
+export function getMainAuthorProjects() {
+  return projects.filter(p => p.role === 'main-author');
+}
+
+// Calculate aggregate stats for main author projects only
 export function getAggregateStats() {
-  const fullProjects = getFullProjects();
+  const ownProjects = getMainAuthorProjects();
   return {
-    totalStars: fullProjects.reduce((sum, p) => sum + (p.stats?.stars || 0), 0),
-    totalCommits: fullProjects.reduce((sum, p) => sum + (p.stats?.commits || 0), 0),
-    totalLOC: fullProjects.reduce((sum, p) => sum + (p.loc?.total || 0), 0),
+    totalStars: ownProjects.reduce((sum, p) => sum + (p.stats?.stars || 0), 0),
+    totalCommits: ownProjects.reduce((sum, p) => sum + (p.stats?.commits || 0), 0),
+    totalLOC: ownProjects.reduce((sum, p) => sum + (p.loc?.total || 0), 0),
   };
 }
 
-// Get LOC by language across all full projects
+// Get LOC by language across all main author projects
 export function getLOCAggregateByLanguage(): Record<string, number> {
-  const fullProjects = getFullProjects();
+  const ownProjects = getMainAuthorProjects();
   const aggregate: Record<string, number> = {};
   
-  fullProjects.forEach(project => {
+  ownProjects.forEach(project => {
     if (project.loc?.byLanguage) {
       Object.entries(project.loc.byLanguage).forEach(([lang, count]) => {
         aggregate[lang] = (aggregate[lang] || 0) + count;

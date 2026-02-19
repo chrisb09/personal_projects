@@ -1,0 +1,114 @@
+{
+  "site": {
+    "title": "Project Portfolio",
+    "description": "A showcase of personal and open source projects"
+  },
+  "header": {
+    "search_placeholder": "Search projects...",
+    "showing": "Showing",
+    "of": "of",
+    "projects": "projects"
+  },
+  "filters": {
+    "all": "All",
+    "category": "Category",
+    "role": "Role",
+    "status": "Status"
+  },
+  "categories": {
+    "backend": "Backend",
+    "frontend": "Frontend",
+    "devops-infrastructure": "DevOps & Infrastructure",
+    "data-scraping": "Data & Scraping",
+    "library": "Library",
+    "package-management": "Package Management",
+    "cli": "CLI Tool",
+    "fullstack": "Full Stack",
+    "utility": "Utility & Tools",
+    "other": "Other"
+  },
+  "roles": {
+    "main-author": "Main Author",
+    "contributor": "Contributor",
+    "fork-maintainer": "Fork Maintainer"
+  },
+  "statuses": {
+    "active": "Active",
+    "experimental": "Experimental",
+    "maintenance": "Maintenance",
+    "archived": "Archived"
+  },
+  "source_types": {
+    "open-source": "Open Source",
+    "closed-source": "Closed Source"
+  },
+  "ai_usage": {
+    "none": "No AI",
+    "minor": "AI Assisted",
+    "major": "AI Generated",
+    "full": "AI Built"
+  },
+  "ai_usage_descriptions": {
+    "none": "Built entirely without AI assistance",
+    "minor": "Used AI for autocompletion and chat assistance only",
+    "major": "Significant portions generated or assisted by AI agents",
+    "full": "Primarily or entirely built using AI tools"
+  },
+  "ai_utilization": {
+    "ai-powered": "AI Powered",
+    "ai-enhanced": "AI Enhanced",
+    "no-ai": "No AI Features"
+  },
+  "ai_utilization_descriptions": {
+    "ai-powered": "Core functionality relies on AI/ML models",
+    "ai-enhanced": "Uses AI to augment certain features",
+    "no-ai": "Does not use AI or machine learning"
+  },
+  "labels": {
+    "built_with": "Built with",
+    "features": "Features"
+  },
+  "stats": {
+    "stars": "Stars",
+    "commits": "Commits",
+    "branches": "Branches",
+    "last_commit": "Last Commit",
+    "loc": "LOC",
+    "total_stars": "Total Stars",
+    "total_commits": "Total Commits",
+    "total_loc": "Total LOC"
+  },
+  "modal": {
+    "overview": "Overview",
+    "stats_metrics": "Stats & Metrics",
+    "repositories": "Repositories",
+    "media_links": "Media & Links",
+    "purpose": "Purpose",
+    "technologies": "Technologies",
+    "dependencies": "Dependencies",
+    "expertise": "Expertise",
+    "strengths": "Strengths",
+    "limitations": "Limitations",
+    "installation": "Installation",
+    "usage": "Usage",
+    "roadmap": "Roadmap",
+    "related_projects": "Related Projects",
+    "primary_repositories": "Primary Repositories",
+    "mirror_repositories": "Mirror Repositories",
+    "mirror_note": "Mirrors for visibility and accessibility. Stats are counted from primary repository.",
+    "screenshots": "Screenshots",
+    "live_demo": "Live Demo",
+    "documentation": "Documentation",
+    "loc_breakdown": "Lines of Code Breakdown",
+    "git_stats": "Git Statistics"
+  },
+  "theme": {
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System"
+  },
+  "language": {
+    "select": "Language",
+    "en": "English"
+  }
+}

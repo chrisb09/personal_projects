@@ -1,11 +1,19 @@
+import { useTranslation } from 'react-i18next';
 import type { Project } from '@/types/project';
 import { 
   categoryLabels, 
   statusLabels, 
+  roleLabels,
+  sourceTypeLabels,
   aiUsageLabels, 
+  aiUtilizationLabels,
   categoryColors, 
+  roleColors,
+  sourceTypeColors,
   aiUsageColors,
+  aiUtilizationColors,
   aiUsageDescriptions,
+  aiUtilizationDescriptions,
   languageColors,
 } from '@/types/project';
 import { Card, CardContent } from '@/components/ui/card';
@@ -16,7 +24,7 @@ import {
   TooltipProvider, 
   TooltipTrigger 
 } from '@/components/ui/tooltip';
-import { ExternalLink, Github, BookOpen, FolderGit2, Star, GitCommit, Code2, Sparkles } from 'lucide-react';
+import { ExternalLink, Github, BookOpen, FolderGit2, Star, GitCommit, Code2, Sparkles, Cpu } from 'lucide-react';
 
 interface ProjectCardProps {
   project: Project;
@@ -58,7 +66,7 @@ function MiniLanguageChart({ data, total }: { data: Record<string, number>; tota
                   key={lang}
                   d={path}
                   fill={color}
-                  stroke="white"
+                  stroke="hsl(var(--card))"
                   strokeWidth="2"
                 />
               );
@@ -90,8 +98,10 @@ function MiniLanguageChart({ data, total }: { data: Record<string, number>; tota
 }
 
 export function ProjectCard({ project, onClick }: ProjectCardProps) {
+  const { t } = useTranslation();
   // Get top 2 technologies to display as badges
   const topTechnologies = project.technologies.slice(0, 2);
+  const hasRepos = project.repos && project.repos.length > 0;
   
   return (
     <TooltipProvider>
@@ -100,13 +110,19 @@ export function ProjectCard({ project, onClick }: ProjectCardProps) {
         onClick={onClick}
       >
         <CardContent className="p-5">
-          {/* Category badge at top */}
-          <div className="mb-3">
+          {/* Category and Role badges at top */}
+          <div className="flex items-center gap-2 mb-3 flex-wrap">
             <Badge 
               variant="outline" 
               className={`${categoryColors[project.category]} text-xs font-medium`}
             >
-              {categoryLabels[project.category]}
+              {t(`categories.${project.category}`, categoryLabels[project.category])}
+            </Badge>
+            <Badge 
+              variant="outline" 
+              className={`${roleColors[project.role]} text-xs font-medium`}
+            >
+              {t(`roles.${project.role}`, roleLabels[project.role])}
             </Badge>
           </div>
 
@@ -185,14 +201,21 @@ export function ProjectCard({ project, onClick }: ProjectCardProps) {
             )}
           </div>
 
-          {/* Footer with Status, AI Usage, and Links */}
+          {/* Footer with Status, Source Type, AI Usage, AI Utilization, and Links */}
           <div className="flex items-center justify-between pt-3 border-t border-border/50">
-            <div className="flex items-center gap-2 flex-wrap">
+            <div className="flex items-center gap-1.5 flex-wrap">
               <Badge variant="secondary" className="text-xs">
-                {statusLabels[project.status]}
+                {t(`statuses.${project.status}`, statusLabels[project.status])}
               </Badge>
               
-              {/* AI Usage Badge with Tooltip */}
+              <Badge 
+                variant="outline" 
+                className={`${sourceTypeColors[project.sourceType]} text-xs`}
+              >
+                {t(`source_types.${project.sourceType}`, sourceTypeLabels[project.sourceType])}
+              </Badge>
+
+              {/* AI Usage Badge (how it was built) */}
               <Tooltip>
                 <TooltipTrigger asChild>
                   <Badge 
@@ -200,11 +223,27 @@ export function ProjectCard({ project, onClick }: ProjectCardProps) {
                     className={`${aiUsageColors[project.aiUsage]} text-xs cursor-help`}
                   >
                     <Sparkles className="w-3 h-3 mr-1" />
-                    {aiUsageLabels[project.aiUsage]}
+                    {t(`ai_usage.${project.aiUsage}`, aiUsageLabels[project.aiUsage])}
                   </Badge>
                 </TooltipTrigger>
                 <TooltipContent side="bottom" className="max-w-xs">
-                  <p className="text-xs">{aiUsageDescriptions[project.aiUsage]}</p>
+                  <p className="text-xs">{t(`ai_usage_descriptions.${project.aiUsage}`, aiUsageDescriptions[project.aiUsage])}</p>
+                </TooltipContent>
+              </Tooltip>
+
+              {/* AI Utilization Badge (does the project use AI) */}
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Badge 
+                    variant="outline" 
+                    className={`${aiUtilizationColors[project.aiUtilization]} text-xs cursor-help`}
+                  >
+                    <Cpu className="w-3 h-3 mr-1" />
+                    {t(`ai_utilization.${project.aiUtilization}`, aiUtilizationLabels[project.aiUtilization])}
+                  </Badge>
+                </TooltipTrigger>
+                <TooltipContent side="bottom" className="max-w-xs">
+                  <p className="text-xs">{t(`ai_utilization_descriptions.${project.aiUtilization}`, aiUtilizationDescriptions[project.aiUtilization])}</p>
                 </TooltipContent>
               </Tooltip>
             </div>
@@ -215,7 +254,7 @@ export function ProjectCard({ project, onClick }: ProjectCardProps) {
                   <ExternalLink className="w-4 h-4" />
                 </span>
               )}
-              {project.repoUrl && (
+              {hasRepos && (
                 <span className="text-muted-foreground hover:text-primary transition-colors">
                   <Github className="w-4 h-4" />
                 </span>
