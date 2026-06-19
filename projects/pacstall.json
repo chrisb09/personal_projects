@@ -1,0 +1,71 @@
+{
+  "id": "pacstall",
+  "name": "Pacstall",
+  "tagline": "Package Manager for Ubuntu/Debian",
+  "year": "2023 - Present",
+  "category": "package-management",
+  "status": "active",
+  "projectType": "software-project",
+  "role": "contributor",
+  "sourceType": "open-source",
+  "aiUsage": "none",
+  "aiUtilization": "no-ai",
+  "description": "Contributing to Pacstall, an AUR-inspired package manager for Ubuntu and Debian systems. Helps bridge the gap between bleeding-edge software and stable distributions.",
+  "purpose": "To make newer software versions accessible on stable Ubuntu/Debian systems without compromising system stability or waiting for official repository updates.",
+  "technologies": [
+    "Bash",
+    "Linux",
+    "Git",
+    "Debian Packaging"
+  ],
+  "dependencies": [
+    "Ubuntu/Debian system",
+    "curl",
+    "wget",
+    "build-essential"
+  ],
+  "expertise": [
+    "Linux Packaging",
+    "Shell Scripting",
+    "Open Source Collaboration",
+    "Quality Assurance"
+  ],
+  "strengths": [
+    "Access to newer software versions",
+    "Community-driven package repository",
+    "AUR-like simplicity for Debian systems",
+    "Automatic dependency resolution",
+    "Clean uninstallation support"
+  ],
+  "limitations": [
+    "Community packages may vary in quality",
+    "Not officially supported by Ubuntu/Debian",
+    "Potential security considerations with user packages",
+    "Smaller package repository than AUR"
+  ],
+  "installation": "# Install Pacstall\nsudo bash -c \"$(curl -fsSL https://pacstall.dev/q/install || wget -q https://pacstall.dev/q/install -O -)\"\n\n# Install a package\npacstall -I neofetch",
+  "usage": "# Search for packages\npacstall -S package-name\n\n# Install a package\npacstall -I package-name\n\n# Update all pacstall packages\npacstall -Up\n\n# Remove a package\npacstall -R package-name",
+  "roadmap": [
+    "Continue contributing new packages",
+    "Improve package quality and testing",
+    "Help with documentation and tutorials",
+    "Contribute to core functionality improvements"
+  ],
+  "demoUrl": "https://pacstall.dev",
+  "repos": [
+    {
+      "name": "pacstall",
+      "url": "https://github.com/pacstall/pacstall",
+      "type": "github"
+    }
+  ],
+  "mirrors": [],
+  "screenshots": [],
+  "relatedProjects": [
+    {
+      "name": "AUR",
+      "relation": "Inspired by",
+      "url": "https://aur.archlinux.org/"
+    }
+  ]
+}

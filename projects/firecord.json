@@ -1,0 +1,70 @@
+{
+  "id": "firecord",
+  "name": "firecord",
+  "tagline": "Experimental Redisson Alternative",
+  "year": "2023",
+  "category": "backend",
+  "status": "experimental",
+  "projectType": "software-project",
+  "role": "main-author",
+  "sourceType": "open-source",
+  "aiUsage": "minor",
+  "aiUtilization": "no-ai",
+  "description": "Redis-based automatic, reference-based object synchronization for Java. A lightweight alternative to Redisson focused on performance and minimal network overhead.",
+  "purpose": "To provide a more efficient solution for distributed object synchronization in Java applications, reducing latency and network load compared to existing solutions.",
+  "technologies": [
+    "Java",
+    "Redis",
+    "AspectJ",
+    "Spring Framework"
+  ],
+  "dependencies": [
+    "Redis 6.0+",
+    "AspectJ Weaver",
+    "Jedis or Lettuce client"
+  ],
+  "expertise": [
+    "Distributed Systems",
+    "Object Synchronization",
+    "Aspect-Oriented Programming",
+    "Low-latency Networking"
+  ],
+  "strengths": [
+    "Automatic object synchronization without manual intervention",
+    "Reference-based tracking reduces memory overhead",
+    "Significantly lower latency compared to Redisson",
+    "Reduced network load through intelligent change detection",
+    "Seamless integration with existing Java applications"
+  ],
+  "limitations": [
+    "Experimental status - API may change",
+    "Limited to Redis backend (no other data stores)",
+    "AspectJ instrumentation required",
+    "Smaller community than established alternatives"
+  ],
+  "installation": "// Add to your pom.xml\n<dependency>\n    <groupId>de.christianfbrinkmann</groupId>\n    <artifactId>firecord</artifactId>\n    <version>0.1.0-SNAPSHOT</version>\n</dependency>\n\n// Configure Redis connection\nfirecord:\n  redis:\n    host: localhost\n    port: 6379",
+  "usage": "// Annotate your shared objects\n@Synchronized\npublic class SharedState {\n    private String data;\n    private int counter;\n    \n    // Getters and setters automatically synchronized\n}\n\n// Use in your application\nSharedState state = firecord.get(SharedState.class, \"state-id\");\nstate.setData(\"Hello, distributed world!\");\n// Changes automatically propagated to all nodes",
+  "roadmap": [
+    "Add support for Redis Cluster and Sentinel",
+    "Implement configurable consistency levels",
+    "Create comprehensive benchmark suite",
+    "Add Spring Boot starter for easier configuration",
+    "Support for custom serialization strategies",
+    "Add monitoring and metrics integration"
+  ],
+  "repos": [],
+  "mirrors": [],
+  "screenshots": [],
+  "relatedProjects": [
+    {
+      "name": "Redisson",
+      "relation": "Inspiration and alternative to",
+      "url": "https://redisson.org/"
+    },
+    {
+      "name": "Redis",
+      "relation": "Built on top of",
+      "url": "https://redis.io/"
+    }
+  ]
+}

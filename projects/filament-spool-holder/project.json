@@ -1,0 +1,61 @@
+{
+  "id": "filament-spool-holder",
+  "name": "Auto-Rewinding Filament Spool Holder",
+  "tagline": "Parametric Mechanical Spool Holder for 3D Printing",
+  "year": "2024",
+  "category": "other",
+  "status": "active",
+  "projectType": "3d-printing",
+  "role": "main-author",
+  "sourceType": "open-source",
+  "aiUsage": "none",
+  "aiUtilization": "no-ai",
+  "description": "A parametric auto-rewinding filament spool holder designed for dual-extrusion or multi-material 3D printers. It automatically rewinds the spool when filament is retracted, preventing tangles.",
+  "purpose": "To solve filament tangling issues on multi-material 3D printers during retraction cycles, using a purely mechanical, printed spring mechanism.",
+  "technologies": [
+    "OpenSCAD",
+    "Fusion 360",
+    "3D Printing",
+    "PETG",
+    "PLA"
+  ],
+  "dependencies": [
+    "608ZZ Bearings (x2)",
+    "M3 Screws"
+  ],
+  "expertise": [
+    "Mechanical Design",
+    "Parametric Modeling",
+    "Tolerance Calibration",
+    "Additive Manufacturing"
+  ],
+  "strengths": [
+    "Purely mechanical solution with no electronics needed",
+    "Parametric design supporting spools from 50mm to 100mm wide",
+    "Reliable integrated spring mechanism printed in PETG for elasticity",
+    "Smooth operation utilizing standard 608ZZ skate bearings"
+  ],
+  "limitations": [
+    "Requires precise printer calibration for functional gear clearance",
+    "Integrated spring needs PETG or ABS (PLA is too brittle and creeps over time)"
+  ],
+  "installation": "# Clone the CAD repository\ngit clone https://github.com/example/auto-rewind-spool-holder.git\ncd auto-rewind-spool-holder\n\n# Open the .scad file in OpenSCAD to customize spool dimensions\nopenscad spool_holder.scad",
+  "usage": "1. Customize the dimensions in OpenSCAD or use pre-sliced STLs.\n2. Print the spring in PETG (3 perimeters, 30% infill).\n3. Print the stand and shaft in PLA.\n4. Press-fit two 608ZZ bearings into the spool hubs.\n5. Assemble the shaft, spring, and stand together.\n6. Mount the spool and feed filament into your printer.",
+  "roadmap": [
+    "Add wall-mount adapter plate",
+    "Create drybox-compatible low-profile version",
+    "Design clutch mechanism to prevent over-tensioning"
+  ],
+  "repos": [
+    {
+      "name": "spool-holder-cad",
+      "url": "https://github.com/example/auto-rewind-spool-holder",
+      "type": "github"
+    }
+  ],
+  "mirrors": [],
+  "screenshots": [
+    "/spool-holder-1.jpg",
+    "/spool-holder-2.jpg"
+  ]
+}

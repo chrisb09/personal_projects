@@ -1,6 +1,18 @@
 {
-  "lastUpdated": "2024-12-15T10:30:00Z",
+  "lastUpdated": "2026-06-19T17:45:39.380Z",
   "projects": {
+    "filament-spool-holder": {
+      "stats": {
+        "stars": 0,
+        "commits": 0,
+        "branches": 0,
+        "lastCommit": ""
+      },
+      "loc": {
+        "total": 0,
+        "byLanguage": {}
+      }
+    },
     "firecord": {
       "stats": {
         "stars": 12,
@@ -15,40 +27,6 @@
           "XML": 800,
           "YAML": 300,
           "Markdown": 200
-        }
-      }
-    },
-    "pdnwebview": {
-      "stats": {
-        "stars": 28,
-        "commits": 89,
-        "branches": 2,
-        "lastCommit": "2023-08-20"
-      },
-      "loc": {
-        "total": 4200,
-        "byLanguage": {
-          "Python": 1800,
-          "HTML": 800,
-          "JavaScript": 1200,
-          "CSS": 300,
-          "Markdown": 100
-        }
-      }
-    },
-    "userbenchmark-scraper": {
-      "stats": {
-        "stars": 5,
-        "commits": 34,
-        "branches": 1,
-        "lastCommit": "2021-06-12"
-      },
-      "loc": {
-        "total": 2800,
-        "byLanguage": {
-          "Python": 2500,
-          "Markdown": 200,
-          "SQL": 100
         }
       }
     },
@@ -70,21 +48,6 @@
         }
       }
     },
-    "pacstall": {
-      "stats": {
-        "stars": 0,
-        "commits": 12,
-        "branches": 2,
-        "lastCommit": "2024-01-28"
-      },
-      "loc": {
-        "total": 450,
-        "byLanguage": {
-          "Bash": 400,
-          "Markdown": 50
-        }
-      }
-    },
     "libretranslate-java": {
       "stats": {
         "stars": 15,
@@ -101,6 +64,39 @@
         }
       }
     },
+    "pacstall": {
+      "stats": {
+        "stars": 1634,
+        "commits": 2560,
+        "branches": 9,
+        "lastCommit": "2026-06-18"
+      },
+      "loc": {
+        "total": 6336,
+        "byLanguage": {
+          "Shell": 5996,
+          "Roff": 340
+        }
+      }
+    },
+    "pdnwebview": {
+      "stats": {
+        "stars": 28,
+        "commits": 89,
+        "branches": 2,
+        "lastCommit": "2023-08-20"
+      },
+      "loc": {
+        "total": 4200,
+        "byLanguage": {
+          "Python": 1800,
+          "HTML": 800,
+          "JavaScript": 1200,
+          "CSS": 300,
+          "Markdown": 100
+        }
+      }
+    },
     "small-projects": {
       "stats": {
         "stars": 3,
@@ -114,6 +110,22 @@
           "Python": 1200,
           "Bash": 500,
           "Markdown": 100
+        }
+      }
+    },
+    "userbenchmark-scraper": {
+      "stats": {
+        "stars": 5,
+        "commits": 34,
+        "branches": 1,
+        "lastCommit": "2021-06-12"
+      },
+      "loc": {
+        "total": 2800,
+        "byLanguage": {
+          "Python": 2500,
+          "Markdown": 200,
+          "SQL": 100
         }
       }
     }

@@ -4,7 +4,9 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "compile-projects": "node scripts/compile-projects.js",
+    "update-stats": "node scripts/update-stats.js",
+    "build": "npm run compile-projects && vite build",
     "preview": "vite preview",
     "lint": "eslint ."
   },

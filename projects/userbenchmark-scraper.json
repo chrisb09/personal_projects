@@ -1,0 +1,64 @@
+{
+  "id": "userbenchmark-scraper",
+  "name": "Userbenchmark Web Scraper",
+  "tagline": "Experimental Hardware Benchmark Data Extractor",
+  "year": "2020 - 2021",
+  "category": "data-scraping",
+  "status": "archived",
+  "projectType": "script-small",
+  "role": "main-author",
+  "sourceType": "open-source",
+  "aiUsage": "none",
+  "aiUtilization": "no-ai",
+  "description": "An automated web scraper for extracting hardware benchmark data from Userbenchmark. Built with Python and featuring a custom job scheduler and Tor integration for anonymity.",
+  "purpose": "To collect large-scale hardware benchmark data for analysis and research purposes, building a dataset of approximately 40,000 benchmarks.",
+  "technologies": [
+    "Python",
+    "Regex",
+    "Tor Network",
+    "SQLite"
+  ],
+  "dependencies": [
+    "tor-python (modified)",
+    "Requests",
+    "BeautifulSoup4",
+    "SQLAlchemy"
+  ],
+  "expertise": [
+    "Web Scraping",
+    "Data Extraction",
+    "Anonymization",
+    "Job Scheduling",
+    "Regex Parsing"
+  ],
+  "strengths": [
+    "Successfully extracted ~40,000 benchmark records",
+    "Custom job scheduler for efficient processing",
+    "Tor integration for request anonymization",
+    "Robust error handling and retry logic",
+    "Efficient regex-based parsing"
+  ],
+  "limitations": [
+    "Dependent on website structure (may break with updates)",
+    "Rate limiting required to avoid blocks",
+    "Tor network can be slow for large-scale scraping",
+    "Ethical and legal considerations for data usage",
+    "No longer actively maintained"
+  ],
+  "installation": "# Install dependencies\npip install requests beautifulsoup4 sqlalchemy\n\n# Install and configure Tor\n# (Modified tor-python client included in repo)\n\n# Initialize database\npython init_db.py",
+  "usage": "# Configure scraping parameters in config.py\nTARGET_CATEGORIES = ['CPU', 'GPU', 'SSD', 'HDD', 'RAM']\nBATCH_SIZE = 100\nUSE_TOR = True\n\n# Run the scraper\npython scraper.py\n\n# Data is stored in SQLite database\npython analyze.py --export csv",
+  "roadmap": [
+    "Project archived - no further development planned",
+    "Could be adapted for other benchmark sites",
+    "Potential for ML-based data analysis"
+  ],
+  "repos": [],
+  "mirrors": [],
+  "screenshots": [],
+  "relatedProjects": [
+    {
+      "name": "tor-python",
+      "relation": "Modified version used"
+    }
+  ]
+}

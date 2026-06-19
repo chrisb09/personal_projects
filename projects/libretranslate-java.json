@@ -1,0 +1,64 @@
+{
+  "id": "libretranslate-java",
+  "name": "libretranslate-java",
+  "tagline": "Java Client for LibreTranslate",
+  "year": "2023 - Present",
+  "category": "library",
+  "status": "active",
+  "projectType": "software-project",
+  "role": "main-author",
+  "sourceType": "open-source",
+  "aiUsage": "minor",
+  "aiUtilization": "no-ai",
+  "description": "A Java client library for the LibreTranslate API. Provides easy integration of translation capabilities into Java applications with a clean, idiomatic API.",
+  "purpose": "To provide Java developers with a simple, well-documented client for self-hosted or public LibreTranslate instances, enabling translation features without external service dependencies.",
+  "technologies": [
+    "Java",
+    "HTTP Client",
+    "JSON",
+    "Maven"
+  ],
+  "dependencies": [
+    "Java 11+",
+    "Jackson (optional)",
+    "Gson (optional)"
+  ],
+  "expertise": [
+    "API Design",
+    "Java Development",
+    "RESTful Services",
+    "Library Development"
+  ],
+  "strengths": [
+    "Clean, Java-idiomatic API design",
+    "Support for both sync and async operations",
+    "Configurable for any LibreTranslate instance",
+    "Lightweight with minimal dependencies",
+    "Well-documented with examples"
+  ],
+  "limitations": [
+    "Requires running LibreTranslate instance",
+    "Translation quality depends on the instance",
+    "Rate limits on public instances",
+    "Limited to supported languages"
+  ],
+  "installation": "// Maven\n<dependency>\n    <groupId>de.christianfbrinkmann</groupId>\n    <artifactId>libretranslate-java</artifactId>\n    <version>1.0.0</version>\n</dependency>\n\n// Gradle\nimplementation 'de.christianfbrinkmann:libretranslate-java:1.0.0'",
+  "usage": "// Create client\nLibreTranslateClient client = LibreTranslateClient.builder()\n    .baseUrl(\"https://libretranslate.de\")\n    .apiKey(\"your-api-key\") // optional\n    .build();\n\n// Translate text\nTranslationResult result = client.translate()\n    .text(\"Hello, World!\")\n    .source(SourceLanguage.ENGLISH)\n    .target(TargetLanguage.GERMAN)\n    .execute();\n\nSystem.out.println(result.getTranslatedText()); // \"Hallo, Welt!\"",
+  "roadmap": [
+    "Add support for batch translations",
+    "Implement caching for repeated translations",
+    "Add Spring Boot auto-configuration",
+    "Support for file/document translation",
+    "Add reactive/Reactor support"
+  ],
+  "repos": [],
+  "mirrors": [],
+  "screenshots": [],
+  "relatedProjects": [
+    {
+      "name": "LibreTranslate",
+      "relation": "Client for",
+      "url": "https://libretranslate.com/"
+    }
+  ]
+}

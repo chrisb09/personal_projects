@@ -1,0 +1,72 @@
+{
+  "id": "pdnwebview",
+  "name": "pdnwebview",
+  "tagline": "Web Viewer for Paint.net Project Files",
+  "year": "2022",
+  "category": "frontend",
+  "status": "active",
+  "projectType": "software-project",
+  "role": "main-author",
+  "sourceType": "open-source",
+  "aiUsage": "none",
+  "aiUtilization": "no-ai",
+  "description": "A web-based viewer for Paint.net (.pdn) project files. Allows users to view and share their Paint.net projects directly in the browser without needing the desktop application.",
+  "purpose": "To make Paint.net project files accessible and shareable on the web, enabling artists to showcase their work and collaborate without requiring everyone to have Paint.net installed.",
+  "technologies": [
+    "Python",
+    "HTML",
+    "CSS",
+    "JavaScript",
+    "Flask"
+  ],
+  "dependencies": [
+    "pdnexport (custom tool)",
+    "Pillow",
+    "Flask",
+    "Gunicorn"
+  ],
+  "expertise": [
+    "Image Processing",
+    "Web Development",
+    "File Format Parsing",
+    "Frontend Design"
+  ],
+  "strengths": [
+    "No Paint.net installation required to view files",
+    "Clean, intuitive web interface",
+    "Fast rendering of complex project files",
+    "Cross-platform compatibility",
+    "Easy sharing via URLs"
+  ],
+  "limitations": [
+    "Read-only (no editing capabilities)",
+    "Requires server-side processing for conversion",
+    "Limited to supported Paint.net features",
+    "Large files may take time to process"
+  ],
+  "installation": "# Clone the repository\ngit clone https://github.com/yourusername/pdnwebview.git\ncd pdnwebview\n\n# Install dependencies\npip install -r requirements.txt\n\n# Run the application\npython app.py",
+  "usage": "1. Upload your .pdn file through the web interface\n2. The server processes the file using pdnexport\n3. View the rendered project in your browser\n4. Share the generated URL with others\n\n// Or use the API directly\ncurl -X POST -F \"file=@project.pdn\" https://your-server.com/api/view",
+  "roadmap": [
+    "Add layer visibility toggles",
+    "Support for animation playback",
+    "Implement zoom and pan controls",
+    "Add export to PNG/JPEG options",
+    "Create browser extension for quick viewing",
+    "Support for newer Paint.net file formats"
+  ],
+  "demoUrl": "https://christian-f-brinkmann.de/pdn",
+  "repos": [],
+  "mirrors": [],
+  "screenshots": [],
+  "relatedProjects": [
+    {
+      "name": "pdnexport",
+      "relation": "Uses for file conversion"
+    },
+    {
+      "name": "Paint.net",
+      "relation": "File format support for",
+      "url": "https://www.getpaint.net/"
+    }
+  ]
+}

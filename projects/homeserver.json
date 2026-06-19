@@ -1,0 +1,85 @@
+{
+  "id": "homeserver",
+  "name": "Private Homeserver",
+  "tagline": "Self-Hosted Infrastructure for Personal Use",
+  "year": "2018 - Present",
+  "category": "devops-infrastructure",
+  "status": "active",
+  "projectType": "it-project",
+  "role": "main-author",
+  "sourceType": "open-source",
+  "aiUsage": "minor",
+  "aiUtilization": "no-ai",
+  "description": "A comprehensive self-hosted server infrastructure providing web hosting, cloud storage, and AI applications for private use. Serving approximately 20 active users with 100+ TB of storage.",
+  "purpose": "To create a privacy-focused, self-controlled alternative to commercial cloud services, providing reliable hosting for personal data and applications.",
+  "technologies": [
+    "Docker",
+    "nginx",
+    "PHP",
+    "Bash",
+    "Python",
+    "Linux",
+    "openZFS",
+    "WireGuard"
+  ],
+  "dependencies": [
+    "Docker Compose",
+    "nginx",
+    "Nextcloud",
+    "Jellyfin",
+    "Various AI models"
+  ],
+  "expertise": [
+    "System Administration",
+    "Network Security",
+    "Storage Management",
+    "Virtualization",
+    "VPN Configuration",
+    "Backup Strategies"
+  ],
+  "strengths": [
+    "Complete data privacy and control",
+    "Cost-effective for multiple users",
+    "Highly customizable to specific needs",
+    "Robust storage with openZFS",
+    "Secure remote access via VPN",
+    "Reliable uptime and performance"
+  ],
+  "limitations": [
+    "Requires ongoing maintenance and updates",
+    "Single point of failure (hardware)",
+    "Dependent on home internet connection",
+    "Security responsibility falls on administrator",
+    "Initial setup complexity"
+  ],
+  "installation": "# Server setup overview\n# 1. Install Ubuntu Server LTS\n# 2. Configure openZFS storage pools\n# 3. Set up Docker and Docker Compose\n# 4. Configure nginx reverse proxy\n# 5. Set up WireGuard VPN\n# 6. Deploy services via Docker Compose\n\n# Example docker-compose.yml structure\nversion: '3.8'\nservices:\n  nextcloud:\n    image: nextcloud:latest\n    # ... configuration\n  jellyfin:\n    image: jellyfin/jellyfin\n    # ... configuration",
+  "usage": "# Access services via VPN\nwg-quick up homeserver\n\n# Web services accessible at:\n# https://cloud.yourdomain.com\n# https://media.yourdomain.com\n\n# Monitor system\nhtop\ndocker stats\nzfs list",
+  "roadmap": [
+    "Implement automated backup to offsite storage",
+    "Add monitoring and alerting (Prometheus/Grafana)",
+    "Set up high availability for critical services",
+    "Expand AI/ML service offerings",
+    "Implement Infrastructure as Code (Terraform)",
+    "Add Kubernetes for container orchestration"
+  ],
+  "repos": [],
+  "mirrors": [],
+  "screenshots": [],
+  "relatedProjects": [
+    {
+      "name": "Nextcloud",
+      "relation": "Hosts",
+      "url": "https://nextcloud.com/"
+    },
+    {
+      "name": "Jellyfin",
+      "relation": "Hosts",
+      "url": "https://jellyfin.org/"
+    },
+    {
+      "name": "openZFS",
+      "relation": "Uses",
+      "url": "https://openzfs.org/"
+    }
+  ]
+}
