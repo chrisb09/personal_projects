@@ -10,7 +10,7 @@
   "sourceType": "open-source",
   "aiUsage": "minor",
   "aiUtilization": "no-ai",
-  "description": "A comprehensive self-hosted server infrastructure providing web hosting, cloud storage, and AI applications for private use. Serving approximately 20 active users with 100+ TB of storage.",
+  "description": "A production-grade, self-hosted infrastructure environment operating continuously since 2018. Manages over 100+ TB of storage serving approximately 20 active users with zero major data loss incidents.",
   "purpose": "To create a privacy-focused, self-controlled alternative to commercial cloud services, providing reliable hosting for personal data and applications.",
   "technologies": [
     "Docker",
@@ -30,20 +30,16 @@
     "Various AI models"
   ],
   "expertise": [
-    "System Administration",
-    "Network Security",
-    "Storage Management",
-    "Virtualization",
-    "VPN Configuration",
-    "Backup Strategies"
+    "Site Reliability Engineering (SRE)",
+    "openZFS Storage Architecture",
+    "Docker Orchestration",
+    "Network Security & VPNs"
   ],
   "strengths": [
-    "Complete data privacy and control",
-    "Cost-effective for multiple users",
-    "Highly customizable to specific needs",
-    "Robust storage with openZFS",
-    "Secure remote access via VPN",
-    "Reliable uptime and performance"
+    "8 years of continuous uptime and infrastructure maintenance",
+    "Architected robust storage pools using openZFS for enterprise-grade data integrity",
+    "Automated deployment of web, cloud, and AI applications via Docker Compose and nginx",
+    "Secure network routing and remote access configured via WireGuard"
   ],
   "limitations": [
     "Requires ongoing maintenance and updates",

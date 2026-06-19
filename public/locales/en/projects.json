@@ -20,7 +20,7 @@
   "homeserver": {
     "name": "Private Homeserver",
     "tagline": "Self-Hosted Infrastructure for Personal Use",
-    "description": "A comprehensive self-hosted server infrastructure providing web hosting, cloud storage, and AI applications for private use. Serving approximately 20 active users with 100+ TB of storage.",
+    "description": "A production-grade, self-hosted infrastructure environment operating continuously since 2018. Manages over 100+ TB of storage serving approximately 20 active users with zero major data loss incidents.",
     "purpose": "To create a privacy-focused, self-controlled alternative to commercial cloud services, providing reliable hosting for personal data and applications."
   },
   "pacstall": {
