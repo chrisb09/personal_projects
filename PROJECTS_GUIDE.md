@@ -25,6 +25,13 @@ projects/your-project-id/
 ```
 During compilation, all images inside the `media/` directory are automatically copied into the web structure (`public/images/projects/your-project-id/`), and the `screenshots` array in the compiled config is dynamically updated to reference their public web URLs.
 
+### C. Logo Auto-Resolution
+You can associate a custom logo icon (supported: `.png`, `.jpg`, `.jpeg`, `.webp`, `.svg`) with any project:
+- **File-based projects**: Place an image file with the same name as the project ID in the `projects/` directory (e.g. `projects/pdnwebview.png`).
+- **Directory-based projects**: Place an image file named `logo.<ext>` inside the project folder (e.g. `projects/filament-spool-holder/logo.png`).
+
+During compilation, these logo files are copied to the public directory and the compiled project `logo` field is automatically set to `/images/projects/<your-project-id>-logo.<ext>` or `/images/projects/<your-project-id>/logo.<ext>` respectively.
+
 ---
 
 ## 2. Supported Fields in Project Metadata
