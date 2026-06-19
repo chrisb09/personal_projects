@@ -46,5 +46,11 @@
     "tagline": "Parametric Mechanical Spool Holder for 3D Printing",
     "description": "A parametric auto-rewinding filament spool holder designed for dual-extrusion or multi-material 3D printers. It automatically rewinds the spool when filament is retracted, preventing tangles.",
     "purpose": "To solve filament tangling issues on multi-material 3D printers during retraction cycles, using a purely mechanical, printed spring mechanism."
+  },
+  "cpp-ml-interface": {
+    "name": "CPP-ML-Interface",
+    "tagline": "Hardware-Accelerated AI Inference Middleware",
+    "description": "A modular C++ middleware designed to couple complex Computational Fluid Dynamics (CFD) solvers with machine learning inference models. Developed on a Rocky 9 HPC cluster, it abstracts underlying hardware and coupling libraries.",
+    "purpose": "To eliminate interconnect bottlenecks in High-Performance Computing (HPC) by providing a platform-independent data path between physical simulations and AI models."
   }
 }

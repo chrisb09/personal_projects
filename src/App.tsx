@@ -153,6 +153,7 @@ function App() {
   const groupedProjects = useMemo(() => {
     const groups: Record<string, Project[]> = {
       'software-project': [],
+      'academic-project': [],
       'script-small': [],
       'it-project': [],
       '3d-printing': [],
@@ -361,8 +362,9 @@ function App() {
             <div className="space-y-6">
               {(() => {
                 let isFirstSection = true;
-                const order: Array<'software-project' | 'script-small' | 'it-project' | '3d-printing'> = [
+                const order: Array<'software-project' | 'academic-project' | 'script-small' | 'it-project' | '3d-printing'> = [
                   'software-project',
+                  'academic-project',
                   'script-small',
                   'it-project',
                   '3d-printing',

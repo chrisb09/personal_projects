@@ -19,7 +19,8 @@
     "software-project": "Projects",
     "script-small": "Scripts and Small Projects",
     "3d-printing": "3D Printing",
-    "it-project": "IT Projects"
+    "it-project": "IT Projects",
+    "academic-project": "Academic Projects"
   },
   "categories": {
     "backend": "Backend",

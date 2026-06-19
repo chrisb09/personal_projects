@@ -5,7 +5,7 @@ export interface Project {
   year: string;
   category: 'backend' | 'frontend' | 'devops-infrastructure' | 'data-scraping' | 'library' | 'package-management' | 'cli' | 'fullstack' | 'utility' | 'other';
   status: 'active' | 'experimental' | 'maintenance' | 'archived';
-  projectType?: 'software-project' | 'script-small' | '3d-printing' | 'it-project';
+  projectType?: 'software-project' | 'script-small' | '3d-printing' | 'it-project' | 'academic-project';
   excludeFromStats?: boolean;
   
   // Role - your involvement with the project
@@ -93,6 +93,7 @@ export const projectTypeLabels: Record<ProjectType, string> = {
   'script-small': 'Scripts and Small Projects',
   '3d-printing': '3D Printing',
   'it-project': 'IT Projects',
+  'academic-project': 'Academic Projects',
 };
 
 export const categoryLabels: Record<ProjectCategory, string> = {

@@ -2,6 +2,57 @@ import type { Project } from '@/types/project';
 
 export const projects: Project[] = [
   {
+    "id": "cpp-ml-interface",
+    "name": "CPP-ML-Interface",
+    "tagline": "Hardware-Accelerated AI Inference Middleware",
+    "year": "2024 - 2026",
+    "category": "backend",
+    "status": "active",
+    "projectType": "academic-project",
+    "role": "main-author",
+    "sourceType": "open-source",
+    "aiUsage": "none",
+    "aiUtilization": "ai-enhanced",
+    "description": "A modular C++ middleware designed to couple complex Computational Fluid Dynamics (CFD) solvers with machine learning inference models. Developed on a Rocky 9 HPC cluster, it abstracts underlying hardware and coupling libraries.",
+    "purpose": "To eliminate interconnect bottlenecks in High-Performance Computing (HPC) by providing a platform-independent data path between physical simulations and AI models.",
+    "technologies": [
+      "C++",
+      "Slurm",
+      "Rocky Linux (RHEL)",
+      "Python"
+    ],
+    "dependencies": [
+      "SmartSim",
+      "PhyDLL",
+      "AixeleratorService",
+      "MPI"
+    ],
+    "expertise": [
+      "HPC Architecture",
+      "Low-Latency Memory Management",
+      "Systems Integration",
+      "C++ Middleware Design"
+    ],
+    "strengths": [
+      "Abstracts heterogeneous coupling libraries (SmartSim, PhyDLL) into a unified configuration-based interface",
+      "Optimized for High-Performance Computing (HPC) environments running Rocky 9",
+      "Handles complex memory-to-memory data transfers between CPU nodes and GPU inference endpoints",
+      "Critical evaluation of Redis-based coupling limitations in soft real-time constraints"
+    ],
+    "limitations": [
+      "Performance bound by coupling library interconnects under heavy GPU load",
+      "Requires Rocky Linux 9 or RHEL-compatible HPC cluster configuration"
+    ],
+    "roadmap": [
+      "Implement direct zero-copy memory transfers via GPU-Direct RDMA",
+      "Add support for PyTorch and TensorFlow C++ native API endpoints",
+      "Extend documentation and coupling benchmarker tools"
+    ],
+    "repos": [],
+    "mirrors": [],
+    "screenshots": []
+  },
+  {
     "id": "filament-spool-holder",
     "name": "Auto-Rewinding Filament Spool Holder",
     "tagline": "Parametric Mechanical Spool Holder for 3D Printing",
