@@ -329,6 +329,7 @@ function ScreenshotGallery({ screenshots, projectName }: { screenshots: string[]
 }
 
 export function ProjectDetailModal({ project, isOpen, onClose, onProjectSelect, allProjects = [] }: ProjectDetailModalProps) {
+  const { t } = useTranslation();
   if (!project) return null;
 
   const hasScreenshots = project.screenshots && project.screenshots.length > 0;
@@ -365,10 +366,18 @@ export function ProjectDetailModal({ project, isOpen, onClose, onProjectSelect, 
                       variant="outline" 
                       className={`${categoryColors[project.category]} text-[10px] px-1.5 py-0.5 leading-none font-medium`}
                     >
-                      {categoryLabels[project.category]}
+                      {t(`categories.${project.category}`, categoryLabels[project.category])}
                     </Badge>
+                    {project.academic && (
+                      <Badge 
+                        variant="outline" 
+                        className="bg-teal-500/10 text-teal-600 border-teal-500/20 dark:text-teal-400 text-[10px] px-1.5 py-0.5 leading-none font-medium"
+                      >
+                        {t('labels.academic', 'Academic')}
+                      </Badge>
+                    )}
                     <Badge variant="secondary" className="text-[10px] px-1.5 py-0.5 leading-none">
-                      {statusLabels[project.status]}
+                      {t(`statuses.${project.status}`, statusLabels[project.status])}
                     </Badge>
                     <Tooltip>
                       <TooltipTrigger asChild>
@@ -377,11 +386,25 @@ export function ProjectDetailModal({ project, isOpen, onClose, onProjectSelect, 
                           className={`${aiUsageColors[project.aiUsage]} text-[10px] px-1.5 py-0.5 leading-none cursor-help`}
                         >
                           <Sparkles className="w-3 h-3 mr-0.5" />
-                          {aiUsageLabels[project.aiUsage]}
+                          {t(`ai_usage.${project.aiUsage}`, aiUsageLabels[project.aiUsage])}
                         </Badge>
                       </TooltipTrigger>
                       <TooltipContent>
-                        <p className="text-xs max-w-xs">{aiUsageDescriptions[project.aiUsage]}</p>
+                        <p className="text-xs max-w-xs">{t(`ai_usage_descriptions.${project.aiUsage}`, aiUsageDescriptions[project.aiUsage])}</p>
+                      </TooltipContent>
+                    </Tooltip>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Badge 
+                          variant="outline" 
+                          className={`${aiUtilizationColors[project.aiUtilization]} text-[10px] px-1.5 py-0.5 leading-none cursor-help`}
+                        >
+                          <Cpu className="w-3 h-3 mr-0.5" />
+                          {t(`ai_utilization.${project.aiUtilization}`, aiUtilizationLabels[project.aiUtilization])}
+                        </Badge>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p className="text-xs max-w-xs">{t(`ai_utilization_descriptions.${project.aiUtilization}`, aiUtilizationDescriptions[project.aiUtilization])}</p>
                       </TooltipContent>
                     </Tooltip>
                     <span className="text-xs text-muted-foreground flex items-center gap-1">

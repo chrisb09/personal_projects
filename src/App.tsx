@@ -47,52 +47,51 @@ import {
 // AI Legend Component - shows both AI Usage (how it was built) and AI Utilization (does it use AI)
 function AILegend() {
   const { t } = useTranslation();
-  const usageLevels: Array<'none' | 'minor' | 'major' | 'full'> = ['none', 'minor', 'major', 'full'];
+  const usageLevels: Array<'none' | 'minor' | 'contributed' | 'major' | 'full'> = ['none', 'minor', 'contributed', 'major', 'full'];
   const utilizationLevels: Array<'ai-powered' | 'ai-enhanced' | 'no-ai'> = ['no-ai', 'ai-enhanced', 'ai-powered'];
   
   return (
-    <div className="bg-muted/30 rounded-lg p-4 border border-border/50 space-y-4">
-      <div>
-        <h4 className="text-sm font-medium mb-3 flex items-center gap-2">
-          <Sparkles className="w-4 h-4" />
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-muted/30 rounded-lg p-6 border border-border/50">
+      {/* Column 1: AI Usage Levels */}
+      <div className="space-y-4">
+        <h4 className="text-sm font-semibold flex items-center gap-2 text-foreground">
+          <Sparkles className="w-4 h-4 text-primary" />
           {t('labels.built_with', 'Built with')} - AI Usage Levels
         </h4>
-        <div className="flex flex-wrap gap-2">
+        <div className="space-y-3">
           {usageLevels.map((level) => (
-            <Tooltip key={level}>
-              <TooltipTrigger asChild>
-                <span 
-                  className={`${aiUsageColors[level]} px-2 py-1 rounded-full text-xs font-medium border cursor-help`}
-                >
-                  {t(`ai_usage.${level}`, aiUsageLabels[level])}
-                </span>
-              </TooltipTrigger>
-              <TooltipContent side="top">
-                <p className="text-xs max-w-xs">{t(`ai_usage_descriptions.${level}`, aiUsageDescriptions[level])}</p>
-              </TooltipContent>
-            </Tooltip>
+            <div key={level} className="flex items-center gap-3">
+              <span 
+                className={`${aiUsageColors[level]} px-2.5 py-1 rounded-full text-[11px] font-medium border shrink-0 min-w-[100px] text-center`}
+              >
+                {t(`ai_usage.${level}`, aiUsageLabels[level])}
+              </span>
+              <span className="text-xs text-muted-foreground leading-relaxed">
+                {t(`ai_usage_descriptions.${level}`, aiUsageDescriptions[level])}
+              </span>
+            </div>
           ))}
         </div>
       </div>
-      <div>
-        <h4 className="text-sm font-medium mb-3 flex items-center gap-2">
-          <Cpu className="w-4 h-4" />
+
+      {/* Column 2: AI Utilization */}
+      <div className="space-y-4">
+        <h4 className="text-sm font-semibold flex items-center gap-2 text-foreground">
+          <Cpu className="w-4 h-4 text-primary" />
           {t('labels.features', 'Features')} - AI Utilization
         </h4>
-        <div className="flex flex-wrap gap-2">
+        <div className="space-y-3">
           {utilizationLevels.map((level) => (
-            <Tooltip key={level}>
-              <TooltipTrigger asChild>
-                <span 
-                  className={`${aiUtilizationColors[level]} px-2 py-1 rounded-full text-xs font-medium border cursor-help`}
-                >
-                  {t(`ai_utilization.${level}`, aiUtilizationLabels[level])}
-                </span>
-              </TooltipTrigger>
-              <TooltipContent side="top">
-                <p className="text-xs max-w-xs">{t(`ai_utilization_descriptions.${level}`, aiUtilizationDescriptions[level])}</p>
-              </TooltipContent>
-            </Tooltip>
+            <div key={level} className="flex items-center gap-3">
+              <span 
+                className={`${aiUtilizationColors[level]} px-2.5 py-1 rounded-full text-[11px] font-medium border shrink-0 min-w-[110px] text-center`}
+              >
+                {t(`ai_utilization.${level}`, aiUtilizationLabels[level])}
+              </span>
+              <span className="text-xs text-muted-foreground leading-relaxed">
+                {t(`ai_utilization_descriptions.${level}`, aiUtilizationDescriptions[level])}
+              </span>
+            </div>
           ))}
         </div>
       </div>
@@ -153,7 +152,6 @@ function App() {
   const groupedProjects = useMemo(() => {
     const groups: Record<string, Project[]> = {
       'software-project': [],
-      'academic-project': [],
       'script-small': [],
       'it-project': [],
       '3d-printing': [],
@@ -362,9 +360,8 @@ function App() {
             <div className="space-y-6">
               {(() => {
                 let isFirstSection = true;
-                const order: Array<'software-project' | 'academic-project' | 'script-small' | 'it-project' | '3d-printing'> = [
+                const order: Array<'software-project' | 'script-small' | 'it-project' | '3d-printing'> = [
                   'software-project',
-                  'academic-project',
                   'script-small',
                   'it-project',
                   '3d-printing',

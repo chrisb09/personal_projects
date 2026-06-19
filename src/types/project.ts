@@ -5,7 +5,8 @@ export interface Project {
   year: string;
   category: 'backend' | 'frontend' | 'devops-infrastructure' | 'data-scraping' | 'library' | 'package-management' | 'cli' | 'fullstack' | 'utility' | 'other';
   status: 'active' | 'experimental' | 'maintenance' | 'archived';
-  projectType?: 'software-project' | 'script-small' | '3d-printing' | 'it-project' | 'academic-project';
+  projectType?: 'software-project' | 'script-small' | '3d-printing' | 'it-project';
+  academic?: boolean;
   excludeFromStats?: boolean;
   
   // Role - your involvement with the project
@@ -15,7 +16,7 @@ export interface Project {
   sourceType: 'open-source' | 'closed-source';
   
   // AI Usage level - how it was built
-  aiUsage: 'none' | 'minor' | 'major' | 'full';
+  aiUsage: 'none' | 'minor' | 'contributed' | 'major' | 'full';
   
   // AI Utilization - does the project itself use AI
   aiUtilization: 'ai-powered' | 'ai-enhanced' | 'no-ai';
@@ -93,7 +94,6 @@ export const projectTypeLabels: Record<ProjectType, string> = {
   'script-small': 'Scripts and Small Projects',
   '3d-printing': '3D Printing',
   'it-project': 'IT Projects',
-  'academic-project': 'Academic Projects',
 };
 
 export const categoryLabels: Record<ProjectCategory, string> = {
@@ -130,6 +130,7 @@ export const sourceTypeLabels: Record<ProjectSourceType, string> = {
 export const aiUsageLabels: Record<AIUsage, string> = {
   none: 'No AI',
   minor: 'AI Assisted',
+  contributed: 'AI Contributed',
   major: 'AI Generated',
   full: 'AI Built',
 };
@@ -137,6 +138,7 @@ export const aiUsageLabels: Record<AIUsage, string> = {
 export const aiUsageDescriptions: Record<AIUsage, string> = {
   none: 'Built entirely without AI assistance',
   minor: 'Used AI for autocompletion and chat assistance only',
+  contributed: 'AI generated some features and/or tests',
   major: 'Significant portions generated or assisted by AI agents',
   full: 'Primarily or entirely built using AI tools',
 };
@@ -178,16 +180,17 @@ export const sourceTypeColors: Record<ProjectSourceType, string> = {
 };
 
 export const aiUsageColors: Record<AIUsage, string> = {
-  none: 'bg-slate-500/10 text-slate-600 border-slate-500/20 dark:text-slate-400',
-  minor: 'bg-violet-500/10 text-violet-600 border-violet-500/20 dark:text-violet-400',
-  major: 'bg-fuchsia-500/10 text-fuchsia-600 border-fuchsia-500/20 dark:text-fuchsia-400',
-  full: 'bg-rose-500/10 text-rose-600 border-rose-500/20 dark:text-rose-400',
+  none: 'bg-slate-100 dark:bg-slate-900/40 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-800',
+  minor: 'bg-sky-50 dark:bg-sky-950/30 text-sky-600 dark:text-sky-400 border-sky-200 dark:border-sky-900/50',
+  contributed: 'bg-indigo-50 dark:bg-indigo-950/30 text-indigo-600 dark:text-indigo-400 border-indigo-200 dark:border-indigo-900/50',
+  major: 'bg-violet-50 dark:bg-violet-950/30 text-violet-600 dark:text-violet-400 border-violet-200 dark:border-violet-900/50',
+  full: 'bg-fuchsia-50 dark:bg-fuchsia-950/30 text-fuchsia-600 dark:text-fuchsia-400 border-fuchsia-200 dark:border-fuchsia-900/50',
 };
 
 export const aiUtilizationColors: Record<AIUtilization, string> = {
-  'ai-powered': 'bg-orange-500/10 text-orange-600 border-orange-500/20 dark:text-orange-400',
-  'ai-enhanced': 'bg-yellow-500/10 text-yellow-600 border-yellow-500/20 dark:text-yellow-400',
-  'no-ai': 'bg-slate-500/10 text-slate-600 border-slate-500/20 dark:text-slate-400',
+  'ai-powered': 'bg-orange-50 dark:bg-orange-950/30 text-orange-600 dark:text-orange-400 border-orange-200 dark:border-orange-900/50',
+  'ai-enhanced': 'bg-amber-50 dark:bg-amber-950/30 text-amber-600 dark:text-amber-400 border-amber-200 dark:border-amber-900/50',
+  'no-ai': 'bg-slate-100 dark:bg-slate-900/40 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-800',
 };
 
 // Language colors for LOC charts

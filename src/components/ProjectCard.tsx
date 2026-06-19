@@ -112,12 +112,22 @@ export function ProjectCard({ project, onClick }: ProjectCardProps) {
         <CardContent className="p-3 pb-2.5">
           {/* Category and Role badges at top — role right-aligned */}
           <div className="flex items-center justify-between gap-2 mb-1.5">
-            <Badge 
-              variant="outline" 
-              className={`${categoryColors[project.category]} text-[10px] px-1.5 py-0.5 leading-none font-medium`}
-            >
-              {t(`categories.${project.category}`, categoryLabels[project.category])}
-            </Badge>
+            <div className="flex items-center gap-1.5">
+              <Badge 
+                variant="outline" 
+                className={`${categoryColors[project.category]} text-[10px] px-1.5 py-0.5 leading-none font-medium`}
+              >
+                {t(`categories.${project.category}`, categoryLabels[project.category])}
+              </Badge>
+              {project.academic && (
+                <Badge 
+                  variant="outline" 
+                  className="bg-teal-500/10 text-teal-600 border-teal-500/20 dark:text-teal-400 text-[10px] px-1.5 py-0.5 leading-none font-medium"
+                >
+                  {t('labels.academic', 'Academic')}
+                </Badge>
+              )}
+            </div>
             <Badge 
               variant="outline" 
               className={`${roleColors[project.role]} text-[10px] px-1.5 py-0.5 leading-none font-medium`}

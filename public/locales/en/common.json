@@ -19,8 +19,7 @@
     "software-project": "Projects",
     "script-small": "Scripts and Small Projects",
     "3d-printing": "3D Printing",
-    "it-project": "IT Projects",
-    "academic-project": "Academic Projects"
+    "it-project": "IT Projects"
   },
   "categories": {
     "backend": "Backend",
@@ -52,12 +51,14 @@
   "ai_usage": {
     "none": "No AI",
     "minor": "AI Assisted",
+    "contributed": "AI Contributed",
     "major": "AI Generated",
     "full": "AI Built"
   },
   "ai_usage_descriptions": {
     "none": "Built entirely without AI assistance",
     "minor": "Used AI for autocompletion and chat assistance only",
+    "contributed": "AI generated some features and/or tests",
     "major": "Significant portions generated or assisted by AI agents",
     "full": "Primarily or entirely built using AI tools"
   },
@@ -73,7 +74,8 @@
   },
   "labels": {
     "built_with": "Built with",
-    "features": "Features"
+    "features": "Features",
+    "academic": "Academic"
   },
   "stats": {
     "stars": "Stars",
