@@ -1,0 +1,48 @@
+{
+  "id": "advoexport",
+  "name": "advoexport",
+  "tagline": "Custom ETL Pipeline for Legacy Legal Data Migration",
+  "year": "2020",
+  "category": "utility",
+  "status": "completed",
+  "projectType": "software-project",
+  "role": "main-author",
+  "sourceType": "open-source",
+  "aiUsage": "none",
+  "aiUtilization": "no-ai",
+  "description": "A Python-based ETL pipeline designed to extract, transform, and migrate legacy case files from the Advoware legal management system into a clean, file-system-based NAS architecture.",
+  "purpose": "To automate the extraction of unstructured, poorly mapped document repositories by cross-referencing them with exported database process registers (.xls), bypassing the need for expensive proprietary migration tools.",
+  "technologies": [
+    "Python",
+    "Excel Data Parsing",
+    "Linux",
+    "Bash"
+  ],
+  "dependencies": [
+    "xlrd",
+    "shutil"
+  ],
+  "expertise": [
+    "ETL Pipelines",
+    "Data Transformation",
+    "Data Sanitization",
+    "Reverse Engineering"
+  ],
+  "strengths": [
+    "Successfully mapped and migrated thousands of legal documents with zero data loss",
+    "Handles complex string cleaning, space-escaped directory paths, and legacy encoding issues",
+    "Maintains data integrity and structure across deep, nested file systems",
+    "Lightweight and framework-free implementation optimized for localized execution"
+  ],
+  "limitations": [],
+  "roadmap": [],
+  "repos": [
+    {
+      "name": "advoexport",
+      "url": "https://gitlab.com/christianbrinkmann/advoexport",
+      "type": "gitlab"
+    }
+  ],
+  "mirrors": [],
+  "screenshots": []
+}
