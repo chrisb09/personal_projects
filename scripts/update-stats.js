@@ -153,8 +153,14 @@ async function updateStats() {
           const [,, host, owner, repo] = gitlabMatch;
           const projectPath = `${owner}/${repo}`;
           const headers = {};
-          if (process.env.GITLAB_TOKEN) {
-            headers['PRIVATE-TOKEN'] = process.env.GITLAB_TOKEN;
+          
+          // Generate instance-specific environment variable name
+          // e.g. gitlab.instance2.com -> GITLAB_TOKEN_GITLAB_INSTANCE2_COM
+          const envTokenName = `GITLAB_TOKEN_${host.toUpperCase().replace(/[^A-Z0-9]/g, '_')}`;
+          const gitlabToken = process.env[envTokenName] || process.env.GITLAB_TOKEN;
+          
+          if (gitlabToken) {
+            headers['PRIVATE-TOKEN'] = gitlabToken;
           }
 
           // Fetch GitLab project details
