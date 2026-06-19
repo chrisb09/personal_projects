@@ -40,5 +40,11 @@
     "tagline": "Utility Tools and Helper Scripts",
     "description": "A collection of small but useful utility projects and scripts for various tasks including Redis data management, secure downloading, duplicate file detection, and simple file hosting.",
     "purpose": "To solve specific, recurring problems with focused, lightweight tools that are easy to understand, use, and modify."
+  },
+  "filament-spool-holder": {
+    "name": "Auto-Rewinding Filament Spool Holder",
+    "tagline": "Parametric Mechanical Spool Holder for 3D Printing",
+    "description": "A parametric auto-rewinding filament spool holder designed for dual-extrusion or multi-material 3D printers. It automatically rewinds the spool when filament is retracted, preventing tangles.",
+    "purpose": "To solve filament tangling issues on multi-material 3D printers during retraction cycles, using a purely mechanical, printed spring mechanism."
   }
 }

@@ -99,118 +99,131 @@ function MiniLanguageChart({ data, total }: { data: Record<string, number>; tota
 
 export function ProjectCard({ project, onClick }: ProjectCardProps) {
   const { t } = useTranslation();
-  // Get top 2 technologies to display as badges
-  const topTechnologies = project.technologies.slice(0, 2);
-  const hasRepos = project.repos && project.repos.length > 0;
+  // Get top 3 technologies to display as badges
+  const topTechnologies = project.technologies.slice(0, 3);
+  const repoCount = project.repos?.length ?? 0;
   
   return (
     <TooltipProvider>
       <Card 
-        className="group cursor-pointer overflow-hidden border border-border/50 bg-card/50 backdrop-blur-sm transition-all duration-300 hover:border-primary/30 hover:bg-card/80 hover:shadow-lg hover:shadow-primary/5 hover:-translate-y-1"
+        className="group cursor-pointer overflow-hidden border border-border/50 bg-card/50 backdrop-blur-sm transition-all duration-300 hover:border-primary/30 hover:bg-card/80 hover:shadow-lg hover:shadow-primary/5 hover:-translate-y-0.5"
         onClick={onClick}
       >
-        <CardContent className="p-5">
-          {/* Category and Role badges at top */}
-          <div className="flex items-center gap-2 mb-3 flex-wrap">
+        <CardContent className="p-3 pb-2.5">
+          {/* Category and Role badges at top — role right-aligned */}
+          <div className="flex items-center justify-between gap-2 mb-1.5">
             <Badge 
               variant="outline" 
-              className={`${categoryColors[project.category]} text-xs font-medium`}
+              className={`${categoryColors[project.category]} text-[10px] px-1.5 py-0.5 leading-none font-medium`}
             >
               {t(`categories.${project.category}`, categoryLabels[project.category])}
             </Badge>
             <Badge 
               variant="outline" 
-              className={`${roleColors[project.role]} text-xs font-medium`}
+              className={`${roleColors[project.role]} text-[10px] px-1.5 py-0.5 leading-none font-medium`}
             >
               {t(`roles.${project.role}`, roleLabels[project.role])}
             </Badge>
           </div>
 
-          {/* Header with Logo and Title */}
-          <div className="flex items-start justify-between mb-3">
-            <div className="flex items-center gap-3 min-w-0">
-              {/* Logo placeholder */}
-              <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center border border-primary/10 group-hover:from-primary/30 group-hover:to-primary/10 transition-all shrink-0">
+          {/* Header with Logo, Title, and language chart */}
+          <div className="flex items-center justify-between mb-1.5">
+            <div className="flex items-center gap-2 min-w-0">
+              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center border border-primary/10 group-hover:from-primary/30 group-hover:to-primary/10 transition-all shrink-0">
                 {project.logo ? (
-                  <img src={project.logo} alt={project.name} className="w-6 h-6 object-contain" />
+                  <img src={project.logo} alt={project.name} className="w-4 h-4 object-contain" />
                 ) : (
-                  <FolderGit2 className="w-5 h-5 text-primary/70" />
+                  <FolderGit2 className="w-3.5 h-3.5 text-primary/70" />
                 )}
               </div>
               <div className="min-w-0">
-                <h3 className="font-semibold text-base leading-tight group-hover:text-primary transition-colors truncate">
+                <h3 className="font-semibold text-sm leading-tight group-hover:text-primary transition-colors truncate">
                   {project.name}
                 </h3>
-                <p className="text-xs text-muted-foreground">{project.year}</p>
+                <p className="text-[10px] text-muted-foreground leading-none mt-0.5">{project.year}</p>
               </div>
             </div>
             
-            {/* Mini language chart */}
             {project.loc && project.loc.total > 0 && (
               <MiniLanguageChart data={project.loc.byLanguage} total={project.loc.total} />
             )}
           </div>
 
           {/* Tagline */}
-          <p className="text-sm font-medium text-foreground/90 mb-2 line-clamp-1">
+          <p className="text-xs font-semibold text-foreground/90 mb-1 line-clamp-1">
             {project.tagline}
           </p>
 
           {/* Description */}
-          <p className="text-xs text-muted-foreground line-clamp-2 mb-3">
+          <p className="text-xs text-muted-foreground line-clamp-2 mb-1.5">
             {project.description}
           </p>
 
           {/* Technology badges */}
-          <div className="flex flex-wrap gap-1.5 mb-3">
+          <div className="flex flex-wrap gap-1 mb-1.5">
             {topTechnologies.map((tech, i) => (
               <Badge 
                 key={i} 
                 variant="secondary" 
-                className="text-xs font-normal bg-secondary/50"
+                className="text-[10px] px-1.5 py-0.5 leading-none font-normal bg-secondary/50"
               >
                 {tech}
               </Badge>
             ))}
-            {project.technologies.length > 2 && (
-              <Badge variant="secondary" className="text-xs font-normal bg-secondary/50">
-                +{project.technologies.length - 2}
+            {project.technologies.length > 3 && (
+              <Badge variant="secondary" className="text-[10px] px-1.5 py-0.5 leading-none font-normal bg-secondary/50">
+                +{project.technologies.length - 3}
               </Badge>
             )}
           </div>
 
           {/* Stats row */}
-          <div className="flex items-center gap-3 mb-3 text-xs text-muted-foreground">
+          <div className="flex items-center gap-3 mb-2 text-[11px] text-muted-foreground">
             {project.stats && (
               <>
                 <div className="flex items-center gap-1">
-                  <Star className="w-3 h-3" />
+                  <Star className="w-3 h-3 text-amber-500/80" />
                   <span>{project.stats.stars}</span>
                 </div>
                 <div className="flex items-center gap-1">
-                  <GitCommit className="w-3 h-3" />
+                  <GitCommit className="w-3 h-3 text-blue-500/80" />
                   <span>{project.stats.commits}</span>
                 </div>
               </>
             )}
             {project.loc && (
               <div className="flex items-center gap-1">
-                <Code2 className="w-3 h-3" />
+                <Code2 className="w-3 h-3 text-green-500/80" />
                 <span>{(project.loc.total / 1000).toFixed(1)}k LOC</span>
               </div>
+            )}
+            {repoCount > 0 && (
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <div className="flex items-center gap-1 cursor-help">
+                    <Github className="w-3 h-3" />
+                    <span>{repoCount} {repoCount === 1 ? 'repo' : 'repos'}</span>
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent side="top">
+                  <p className="text-[10px]">
+                    {project.repos?.map(r => r.name).join(', ')}
+                  </p>
+                </TooltipContent>
+              </Tooltip>
             )}
           </div>
 
           {/* Footer with Status, Source Type, AI Usage, AI Utilization, and Links */}
-          <div className="flex items-center justify-between pt-3 border-t border-border/50">
-            <div className="flex items-center gap-1.5 flex-wrap">
-              <Badge variant="secondary" className="text-xs">
+          <div className="flex items-center justify-between pt-1.5 border-t border-border/50">
+            <div className="flex items-center gap-1 flex-wrap">
+              <Badge variant="secondary" className="text-[10px] px-1.5 py-0.5 leading-none">
                 {t(`statuses.${project.status}`, statusLabels[project.status])}
               </Badge>
               
               <Badge 
                 variant="outline" 
-                className={`${sourceTypeColors[project.sourceType]} text-xs`}
+                className={`${sourceTypeColors[project.sourceType]} text-[10px] px-1.5 py-0.5 leading-none`}
               >
                 {t(`source_types.${project.sourceType}`, sourceTypeLabels[project.sourceType])}
               </Badge>
@@ -220,9 +233,9 @@ export function ProjectCard({ project, onClick }: ProjectCardProps) {
                 <TooltipTrigger asChild>
                   <Badge 
                     variant="outline" 
-                    className={`${aiUsageColors[project.aiUsage]} text-xs cursor-help`}
+                    className={`${aiUsageColors[project.aiUsage]} text-[10px] px-1.5 py-0.5 leading-none cursor-help`}
                   >
-                    <Sparkles className="w-3 h-3 mr-1" />
+                    <Sparkles className="w-3 h-3 mr-0.5" />
                     {t(`ai_usage.${project.aiUsage}`, aiUsageLabels[project.aiUsage])}
                   </Badge>
                 </TooltipTrigger>
@@ -236,9 +249,9 @@ export function ProjectCard({ project, onClick }: ProjectCardProps) {
                 <TooltipTrigger asChild>
                   <Badge 
                     variant="outline" 
-                    className={`${aiUtilizationColors[project.aiUtilization]} text-xs cursor-help`}
+                    className={`${aiUtilizationColors[project.aiUtilization]} text-[10px] px-1.5 py-0.5 leading-none cursor-help`}
                   >
-                    <Cpu className="w-3 h-3 mr-1" />
+                    <Cpu className="w-3 h-3 mr-0.5" />
                     {t(`ai_utilization.${project.aiUtilization}`, aiUtilizationLabels[project.aiUtilization])}
                   </Badge>
                 </TooltipTrigger>
@@ -251,17 +264,17 @@ export function ProjectCard({ project, onClick }: ProjectCardProps) {
             <div className="flex items-center gap-2">
               {project.demoUrl && (
                 <span className="text-muted-foreground hover:text-primary transition-colors">
-                  <ExternalLink className="w-4 h-4" />
+                  <ExternalLink className="w-3.5 h-3.5" />
                 </span>
               )}
-              {hasRepos && (
+              {repoCount > 0 && (
                 <span className="text-muted-foreground hover:text-primary transition-colors">
-                  <Github className="w-4 h-4" />
+                  <Github className="w-3.5 h-3.5" />
                 </span>
               )}
               {project.docsUrl && (
                 <span className="text-muted-foreground hover:text-primary transition-colors">
-                  <BookOpen className="w-4 h-4" />
+                  <BookOpen className="w-3.5 h-3.5" />
                 </span>
               )}
             </div>

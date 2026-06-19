@@ -5,6 +5,7 @@ export interface Project {
   year: string;
   category: 'backend' | 'frontend' | 'devops-infrastructure' | 'data-scraping' | 'library' | 'package-management' | 'cli' | 'fullstack' | 'utility' | 'other';
   status: 'active' | 'experimental' | 'maintenance' | 'archived';
+  projectType?: 'software-project' | 'script-small' | '3d-printing' | 'it-project';
   
   // Role - your involvement with the project
   role: 'main-author' | 'contributor' | 'fork-maintainer';
@@ -84,6 +85,14 @@ export type ProjectRole = Project['role'];
 export type ProjectSourceType = Project['sourceType'];
 export type AIUsage = Project['aiUsage'];
 export type AIUtilization = Project['aiUtilization'];
+export type ProjectType = NonNullable<Project['projectType']>;
+
+export const projectTypeLabels: Record<ProjectType, string> = {
+  'software-project': 'Projects',
+  'script-small': 'Scripts and Small Projects',
+  '3d-printing': '3D Printing',
+  'it-project': 'IT Projects',
+};
 
 export const categoryLabels: Record<ProjectCategory, string> = {
   backend: 'Backend',

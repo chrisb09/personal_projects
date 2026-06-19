@@ -12,6 +12,7 @@ import {
   aiUtilizationLabels,
   aiUtilizationColors,
   aiUtilizationDescriptions,
+  projectTypeLabels,
 } from '@/types/project';
 import { ProjectCard } from '@/components/ProjectCard';
 import { ProjectDetailModal } from '@/components/ProjectDetailModal';
@@ -19,6 +20,7 @@ import { ThemeToggle } from '@/components/ThemeToggle';
 import { LanguageSelector } from '@/components/LanguageSelector';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Separator } from '@/components/ui/separator';
 import { 
   Tooltip, 
   TooltipContent, 
@@ -46,7 +48,7 @@ import {
 function AILegend() {
   const { t } = useTranslation();
   const usageLevels: Array<'none' | 'minor' | 'major' | 'full'> = ['none', 'minor', 'major', 'full'];
-  const utilizationLevels: Array<'ai-powered' | 'ai-enhanced' | 'no-ai'> = ['ai-powered', 'ai-enhanced', 'no-ai'];
+  const utilizationLevels: Array<'ai-powered' | 'ai-enhanced' | 'no-ai'> = ['no-ai', 'ai-enhanced', 'ai-powered'];
   
   return (
     <div className="bg-muted/30 rounded-lg p-4 border border-border/50 space-y-4">
@@ -147,6 +149,26 @@ function App() {
     });
   }, [projectsWithStats, searchQuery, selectedCategory]);
 
+  // Group filtered projects by projectType
+  const groupedProjects = useMemo(() => {
+    const groups: Record<string, Project[]> = {
+      'software-project': [],
+      'script-small': [],
+      'it-project': [],
+      '3d-printing': [],
+    };
+    
+    filteredProjects.forEach(project => {
+      const type = project.projectType || 'software-project';
+      if (!groups[type]) {
+        groups[type] = [];
+      }
+      groups[type].push(project);
+    });
+    
+    return groups;
+  }, [filteredProjects]);
+
   // Get aggregate stats from projects with stats
   const aggregateStats = useMemo(() => {
     const totalStars = projectsWithStats.reduce((sum, p) => sum + (p.stats?.stars || 0), 0);
@@ -195,59 +217,59 @@ function App() {
           <div className="absolute bottom-0 left-0 w-64 h-64 bg-primary/3 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
           
           {/* Top bar with theme and language controls */}
-          <div className="relative flex items-center justify-end gap-1 px-4 sm:px-6 lg:px-8 pt-3 max-w-6xl mx-auto">
+          <div className="relative flex items-center justify-end gap-1 px-4 sm:px-6 lg:px-8 pt-2 max-w-6xl mx-auto">
             <LanguageSelector />
             <ThemeToggle />
           </div>
           
-          <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-12 pt-6 md:pb-16 md:pt-8">
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-              <div className="space-y-3">
-                <div className="flex items-center gap-2 text-muted-foreground">
-                  <Code2 className="w-5 h-5" />
-                  <span className="text-sm font-medium">Developer Portfolio</span>
+          <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-5 pt-1.5 md:pb-6 md:pt-2">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 md:gap-6">
+              <div className="space-y-1.5">
+                <div className="flex items-center gap-1.5 text-muted-foreground">
+                  <Code2 className="w-4 h-4" />
+                  <span className="text-xs font-medium">Developer Portfolio</span>
                 </div>
                 
-                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight">
+                <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight">
                   Personal{' '}
                   <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
                     Projects
                   </span>
                 </h1>
                 
-                <p className="text-lg text-muted-foreground max-w-xl leading-relaxed">
+                <p className="text-sm md:text-base text-muted-foreground max-w-xl leading-relaxed">
                   A collection of my work spanning backend systems, web applications, 
                   DevOps infrastructure, and open source contributions.
                 </p>
 
-                <div className="flex flex-wrap gap-2 pt-1">
-                  <Button variant="default" size="sm" className="gap-2" asChild>
+                <div className="flex flex-wrap gap-1.5 pt-0.5">
+                  <Button variant="default" size="sm" className="h-8 gap-2 text-xs" asChild>
                     <a href="https://github.com" target="_blank" rel="noopener noreferrer">
-                      <Github className="w-4 h-4" />
+                      <Github className="w-3.5 h-3.5" />
                       GitHub
                     </a>
                   </Button>
-                  <Button variant="outline" size="sm" className="gap-2" asChild>
+                  <Button variant="outline" size="sm" className="h-8 gap-2 text-xs" asChild>
                     <a href="https://gitlab.com" target="_blank" rel="noopener noreferrer">
-                      <Gitlab className="w-4 h-4" />
+                      <Gitlab className="w-3.5 h-3.5" />
                       GitLab
                     </a>
                   </Button>
-                  <Button variant="outline" size="sm" className="gap-1.5" asChild>
+                  <Button variant="outline" size="sm" className="h-8 gap-1.5 text-xs" asChild>
                     <a href="https://gitlab.instance2.com" target="_blank" rel="noopener noreferrer">
-                      <Gitlab className="w-3.5 h-3.5" />
-                      <span className="text-xs">GL 2</span>
+                      <Gitlab className="w-3 h-3" />
+                      <span className="text-[11px]">GL 2</span>
                     </a>
                   </Button>
-                  <Button variant="outline" size="sm" className="gap-2" asChild>
+                  <Button variant="outline" size="sm" className="h-8 gap-2 text-xs" asChild>
                     <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
-                      <Linkedin className="w-4 h-4" />
+                      <Linkedin className="w-3.5 h-3.5" />
                       LinkedIn
                     </a>
                   </Button>
-                  <Button variant="outline" size="sm" className="gap-2" asChild>
+                  <Button variant="outline" size="sm" className="h-8 gap-2 text-xs" asChild>
                     <a href="mailto:contact@example.com">
-                      <Mail className="w-4 h-4" />
+                      <Mail className="w-3.5 h-3.5" />
                       Contact
                     </a>
                   </Button>
@@ -258,24 +280,24 @@ function App() {
               <div className="grid grid-cols-3 gap-4 md:gap-6">
                 <div className="text-center md:text-right">
                   <div className="flex items-center md:justify-end gap-1.5 text-primary">
-                    <Star className="w-5 h-5" />
-                    <p className="text-3xl font-bold">{aggregateStats.totalStars}</p>
+                    <Star className="w-4 h-4" />
+                    <p className="text-2xl font-bold">{aggregateStats.totalStars}</p>
                   </div>
-                  <p className="text-sm text-muted-foreground">{t('stats.total_stars', 'Total Stars')}</p>
+                  <p className="text-xs text-muted-foreground">{t('stats.total_stars', 'Total Stars')}</p>
                 </div>
                 <div className="text-center md:text-right">
                   <div className="flex items-center md:justify-end gap-1.5 text-primary">
-                    <GitCommit className="w-5 h-5" />
-                    <p className="text-3xl font-bold">{aggregateStats.totalCommits}</p>
+                    <GitCommit className="w-4 h-4" />
+                    <p className="text-2xl font-bold">{aggregateStats.totalCommits}</p>
                   </div>
-                  <p className="text-sm text-muted-foreground">{t('stats.total_commits', 'Total Commits')}</p>
+                  <p className="text-xs text-muted-foreground">{t('stats.total_commits', 'Total Commits')}</p>
                 </div>
                 <div className="text-center md:text-right">
                   <div className="flex items-center md:justify-end gap-1.5 text-primary">
-                    <Code className="w-5 h-5" />
-                    <p className="text-3xl font-bold">{(totalLOC / 1000).toFixed(1)}k</p>
+                    <Code className="w-4 h-4" />
+                    <p className="text-2xl font-bold">{(totalLOC / 1000).toFixed(1)}k</p>
                   </div>
-                  <p className="text-sm text-muted-foreground">{t('stats.total_loc', 'Lines of Code')}</p>
+                  <p className="text-xs text-muted-foreground">{t('stats.total_loc', 'Total LOC')}</p>
                 </div>
               </div>
             </div>
@@ -283,18 +305,18 @@ function App() {
         </header>
 
         {/* Main Content */}
-        <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 md:py-5">
           {/* Filters */}
-          <div className="space-y-4 mb-8">
+          <div className="flex flex-col md:flex-row md:items-center gap-3 mb-3">
             {/* Search */}
-            <div className="relative">
+            <div className="relative flex-1 max-w-md">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
               <Input
                 type="text"
-                placeholder={t('header.search_placeholder', 'Search projects by name, description, or technology...')}
+                placeholder={t('header.search_placeholder', 'Search projects...')}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 pr-10"
+                className="pl-10 pr-10 h-9 text-sm"
               />
               {searchQuery && (
                 <button
@@ -307,43 +329,75 @@ function App() {
             </div>
 
             {/* Category Filters */}
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-1.5 flex-1 items-center justify-start md:justify-end">
               {categories.map((category) => (
                 <button
                   key={category}
                   onClick={() => setSelectedCategory(category)}
                   className={`
-                    px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200
+                    px-2.5 py-1.5 rounded-md text-xs font-medium transition-all duration-200 border
                     ${selectedCategory === category 
-                      ? 'bg-primary/10 text-primary border border-primary/30 shadow-sm' 
-                      : 'bg-muted/50 hover:bg-muted text-muted-foreground hover:text-foreground border border-transparent'
+                      ? 'bg-primary/10 text-primary border-primary/30 shadow-sm' 
+                      : 'bg-muted/50 hover:bg-muted text-muted-foreground hover:text-foreground border-transparent'
                     }
                   `}
                 >
-                  {category === 'all' ? t('filters.all', 'All Projects') : t(`categories.${category}`, categoryLabels[category])}
+                  {category === 'all' ? t('filters.all', 'All') : t(`categories.${category}`, categoryLabels[category])}
                 </button>
               ))}
             </div>
           </div>
 
           {/* Results count */}
-          <div className="flex items-center justify-between mb-6">
-            <p className="text-sm text-muted-foreground">
+          <div className="flex items-center justify-between mb-2">
+            <p className="text-xs text-muted-foreground">
               {t('header.showing', 'Showing')} <span className="font-medium text-foreground">{filteredProjects.length}</span> {t('header.of', 'of')}{' '}
               <span className="font-medium text-foreground">{projectsWithStats.length}</span> {t('header.projects', 'projects')}
             </p>
           </div>
 
-          {/* Projects Grid */}
+          {/* Projects Grid Grouped */}
           {filteredProjects.length > 0 ? (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredProjects.map((project) => (
-                <ProjectCard
-                  key={project.id}
-                  project={project}
-                  onClick={() => handleProjectClick(project)}
-                />
-              ))}
+            <div className="space-y-6">
+              {(() => {
+                let isFirstSection = true;
+                const order: Array<'software-project' | 'script-small' | 'it-project' | '3d-printing'> = [
+                  'software-project',
+                  'script-small',
+                  'it-project',
+                  '3d-printing',
+                ];
+                
+                return order.map((type) => {
+                  const groupProjects = groupedProjects[type] || [];
+                  if (groupProjects.length === 0) return null;
+                  
+                  const showSeparator = !isFirstSection;
+                  isFirstSection = false;
+                  
+                  return (
+                    <div key={type} className="space-y-3">
+                      {showSeparator && (
+                        <div className="pt-2">
+                          <Separator className="opacity-40" />
+                        </div>
+                      )}
+                      <h2 className="text-base font-semibold tracking-tight text-foreground/90 mt-2">
+                        {t(`project_types.${type}`, projectTypeLabels[type])}
+                      </h2>
+                      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
+                        {groupProjects.map((project) => (
+                          <ProjectCard
+                            key={project.id}
+                            project={project}
+                            onClick={() => handleProjectClick(project)}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  );
+                });
+              })()}
             </div>
           ) : (
             <div className="text-center py-20">

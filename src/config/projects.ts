@@ -36,6 +36,7 @@ export const projects: Project[] = [
     year: '2023',
     category: 'backend',
     status: 'experimental',
+    projectType: 'software-project',
     role: 'main-author',
     sourceType: 'open-source',
     aiUsage: 'minor',
@@ -118,6 +119,7 @@ state.setData("Hello, distributed world!");
     year: '2022',
     category: 'frontend',
     status: 'active',
+    projectType: 'software-project',
     role: 'main-author',
     sourceType: 'open-source',
     aiUsage: 'none',
@@ -191,6 +193,7 @@ curl -X POST -F "file=@project.pdn" https://your-server.com/api/view`,
     year: '2020 - 2021',
     category: 'data-scraping',
     status: 'archived',
+    projectType: 'script-small',
     role: 'main-author',
     sourceType: 'open-source',
     aiUsage: 'none',
@@ -262,6 +265,7 @@ python analyze.py --export csv`,
     year: '2018 - Present',
     category: 'devops-infrastructure',
     status: 'active',
+    projectType: 'it-project',
     role: 'main-author',
     sourceType: 'open-source',
     aiUsage: 'minor',
@@ -349,6 +353,7 @@ zfs list`,
     year: '2023 - Present',
     category: 'package-management',
     status: 'active',
+    projectType: 'software-project',
     role: 'contributor',
     sourceType: 'open-source',
     aiUsage: 'none',
@@ -420,6 +425,7 @@ pacstall -R package-name`,
     year: '2023 - Present',
     category: 'library',
     status: 'active',
+    projectType: 'software-project',
     role: 'main-author',
     sourceType: 'open-source',
     aiUsage: 'minor',
@@ -498,6 +504,7 @@ System.out.println(result.getTranslatedText()); // "Hallo, Welt!"`,
     year: 'Various',
     category: 'utility',
     status: 'active',
+    projectType: 'script-small',
     role: 'main-author',
     sourceType: 'open-source',
     aiUsage: 'none',
@@ -556,6 +563,66 @@ python host-files.py --port 8080 --directory ./files`,
     repos: [],
     mirrors: [],
     screenshots: [],
+    logo: undefined,
+  },
+  
+  {
+    id: 'filament-spool-holder',
+    name: 'Auto-Rewinding Filament Spool Holder',
+    tagline: 'Parametric Mechanical Spool Holder for 3D Printing',
+    year: '2024',
+    category: 'other',
+    status: 'active',
+    projectType: '3d-printing',
+    role: 'main-author',
+    sourceType: 'open-source',
+    aiUsage: 'none',
+    aiUtilization: 'no-ai',
+    
+    description: 'A parametric auto-rewinding filament spool holder designed for dual-extrusion or multi-material 3D printers. It automatically rewinds the spool when filament is retracted, preventing tangles.',
+    purpose: 'To solve filament tangling issues on multi-material 3D printers during retraction cycles, using a purely mechanical, printed spring mechanism.',
+    
+    technologies: ['OpenSCAD', 'Fusion 360', '3D Printing', 'PETG', 'PLA'],
+    dependencies: ['608ZZ Bearings (x2)', 'M3 Screws'],
+    expertise: ['Mechanical Design', 'Parametric Modeling', 'Tolerance Calibration', 'Additive Manufacturing'],
+    
+    strengths: [
+      'Purely mechanical solution with no electronics needed',
+      'Parametric design supporting spools from 50mm to 100mm wide',
+      'Reliable integrated spring mechanism printed in PETG for elasticity',
+      'Smooth operation utilizing standard 608ZZ skate bearings',
+    ],
+    limitations: [
+      'Requires precise printer calibration for functional gear clearance',
+      'Integrated spring needs PETG or ABS (PLA is too brittle and creeps over time)',
+    ],
+    
+    installation: `# Clone the CAD repository
+git clone https://github.com/example/auto-rewind-spool-holder.git
+cd auto-rewind-spool-holder
+
+# Open the .scad file in OpenSCAD to customize spool dimensions
+openscad spool_holder.scad`,
+    
+    usage: `1. Customize the dimensions in OpenSCAD or use pre-sliced STLs.
+2. Print the spring in PETG (3 perimeters, 30% infill).
+3. Print the stand and shaft in PLA.
+4. Press-fit two 608ZZ bearings into the spool hubs.
+5. Assemble the shaft, spring, and stand together.
+6. Mount the spool and feed filament into your printer.`,
+    
+    roadmap: [
+      'Add wall-mount adapter plate',
+      'Create drybox-compatible low-profile version',
+      'Design clutch mechanism to prevent over-tensioning',
+    ],
+    
+    demoUrl: undefined,
+    repos: [
+      { name: 'spool-holder-cad', url: 'https://github.com/example/auto-rewind-spool-holder', type: 'github' }
+    ],
+    mirrors: [],
+    screenshots: ['/spool-holder-1.jpg', '/spool-holder-2.jpg'],
     logo: undefined,
   },
 ];

@@ -15,6 +15,12 @@
     "role": "Role",
     "status": "Status"
   },
+  "project_types": {
+    "software-project": "Projects",
+    "script-small": "Scripts and Small Projects",
+    "3d-printing": "3D Printing",
+    "it-project": "IT Projects"
+  },
   "categories": {
     "backend": "Backend",
     "frontend": "Frontend",

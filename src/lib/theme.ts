@@ -3,16 +3,21 @@ type Theme = 'light' | 'dark' | 'system';
 const COOKIE_NAME = 'theme';
 const COOKIE_MAX_AGE = 365 * 24 * 60 * 60; // 1 year in seconds
 
+const isBrowser = typeof window !== 'undefined';
+
 function getCookie(name: string): string | null {
+  if (!isBrowser) return null;
   const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
   return match ? match[2] : null;
 }
 
 function setCookie(name: string, value: string) {
+  if (!isBrowser) return;
   document.cookie = `${name}=${value};path=/;max-age=${COOKIE_MAX_AGE};SameSite=Lax`;
 }
 
 function getSystemTheme(): 'light' | 'dark' {
+  if (!isBrowser) return 'light';
   return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
 }
 
@@ -32,6 +37,7 @@ export function getResolvedTheme(theme: Theme): 'light' | 'dark' {
 }
 
 export function applyTheme(theme: Theme) {
+  if (!isBrowser) return;
   const resolved = getResolvedTheme(theme);
   const root = document.documentElement;
 
@@ -45,6 +51,7 @@ export function applyTheme(theme: Theme) {
 }
 
 export function initializeTheme() {
+  if (!isBrowser) return;
   const theme = getStoredTheme();
   applyTheme(theme);
 
