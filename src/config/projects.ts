@@ -358,7 +358,7 @@ export const projects: Project[] = [
     "sourceType": "open-source",
     "aiUsage": "none",
     "aiUtilization": "no-ai",
-    "description": "A web-based viewer for Paint.net (.pdn) project files. Allows users to view and share their Paint.net projects directly in the browser without needing the desktop application.",
+    "description": "A custom web-based viewer for Paint.net (.pdn) project files. Built entirely without heavy frontend frameworks to ensure maximum rendering performance and a lightweight footprint.",
     "purpose": "To make Paint.net project files accessible and shareable on the web, enabling artists to showcase their work and collaborate without requiring everyone to have Paint.net installed.",
     "technologies": [
       "Python",
@@ -380,11 +380,9 @@ export const projects: Project[] = [
       "Frontend Design"
     ],
     "strengths": [
-      "No Paint.net installation required to view files",
-      "Clean, intuitive web interface",
-      "Fast rendering of complex project files",
-      "Cross-platform compatibility",
-      "Easy sharing via URLs"
+      "Highly optimized vanilla implementation avoiding bloated JavaScript frameworks",
+      "Custom backend conversion pipeline (pdnexport) for rapid file processing",
+      "Clean, fast rendering of complex, multi-layered image projects in the browser"
     ],
     "limitations": [
       "Read-only (no editing capabilities)",
