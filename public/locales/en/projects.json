@@ -2,8 +2,8 @@
   "firecord": {
     "name": "firecord",
     "tagline": "Experimental Redisson Alternative",
-    "description": "Redis-based automatic, reference-based object synchronization for Java. A lightweight alternative to Redisson focused on performance and minimal network overhead.",
-    "purpose": "To provide a more efficient solution for distributed object synchronization in Java applications, reducing latency and network load compared to existing solutions."
+    "description": "A high-performance, Redis-based automatic object synchronization library for Java. Developed as a lightweight, low-latency alternative to Redisson, heavily utilizing AspectJ for reference-based tracking.",
+    "purpose": "Born from the need to synchronize distributed state in sub-50ms tick environments where standard solutions introduced unacceptable network overhead and latency."
   },
   "pdnwebview": {
     "name": "pdnwebview",

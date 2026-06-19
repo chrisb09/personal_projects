@@ -10,8 +10,8 @@
   "sourceType": "open-source",
   "aiUsage": "minor",
   "aiUtilization": "no-ai",
-  "description": "Redis-based automatic, reference-based object synchronization for Java. A lightweight alternative to Redisson focused on performance and minimal network overhead.",
-  "purpose": "To provide a more efficient solution for distributed object synchronization in Java applications, reducing latency and network load compared to existing solutions.",
+  "description": "A high-performance, Redis-based automatic object synchronization library for Java. Developed as a lightweight, low-latency alternative to Redisson, heavily utilizing AspectJ for reference-based tracking.",
+  "purpose": "Born from the need to synchronize distributed state in sub-50ms tick environments where standard solutions introduced unacceptable network overhead and latency.",
   "technologies": [
     "Java",
     "Redis",
@@ -24,17 +24,14 @@
     "Jedis or Lettuce client"
   ],
   "expertise": [
-    "Distributed Systems",
-    "Object Synchronization",
-    "Aspect-Oriented Programming",
-    "Low-latency Networking"
+    "Distributed Systems Architecture",
+    "Aspect-Oriented Programming (AspectJ)",
+    "Low-Latency Memory Synchronization"
   ],
   "strengths": [
-    "Automatic object synchronization without manual intervention",
-    "Reference-based tracking reduces memory overhead",
-    "Significantly lower latency compared to Redisson",
-    "Reduced network load through intelligent change detection",
-    "Seamless integration with existing Java applications"
+    "Eliminated manual synchronization boilerplate through AspectJ instrumentation",
+    "Significantly reduced network payload sizes via intelligent, reference-based state diffing",
+    "Optimized specifically for latency-critical distributed environments"
   ],
   "limitations": [
     "Experimental status - API may change",
