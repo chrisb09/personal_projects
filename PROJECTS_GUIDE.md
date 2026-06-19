@@ -47,6 +47,7 @@ Each project JSON file (either `projects/<id>.json` or `projects/<id>/project.js
 | `category` | `string` | **Required.** Technical category. Supported: `backend`, `frontend`, `devops-infrastructure`, `data-scraping`, `library`, `package-management`, `cli`, `fullstack`, `utility`, `other`. |
 | `status` | `string` | **Required.** Lifecycle status. Supported: `active`, `experimental`, `maintenance`, `archived`. |
 | `projectType` | `string` | **Required.** Main landing page category. Supported: `software-project`, `script-small`, `3d-printing`, `it-project`. |
+| `excludeFromStats` | `boolean` | *Optional.* Set `true` to exclude this project from dynamic API stats fetching (useful if a Git instance blocks queries or is private). |
 | `role` | `string` | **Required.** Your role: `main-author`, `contributor`, `fork-maintainer`. |
 | `sourceType` | `string` | **Required.** Source visibility: `open-source`, `closed-source`. |
 | `aiUsage` | `string` | **Required.** AI coding assistance: `none` (No AI), `minor` (AI Assisted), `major` (AI Generated), `full` (AI Built). |

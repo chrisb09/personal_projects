@@ -6,6 +6,7 @@ export interface Project {
   category: 'backend' | 'frontend' | 'devops-infrastructure' | 'data-scraping' | 'library' | 'package-management' | 'cli' | 'fullstack' | 'utility' | 'other';
   status: 'active' | 'experimental' | 'maintenance' | 'archived';
   projectType?: 'software-project' | 'script-small' | '3d-printing' | 'it-project';
+  excludeFromStats?: boolean;
   
   // Role - your involvement with the project
   role: 'main-author' | 'contributor' | 'fork-maintainer';

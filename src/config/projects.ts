@@ -9,6 +9,7 @@ export const projects: Project[] = [
     "category": "other",
     "status": "active",
     "projectType": "3d-printing",
+    "excludeFromStats": true,
     "role": "main-author",
     "sourceType": "open-source",
     "aiUsage": "none",

@@ -67,9 +67,9 @@ async function updateStats() {
       projectStats.loc = { ...projectStats.loc, ...project.loc };
     }
 
-    // Attempt to fetch fresh stats if repository is configured
+    // Attempt to fetch fresh stats if repository is configured and stats are not excluded
     const primaryRepo = project.repos && project.repos[0];
-    if (primaryRepo && primaryRepo.url) {
+    if (primaryRepo && primaryRepo.url && !project.excludeFromStats) {
       const repoUrl = primaryRepo.url;
       console.log(`\nFetching stats for project: ${projectId} (${repoUrl})`);
 
