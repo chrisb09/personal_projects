@@ -102,6 +102,63 @@ export const projects: Project[] = [
     "screenshots": []
   },
   {
+    "id": "custom-orchestration",
+    "name": "Distributed Linux Service Orchestrator",
+    "tagline": "Bespoke Control Plane and CI/CD Engine for Low-Latency Application Clusters",
+    "year": "2012 - Present",
+    "category": "devops-infrastructure",
+    "status": "active",
+    "projectType": "software-project",
+    "role": "main-author",
+    "sourceType": "open-source",
+    "aiUsage": "none",
+    "aiUtilization": "no-ai",
+    "description": "A lightweight, low-overhead orchestration platform and automated CI/CD control plane written in Bash. Designed to manage a distributed multi-instance cluster with strict memory isolation, soft real-time execution constraints, and zero-downtime hot-reloads.",
+    "purpose": "To deliver deterministic daemon lifecycle management and deployment automation in high-concurrency environments where standard containerization runtimes introduce unacceptable process jitter and latency overhead.",
+    "technologies": [
+      "Bash",
+      "Linux",
+      "Redis",
+      "Maven",
+      "Git"
+    ],
+    "dependencies": [
+      "screen",
+      "jq",
+      "curl",
+      "lsof",
+      "procps"
+    ],
+    "expertise": [
+      "Process Lifecycle & Signal Handling",
+      "Parallel Automation (Concurrency)",
+      "Storage Isolation & Loop Devices",
+      "Log Analytics & Unix Text Processing Pipeline",
+      "Automated Privilege Escalation"
+    ],
+    "strengths": [
+      "Implemented a cascading process termination matrix (Graceful Command -> Emulated Key Injection -> Window Termination -> OS-Level SIGKILL via Process Tree Tracing)",
+      "Engineered asynchronous parallel task execution using background subshells and dynamic PID tracking arrays for concurrent Git operations",
+      "Designed automated storage virtualization and isolation by generating 10GB raw images, formatting ext4 filesystems, and loop-mounting to prevent host disk exhaustion",
+      "Built a real-time watchdog system monitoring log capacities, process utilization, and dynamic ports with automated Discord webhook notifications via structured JSON payloads",
+      "Advanced utilization of Bash 4+ associative arrays to map multi-layered application states, dependencies, and dynamic routing profiles",
+      "Created text-processing pipelines using sed, awk, and grep for custom dynamic string multiplexing and multi-criteria server/plugin selection logic"
+    ],
+    "limitations": [
+      "Tightly coupled with GNU Screen as the terminal multiplexer backend",
+      "Configuration management relies on sourced flat-file state scripts rather than declarative syntax (YAML/JSON)",
+      "Platform-dependent orchestration optimized primarily for Debian-based systems"
+    ],
+    "roadmap": [
+      "Abstract the terminal multiplexer layer to support systemd slices or lightweight cgroups directly",
+      "Migrate the procedural bash architecture toward a compiled, typed platform utility (Go/Rust)",
+      "Integrate Prometheus exposition endpoints for structured telemetry collection"
+    ],
+    "repos": [],
+    "mirrors": [],
+    "screenshots": []
+  },
+  {
     "id": "exam-system-backend",
     "name": "LLM-Integrated Exam System",
     "tagline": "Scaled Backend for University Assessments",
