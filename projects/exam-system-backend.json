@@ -9,8 +9,8 @@
   "academic": true,
   "role": "backend-co-lead",
   "sourceType": "closed-source",
-  "aiUsage": "none",
-  "aiUtilization": "ai-powered",
+  "aiUsage": "minor",
+  "aiUtilization": "ai-enhanced",
   "description": "Extended an existing digital examination system for a Ukrainian university. Engineered the backend architecture, database schema, and microservice orchestration to handle concurrent student loads.",
   "purpose": "To introduce knowledge-based testing to the examination infrastructure and introduce automated, AI-assisted preliminary grading for free-text answers to reduce examiner workload.",
   "technologies": [
