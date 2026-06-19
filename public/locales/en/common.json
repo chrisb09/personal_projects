@@ -36,13 +36,15 @@
   "roles": {
     "main-author": "Main Author",
     "contributor": "Contributor",
-    "fork-maintainer": "Fork Maintainer"
+    "fork-maintainer": "Fork Maintainer",
+    "backend-co-lead": "Backend Co-Lead"
   },
   "statuses": {
     "active": "Active",
     "experimental": "Experimental",
     "maintenance": "Maintenance",
-    "archived": "Archived"
+    "archived": "Archived",
+    "completed": "Completed"
   },
   "source_types": {
     "open-source": "Open Source",

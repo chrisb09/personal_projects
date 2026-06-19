@@ -4,13 +4,13 @@ export interface Project {
   tagline: string;
   year: string;
   category: 'backend' | 'frontend' | 'devops-infrastructure' | 'data-scraping' | 'library' | 'package-management' | 'cli' | 'fullstack' | 'utility' | 'other';
-  status: 'active' | 'experimental' | 'maintenance' | 'archived';
+  status: 'active' | 'experimental' | 'maintenance' | 'archived' | 'completed';
   projectType?: 'software-project' | 'script-small' | '3d-printing' | 'it-project';
   academic?: boolean;
   excludeFromStats?: boolean;
   
   // Role - your involvement with the project
-  role: 'main-author' | 'contributor' | 'fork-maintainer';
+  role: 'main-author' | 'contributor' | 'fork-maintainer' | 'backend-co-lead';
   
   // Source type - open or closed source (displayed as label)
   sourceType: 'open-source' | 'closed-source';
@@ -114,12 +114,14 @@ export const statusLabels: Record<ProjectStatus, string> = {
   experimental: 'Experimental',
   maintenance: 'Maintenance',
   archived: 'Archived',
+  completed: 'Completed',
 };
 
 export const roleLabels: Record<ProjectRole, string> = {
   'main-author': 'Main Author',
   contributor: 'Contributor',
   'fork-maintainer': 'Fork Maintainer',
+  'backend-co-lead': 'Backend Co-Lead',
 };
 
 export const sourceTypeLabels: Record<ProjectSourceType, string> = {
@@ -172,6 +174,7 @@ export const roleColors: Record<ProjectRole, string> = {
   'main-author': 'bg-emerald-500/10 text-emerald-600 border-emerald-500/20 dark:text-emerald-400',
   contributor: 'bg-amber-500/10 text-amber-600 border-amber-500/20 dark:text-amber-400',
   'fork-maintainer': 'bg-sky-500/10 text-sky-600 border-sky-500/20 dark:text-sky-400',
+  'backend-co-lead': 'bg-cyan-500/10 text-cyan-600 border-cyan-500/20 dark:text-cyan-400',
 };
 
 export const sourceTypeColors: Record<ProjectSourceType, string> = {

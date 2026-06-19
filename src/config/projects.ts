@@ -54,6 +54,46 @@ export const projects: Project[] = [
     "screenshots": []
   },
   {
+    "id": "exam-system-backend",
+    "name": "LLM-Integrated Exam System",
+    "tagline": "Scaled Backend for University Assessments",
+    "year": "2025",
+    "category": "backend",
+    "status": "completed",
+    "projectType": "software-project",
+    "academic": true,
+    "role": "backend-co-lead",
+    "sourceType": "closed-source",
+    "aiUsage": "none",
+    "aiUtilization": "ai-powered",
+    "description": "Extended an existing digital examination system for a Ukrainian university. Engineered the backend architecture, database schema, and microservice orchestration to handle concurrent student loads.",
+    "purpose": "To introduce knowledge-based testing to the examination infrastructure and introduce automated, AI-assisted preliminary grading for free-text answers to reduce examiner workload.",
+    "technologies": [
+      "Kubernetes",
+      "SQL",
+      "JavaScript",
+      "openai API"
+    ],
+    "dependencies": [],
+    "expertise": [
+      "Microservice Orchestration",
+      "Database Design",
+      "API Integration",
+      "Containerization"
+    ],
+    "strengths": [
+      "Successfully containerized and deployed the application stack using Kubernetes",
+      "Designed scalable SQL schemas to handle concurrent exam submissions securely",
+      "Integrated LLM endpoints for automated, preliminary evaluation of free-text responses",
+      "Delivered a robust backend under tight academic project deadlines"
+    ],
+    "limitations": [],
+    "roadmap": [],
+    "repos": [],
+    "mirrors": [],
+    "screenshots": []
+  },
+  {
     "id": "filament-spool-holder",
     "name": "Auto-Rewinding Filament Spool Holder",
     "tagline": "Parametric Mechanical Spool Holder for 3D Printing",
