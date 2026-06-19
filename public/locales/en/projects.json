@@ -14,7 +14,7 @@
   "userbenchmark-scraper": {
     "name": "Userbenchmark Web Scraper",
     "tagline": "Experimental Hardware Benchmark Data Extractor",
-    "description": "An automated web scraper for extracting hardware benchmark data from Userbenchmark. Built with Python and featuring a custom job scheduler and Tor integration for anonymity.",
+    "description": "An end-to-end data extraction pipeline built in Python. Features a custom job scheduler and Tor network routing to bypass aggressive rate limiting, successfully aggregating a massive hardware dataset.",
     "purpose": "To collect large-scale hardware benchmark data for analysis and research purposes, building a dataset of approximately 40,000 benchmarks."
   },
   "homeserver": {

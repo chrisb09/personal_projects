@@ -484,7 +484,7 @@ export const projects: Project[] = [
     "sourceType": "open-source",
     "aiUsage": "none",
     "aiUtilization": "no-ai",
-    "description": "An automated web scraper for extracting hardware benchmark data from Userbenchmark. Built with Python and featuring a custom job scheduler and Tor integration for anonymity.",
+    "description": "An end-to-end data extraction pipeline built in Python. Features a custom job scheduler and Tor network routing to bypass aggressive rate limiting, successfully aggregating a massive hardware dataset.",
     "purpose": "To collect large-scale hardware benchmark data for analysis and research purposes, building a dataset of approximately 40,000 benchmarks.",
     "technologies": [
       "Python",
@@ -499,18 +499,16 @@ export const projects: Project[] = [
       "SQLAlchemy"
     ],
     "expertise": [
-      "Web Scraping",
-      "Data Extraction",
-      "Anonymization",
-      "Job Scheduling",
+      "Data Pipeline Engineering",
+      "Custom Job Scheduling",
+      "Network Routing (Tor)",
       "Regex Parsing"
     ],
     "strengths": [
-      "Successfully extracted ~40,000 benchmark records",
-      "Custom job scheduler for efficient processing",
-      "Tor integration for request anonymization",
-      "Robust error handling and retry logic",
-      "Efficient regex-based parsing"
+      "Successfully parsed and extracted ~40,000 distinct benchmark records",
+      "Engineered a custom job scheduler to manage asynchronous scraping tasks and error recovery",
+      "Implemented resilient request routing using a modified tor-python client to handle IP blocks",
+      "Highly optimized Regex parsing for unstructured HTML data"
     ],
     "limitations": [
       "Dependent on website structure (may break with updates)",
