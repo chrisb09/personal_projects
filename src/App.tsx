@@ -39,6 +39,8 @@ import {
   FolderGit2,
   Star,
   GitCommit,
+  Code,
+  Sparkles,
   Cpu,
   ExternalLink,
   BookOpen
