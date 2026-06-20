@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-06-20T12:29:31.984Z",
+  "lastUpdated": "2026-06-20T12:42:36.827Z",
   "projects": {
     "advoexport": {
       "stats": {
@@ -194,16 +194,20 @@
     "userbenchmark-scraper": {
       "stats": {
         "stars": 5,
-        "commits": 34,
+        "commits": 352,
         "branches": 1,
-        "lastCommit": "2021-06-12"
+        "lastCommit": "2021-03-31"
       },
       "loc": {
-        "total": 2800,
+        "total": 40152,
         "byLanguage": {
-          "Python": 2500,
-          "Markdown": 200,
-          "SQL": 100
+          "Shell": 114,
+          "TXT": 37852,
+          "Other": 64,
+          "Python": 2033,
+          "Markdown": 73,
+          "JSON": 1,
+          "HTML": 15
         }
       }
     }

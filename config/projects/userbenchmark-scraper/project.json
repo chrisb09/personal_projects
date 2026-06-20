@@ -50,7 +50,13 @@
     "Could be adapted for other benchmark sites",
     "Potential for ML-based data analysis"
   ],
-  "repos": [],
+  "repos": [
+    {
+      "name": "userbenchmark-web-scraper",
+      "url": "https://gitlab.com/christianbrinkmann/userbenchmark-web-scraper",
+      "type": "gitlab"
+    }
+  ],
   "mirrors": [],
   "screenshots": [],
   "relatedProjects": [

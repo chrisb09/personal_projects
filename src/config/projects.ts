@@ -534,7 +534,7 @@ export const projects: Project[] = [
   },
   {
     "id": "pacstall-programs",
-    "name": "Pacstall",
+    "name": "Pacstall Programs",
     "tagline": "Package Manager for Ubuntu/Debian",
     "year": "2025 - Present",
     "category": "package-management",
@@ -544,7 +544,7 @@ export const projects: Project[] = [
     "sourceType": "open-source",
     "aiUsage": "none",
     "aiUtilization": "no-ai",
-    "description": "Contributing to Pacstall, an AUR-inspired package manager for Ubuntu and Debian systems. Helps bridge the gap between bleeding-edge software and stable distributions.",
+    "description": "Contributing to the Pacstall package repository, an AUR-inspired package manager for Ubuntu and Debian systems. Helps bridge the gap between bleeding-edge software and stable distributions.",
     "purpose": "To make newer software versions accessible on stable Ubuntu/Debian systems without compromising system stability or waiting for official repository updates.",
     "technologies": [
       "Bash",
@@ -585,7 +585,7 @@ export const projects: Project[] = [
       "Help with documentation and tutorials",
       "Contribute to core functionality improvements"
     ],
-    "demoUrl": "https://pacstall.dev",
+    "liveUrl": "https://pacstall.dev",
     "repos": [
       {
         "name": "pacstall-programs",
@@ -793,7 +793,13 @@ export const projects: Project[] = [
       "Could be adapted for other benchmark sites",
       "Potential for ML-based data analysis"
     ],
-    "repos": [],
+    "repos": [
+      {
+        "name": "userbenchmark-web-scraper",
+        "url": "https://gitlab.com/christianbrinkmann/userbenchmark-web-scraper",
+        "type": "gitlab"
+      }
+    ],
     "mirrors": [],
     "screenshots": [],
     "relatedProjects": [
