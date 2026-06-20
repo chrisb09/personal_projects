@@ -533,7 +533,7 @@ export const projects: Project[] = [
     ]
   },
   {
-    "id": "pacstall",
+    "id": "pacstall-programs",
     "name": "Pacstall",
     "tagline": "Package Manager for Ubuntu/Debian",
     "year": "2025 - Present",
@@ -658,7 +658,18 @@ export const projects: Project[] = [
       "Support for newer Paint.net file formats"
     ],
     "demoUrl": "https://christian-f-brinkmann.de/pdn",
-    "repos": [],
+    "repos": [
+      {
+        "name": "pdnwebview",
+        "url": "https://github.com/chrisb09/pdnwebview",
+        "type": "github"
+      },
+      {
+        "name": "pdnexport",
+        "url": "https://gitlab.com/christianbrinkmann/pdnexport",
+        "type": "gitlab"
+      }
+    ],
     "mirrors": [],
     "screenshots": [],
     "relatedProjects": [

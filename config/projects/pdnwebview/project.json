@@ -53,7 +53,18 @@
     "Support for newer Paint.net file formats"
   ],
   "demoUrl": "https://christian-f-brinkmann.de/pdn",
-  "repos": [],
+  "repos": [
+    {
+      "name": "pdnwebview",
+      "url": "https://github.com/chrisb09/pdnwebview",
+      "type": "github"
+    },
+    {
+      "name": "pdnexport",
+      "url": "https://gitlab.com/christianbrinkmann/pdnexport",
+      "type": "gitlab"
+    }
+  ],
   "mirrors": [],
   "screenshots": [],
   "relatedProjects": [

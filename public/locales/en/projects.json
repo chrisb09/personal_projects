@@ -23,7 +23,7 @@
     "description": "A production-grade, self-hosted infrastructure environment operating continuously since 2018. Manages over 100+ TB of storage serving approximately 20 active users with zero major data loss incidents.",
     "purpose": "To create a privacy-focused, self-controlled alternative to commercial cloud services, providing reliable hosting for personal data and applications."
   },
-  "pacstall": {
+  "pacstall-programs": {
     "name": "Pacstall",
     "tagline": "Package Manager for Ubuntu/Debian",
     "description": "Contributing to Pacstall, an AUR-inspired package manager for Ubuntu and Debian systems. Helps bridge the gap between bleeding-edge software and stable distributions.",

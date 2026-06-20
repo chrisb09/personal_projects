@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-06-20T12:21:20.241Z",
+  "lastUpdated": "2026-06-20T12:29:31.984Z",
   "projects": {
     "advoexport": {
       "stats": {
@@ -137,7 +137,7 @@
         }
       }
     },
-    "pacstall": {
+    "pacstall-programs": {
       "stats": {
         "stars": 215,
         "commits": 47,
@@ -154,19 +154,24 @@
     },
     "pdnwebview": {
       "stats": {
-        "stars": 28,
-        "commits": 89,
-        "branches": 2,
-        "lastCommit": "2023-08-20"
+        "stars": 0,
+        "commits": 19,
+        "branches": 3,
+        "lastCommit": "2025-04-14"
       },
       "loc": {
-        "total": 4200,
+        "total": 8461,
         "byLanguage": {
-          "Python": 1800,
-          "HTML": 800,
-          "JavaScript": 1200,
-          "CSS": 300,
-          "Markdown": 100
+          "HTML": 194,
+          "TXT": 21,
+          "JSON": 6,
+          "Markdown": 78,
+          "Other": 14,
+          "LESS": 1836,
+          "CSS": 2782,
+          "SCSS": 1836,
+          "JavaScript": 1469,
+          "Python": 225
         }
       }
     },

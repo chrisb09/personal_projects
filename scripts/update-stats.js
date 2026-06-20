@@ -397,13 +397,12 @@ async function updateStats() {
         if (!repo.url) continue;
 
         const repoDirName = getRepoDirName(repo.url);
-        const repoPath = path.join(reposDir, projectId, repoDirName);
+        const repoPath = path.join(reposDir, repoDirName);
         const sshUrl = getSshGitUrl(repo.url);
 
         try {
           if (!fs.existsSync(repoPath)) {
             console.log(`Cloning ${repo.url} via SSH into ${repoPath}...`);
-            fs.mkdirSync(path.dirname(repoPath), { recursive: true });
             runGit(`git clone "${sshUrl}" "${repoPath}"`);
           } else {
             console.log(`Updating remote URL and fetching for ${repo.url} in ${repoPath}...`);
