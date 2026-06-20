@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-06-20T18:28:07.175Z",
+  "lastUpdated": "2026-06-20T18:31:08.214Z",
   "projects": {
     "advoexport": {
       "stats": {
@@ -145,6 +145,56 @@
       "loc": {
         "total": 0,
         "byLanguage": {}
+      }
+    },
+    "find-duplicates": {
+      "stats": {
+        "stars": 2,
+        "commits": 16,
+        "branches": 1,
+        "lastCommit": "2025-02-15"
+      },
+      "loc": {
+        "total": 487,
+        "byLanguage": {
+          "Shell": 11,
+          "Markdown": 69,
+          "Other": 9,
+          "Python": 398
+        }
+      },
+      "repoHashes": {
+        "find-duplicates": "68576ed1f4887edbafa7963287b59f48061641fb"
+      },
+      "repoLocs": {
+        "find-duplicates": {
+          "total": 487,
+          "byLanguage": {
+            "Shell": 11,
+            "Markdown": 69,
+            "Other": 9,
+            "Python": 398
+          },
+          "excludeFirstCommit": false
+        }
+      },
+      "repoAuthors": {
+        "find-duplicates": {
+          "root <root@christian-f-brinkmann.de>": 26,
+          "Christian F. Brinkmann (cloud) <mail@christian-f-brinkmann.de>": 1,
+          "root <root@cloud.christian-f-brinkmann.de>": 337,
+          "Christian F. Brinkmann <christian@xiaomi-notebook-pro-kubuntu-22.04>": 102,
+          "Christian F. Brinkmann <christian.brinkmann09@gmail.com>": 21
+        }
+      },
+      "repoCommits": {
+        "find-duplicates": 16
+      },
+      "repoBranches": {
+        "find-duplicates": 1
+      },
+      "repoLastCommit": {
+        "find-duplicates": "2025-02-15"
       }
     },
     "firecord": {

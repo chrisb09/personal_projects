@@ -1,0 +1,53 @@
+{
+  "id": "find-duplicates",
+  "name": "find-duplicates",
+  "tagline": "Python script to locate duplicate files and replace them with symbolic/hard links",
+  "year": "2022-2025",
+  "category": "utility",
+  "status": "active",
+  "projectType": "script-small",
+  "role": "main-author",
+  "sourceType": "open-source",
+  "aiUsage": "none",
+  "aiUtilization": "no-ai",
+  "description": "A Python command-line script that crawls source and destination directories to detect duplicate files by hashing. It can automatically delete target duplicates and replace them with symlinks or hardlinks, optimizing disk space while preserving file organization.",
+  "purpose": "To free up storage space (e.g. seeding torrents while maintaining files in library folders on different drives) without duplicating file contents.",
+  "technologies": [
+    "Python",
+    "Bash"
+  ],
+  "dependencies": [
+    "Python 3"
+  ],
+  "expertise": [
+    "Data Verification",
+    "Scripting",
+    "Storage Management"
+  ],
+  "strengths": [
+    "Uses speculative caching (filename+size) for extremely fast subsequent runs",
+    "Supports dry-run mode by default to preview changes safely",
+    "Generates clean links (symlinks or hardlinks) without duplicating files",
+    "Zero external dependencies (uses Python standard library only)"
+  ],
+  "limitations": [
+    "Hardlinks cannot span across different physical drives",
+    "Speculative caching might mismatch files with identical name/size but different content",
+    "File system operations modify target files directly (recommends backup)"
+  ],
+  "installation": "git clone git@github.com:chrisb09/find-duplicates.git\ncd find-duplicates\nchmod +x find_duplicates.py",
+  "usage": "# Perform a dry-run check:\npython3 find_duplicates.py /path/to/source /path/to/destination\n\n# Create symlinks for duplicates:\npython3 find_duplicates.py --softlink /path/to/source /path/to/destination",
+  "roadmap": [
+    "Improve caching validation algorithms",
+    "Provide interactive confirmation prompt before link creation"
+  ],
+  "repos": [
+    {
+      "name": "find-duplicates",
+      "url": "https://github.com/chrisb09/find-duplicates",
+      "type": "github"
+    }
+  ],
+  "mirrors": [],
+  "screenshots": []
+}
