@@ -669,7 +669,9 @@ export const projects: Project[] = [
       }
     ],
     "mirrors": [],
-    "screenshots": [],
+    "screenshots": [
+      "/images/projects/pdnwebview/zaubertrank.png"
+    ],
     "relatedProjects": [
       {
         "name": "pdnexport",
