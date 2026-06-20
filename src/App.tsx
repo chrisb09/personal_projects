@@ -195,7 +195,9 @@ function App() {
 
   // Get aggregate stats from projects with stats
   const aggregateStats = useMemo(() => {
-    const totalStars = projectsWithStats.reduce((sum, p) => sum + (p.stats?.stars || 0), 0);
+    const totalStars = projectsWithStats
+      .filter(p => p.role === 'main-author')
+      .reduce((sum, p) => sum + (p.stats?.stars || 0), 0);
     const totalCommits = projectsWithStats.reduce((sum, p) => sum + (p.stats?.commits || 0), 0);
     return { totalStars, totalCommits };
   }, [projectsWithStats]);

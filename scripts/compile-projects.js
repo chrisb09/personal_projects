@@ -141,22 +141,21 @@ export function getMainAuthorProjects() {
   return projects.filter(p => p.role === 'main-author');
 }
 
-// Calculate aggregate stats for main author projects only
+// Calculate aggregate stats
 export function getAggregateStats() {
   const ownProjects = getMainAuthorProjects();
   return {
     totalStars: ownProjects.reduce((sum, p) => sum + (p.stats?.stars || 0), 0),
-    totalCommits: ownProjects.reduce((sum, p) => sum + (p.stats?.commits || 0), 0),
-    totalLOC: ownProjects.reduce((sum, p) => sum + (p.loc?.total || 0), 0),
+    totalCommits: projects.reduce((sum, p) => sum + (p.stats?.commits || 0), 0),
+    totalLOC: projects.reduce((sum, p) => sum + (p.loc?.total || 0), 0),
   };
 }
 
-// Get LOC by language across all main author projects
+// Get LOC by language across all projects
 export function getLOCAggregateByLanguage(): Record<string, number> {
-  const ownProjects = getMainAuthorProjects();
   const aggregate: Record<string, number> = {};
   
-  ownProjects.forEach(project => {
+  projects.forEach(project => {
     if (project.loc?.byLanguage) {
       Object.entries(project.loc.byLanguage).forEach(([lang, count]) => {
         aggregate[lang] = (aggregate[lang] || 0) + count;

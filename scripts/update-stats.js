@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const { execSync } = require('child_process');
+const { execSync, exec } = require('child_process');
 
 const projectsDir = path.join(__dirname, '../config/projects');
 const statsFilePath = path.join(__dirname, '../public/stats.json');
@@ -13,7 +13,7 @@ if (!fs.existsSync(reposDir)) {
   fs.mkdirSync(reposDir, { recursive: true });
 }
 
-// Helper to execute Git commands with terminal prompts disabled to prevent hanging
+// Helper to execute Git commands synchronously with terminal prompts disabled
 function runGit(command, cwd) {
   return execSync(command, {
     cwd,
@@ -197,6 +197,103 @@ function loadProjects() {
   return projects;
 }
 
+// Run git blame asynchronously for a single file
+async function analyzeFileBlame(file, repoPath, config, matchesAuthor) {
+  const fullFilePath = path.join(repoPath, file);
+  if (shouldIgnore(file, config) || isBinaryFile(fullFilePath)) {
+    return null;
+  }
+
+  const lang = getLanguageForFile(file);
+  let localLocTotal = 0;
+  const localLocByLanguage = {};
+  const localAuthorsList = [];
+
+  try {
+    const blameOutput = await new Promise((resolve, reject) => {
+      exec(`git blame --line-porcelain -- "${file}"`, {
+        cwd: repoPath,
+        env: { ...process.env, GIT_TERMINAL_PROMPT: '0' },
+        maxBuffer: 100 * 1024 * 1024
+      }, (error, stdout, stderr) => {
+        if (error) reject(error);
+        else resolve(stdout);
+      });
+    });
+
+    let currentSha = null;
+    const commitCache = new Map();
+    let tempAuthor = null;
+    let tempEmail = null;
+
+    const lines = blameOutput.split('\n');
+    for (const line of lines) {
+      if (line.startsWith('\t')) {
+        const authorDetails = commitCache.get(currentSha) || { name: tempAuthor, email: tempEmail };
+        if (authorDetails) {
+          const authorStr = `${authorDetails.name} <${authorDetails.email}>`;
+          localAuthorsList.push(authorStr);
+
+          const name = authorDetails.name;
+          const email = authorDetails.email;
+          if (matchesAuthor(name, email)) {
+            localLocTotal++;
+            localLocByLanguage[lang] = (localLocByLanguage[lang] || 0) + 1;
+          }
+        }
+      } else {
+        const firstSpace = line.indexOf(' ');
+        const header = firstSpace === -1 ? line : line.substring(0, firstSpace);
+        const value = firstSpace === -1 ? '' : line.substring(firstSpace + 1);
+
+        if (header.length === 40 || header.length === 64) {
+          currentSha = header;
+          tempAuthor = null;
+          tempEmail = null;
+        } else if (header === 'author') {
+          tempAuthor = value;
+        } else if (header === 'author-mail') {
+          tempEmail = value.replace(/^<|>/g, '');
+        } else if (header === 'filename') {
+          if (currentSha && tempAuthor) {
+            commitCache.set(currentSha, { name: tempAuthor, email: tempEmail });
+          }
+        }
+      }
+    }
+
+    return { localLocTotal, localLocByLanguage, localAuthorsList };
+  } catch (blameErr) {
+    console.warn(`Failed to run git blame on file ${file}: ${blameErr.message}`);
+    return null;
+  }
+}
+
+// Process files concurrently in parallel batches
+async function processFilesParallel(files, repoPath, config, matchesAuthor, concurrencyLimit = 15) {
+  let index = 0;
+  let projectLocTotal = 0;
+  const projectLocByLanguage = {};
+  const localAuthorsListAll = [];
+
+  const workers = Array(concurrencyLimit).fill(null).map(async () => {
+    while (index < files.length) {
+      const file = files[index++];
+      const result = await analyzeFileBlame(file, repoPath, config, matchesAuthor);
+      if (result) {
+        projectLocTotal += result.localLocTotal;
+        for (const [lang, count] of Object.entries(result.localLocByLanguage)) {
+          projectLocByLanguage[lang] = (projectLocByLanguage[lang] || 0) + count;
+        }
+        localAuthorsListAll.push(...result.localAuthorsList);
+      }
+    }
+  });
+
+  await Promise.all(workers);
+  return { projectLocTotal, projectLocByLanguage, localAuthorsListAll };
+}
+
 async function updateStats() {
   const config = loadStatsConfig();
   const authorRegexes = config.authors.map(pattern => new RegExp(pattern, 'i'));
@@ -334,10 +431,25 @@ async function updateStats() {
             .length;
           totalBranches += repoBranches;
 
-          // 2. Get commit count
-          const commitsOutput = runGit('git rev-list --count HEAD', repoPath).toString();
-          const repoCommits = parseInt(commitsOutput.trim(), 10) || 0;
-          totalCommits += repoCommits;
+          // 2. Get commit count made by matching author(s)
+          const commitsListOutput = runGit('git log --format="%an <%ae>"', repoPath).toString();
+          const commitAuthors = commitsListOutput.trim().split('\n');
+          let matchedCommits = 0;
+          for (const authorLine of commitAuthors) {
+            if (authorLine.trim()) {
+              const match = authorLine.match(/^(.*?) <(.*?)>$/);
+              if (match) {
+                const name = match[1];
+                const email = match[2];
+                if (matchesAuthor(name, email)) {
+                  matchedCommits++;
+                }
+              } else if (matchesAuthor(authorLine, '')) {
+                matchedCommits++;
+              }
+            }
+          }
+          totalCommits += matchedCommits;
 
           // 3. Get last commit date (YYYY-MM-DD)
           const lastCommitOutput = runGit('git log -1 --format=%cs', repoPath).toString().trim();
@@ -345,65 +457,18 @@ async function updateStats() {
             latestCommitDate = lastCommitOutput;
           }
 
-          // 4. Analyze tracked files
+          // 4. Analyze tracked files in parallel batches
           const filesOutput = runGit('git ls-files', repoPath).toString().trim();
           const files = filesOutput.split('\n').filter(f => f.trim() !== '');
 
-          for (const file of files) {
-            const fullFilePath = path.join(repoPath, file);
-            
-            // Skip if ignored or is binary
-            if (shouldIgnore(file, config) || isBinaryFile(fullFilePath)) {
-              continue;
-            }
-
-            const lang = getLanguageForFile(file);
-
-            // Run git blame to attribute lines
-            try {
-              const blameOutput = runGit(`git blame --line-porcelain -- "${file}"`, repoPath).toString();
-
-              let currentSha = null;
-              const commitCache = new Map();
-              let tempAuthor = null;
-              let tempEmail = null;
-
-              const lines = blameOutput.split('\n');
-              for (const line of lines) {
-                if (line.startsWith('\t')) {
-                  const authorDetails = commitCache.get(currentSha) || { name: tempAuthor, email: tempEmail };
-                  if (authorDetails) {
-                    const authorStr = `${authorDetails.name} <${authorDetails.email}>`;
-                    globalAuthorsMap.set(authorStr, (globalAuthorsMap.get(authorStr) || 0) + 1);
-
-                    if (matchesAuthor(authorDetails.name, authorDetails.email)) {
-                      projectLocTotal++;
-                      projectLocByLanguage[lang] = (projectLocByLanguage[lang] || 0) + 1;
-                    }
-                  }
-                } else {
-                  const firstSpace = line.indexOf(' ');
-                  const header = firstSpace === -1 ? line : line.substring(0, firstSpace);
-                  const value = firstSpace === -1 ? '' : line.substring(firstSpace + 1);
-
-                  if (header.length === 40 || header.length === 64) {
-                    currentSha = header;
-                    tempAuthor = null;
-                    tempEmail = null;
-                  } else if (header === 'author') {
-                    tempAuthor = value;
-                  } else if (header === 'author-mail') {
-                    tempEmail = value.replace(/^<|>/g, '');
-                  } else if (header === 'filename') {
-                    if (currentSha && tempAuthor) {
-                      commitCache.set(currentSha, { name: tempAuthor, email: tempEmail });
-                    }
-                  }
-                }
-              }
-            } catch (blameErr) {
-              console.warn(`Failed to run git blame on file ${file}: ${blameErr.message}`);
-            }
+          const analysis = await processFilesParallel(files, repoPath, config, matchesAuthor, 15);
+          
+          projectLocTotal += analysis.projectLocTotal;
+          for (const [lang, count] of Object.entries(analysis.projectLocByLanguage)) {
+            projectLocByLanguage[lang] = (projectLocByLanguage[lang] || 0) + count;
+          }
+          for (const authorStr of analysis.localAuthorsListAll) {
+            globalAuthorsMap.set(authorStr, (globalAuthorsMap.get(authorStr) || 0) + 1);
           }
 
           analyzedSuccessfully = true;
@@ -440,13 +505,39 @@ async function updateStats() {
   fs.writeFileSync(statsFilePath, JSON.stringify(finalStats, null, 2), 'utf8');
   console.log(`\nSuccessfully updated stats file: ${statsFilePath}`);
 
-  // Save global authors report
+  // Save global authors report split into Matched vs Unmatched
   const sortedAuthors = [...globalAuthorsMap.entries()]
-    .sort((a, b) => b[1] - a[1])
-    .map(([author, count]) => `${author}: ${count} lines`);
+    .sort((a, b) => b[1] - a[1]);
 
-  fs.writeFileSync(authorsReportPath, sortedAuthors.join('\n'), 'utf8');
-  console.log(`Successfully generated authors report: ${authorsReportPath}`);
+  const matchedGroup = [];
+  const unmatchedGroup = [];
+
+  for (const [author, count] of sortedAuthors) {
+    const match = author.match(/^(.*?) <(.*?)>$/);
+    let matched = false;
+    if (match) {
+      matched = matchesAuthor(match[1], match[2]);
+    } else {
+      matched = matchesAuthor(author, '');
+    }
+
+    const reportLine = `${author}: ${count} lines`;
+    if (matched) {
+      matchedGroup.push(reportLine);
+    } else {
+      unmatchedGroup.push(reportLine);
+    }
+  }
+
+  const reportContent = [
+    `=== MATCHED AUTHORS (ME) ===`,
+    matchedGroup.length > 0 ? matchedGroup.join('\n') : `(No matched authors found)`,
+    `\n=== UNMATCHED AUTHORS (OTHERS) ===`,
+    unmatchedGroup.length > 0 ? unmatchedGroup.join('\n') : `(No unmatched authors found)`
+  ].join('\n');
+
+  fs.writeFileSync(authorsReportPath, reportContent, 'utf8');
+  console.log(`Successfully generated split authors report: ${authorsReportPath}`);
 }
 
 updateStats().catch(console.error);

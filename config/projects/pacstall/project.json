@@ -54,8 +54,8 @@
   "demoUrl": "https://pacstall.dev",
   "repos": [
     {
-      "name": "pacstall",
-      "url": "https://github.com/pacstall/pacstall",
+      "name": "pacstall-programs",
+      "url": "https://github.com/pacstall/pacstall-programs",
       "type": "github"
     }
   ],

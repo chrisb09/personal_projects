@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-06-20T12:07:03.093Z",
+  "lastUpdated": "2026-06-20T12:21:20.241Z",
   "projects": {
     "advoexport": {
       "stats": {
@@ -11,9 +11,9 @@
       "loc": {
         "total": 624,
         "byLanguage": {
-          "Other": 10,
           "Python": 612,
-          "Shell": 2
+          "Shell": 2,
+          "Other": 10
         }
       }
     },
@@ -63,13 +63,13 @@
       "loc": {
         "total": 5255,
         "byLanguage": {
-          "YAML": 79,
-          "Other": 33,
-          "JavaScript": 1817,
           "TypeScript": 2579,
+          "JavaScript": 1817,
+          "Other": 33,
+          "YAML": 79,
           "CSS": 34,
-          "XML": 1,
           "JSON": 554,
+          "XML": 1,
           "MJS": 158
         }
       }
@@ -139,14 +139,17 @@
     },
     "pacstall": {
       "stats": {
-        "stars": 1635,
-        "commits": 2560,
-        "branches": 9,
+        "stars": 215,
+        "commits": 47,
+        "branches": 2,
         "lastCommit": "2026-06-18"
       },
       "loc": {
-        "total": 0,
-        "byLanguage": {}
+        "total": 812,
+        "byLanguage": {
+          "Other": 462,
+          "PACSCRIPT": 350
+        }
       }
     },
     "pdnwebview": {
