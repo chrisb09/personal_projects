@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-06-20T16:55:46.546Z",
+  "lastUpdated": "2026-06-20T16:58:03.266Z",
   "projects": {
     "advoexport": {
       "stats": {
@@ -592,24 +592,36 @@
     "small-projects": {
       "stats": {
         "stars": 1,
-        "commits": 2,
-        "branches": 1,
-        "lastCommit": "2023-01-26"
+        "commits": 8,
+        "branches": 2,
+        "lastCommit": "2024-01-19"
       },
       "loc": {
-        "total": 24,
+        "total": 399,
         "byLanguage": {
-          "Python": 24
+          "Python": 279,
+          "Other": 2,
+          "Markdown": 118
         }
       },
       "repoHashes": {
-        "redis-dump-load": "74854b702a8bacc1c2fdcdbca3631264208fab13"
+        "redis-dump-load": "74854b702a8bacc1c2fdcdbca3631264208fab13",
+        "redis_load_store": "2e4ec42a1330040abbd6e268133fc06322440fcb"
       },
       "repoLocs": {
         "redis-dump-load": {
           "total": 24,
           "byLanguage": {
             "Python": 24
+          },
+          "excludeFirstCommit": false
+        },
+        "redis_load_store": {
+          "total": 375,
+          "byLanguage": {
+            "Other": 2,
+            "Markdown": 118,
+            "Python": 255
           },
           "excludeFirstCommit": false
         }
@@ -629,16 +641,22 @@
           "Christian F. Brinkmann <christian.brinkmann09@gmail.com>": 24,
           "Jonas Nockert <jonasnockert@gmail.com>": 2,
           "Ben Reser <ben@reser.org>": 1
+        },
+        "redis_load_store": {
+          "Christian F. Brinkmann <christian.brinkmann09@gmail.com>": 375
         }
       },
       "repoCommits": {
-        "redis-dump-load": 2
+        "redis-dump-load": 2,
+        "redis_load_store": 6
       },
       "repoBranches": {
-        "redis-dump-load": 1
+        "redis-dump-load": 1,
+        "redis_load_store": 1
       },
       "repoLastCommit": {
-        "redis-dump-load": "2023-01-26"
+        "redis-dump-load": "2023-01-26",
+        "redis_load_store": "2024-01-19"
       }
     },
     "userbenchmark-scraper": {

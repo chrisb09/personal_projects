@@ -828,6 +828,11 @@ export const projects: Project[] = [
         "name": "redis-dump-load",
         "url": "https://github.com/chrisb09/redis-dump-load",
         "type": "github"
+      },
+      {
+        "name": "redis_load_store",
+        "url": "https://gitlab.com/christianbrinkmann/redis_load_store",
+        "type": "gitlab"
       }
     ],
     "mirrors": [],
