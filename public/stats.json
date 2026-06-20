@@ -1,16 +1,20 @@
 {
-  "lastUpdated": "2026-06-20T11:36:35.694Z",
+  "lastUpdated": "2026-06-20T12:07:03.093Z",
   "projects": {
     "advoexport": {
       "stats": {
         "stars": 0,
-        "commits": 0,
-        "branches": 0,
-        "lastCommit": ""
+        "commits": 7,
+        "branches": 1,
+        "lastCommit": "2020-07-21"
       },
       "loc": {
-        "total": 0,
-        "byLanguage": {}
+        "total": 624,
+        "byLanguage": {
+          "Other": 10,
+          "Python": 612,
+          "Shell": 2
+        }
       }
     },
     "cpp-ml-interface": {
@@ -57,11 +61,16 @@
         "lastCommit": "2026-05-26"
       },
       "loc": {
-        "total": 2819,
+        "total": 5255,
         "byLanguage": {
-          "TypeScript": 1766,
-          "JavaScript": 1039,
-          "CSS": 14
+          "YAML": 79,
+          "Other": 33,
+          "JavaScript": 1817,
+          "TypeScript": 2579,
+          "CSS": 34,
+          "XML": 1,
+          "JSON": 554,
+          "MJS": 158
         }
       }
     },
@@ -136,11 +145,8 @@
         "lastCommit": "2026-06-18"
       },
       "loc": {
-        "total": 6336,
-        "byLanguage": {
-          "Shell": 5996,
-          "Roff": 340
-        }
+        "total": 0,
+        "byLanguage": {}
       }
     },
     "pdnwebview": {

@@ -1,0 +1,46 @@
+{
+  "authors": [
+    "Christian.*Brinkmann",
+    "christian\\.brinkmann.*",
+    "chrisb09",
+    "christianbrinkmann"
+  ],
+  "ignoreExtensions": [
+    ".log",
+    ".lock",
+    ".png",
+    ".jpg",
+    ".jpeg",
+    ".webp",
+    ".gif",
+    ".ico",
+    ".pdf",
+    ".zip",
+    ".gz",
+    ".tar",
+    ".woff",
+    ".woff2",
+    ".ttf",
+    ".eot",
+    ".mp4",
+    ".mp3",
+    ".svg"
+  ],
+  "ignoreFiles": [
+    "package-lock.json",
+    "pnpm-lock.yaml",
+    "yarn.lock",
+    "go.sum"
+  ],
+  "ignoreDirectories": [
+    "node_modules",
+    ".git",
+    "dist",
+    ".next",
+    "build",
+    "public",
+    "repos",
+    "temp",
+    "tmp"
+  ]
+}

@@ -1,17 +1,183 @@
 const fs = require('fs');
 const path = require('path');
+const { execSync } = require('child_process');
 
 const projectsDir = path.join(__dirname, '../config/projects');
 const statsFilePath = path.join(__dirname, '../public/stats.json');
+const statsConfigPath = path.join(__dirname, '../config/stats-config.json');
+const reposDir = path.join(__dirname, '../repos');
+const authorsReportPath = path.join(__dirname, '../authors-report.txt');
 
-// Helper to parse Link header count for GitHub
-function parseLinkHeaderCount(linkHeader, defaultCount) {
-  if (!linkHeader) return defaultCount;
-  const match = linkHeader.match(/&page=(\d+)>; rel="last"/);
-  return match ? parseInt(match[1], 10) : defaultCount;
+// Ensure directory for cloned repositories exists
+if (!fs.existsSync(reposDir)) {
+  fs.mkdirSync(reposDir, { recursive: true });
 }
 
-// Load all project JSON configs from the projects directory
+// Helper to execute Git commands with terminal prompts disabled to prevent hanging
+function runGit(command, cwd) {
+  return execSync(command, {
+    cwd,
+    env: { ...process.env, GIT_TERMINAL_PROMPT: '0' },
+    maxBuffer: 100 * 1024 * 1024,
+    stdio: ['ignore', 'pipe', 'ignore'] // suppress stderr to avoid pollution, capture stdout
+  });
+}
+
+// Load stats config containing author patterns and ignore rules
+function loadStatsConfig() {
+  if (fs.existsSync(statsConfigPath)) {
+    try {
+      return JSON.parse(fs.readFileSync(statsConfigPath, 'utf8'));
+    } catch (e) {
+      console.error('Failed to parse stats-config.json:', e.message);
+    }
+  }
+  // Default fallback config
+  return {
+    authors: [
+      "Christian.*Brinkmann",
+      "christian\\.brinkmann.*",
+      "chrisb09",
+      "christianbrinkmann"
+    ],
+    ignoreExtensions: [
+      ".log", ".lock", ".png", ".jpg", ".jpeg", ".webp", ".gif", ".ico", ".pdf", 
+      ".zip", ".gz", ".tar", ".woff", ".woff2", ".ttf", ".eot", ".svg"
+    ],
+    ignoreFiles: [
+      "package-lock.json", "pnpm-lock.yaml", "yarn.lock", "go.sum"
+    ],
+    ignoreDirectories: [
+      "node_modules", ".git", "dist", ".next", "build", "public", "repos", "temp", "tmp"
+    ]
+  };
+}
+
+// Convert Git HTTPS URL to SSH format for passwordless auth using local SSH keys
+function getSshGitUrl(url) {
+  if (url.startsWith('git@') || url.startsWith('ssh://')) {
+    return url; // Already SSH
+  }
+  
+  try {
+    const match = url.match(/^https?:\/\/([^\/]+)\/(.+)$/i);
+    if (match) {
+      const host = match[1];
+      let repoPath = match[2];
+      if (!repoPath.endsWith('.git')) {
+        repoPath += '.git';
+      }
+      return `git@${host}:${repoPath}`;
+    }
+  } catch (e) {
+    // ignore parsing errors and use original URL
+  }
+  return url;
+}
+
+// Extract directory name from repo URL
+function getRepoDirName(url) {
+  const cleanUrl = url.replace(/\.git$/, '');
+  const parts = cleanUrl.split('/');
+  return parts[parts.length - 1] || 'temp-repo';
+}
+
+// Map extensions to language names
+const extensionToLanguage = {
+  '.js': 'JavaScript',
+  '.jsx': 'JavaScript',
+  '.ts': 'TypeScript',
+  '.tsx': 'TypeScript',
+  '.py': 'Python',
+  '.go': 'Go',
+  '.java': 'Java',
+  '.c': 'C',
+  '.cpp': 'C++',
+  '.h': 'C/C++ Header',
+  '.hpp': 'C/C++ Header',
+  '.cs': 'C#',
+  '.sh': 'Shell',
+  '.bash': 'Shell',
+  '.yml': 'YAML',
+  '.yaml': 'YAML',
+  '.json': 'JSON',
+  '.md': 'Markdown',
+  '.css': 'CSS',
+  '.html': 'HTML',
+  '.scss': 'SCSS',
+  '.rs': 'Rust',
+  '.php': 'PHP',
+  '.rb': 'Ruby',
+  '.pl': 'Perl',
+  '.pm': 'Perl',
+  '.kt': 'Kotlin',
+  '.swift': 'Swift',
+  '.scala': 'Scala',
+  '.m': 'Objective-C',
+  '.sql': 'SQL',
+  '.scad': 'OpenSCAD',
+  '.vue': 'Vue',
+  '.svelte': 'Svelte',
+  '.r': 'R',
+  '.dart': 'Dart'
+};
+
+function getLanguageForFile(filePath) {
+  const ext = path.extname(filePath).toLowerCase();
+  if (extensionToLanguage[ext]) {
+    return extensionToLanguage[ext];
+  }
+  if (ext) {
+    return ext.substring(1).toUpperCase();
+  }
+  return 'Other';
+}
+
+// Check if a file should be ignored based on stats-config rules
+function shouldIgnore(filePath, config) {
+  const basename = path.basename(filePath);
+  if (config.ignoreFiles.includes(basename)) {
+    return true;
+  }
+  
+  const ext = path.extname(filePath).toLowerCase();
+  if (config.ignoreExtensions.includes(ext)) {
+    return true;
+  }
+  
+  const segments = filePath.split(/[\\/]/);
+  for (const segment of segments) {
+    if (config.ignoreDirectories.includes(segment)) {
+      return true;
+    }
+  }
+  
+  return false;
+}
+
+// Check if file is binary by searching for null bytes
+function isBinaryFile(filePath) {
+  const buffer = Buffer.alloc(512);
+  let fd;
+  try {
+    fd = fs.openSync(filePath, 'r');
+    const bytesRead = fs.readSync(fd, buffer, 0, 512, 0);
+    fs.closeSync(fd);
+    for (let i = 0; i < bytesRead; i++) {
+      if (buffer[i] === 0) {
+        return true;
+      }
+    }
+    return false;
+  } catch (err) {
+    if (fd !== undefined) {
+      try { fs.closeSync(fd); } catch (e) {}
+    }
+    return true; // assume binary on read failure
+  }
+}
+
+// Load all project JSON configs from config/projects/*
 function loadProjects() {
   const projects = [];
   if (!fs.existsSync(projectsDir)) return projects;
@@ -32,6 +198,14 @@ function loadProjects() {
 }
 
 async function updateStats() {
+  const config = loadStatsConfig();
+  const authorRegexes = config.authors.map(pattern => new RegExp(pattern, 'i'));
+
+  function matchesAuthor(name, email) {
+    const checkStr = `${name} <${email}>`;
+    return authorRegexes.some(regex => regex.test(name) || regex.test(email) || regex.test(checkStr));
+  }
+
   const projects = loadProjects();
   console.log(`Loaded ${projects.length} projects for stats collection.`);
 
@@ -47,6 +221,7 @@ async function updateStats() {
   }
 
   const updatedProjectsStats = {};
+  const globalAuthorsMap = new Map();
 
   for (const project of projects) {
     const projectId = project.id;
@@ -57,7 +232,6 @@ async function updateStats() {
       loc: { total: 0, byLanguage: {} }
     };
 
-    // If project has static stats/loc in its definition, merge it as baseline
     if (project.stats) {
       projectStats.stats = { ...projectStats.stats, ...project.stats };
     }
@@ -65,162 +239,192 @@ async function updateStats() {
       projectStats.loc = { ...projectStats.loc, ...project.loc };
     }
 
-    // Attempt to fetch fresh stats if repository is configured and stats are not excluded
+    // Step A: Fetch stars from hosting API if possible (we need API for stars)
     const primaryRepo = project.repos && project.repos[0];
+    let fetchedStars = null;
+
     if (primaryRepo && primaryRepo.url && !project.excludeFromStats) {
       const repoUrl = primaryRepo.url;
-      console.log(`\nFetching stats for project: ${projectId} (${repoUrl})`);
-
       try {
-        // Detect Github
         const githubMatch = repoUrl.match(/https?:\/\/github\.com\/(.+?)\/(.+?)(?:\.git)?$/i);
-        // Detect GitLab (supports custom hosts containing gitlab)
         const gitlabMatch = repoUrl.match(/https?:\/\/([^\/]*gitlab[^\/]*)\/(.+?)\/(.+?)(?:\.git)?$/i);
 
         if (githubMatch) {
           const [, owner, repo] = githubMatch;
-          const headers = {
-            'User-Agent': 'Antigravity-Portfolio-Script'
-          };
+          const headers = { 'User-Agent': 'Antigravity-Portfolio-Script' };
           if (process.env.GITHUB_TOKEN) {
             headers['Authorization'] = `token ${process.env.GITHUB_TOKEN}`;
           }
-
-          // Fetch Repository Details
           const repoRes = await fetch(`https://api.github.com/repos/${owner}/${repo}`, { headers });
-          if (!repoRes.ok) throw new Error(`GitHub Repo API error: ${repoRes.status}`);
-          const repoData = await repoRes.json();
-
-          // Fetch Commits count (per_page=1 and read link header)
-          let commitsCount = projectStats.stats.commits || 0;
-          const commitsRes = await fetch(`https://api.github.com/repos/${owner}/${repo}/commits?per_page=1`, { headers });
-          if (commitsRes.ok) {
-            const linkHeader = commitsRes.headers.get('link');
-            const list = await commitsRes.json();
-            commitsCount = parseLinkHeaderCount(linkHeader, list.length);
+          if (repoRes.ok) {
+            const repoData = await repoRes.json();
+            fetchedStars = repoData.stargazers_count;
+            console.log(`Fetched stars for ${projectId} from GitHub: ${fetchedStars}`);
           }
-
-          // Fetch Branches count
-          let branchesCount = projectStats.stats.branches || 0;
-          const branchesRes = await fetch(`https://api.github.com/repos/${owner}/${repo}/branches?per_page=1`, { headers });
-          if (branchesRes.ok) {
-            const linkHeader = branchesRes.headers.get('link');
-            const list = await branchesRes.json();
-            branchesCount = parseLinkHeaderCount(linkHeader, list.length);
-          }
-
-          // Fetch Languages LOC
-          const langRes = await fetch(`https://api.github.com/repos/${owner}/${repo}/languages`, { headers });
-          let loc = projectStats.loc;
-          if (langRes.ok) {
-            const langBytes = await langRes.json();
-            const byLanguage = {};
-            let total = 0;
-
-            // Estimate LOC: 1 LOC ≈ 55 bytes average
-            Object.entries(langBytes).forEach(([lang, bytes]) => {
-              const estimatedLines = Math.round(bytes / 55);
-              if (estimatedLines > 0) {
-                byLanguage[lang] = estimatedLines;
-                total += estimatedLines;
-              }
-            });
-
-            if (total > 0) {
-              loc = { total, byLanguage };
-            }
-          }
-
-          // Format last commit (YYYY-MM-DD)
-          const lastCommitRaw = repoData.pushed_at || '';
-          const lastCommit = lastCommitRaw ? lastCommitRaw.substring(0, 10) : projectStats.stats.lastCommit;
-
-          projectStats = {
-            stats: {
-              stars: repoData.stargazers_count,
-              commits: commitsCount,
-              branches: branchesCount,
-              lastCommit
-            },
-            loc
-          };
-
-          console.log(`Successfully fetched GitHub stats for ${projectId}`);
-
         } else if (gitlabMatch) {
           const [,, host, owner, repo] = gitlabMatch;
           const projectPath = `${owner}/${repo}`;
           const headers = {};
-          
-          // Generate instance-specific environment variable name
-          // e.g. gitlab.instance2.com -> GITLAB_TOKEN_GITLAB_INSTANCE2_COM
           const envTokenName = `GITLAB_TOKEN_${host.toUpperCase().replace(/[^A-Z0-9]/g, '_')}`;
           const gitlabToken = process.env[envTokenName] || process.env.GITLAB_TOKEN;
-          
           if (gitlabToken) {
             headers['PRIVATE-TOKEN'] = gitlabToken;
           }
-
-          // Fetch GitLab project details
           const projectUrl = `https://${host}/api/v4/projects/${encodeURIComponent(projectPath)}`;
           const projectRes = await fetch(projectUrl, { headers });
-          if (!projectRes.ok) throw new Error(`GitLab Project API error: ${projectRes.status}`);
-          const projectData = await projectRes.json();
-          const gitlabId = projectData.id;
-
-          // Fetch Commits count
-          let commitsCount = projectStats.stats.commits || 0;
-          const commitsRes = await fetch(`https://${host}/api/v4/projects/${gitlabId}/repository/commits?per_page=1`, { headers });
-          if (commitsRes.ok) {
-            const totalHeader = commitsRes.headers.get('X-Total');
-            commitsCount = totalHeader ? parseInt(totalHeader, 10) : commitsCount;
+          if (projectRes.ok) {
+            const projectData = await projectRes.json();
+            fetchedStars = projectData.star_count || 0;
+            console.log(`Fetched stars for ${projectId} from GitLab: ${fetchedStars}`);
           }
-
-          // Fetch Branches count
-          let branchesCount = projectStats.stats.branches || 0;
-          const branchesRes = await fetch(`https://${host}/api/v4/projects/${gitlabId}/repository/branches?per_page=1`, { headers });
-          if (branchesRes.ok) {
-            const totalHeader = branchesRes.headers.get('X-Total');
-            branchesCount = totalHeader ? parseInt(totalHeader, 10) : branchesCount;
-          }
-
-          // Fetch Languages
-          const langRes = await fetch(`https://${host}/api/v4/projects/${gitlabId}/languages`, { headers });
-          let loc = projectStats.loc;
-          if (langRes.ok) {
-            const langPercentages = await langRes.json();
-            const byLanguage = {};
-            
-            // GitLab returns language percentages (e.g. { "TypeScript": 65.2 }).
-            // We use our baseline total LOC (or fallback to 5000 if 0) and distribute it.
-            const total = loc.total || 5000;
-            Object.entries(langPercentages).forEach(([lang, percent]) => {
-              byLanguage[lang] = Math.round((percent / 100) * total);
-            });
-            loc = { total, byLanguage };
-          }
-
-          // Format last commit (YYYY-MM-DD)
-          const lastCommitRaw = projectData.last_activity_at || '';
-          const lastCommit = lastCommitRaw ? lastCommitRaw.substring(0, 10) : projectStats.stats.lastCommit;
-
-          projectStats = {
-            stats: {
-              stars: projectData.star_count || 0,
-              commits: commitsCount,
-              branches: branchesCount,
-              lastCommit
-            },
-            loc
-          };
-
-          console.log(`Successfully fetched GitLab stats for ${projectId}`);
-        } else {
-          console.log(`Repository type not supported for API stats: ${repoUrl}`);
         }
       } catch (err) {
-        console.error(`Failed to fetch live stats for ${projectId}:`, err.message);
-        console.log(`Keeping existing fallback stats for ${projectId}`);
+        console.warn(`Failed to fetch stars for ${projectId}: ${err.message}`);
+      }
+    }
+
+    if (fetchedStars !== null) {
+      projectStats.stats.stars = fetchedStars;
+    }
+
+    // Step B: Clone/Update repositories locally and analyze line-by-line attribution
+    if (project.repos && project.repos.length > 0) {
+      let projectLocTotal = 0;
+      const projectLocByLanguage = {};
+      let totalCommits = 0;
+      let totalBranches = 0;
+      let latestCommitDate = '';
+      let analyzedSuccessfully = false;
+
+      for (const repo of project.repos) {
+        if (!repo.url) continue;
+
+        const repoDirName = getRepoDirName(repo.url);
+        const repoPath = path.join(reposDir, projectId, repoDirName);
+        const sshUrl = getSshGitUrl(repo.url);
+
+        try {
+          if (!fs.existsSync(repoPath)) {
+            console.log(`Cloning ${repo.url} via SSH into ${repoPath}...`);
+            fs.mkdirSync(path.dirname(repoPath), { recursive: true });
+            runGit(`git clone "${sshUrl}" "${repoPath}"`);
+          } else {
+            console.log(`Updating remote URL and fetching for ${repo.url} in ${repoPath}...`);
+            try {
+              runGit(`git remote set-url origin "${sshUrl}"`, repoPath);
+            } catch (remoteErr) {
+              console.warn(`Failed to set remote URL to SSH for ${repo.url}: ${remoteErr.message}`);
+            }
+            runGit(`git fetch --all`, repoPath);
+            try {
+              runGit(`git remote set-head origin -a`, repoPath);
+              runGit(`git reset --hard origin/HEAD`, repoPath);
+            } catch (e) {
+              runGit(`git reset --hard HEAD`, repoPath);
+              runGit(`git pull`, repoPath);
+            }
+          }
+
+          console.log(`Analyzing local repo: ${repoDirName}...`);
+
+          // 1. Get branch count
+          const branchesOutput = runGit('git branch -r', repoPath).toString();
+          const repoBranches = branchesOutput.trim().split('\n')
+            .filter(line => line.trim() && !line.includes('origin/HEAD'))
+            .length;
+          totalBranches += repoBranches;
+
+          // 2. Get commit count
+          const commitsOutput = runGit('git rev-list --count HEAD', repoPath).toString();
+          const repoCommits = parseInt(commitsOutput.trim(), 10) || 0;
+          totalCommits += repoCommits;
+
+          // 3. Get last commit date (YYYY-MM-DD)
+          const lastCommitOutput = runGit('git log -1 --format=%cs', repoPath).toString().trim();
+          if (lastCommitOutput && (!latestCommitDate || lastCommitOutput > latestCommitDate)) {
+            latestCommitDate = lastCommitOutput;
+          }
+
+          // 4. Analyze tracked files
+          const filesOutput = runGit('git ls-files', repoPath).toString().trim();
+          const files = filesOutput.split('\n').filter(f => f.trim() !== '');
+
+          for (const file of files) {
+            const fullFilePath = path.join(repoPath, file);
+            
+            // Skip if ignored or is binary
+            if (shouldIgnore(file, config) || isBinaryFile(fullFilePath)) {
+              continue;
+            }
+
+            const lang = getLanguageForFile(file);
+
+            // Run git blame to attribute lines
+            try {
+              const blameOutput = runGit(`git blame --line-porcelain -- "${file}"`, repoPath).toString();
+
+              let currentSha = null;
+              const commitCache = new Map();
+              let tempAuthor = null;
+              let tempEmail = null;
+
+              const lines = blameOutput.split('\n');
+              for (const line of lines) {
+                if (line.startsWith('\t')) {
+                  const authorDetails = commitCache.get(currentSha) || { name: tempAuthor, email: tempEmail };
+                  if (authorDetails) {
+                    const authorStr = `${authorDetails.name} <${authorDetails.email}>`;
+                    globalAuthorsMap.set(authorStr, (globalAuthorsMap.get(authorStr) || 0) + 1);
+
+                    if (matchesAuthor(authorDetails.name, authorDetails.email)) {
+                      projectLocTotal++;
+                      projectLocByLanguage[lang] = (projectLocByLanguage[lang] || 0) + 1;
+                    }
+                  }
+                } else {
+                  const firstSpace = line.indexOf(' ');
+                  const header = firstSpace === -1 ? line : line.substring(0, firstSpace);
+                  const value = firstSpace === -1 ? '' : line.substring(firstSpace + 1);
+
+                  if (header.length === 40 || header.length === 64) {
+                    currentSha = header;
+                    tempAuthor = null;
+                    tempEmail = null;
+                  } else if (header === 'author') {
+                    tempAuthor = value;
+                  } else if (header === 'author-mail') {
+                    tempEmail = value.replace(/^<|>/g, '');
+                  } else if (header === 'filename') {
+                    if (currentSha && tempAuthor) {
+                      commitCache.set(currentSha, { name: tempAuthor, email: tempEmail });
+                    }
+                  }
+                }
+              }
+            } catch (blameErr) {
+              console.warn(`Failed to run git blame on file ${file}: ${blameErr.message}`);
+            }
+          }
+
+          analyzedSuccessfully = true;
+        } catch (repoErr) {
+          console.error(`Failed to analyze repo ${repo.url} for project ${projectId}:`, repoErr.message);
+        }
+      }
+
+      if (analyzedSuccessfully) {
+        projectStats.loc = {
+          total: projectLocTotal,
+          byLanguage: projectLocByLanguage
+        };
+        projectStats.stats.commits = totalCommits;
+        projectStats.stats.branches = totalBranches;
+        if (latestCommitDate) {
+          projectStats.stats.lastCommit = latestCommitDate;
+        }
+        console.log(`Project ${projectId} stats updated locally: LOC total=${projectLocTotal}, commits=${totalCommits}, lastCommit=${latestCommitDate}`);
+      } else {
+        console.log(`Keeping fallback stats for project ${projectId} since local analysis failed/skipped.`);
       }
     }
 
@@ -235,6 +439,14 @@ async function updateStats() {
 
   fs.writeFileSync(statsFilePath, JSON.stringify(finalStats, null, 2), 'utf8');
   console.log(`\nSuccessfully updated stats file: ${statsFilePath}`);
+
+  // Save global authors report
+  const sortedAuthors = [...globalAuthorsMap.entries()]
+    .sort((a, b) => b[1] - a[1])
+    .map(([author, count]) => `${author}: ${count} lines`);
+
+  fs.writeFileSync(authorsReportPath, sortedAuthors.join('\n'), 'utf8');
+  console.log(`Successfully generated authors report: ${authorsReportPath}`);
 }
 
 updateStats().catch(console.error);
