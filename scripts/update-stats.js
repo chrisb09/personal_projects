@@ -320,6 +320,12 @@ async function updateStats() {
     }
   }
 
+  const forceReanalyze = process.argv.includes('--force') || process.argv.includes('-f');
+  if (forceReanalyze) {
+    console.log('Force re-analyze flag detected. Bypassing cache for all repositories...');
+    existingStats.projects = {};
+  }
+
   const updatedProjectsStats = {};
   const globalAuthorsMap = new Map();
 
