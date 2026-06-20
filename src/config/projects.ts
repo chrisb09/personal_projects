@@ -2,6 +2,71 @@ import type { Project } from '@/types/project';
 
 export const projects: Project[] = [
   {
+    "id": "MusicBot",
+    "name": "JMusicBot Fork",
+    "tagline": "Feature-rich self-hosted Discord music bot fork with playback analytics and Docker deployment",
+    "year": "2016-2026",
+    "category": "backend",
+    "status": "active",
+    "projectType": "software-project",
+    "role": "fork-maintainer",
+    "sourceType": "open-source",
+    "aiUsage": "none",
+    "aiUtilization": "no-ai",
+    "description": "A maintained, feature-rich fork of the popular self-hosted JMusicBot Discord music bot. Built with JDA 6 and Java, it includes modern Discord voice encryption (DAVE) support, optional YouTube account login (OAuth2), custom per-channel playback status messages, and JDBC/SQLite playback analytics logging. The project includes a dedicated Docker container deployment path.",
+    "purpose": "To keep JMusicBot operational on modern Discord API standards while expanding it with database-backed statistics and native container support.",
+    "technologies": [
+      "Java",
+      "Docker",
+      "SQLite",
+      "JDA"
+    ],
+    "dependencies": [
+      "JDA 6.x",
+      "lavaplayer",
+      "SQLite-JDBC",
+      "JDA-Chewtils"
+    ],
+    "expertise": [
+      "Backend Development",
+      "API Integration",
+      "Containerization",
+      "Database Logging"
+    ],
+    "strengths": [
+      "Fully updated to support DAVE voice encryption and JDA 6.1.1",
+      "Bypasses YouTube rate limits via Google account OAuth2 login & visitor tokens",
+      "Built-in SQLite playback analytics and scheduling scheduler reports",
+      "Comes with containerized Docker deployment and compose configurations"
+    ],
+    "limitations": [
+      "Subject to ongoing changes in YouTube and Discord API structures",
+      "Requires manual Google account login config for restricted content",
+      "Requires Docker or Java 8+ environment to self-host"
+    ],
+    "installation": "# Clone and build the jar:\ngit clone git@github.com:chrisb09/MusicBot.git\ncd MusicBot\nmvn clean package\n\n# Or run via Docker Compose:\ndocker-compose up -d",
+    "usage": "# Run JMusicBot directly:\njava -Dnogui=true -jar JMusicBot.jar\n\n# Configure settings in config.txt:\ntoken=YOUR_BOT_TOKEN\nowner=YOUR_DISCORD_ID\nyoutubeoauth2=true",
+    "roadmap": [
+      "Automate dependencies/lavaplayer library version bumps",
+      "Support database-backed web dashboard for real-time playlist sharing"
+    ],
+    "repos": [
+      {
+        "name": "MusicBot",
+        "url": "https://github.com/chrisb09/MusicBot",
+        "type": "github"
+      },
+      {
+        "name": "jmb-container",
+        "url": "https://github.com/chrisb09/jmb-container",
+        "type": "github"
+      }
+    ],
+    "mirrors": [],
+    "screenshots": [],
+    "logo": "/images/projects/MusicBot/logo.png"
+  },
+  {
     "id": "advoexport",
     "name": "advoexport",
     "tagline": "Custom ETL Pipeline for Legacy Legal Data Migration",
@@ -654,6 +719,58 @@ export const projects: Project[] = [
       "/images/projects/image-rename-manual-gui/screenshot_large.png"
     ],
     "logo": "/images/projects/image-rename-manual-gui/logo.png"
+  },
+  {
+    "id": "jda-chewtils",
+    "name": "JDA-Chewtils",
+    "tagline": "Modern, modular tools and utilities extension library for JDA Discord bots",
+    "year": "2016-2025",
+    "category": "library",
+    "status": "active",
+    "projectType": "software-project",
+    "role": "contributor",
+    "sourceType": "open-source",
+    "aiUsage": "none",
+    "aiUtilization": "no-ai",
+    "description": "A modern, modular fork of the classic JDA-Utilities library that provides boilerplate reduction tools for Java Discord API (JDA) bots. It includes helper structures for menu pagination, command parsing, and OAuth2 integration. I contributed to JDA 6.1.1 compatibility upgrades.",
+    "purpose": "To simplify Java-based Discord bot development by providing reusable structures for command registering and UI menus.",
+    "technologies": [
+      "Java",
+      "Gradle",
+      "JDA"
+    ],
+    "dependencies": [
+      "JDA 5.x / 6.x"
+    ],
+    "expertise": [
+      "Library Design",
+      "API Integration",
+      "Java Software Development"
+    ],
+    "strengths": [
+      "Modular library design allowing developers to import only required features",
+      "Provides fully customizable paginated menu systems",
+      "Actively maintained to support modern JDA versions",
+      "Simplifies slash command registration and permissions handling"
+    ],
+    "limitations": [
+      "Tightly coupled to DV8FromTheWorld/JDA API updates",
+      "Requires Java 8 or higher"
+    ],
+    "installation": "// Gradle dependency integration:\nimplementation 'pw.chew:jda-chewtils:JDA-UTILITIES-VERSION'",
+    "usage": "// Define a basic command:\npublic class PingCommand extends Command {\n    public PingCommand() {\n        this.name = \"ping\";\n        this.help = \"responds with pong\";\n    }\n    @Override\n    protected void execute(CommandEvent event) {\n        event.reply(\"Pong!\");\n    }\n}",
+    "roadmap": [
+      "Expand installation contexts for modern Discord application actions"
+    ],
+    "repos": [
+      {
+        "name": "JDA-Chewtils",
+        "url": "https://github.com/Chew/JDA-Chewtils",
+        "type": "github"
+      }
+    ],
+    "mirrors": [],
+    "screenshots": []
   },
   {
     "id": "libretranslate-java",

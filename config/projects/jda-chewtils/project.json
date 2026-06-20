@@ -1,0 +1,52 @@
+{
+  "id": "jda-chewtils",
+  "name": "JDA-Chewtils",
+  "tagline": "Modern, modular tools and utilities extension library for JDA Discord bots",
+  "year": "2016-2025",
+  "category": "library",
+  "status": "active",
+  "projectType": "software-project",
+  "role": "contributor",
+  "sourceType": "open-source",
+  "aiUsage": "none",
+  "aiUtilization": "no-ai",
+  "description": "A modern, modular fork of the classic JDA-Utilities library that provides boilerplate reduction tools for Java Discord API (JDA) bots. It includes helper structures for menu pagination, command parsing, and OAuth2 integration. I contributed to JDA 6.1.1 compatibility upgrades.",
+  "purpose": "To simplify Java-based Discord bot development by providing reusable structures for command registering and UI menus.",
+  "technologies": [
+    "Java",
+    "Gradle",
+    "JDA"
+  ],
+  "dependencies": [
+    "JDA 5.x / 6.x"
+  ],
+  "expertise": [
+    "Library Design",
+    "API Integration",
+    "Java Software Development"
+  ],
+  "strengths": [
+    "Modular library design allowing developers to import only required features",
+    "Provides fully customizable paginated menu systems",
+    "Actively maintained to support modern JDA versions",
+    "Simplifies slash command registration and permissions handling"
+  ],
+  "limitations": [
+    "Tightly coupled to DV8FromTheWorld/JDA API updates",
+    "Requires Java 8 or higher"
+  ],
+  "installation": "// Gradle dependency integration:\nimplementation 'pw.chew:jda-chewtils:JDA-UTILITIES-VERSION'",
+  "usage": "// Define a basic command:\npublic class PingCommand extends Command {\n    public PingCommand() {\n        this.name = \"ping\";\n        this.help = \"responds with pong\";\n    }\n    @Override\n    protected void execute(CommandEvent event) {\n        event.reply(\"Pong!\");\n    }\n}",
+  "roadmap": [
+    "Expand installation contexts for modern Discord application actions"
+  ],
+  "repos": [
+    {
+      "name": "JDA-Chewtils",
+      "url": "https://github.com/Chew/JDA-Chewtils",
+      "type": "github"
+    }
+  ],
+  "mirrors": [],
+  "screenshots": []
+}

@@ -1,6 +1,104 @@
 {
-  "lastUpdated": "2026-06-20T18:36:37.616Z",
+  "lastUpdated": "2026-06-20T19:09:56.937Z",
   "projects": {
+    "MusicBot": {
+      "stats": {
+        "stars": 13,
+        "commits": 62,
+        "branches": 6,
+        "lastCommit": "2026-06-19"
+      },
+      "loc": {
+        "total": 5023,
+        "byLanguage": {
+          "Markdown": 454,
+          "Other": 41,
+          "Java": 4355,
+          "PROPERTIES": 1,
+          "XML": 137,
+          "CONF": 17,
+          "Shell": 17,
+          "YAML": 1
+        }
+      },
+      "repoHashes": {
+        "MusicBot": "838ff6909051ca4425eca58aec40624e86b35ea1",
+        "jmb-container": "29d7fd47532f6ab9ff61e9c8efeb2bbb96843109"
+      },
+      "repoLocs": {
+        "MusicBot": {
+          "total": 4960,
+          "byLanguage": {
+            "Markdown": 448,
+            "Other": 2,
+            "Java": 4355,
+            "PROPERTIES": 1,
+            "XML": 137,
+            "CONF": 17
+          },
+          "excludeFirstCommit": false
+        },
+        "jmb-container": {
+          "total": 63,
+          "byLanguage": {
+            "Shell": 17,
+            "YAML": 1,
+            "Markdown": 6,
+            "Other": 39
+          },
+          "excludeFirstCommit": false
+        }
+      },
+      "repoAuthors": {
+        "MusicBot": {
+          "Christian F. Brinkmann (cloud) <mail@christian-f-brinkmann.de>": 4707,
+          "John Grosh <john.a.grosh@gmail.com>": 6576,
+          "Lythus <arvy040207@gmail.com>": 1,
+          "unknown <john.a.grosh@gmail.com>": 11,
+          "Michaili K <mysteriouscursor+git@protonmail.com>": 254,
+          "Christian F. Brinkmann <christian.brinkmann09@gmail.com>": 234,
+          "MichailiK <39029839+MichailiK@users.noreply.github.com>": 193,
+          "Michaili K <git@michaili.dev>": 1010,
+          "Lachlan Pond <lachipond@gmail.com>": 7,
+          "Michail <git@michaili.dev>": 54,
+          "Timothy Gillespie <tgillespie@FOSSalyze.de>": 1,
+          "Moritz Bender <35152647+Morilli@users.noreply.github.com>": 3,
+          "dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>": 1,
+          "M R S E <Maurice.Craft@t-online.de>": 1,
+          "root <root@cloud.christian-f-brinkmann.de>": 19,
+          "Louk <64579257+yo-louk@users.noreply.github.com>": 5,
+          "Michaili <39029839+MichailiK@users.noreply.github.com>": 8,
+          "yo-louk <loukrijnders@gmail.com>": 4,
+          "Wolfgang Schwendtbauer <wolfgang.schwendtbauer@gmail.com>": 399,
+          "Maoyue 貓月 <95519633+MagicTeaMC@users.noreply.github.com>": 27,
+          "Kevin S <t3rminus@users.noreply.github.com>": 21,
+          "Rick Fontein <r.fontein.95@gmail.com>": 81,
+          "Michaili K <39029839+MichailiK@users.noreply.github.com>": 29,
+          "lrbn86 <lrbn86@gmail.com>": 1,
+          "Xiao Quan 全笑 <58939349+all-laugh@users.noreply.github.com>": 5,
+          "njezi <jbm.pl34@gmail.com>": 1,
+          "Kevin S <kevin@chilicode.ca>": 1
+        },
+        "jmb-container": {
+          "Sören Gürtler <soeren@guertler.net>": 80,
+          "root <root@cloud.christian-f-brinkmann.de>": 44,
+          "Sören gürtler <soeren@guertler.com>": 11,
+          "Christian F. Brinkmann (cloud) <mail@christian-f-brinkmann.de>": 19
+        }
+      },
+      "repoCommits": {
+        "MusicBot": 52,
+        "jmb-container": 10
+      },
+      "repoBranches": {
+        "MusicBot": 5,
+        "jmb-container": 1
+      },
+      "repoLastCommit": {
+        "MusicBot": "2026-06-19",
+        "jmb-container": "2026-03-06"
+      }
+    },
     "advoexport": {
       "stats": {
         "stars": 0,
@@ -362,6 +460,86 @@
       },
       "repoLastCommit": {
         "image-rename-manual-gui": "2023-06-12"
+      }
+    },
+    "jda-chewtils": {
+      "stats": {
+        "stars": 77,
+        "commits": 1,
+        "branches": 11,
+        "lastCommit": "2025-12-17"
+      },
+      "loc": {
+        "total": 13,
+        "byLanguage": {
+          "GRADLE": 1,
+          "YAML": 2,
+          "Java": 10
+        }
+      },
+      "repoHashes": {
+        "JDA-Chewtils": "db6eaa55e11fa2162e1d66e3df2e0de5bc28fb1f"
+      },
+      "repoLocs": {
+        "JDA-Chewtils": {
+          "total": 13,
+          "byLanguage": {
+            "GRADLE": 1,
+            "YAML": 2,
+            "Java": 10
+          },
+          "excludeFirstCommit": false
+        }
+      },
+      "repoAuthors": {
+        "JDA-Chewtils": {
+          "Almighty Alpaca <aljoschagrebe@gmail.com>": 9514,
+          "TheMonitorLizard <kaidangustave@yahoo.com>": 2022,
+          "Kaidan Gustave <KaidanGustave@yahoo.com>": 300,
+          "ROM <rom.void95@gmail.com>": 219,
+          "John Grosh <john.a.grosh@gmail.com>": 1220,
+          "rtm516 <rtm516@users.noreply.github.com>": 26,
+          "Chew <chew@chew.pw>": 618,
+          "Christian F. Brinkmann <christian.brinkmann09@gmail.com>": 13,
+          "JellyBrick <shlee1503@naver.com>": 2,
+          "Martin Husted Hartvig <martin@hartvig.cc>": 1,
+          "Hasan Demirtaş <utsukushihito@outlook.com>": 51,
+          "Michael Ritter <ritter.michael92@gmail.com>": 412,
+          "Olivia <chew@chew.pw>": 3895,
+          "Andre_601 <11576465+Andre601@users.noreply.github.com>": 144,
+          "ZephyrKaOne <74645571+ZephyrKaOne@users.noreply.github.com>": 239,
+          "Tomachi <8929706+book000@users.noreply.github.com>": 12,
+          "Andre_601 <github@andre601.ch>": 355,
+          "Mayuna <52459400+lilmayu@users.noreply.github.com>": 34,
+          "badstagram <52403515+badstagram@users.noreply.github.com>": 1,
+          "ollie <olliedean@kakao.com>": 1,
+          "Florian Spieß <business@minnced.club>": 14,
+          "Jae Park <jaepark12336@gmail.com>": 2,
+          "freya02 <41875020+freya022@users.noreply.github.com>": 4,
+          "Unknown <johnnyjayjay02@gmail.com>": 847,
+          "Aljoscha Grebe <Almighty-Alpaca@users.noreply.github.com>": 2,
+          "Duncan Sterken <duncan.sterken123@gmail.com>": 108,
+          "freya022 <41875020+freya022@users.noreply.github.com>": 137,
+          "matyrobbrt <robertmateimoraru@gmail.com>": 9,
+          "Fontany--Legall Brandon <brandon@fontany-legall.xyz>": 4,
+          "ipsvn <80017804+ipsvn@users.noreply.github.com>": 1,
+          "Matyrobbrt <65940752+Matyrobbrt@users.noreply.github.com>": 2,
+          "duncte123 <contact@duncte123.me>": 3,
+          "duncte123 <duncan.sterken123@gmail.com>": 3,
+          "Andre601 <11576465+andre601@users.noreply.github.com>": 574,
+          "Mathias Sand Jahren <the.mather1@gmail.com>": 3,
+          "astra-OCE <79144169+astra-OCE@users.noreply.github.com>": 2,
+          "Ethan <ElectronicWizard@users.noreply.github.com>": 1
+        }
+      },
+      "repoCommits": {
+        "JDA-Chewtils": 1
+      },
+      "repoBranches": {
+        "JDA-Chewtils": 11
+      },
+      "repoLastCommit": {
+        "JDA-Chewtils": "2025-12-17"
       }
     },
     "libretranslate-java": {
