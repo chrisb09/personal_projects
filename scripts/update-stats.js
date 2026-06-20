@@ -393,6 +393,14 @@ async function updateStats() {
       let latestCommitDate = '';
       let analyzedSuccessfully = false;
 
+      // Cache dictionaries
+      const repoHashes = {};
+      const repoAuthors = {};
+      const repoLocs = {};
+      const repoCommits = {};
+      const repoBranches = {};
+      const repoLastCommit = {};
+
       for (const repo of project.repos) {
         if (!repo.url) continue;
 
@@ -401,7 +409,11 @@ async function updateStats() {
         const sshUrl = getSshGitUrl(repo.url);
 
         try {
-          if (!fs.existsSync(repoPath)) {
+          const hasGitFolder = fs.existsSync(repoPath) && fs.existsSync(path.join(repoPath, '.git'));
+          if (!hasGitFolder) {
+            if (fs.existsSync(repoPath)) {
+              fs.rmSync(repoPath, { recursive: true, force: true });
+            }
             console.log(`Cloning ${repo.url} via SSH into ${repoPath}...`);
             runGit(`git clone "${sshUrl}" "${repoPath}"`);
           } else {
@@ -421,14 +433,57 @@ async function updateStats() {
             }
           }
 
+          // Check current commit hash
+          const currentCommitHash = runGit('git rev-parse HEAD', repoPath).toString().trim();
+          
+          // Check if we can reuse cached stats for this repository
+          const cachedHash = existingStats.projects[projectId]?.repoHashes?.[repoDirName];
+          const cachedLoc = existingStats.projects[projectId]?.repoLocs?.[repoDirName];
+          const cachedAuthors = existingStats.projects[projectId]?.repoAuthors?.[repoDirName];
+          const cachedCommits = existingStats.projects[projectId]?.repoCommits?.[repoDirName];
+          const cachedBranches = existingStats.projects[projectId]?.repoBranches?.[repoDirName];
+          const cachedLastCommit = existingStats.projects[projectId]?.repoLastCommit?.[repoDirName];
+
+          if (cachedHash && cachedHash === currentCommitHash && cachedLoc && cachedAuthors) {
+            console.log(`Using cached stats for repo: ${repoDirName} at commit ${currentCommitHash}`);
+            
+            projectLocTotal += cachedLoc.total || 0;
+            if (cachedLoc.byLanguage) {
+              for (const [lang, count] of Object.entries(cachedLoc.byLanguage)) {
+                projectLocByLanguage[lang] = (projectLocByLanguage[lang] || 0) + count;
+              }
+            }
+            totalCommits += cachedCommits || 0;
+            totalBranches += cachedBranches || 0;
+            if (cachedLastCommit && (!latestCommitDate || cachedLastCommit > latestCommitDate)) {
+              latestCommitDate = cachedLastCommit;
+            }
+
+            // Reconstruct global authors map
+            for (const [authorStr, count] of Object.entries(cachedAuthors)) {
+              globalAuthorsMap.set(authorStr, (globalAuthorsMap.get(authorStr) || 0) + count);
+            }
+
+            // Carry over cache records
+            repoHashes[repoDirName] = cachedHash;
+            repoLocs[repoDirName] = cachedLoc;
+            repoAuthors[repoDirName] = cachedAuthors;
+            repoCommits[repoDirName] = cachedCommits || 0;
+            repoBranches[repoDirName] = cachedBranches || 0;
+            repoLastCommit[repoDirName] = cachedLastCommit || '';
+
+            analyzedSuccessfully = true;
+            continue;
+          }
+
           console.log(`Analyzing local repo: ${repoDirName}...`);
 
           // 1. Get branch count
           const branchesOutput = runGit('git branch -r', repoPath).toString();
-          const repoBranches = branchesOutput.trim().split('\n')
+          const repoBranchesCount = branchesOutput.trim().split('\n')
             .filter(line => line.trim() && !line.includes('origin/HEAD'))
             .length;
-          totalBranches += repoBranches;
+          totalBranches += repoBranchesCount;
 
           // 2. Get commit count made by matching author(s)
           const commitsListOutput = runGit('git log --format="%an <%ae>"', repoPath).toString();
@@ -466,9 +521,21 @@ async function updateStats() {
           for (const [lang, count] of Object.entries(analysis.projectLocByLanguage)) {
             projectLocByLanguage[lang] = (projectLocByLanguage[lang] || 0) + count;
           }
+
+          // Cache specific repo authors
+          const localAuthorsCount = {};
           for (const authorStr of analysis.localAuthorsListAll) {
             globalAuthorsMap.set(authorStr, (globalAuthorsMap.get(authorStr) || 0) + 1);
+            localAuthorsCount[authorStr] = (localAuthorsCount[authorStr] || 0) + 1;
           }
+
+          // Save current repo run to cache dictionaries
+          repoHashes[repoDirName] = currentCommitHash;
+          repoLocs[repoDirName] = { total: analysis.projectLocTotal, byLanguage: analysis.projectLocByLanguage };
+          repoAuthors[repoDirName] = localAuthorsCount;
+          repoCommits[repoDirName] = matchedCommits;
+          repoBranches[repoDirName] = repoBranchesCount;
+          repoLastCommit[repoDirName] = lastCommitOutput;
 
           analyzedSuccessfully = true;
         } catch (repoErr) {
@@ -486,7 +553,16 @@ async function updateStats() {
         if (latestCommitDate) {
           projectStats.stats.lastCommit = latestCommitDate;
         }
-        console.log(`Project ${projectId} stats updated locally: LOC total=${projectLocTotal}, commits=${totalCommits}, lastCommit=${latestCommitDate}`);
+
+        // Save cache metadata to stats file
+        projectStats.repoHashes = repoHashes;
+        projectStats.repoLocs = repoLocs;
+        projectStats.repoAuthors = repoAuthors;
+        projectStats.repoCommits = repoCommits;
+        projectStats.repoBranches = repoBranches;
+        projectStats.repoLastCommit = repoLastCommit;
+
+        console.log(`Project ${projectId} stats updated: LOC total=${projectLocTotal}, commits=${totalCommits}, lastCommit=${latestCommitDate}`);
       } else {
         console.log(`Keeping fallback stats for project ${projectId} since local analysis failed/skipped.`);
       }
