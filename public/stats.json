@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-06-20T18:25:46.277Z",
+  "lastUpdated": "2026-06-20T18:28:07.175Z",
   "projects": {
     "advoexport": {
       "stats": {
@@ -216,6 +216,55 @@
       "loc": {
         "total": 0,
         "byLanguage": {}
+      }
+    },
+    "ibus": {
+      "stats": {
+        "stars": 0,
+        "commits": 40,
+        "branches": 2,
+        "lastCommit": "2019-10-13"
+      },
+      "loc": {
+        "total": 1858,
+        "byLanguage": {
+          "Java": 1787,
+          "Shell": 1,
+          "BAT": 2,
+          "Markdown": 57,
+          "Other": 11
+        }
+      },
+      "repoHashes": {
+        "ibus": "60234f5b8cc89501b9ccfab34981d04bda7b5d61"
+      },
+      "repoLocs": {
+        "ibus": {
+          "total": 1858,
+          "byLanguage": {
+            "Java": 1787,
+            "Shell": 1,
+            "BAT": 2,
+            "Markdown": 57,
+            "Other": 11
+          },
+          "excludeFirstCommit": false
+        }
+      },
+      "repoAuthors": {
+        "ibus": {
+          "Christian Frederik Brinkmann <christian.brinkmann09@gmail.com>": 1750,
+          "Christian Brinkmann <christian.brinkmann09@gmail.com>": 108
+        }
+      },
+      "repoCommits": {
+        "ibus": 40
+      },
+      "repoBranches": {
+        "ibus": 2
+      },
+      "repoLastCommit": {
+        "ibus": "2019-10-13"
       }
     },
     "image-rename-manual-gui": {

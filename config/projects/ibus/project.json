@@ -1,0 +1,54 @@
+{
+  "id": "ibus",
+  "name": "Ibus",
+  "tagline": "Java Tool to Encode Files into ARGB Images for Unlimited Cloud Storage",
+  "year": "2019",
+  "category": "utility",
+  "status": "completed",
+  "projectType": "script-small",
+  "role": "main-author",
+  "sourceType": "open-source",
+  "aiUsage": "none",
+  "aiUtilization": "no-ai",
+  "description": "A Java-based CLI utility that encodes files into ARGB pixels of PNG images and decodes them back to their original state. By representing files as images, it enables using unlimited photo cloud storage services (like Google Photos or Amazon Photos) as a backup destination.",
+  "purpose": "To bypass file-hosting limitations on cloud providers by translating binary files and directory structures into visual image files.",
+  "technologies": [
+    "Java",
+    "Cryptography (AES)"
+  ],
+  "dependencies": [
+    "Java 8+"
+  ],
+  "expertise": [
+    "Data Encoding",
+    "Cryptography",
+    "File Systems"
+  ],
+  "strengths": [
+    "Translates arbitrary files into standard PNG images (up to 64MB per image)",
+    "Supports optional 128-bit AES encryption/decryption for data security",
+    "Restores original directory structures and file modification timestamps (since v2.1)",
+    "Splits large files automatically across multiple image sequences"
+  ],
+  "limitations": [
+    "Google/Amazon Photos API restrictions limit automated cloud integration",
+    "Memory-bound and single-threaded encoding",
+    "Losing the AES key results in permanent data loss"
+  ],
+  "installation": "git clone git@gitlab.com:christianbrinkmann/ibus.git\ncd ibus\n# Use pre-built jar in download/ or build it from src/",
+  "usage": "# Encode/Decode data with AES key:\njava -jar Ibus.jar dataDir --key=YOUR_SECRET_KEY\n\n# Configure size constraints:\njava -jar Ibus.jar dataDir --key=YOUR_KEY --minsize=256 --maxsize=4000",
+  "roadmap": [
+    "Add native file system integration",
+    "Optimize encoding/decoding performance",
+    "Integrate desktop context menu shortcuts"
+  ],
+  "repos": [
+    {
+      "name": "ibus",
+      "url": "https://gitlab.com/christianbrinkmann/ibus",
+      "type": "gitlab"
+    }
+  ],
+  "mirrors": [],
+  "screenshots": []
+}
