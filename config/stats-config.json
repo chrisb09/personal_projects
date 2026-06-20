@@ -3,7 +3,8 @@
     "Christian.*Brinkmann",
     "christian\\.brinkmann.*",
     "chrisb09",
-    "christianbrinkmann"
+    "christianbrinkmann",
+    "root <mail@localhost>"
   ],
   "ignoreExtensions": [
     ".log",

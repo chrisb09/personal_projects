@@ -42,8 +42,8 @@
     "Rate limits on public instances",
     "Limited to supported languages"
   ],
-  "installation": "// Maven\n<dependency>\n    <groupId>de.christianfbrinkmann</groupId>\n    <artifactId>libretranslate-java</artifactId>\n    <version>1.0.0</version>\n</dependency>\n\n// Gradle\nimplementation 'de.christianfbrinkmann:libretranslate-java:1.0.0'",
-  "usage": "// Create client\nLibreTranslateClient client = LibreTranslateClient.builder()\n    .baseUrl(\"https://libretranslate.de\")\n    .apiKey(\"your-api-key\") // optional\n    .build();\n\n// Translate text\nTranslationResult result = client.translate()\n    .text(\"Hello, World!\")\n    .source(SourceLanguage.ENGLISH)\n    .target(TargetLanguage.GERMAN)\n    .execute();\n\nSystem.out.println(result.getTranslatedText()); // \"Hallo, Welt!\"",
+  "installation": "// Maven Repository\n<repository>\n    <id>dynomakeRepository</id>\n    <url>https://maven.dynomake.it/releases</url>\n</repository>\n\n// Maven Dependency\n<dependency>\n    <groupId>space.dynomake</groupId>\n    <artifactId>libretranslate-java</artifactId>\n    <version>1.0.9</version>\n</dependency>\n\n// Gradle Repository\nrepositories {\n    maven {\n        name = 'dynomakeRepository'\n        url = uri('https://maven.dynomake.it/releases')\n    }\n}\n\n// Gradle Dependency\nimplementation 'space.dynomake:libretranslate-java:1.0.9'",
+  "usage": "// Configure API settings (optional)\nTranslator.setUrlApi(\"https://translate.example.com/translate\");\nTranslator.setApiKey(\"your_api_key\");\n\n// Translate text\nString translated = Translator.translate(Language.ENGLISH, Language.GERMAN, \"Hello, World!\");\nSystem.out.println(translated); // \"Hallo, Welt!\"",
   "roadmap": [
     "Add support for batch translations",
     "Implement caching for repeated translations",
@@ -51,7 +51,13 @@
     "Support for file/document translation",
     "Add reactive/Reactor support"
   ],
-  "repos": [],
+  "repos": [
+    {
+      "name": "libretranslate-java",
+      "url": "https://github.com/dynomake/libretranslate-java",
+      "type": "github"
+    }
+  ],
   "mirrors": [],
   "screenshots": [],
   "relatedProjects": [
