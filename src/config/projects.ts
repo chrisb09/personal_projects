@@ -614,7 +614,7 @@ export const projects: Project[] = [
     "projectType": "software-project",
     "role": "contributor",
     "sourceType": "open-source",
-    "aiUsage": "none",
+    "aiUsage": "minor",
     "aiUtilization": "no-ai",
     "description": "Contributing to the Pacstall package repository, an AUR-inspired package manager for Ubuntu and Debian systems. Helps bridge the gap between bleeding-edge software and stable distributions.",
     "purpose": "To make newer software versions accessible on stable Ubuntu/Debian systems without compromising system stability or waiting for official repository updates.",
@@ -673,7 +673,8 @@ export const projects: Project[] = [
         "relation": "Inspired by",
         "url": "https://aur.archlinux.org/"
       }
-    ]
+    ],
+    "logo": "/images/projects/pacstall-programs/logo.svg"
   },
   {
     "id": "pdnwebview",
