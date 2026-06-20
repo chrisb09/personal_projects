@@ -33,7 +33,7 @@ npm run build
 Rather than being hardcoded in code, your portfolio settings and project entries are defined in the `/config` directory at the project root:
 
 1. **Header & Contact Buttons**: Configured in [config/portfolio-header.json](file:///home/christian/git/personal_projects/config/portfolio-header.json). Controls the landing page badge, title text, description, and list of external social links (GitHub, GitLab, LinkedIn, etc.) displayed in the header and footer.
-2. **Project Entries**: Located in [config/projects/](file:///home/christian/git/personal_projects/config/projects/). Each project is defined either as a single `.json` file, or as a directory containing a `project.json` and a `media/` folder (for screenshots). 
+2. **Project Entries**: Located in [config/projects/](file:///home/christian/git/personal_projects/config/projects/). Each project is defined as a directory containing a `project.json` file, an optional `media/` folder (for screenshots), and an optional `logo.<ext>` image (for project logo). 
 
 For details on the project metadata fields, see [PROJECTS_GUIDE.md](file:///home/christian/git/personal_projects/PROJECTS_GUIDE.md).
 
