@@ -134,9 +134,13 @@ export function ProjectCard({ project, onClick }: ProjectCardProps) {
           {/* Header with Logo, Title, and language chart */}
           <div className="flex items-center justify-between mb-1.5">
             <div className="flex items-center gap-2 min-w-0">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center border border-primary/10 group-hover:from-primary/30 group-hover:to-primary/10 transition-all shrink-0">
+              <div className={`w-8 h-8 rounded-lg border border-primary/10 shrink-0 overflow-hidden flex items-center justify-center transition-all ${
+                project.logo 
+                  ? 'bg-transparent' 
+                  : 'bg-gradient-to-br from-primary/20 to-primary/5 group-hover:from-primary/30 group-hover:to-primary/10'
+              }`}>
                 {project.logo ? (
-                  <img src={project.logo} alt={project.name} className="w-4 h-4 object-contain" />
+                  <img src={project.logo} alt={project.name} className="w-full h-full object-cover" />
                 ) : (
                   <FolderGit2 className="w-3.5 h-3.5 text-primary/70" />
                 )}

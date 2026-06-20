@@ -55,7 +55,8 @@
     {
       "name": "nudenetv2",
       "url": "https://gitlab.com/christianbrinkmann/nudenetv2",
-      "type": "gitlab"
+      "type": "gitlab",
+      "excludeFirstCommit": true
     }
   ],
   "mirrors": [],

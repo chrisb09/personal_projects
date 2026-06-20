@@ -198,7 +198,7 @@ function loadProjects() {
 }
 
 // Run git blame asynchronously for a single file
-async function analyzeFileBlame(file, repoPath, config, matchesAuthor) {
+async function analyzeFileBlame(file, repoPath, config, matchesAuthor, excludeFirstCommit = false, firstCommitHashes = new Set()) {
   const fullFilePath = path.join(repoPath, file);
   if (shouldIgnore(file, config) || isBinaryFile(fullFilePath)) {
     return null;
@@ -229,8 +229,11 @@ async function analyzeFileBlame(file, repoPath, config, matchesAuthor) {
     const lines = blameOutput.split('\n');
     for (const line of lines) {
       if (line.startsWith('\t')) {
-        const authorDetails = commitCache.get(currentSha) || { name: tempAuthor, email: tempEmail };
+        let authorDetails = commitCache.get(currentSha) || { name: tempAuthor, email: tempEmail };
         if (authorDetails) {
+          if (excludeFirstCommit && firstCommitHashes.has(currentSha)) {
+            authorDetails = { name: "Original Codebase", email: "imported@repo" };
+          }
           const authorStr = `${authorDetails.name} <${authorDetails.email}>`;
           localAuthorsList.push(authorStr);
 
@@ -270,7 +273,7 @@ async function analyzeFileBlame(file, repoPath, config, matchesAuthor) {
 }
 
 // Process files concurrently in parallel batches
-async function processFilesParallel(files, repoPath, config, matchesAuthor, concurrencyLimit = 15) {
+async function processFilesParallel(files, repoPath, config, matchesAuthor, excludeFirstCommit = false, firstCommitHashes = new Set(), concurrencyLimit = 15) {
   let index = 0;
   let projectLocTotal = 0;
   const projectLocByLanguage = {};
@@ -279,7 +282,7 @@ async function processFilesParallel(files, repoPath, config, matchesAuthor, conc
   const workers = Array(concurrencyLimit).fill(null).map(async () => {
     while (index < files.length) {
       const file = files[index++];
-      const result = await analyzeFileBlame(file, repoPath, config, matchesAuthor);
+      const result = await analyzeFileBlame(file, repoPath, config, matchesAuthor, excludeFirstCommit, firstCommitHashes);
       if (result) {
         projectLocTotal += result.localLocTotal;
         for (const [lang, count] of Object.entries(result.localLocByLanguage)) {
@@ -436,6 +439,19 @@ async function updateStats() {
           // Check current commit hash
           const currentCommitHash = runGit('git rev-parse HEAD', repoPath).toString().trim();
           
+          const excludeFirstCommit = !!repo.excludeFirstCommit;
+          const firstCommitHashes = new Set();
+          if (excludeFirstCommit) {
+            try {
+              const hashes = runGit('git rev-list --max-parents=0 HEAD', repoPath).toString().trim().split('\n');
+              for (const h of hashes) {
+                if (h.trim()) firstCommitHashes.add(h.trim());
+              }
+            } catch (e) {
+              console.warn(`Failed to retrieve first commit for ${repo.url}: ${e.message}`);
+            }
+          }
+
           // Check if we can reuse cached stats for this repository
           const cachedHash = existingStats.projects[projectId]?.repoHashes?.[repoDirName];
           const cachedLoc = existingStats.projects[projectId]?.repoLocs?.[repoDirName];
@@ -443,8 +459,9 @@ async function updateStats() {
           const cachedCommits = existingStats.projects[projectId]?.repoCommits?.[repoDirName];
           const cachedBranches = existingStats.projects[projectId]?.repoBranches?.[repoDirName];
           const cachedLastCommit = existingStats.projects[projectId]?.repoLastCommit?.[repoDirName];
+          const cachedExcludeFirstCommit = !!cachedLoc?.excludeFirstCommit;
 
-          if (cachedHash && cachedHash === currentCommitHash && cachedLoc && cachedAuthors) {
+          if (cachedHash && cachedHash === currentCommitHash && cachedLoc && cachedAuthors && cachedExcludeFirstCommit === excludeFirstCommit) {
             console.log(`Using cached stats for repo: ${repoDirName} at commit ${currentCommitHash}`);
             
             projectLocTotal += cachedLoc.total || 0;
@@ -486,20 +503,34 @@ async function updateStats() {
           totalBranches += repoBranchesCount;
 
           // 2. Get commit count made by matching author(s)
-          const commitsListOutput = runGit('git log --format="%an <%ae>"', repoPath).toString();
-          const commitAuthors = commitsListOutput.trim().split('\n');
+          const commitsListOutput = runGit('git log --format="%an <%ae> %H"', repoPath).toString();
+          const commitLines = commitsListOutput.trim().split('\n');
           let matchedCommits = 0;
-          for (const authorLine of commitAuthors) {
-            if (authorLine.trim()) {
-              const match = authorLine.match(/^(.*?) <(.*?)>$/);
+          for (const line of commitLines) {
+            if (line.trim()) {
+              const match = line.match(/^(.*?) <(.*?)> ([a-f0-9]+)$/i);
               if (match) {
                 const name = match[1];
                 const email = match[2];
+                const commitHash = match[3];
+                if (excludeFirstCommit && firstCommitHashes.has(commitHash)) {
+                  continue; // Skip counting the first commit
+                }
                 if (matchesAuthor(name, email)) {
                   matchedCommits++;
                 }
-              } else if (matchesAuthor(authorLine, '')) {
-                matchedCommits++;
+              } else {
+                const matchNoEmail = line.match(/^(.*?) ([a-f0-9]+)$/i);
+                if (matchNoEmail) {
+                  const name = matchNoEmail[1];
+                  const commitHash = matchNoEmail[2];
+                  if (excludeFirstCommit && firstCommitHashes.has(commitHash)) {
+                    continue;
+                  }
+                  if (matchesAuthor(name, '')) {
+                    matchedCommits++;
+                  }
+                }
               }
             }
           }
@@ -515,7 +546,7 @@ async function updateStats() {
           const filesOutput = runGit('git ls-files', repoPath).toString().trim();
           const files = filesOutput.split('\n').filter(f => f.trim() !== '');
 
-          const analysis = await processFilesParallel(files, repoPath, config, matchesAuthor, 15);
+          const analysis = await processFilesParallel(files, repoPath, config, matchesAuthor, excludeFirstCommit, firstCommitHashes, 15);
           
           projectLocTotal += analysis.projectLocTotal;
           for (const [lang, count] of Object.entries(analysis.projectLocByLanguage)) {
@@ -531,7 +562,11 @@ async function updateStats() {
 
           // Save current repo run to cache dictionaries
           repoHashes[repoDirName] = currentCommitHash;
-          repoLocs[repoDirName] = { total: analysis.projectLocTotal, byLanguage: analysis.projectLocByLanguage };
+          repoLocs[repoDirName] = { 
+            total: analysis.projectLocTotal, 
+            byLanguage: analysis.projectLocByLanguage,
+            excludeFirstCommit: excludeFirstCommit
+          };
           repoAuthors[repoDirName] = localAuthorsCount;
           repoCommits[repoDirName] = matchedCommits;
           repoBranches[repoDirName] = repoBranchesCount;

@@ -5,20 +5,21 @@
   "year": "2020 - 2021",
   "category": "data-scraping",
   "status": "archived",
-  "projectType": "script-small",
+  "projectType": "software-project",
   "role": "main-author",
   "sourceType": "open-source",
   "aiUsage": "none",
   "aiUtilization": "no-ai",
-  "description": "A distributed client-server web scraping system written in Python. It features a centralized coordinator (TCP socket server) that manages a job queue and coordinates multiple regional Docker-based scraping clients. Clients route requests through regional Tor exit nodes to bypass rate limiting, parsing unstructured HTML benchmarks and returning structured JSON data back to the server, which aggregates it into a centralized SQLite database.",
+  "description": "A distributed client-server web scraping system written in Python. It features a centralized coordinator (TCP socket server) managing a job queue and multiple regional Docker-based scraping clients. The clients utilize a custom-built multiprocessed task scheduling library (torpyjob) and a custom-modified pure-Python Tor client library (torpy) to run scraping tasks over isolated Tor circuits with country-specific exit node routing to bypass rate-limiting. Scraped unstructured HTML benchmark data is parsed and returned to the server, which aggregates it in a centralized SQLite database.",
   "purpose": "To collect large-scale, multi-category hardware benchmark statistics across CPUs, GPUs, SSDs, HDDs, and RAM by distributing traffic across multiple Tor exit nodes and regional IP addresses to prevent rate-limit blocks.",
   "technologies": [
     "Python",
     "TCP Socket Programming",
-    "Tor Network",
-    "Docker",
+    "Tor Network & Routing",
+    "Docker & Docker Compose",
     "SQLite",
-    "Multi-threading"
+    "Multiprocessing & Multi-threading",
+    "SOCKS5 Proxying"
   ],
   "dependencies": [
     "requests",
@@ -33,11 +34,13 @@
     "Socket Programming",
     "Network Routing & Tor",
     "Regex Parsing & HTML Scraping",
-    "Multi-threaded Data Pipelines"
+    "Multiprocessed Task Scheduling"
   ],
   "strengths": [
     "Distributed client-server architecture coordinating multiple concurrent scraping workers",
-    "Tor network exit node manipulation to rotate IP addresses by country code",
+    "Custom scheduling library (torpyjob) managing concurrent jobs with unique Tor exit node IPs",
+    "Custom Tor library (torpy) modifications supporting SocksServer control, exit node selection, and dynamic port allocation",
+    "Tor network exit node manipulation to rotate IP addresses by country code to bypass rate limiting",
     "Lightweight TCP socket-based communication protocol for job distribution",
     "Lightweight raw SQLite database integration with thread-safe transactional queueing",
     "Containerized client deployment using Docker for simple scale-out"

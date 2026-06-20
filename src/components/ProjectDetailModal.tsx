@@ -353,9 +353,11 @@ export function ProjectDetailModal({ project, isOpen, onClose, onProjectSelect, 
             <DialogHeader>
               <div className="flex items-start gap-3.5">
                 {/* Logo */}
-                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/30 to-primary/10 flex items-center justify-center border border-primary/20 shadow-md shadow-primary/10 shrink-0">
+                <div className={`w-12 h-12 rounded-xl border border-primary/20 shadow-md shadow-primary/10 shrink-0 overflow-hidden flex items-center justify-center ${
+                  project.logo ? 'bg-transparent' : 'bg-gradient-to-br from-primary/30 to-primary/10'
+                }`}>
                   {project.logo ? (
-                    <img src={project.logo} alt={project.name} className="w-7 h-7 object-contain" />
+                    <img src={project.logo} alt={project.name} className="w-full h-full object-cover" />
                   ) : (
                     <FolderGit2 className="w-5 h-5 text-primary" />
                   )}

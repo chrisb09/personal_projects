@@ -49,6 +49,7 @@ export interface Project {
     name: string;
     url: string;
     type?: 'github' | 'gitlab' | 'gitea' | 'other';
+    excludeFirstCommit?: boolean;
   }[];
   mirrors?: {
     name: string;

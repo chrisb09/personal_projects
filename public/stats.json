@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-06-20T13:22:16.411Z",
+  "lastUpdated": "2026-06-20T15:48:57.727Z",
   "projects": {
     "advoexport": {
       "stats": {
@@ -199,17 +199,15 @@
     "nudenetv2": {
       "stats": {
         "stars": 2,
-        "commits": 4,
+        "commits": 3,
         "branches": 1,
         "lastCommit": "2025-05-26"
       },
       "loc": {
-        "total": 1123,
+        "total": 110,
         "byLanguage": {
-          "TXT": 2,
-          "Python": 879,
-          "Shell": 13,
-          "Markdown": 125,
+          "Markdown": 3,
+          "Python": 3,
           "Other": 104
         }
       },
@@ -218,24 +216,24 @@
       },
       "repoLocs": {
         "nudenetv2": {
-          "total": 1123,
+          "total": 110,
           "byLanguage": {
-            "TXT": 2,
-            "Python": 879,
-            "Shell": 13,
-            "Markdown": 125,
+            "Markdown": 3,
+            "Python": 3,
             "Other": 104
-          }
+          },
+          "excludeFirstCommit": true
         }
       },
       "repoAuthors": {
         "nudenetv2": {
-          "Christian F. Brinkmann <christian.brinkmann09@gmail.com>": 1123,
+          "Original Codebase <imported@repo>": 1011,
+          "Christian F. Brinkmann <christian.brinkmann09@gmail.com>": 110,
           "Michael King <mking44444@gmail.com>": 74
         }
       },
       "repoCommits": {
-        "nudenetv2": 4
+        "nudenetv2": 3
       },
       "repoBranches": {
         "nudenetv2": 1

@@ -8,6 +8,7 @@
   "ignoreExtensions": [
     ".log",
     ".lock",
+    ".txt",
     ".png",
     ".jpg",
     ".jpeg",
