@@ -6,7 +6,7 @@ All content (including projects, links, and layout headings) is driven dynamical
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ### 1. Installation
 Install project dependencies using `npm`:
@@ -28,7 +28,7 @@ npm run build
 
 ---
 
-## 🛠️ Folder Configuration
+## Folder Configuration
 
 Rather than being hardcoded in code, your portfolio settings and project entries are defined in the `/config` directory at the project root:
 
@@ -39,7 +39,7 @@ For details on the project metadata fields, see [PROJECTS_GUIDE.md](file:///home
 
 ---
 
-## ⚙️ Compilation & Automation Scripts
+## Compilation & Automation Scripts
 
 The project includes several utilities to compile data and pull external stats:
 
