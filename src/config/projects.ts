@@ -396,7 +396,8 @@ export const projects: Project[] = [
         "relation": "Built on top of",
         "url": "https://redis.io/"
       }
-    ]
+    ],
+    "logo": "/images/projects/firecord/logo.png"
   },
   {
     "id": "homeserver",
@@ -822,7 +823,13 @@ export const projects: Project[] = [
       "Package for easier distribution",
       "Add CI/CD for automated testing"
     ],
-    "repos": [],
+    "repos": [
+      {
+        "name": "redis-dump-load",
+        "url": "https://github.com/chrisb09/redis-dump-load",
+        "type": "github"
+      }
+    ],
     "mirrors": [],
     "screenshots": []
   },

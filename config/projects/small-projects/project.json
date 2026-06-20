@@ -48,7 +48,13 @@
     "Package for easier distribution",
     "Add CI/CD for automated testing"
   ],
-  "repos": [],
+  "repos": [
+    {
+      "name": "redis-dump-load",
+      "url": "https://github.com/chrisb09/redis-dump-load",
+      "type": "github"
+    }
+  ],
   "mirrors": [],
   "screenshots": []
 }

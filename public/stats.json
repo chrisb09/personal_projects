@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-06-20T16:39:50.570Z",
+  "lastUpdated": "2026-06-20T16:55:46.546Z",
   "projects": {
     "advoexport": {
       "stats": {
@@ -591,14 +591,54 @@
     },
     "small-projects": {
       "stats": {
-        "stars": 0,
-        "commits": 0,
-        "branches": 0,
-        "lastCommit": ""
+        "stars": 1,
+        "commits": 2,
+        "branches": 1,
+        "lastCommit": "2023-01-26"
       },
       "loc": {
-        "total": 0,
-        "byLanguage": {}
+        "total": 24,
+        "byLanguage": {
+          "Python": 24
+        }
+      },
+      "repoHashes": {
+        "redis-dump-load": "74854b702a8bacc1c2fdcdbca3631264208fab13"
+      },
+      "repoLocs": {
+        "redis-dump-load": {
+          "total": 24,
+          "byLanguage": {
+            "Python": 24
+          },
+          "excludeFirstCommit": false
+        }
+      },
+      "repoAuthors": {
+        "redis-dump-load": {
+          "Oleg Pudeyev <oleg@bsdpower.com>": 1761,
+          "Malthe Jørgensen <malthe.jorgensen@gmail.com>": 11,
+          "Joe LeVeque <jolevequ@microsoft.com>": 2,
+          "Hyunchel Kim <hyunchel@fashionmetric.com>": 1,
+          "vls <vls@users.noreply.github.com>": 35,
+          "Max Walton <mwalton@evertz.com>": 4,
+          "minh <hnimminh@outlook.com>": 8,
+          "Pietro Battiston <me@pietrobattiston.it>": 24,
+          "pethomas <tpe@thomas-imac.ps>": 7,
+          "Qi Luo <qiluo-msft@users.noreply.github.com>": 1,
+          "Christian F. Brinkmann <christian.brinkmann09@gmail.com>": 24,
+          "Jonas Nockert <jonasnockert@gmail.com>": 2,
+          "Ben Reser <ben@reser.org>": 1
+        }
+      },
+      "repoCommits": {
+        "redis-dump-load": 2
+      },
+      "repoBranches": {
+        "redis-dump-load": 1
+      },
+      "repoLastCommit": {
+        "redis-dump-load": "2023-01-26"
       }
     },
     "userbenchmark-scraper": {
