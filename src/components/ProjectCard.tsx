@@ -274,19 +274,58 @@ export function ProjectCard({ project, onClick }: ProjectCardProps) {
             
             <div className="flex items-center gap-2">
               {project.demoUrl && (
-                <span className="text-muted-foreground hover:text-primary transition-colors">
+                <a 
+                  href={project.demoUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => e.stopPropagation()}
+                  className="text-muted-foreground hover:text-primary transition-colors p-1 -m-1"
+                  title="Live Demo"
+                >
                   <ExternalLink className="w-3.5 h-3.5" />
-                </span>
+                </a>
+              )}
+              {project.liveUrl && (
+                <a 
+                  href={project.liveUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => e.stopPropagation()}
+                  className="text-muted-foreground hover:text-primary transition-colors p-1 -m-1"
+                  title={(() => {
+                    try {
+                      return new URL(project.liveUrl).hostname;
+                    } catch (e) {
+                      return 'Website';
+                    }
+                  })()}
+                >
+                  <ExternalLink className="w-3.5 h-3.5" />
+                </a>
               )}
               {repoCount > 0 && (
-                <span className="text-muted-foreground hover:text-primary transition-colors">
+                <a 
+                  href={project.repos?.[0]?.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => e.stopPropagation()}
+                  className="text-muted-foreground hover:text-primary transition-colors p-1 -m-1"
+                  title="Repository"
+                >
                   <Github className="w-3.5 h-3.5" />
-                </span>
+                </a>
               )}
               {project.docsUrl && (
-                <span className="text-muted-foreground hover:text-primary transition-colors">
+                <a 
+                  href={project.docsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => e.stopPropagation()}
+                  className="text-muted-foreground hover:text-primary transition-colors p-1 -m-1"
+                  title="Documentation"
+                >
                   <BookOpen className="w-3.5 h-3.5" />
-                </span>
+                </a>
               )}
             </div>
           </div>

@@ -246,7 +246,8 @@ export const projects: Project[] = [
       "Integrate a headless CMS layer to decouple content creation from the codebase",
       "Implement automated end-to-end testing profiles using Playwright or Cypress"
     ],
-    "demoUrl": "https://ferienw-am-meer.de",
+    "liveUrl": "https://ferienw-am-meer.de",
+    "oldUrl": "https://ferien.christian-f-brinkmann.de",
     "repos": [
       {
         "name": "ferienw-am-meer.de",

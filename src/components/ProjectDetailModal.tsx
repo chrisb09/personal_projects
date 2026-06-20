@@ -432,6 +432,28 @@ export function ProjectDetailModal({ project, isOpen, onClose, onProjectSelect, 
                   </a>
                 </Button>
               )}
+              {project.liveUrl && (
+                <Button size="sm" className="h-8 text-xs gap-2" variant="default" asChild>
+                  <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
+                    <ExternalLink className="w-3.5 h-3.5" />
+                    {(() => {
+                      try {
+                        return new URL(project.liveUrl).hostname;
+                      } catch (e) {
+                        return 'Website';
+                      }
+                    })()}
+                  </a>
+                </Button>
+              )}
+              {project.oldUrl && (
+                <Button size="sm" className="h-8 text-xs gap-2" variant="outline" asChild>
+                  <a href={project.oldUrl} target="_blank" rel="noopener noreferrer">
+                    <ExternalLink className="w-3.5 h-3.5" />
+                    {t('modal.legacy_version', 'Legacy Version')}
+                  </a>
+                </Button>
+              )}
               {hasRepos && project.repos?.map((repo, i) => (
                 <Button key={i} size="sm" className="h-8 text-xs gap-2" variant="outline" asChild>
                   <a href={repo.url} target="_blank" rel="noopener noreferrer">

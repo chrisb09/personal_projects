@@ -43,6 +43,8 @@ export interface Project {
   
   // Links & media
   demoUrl?: string;
+  liveUrl?: string;
+  oldUrl?: string;
   repos?: {
     name: string;
     url: string;

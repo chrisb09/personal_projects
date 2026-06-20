@@ -110,6 +110,7 @@
     "mirror_note": "Mirrors for visibility and accessibility. Stats are counted from primary repository.",
     "screenshots": "Screenshots",
     "live_demo": "Live Demo",
+    "legacy_version": "Legacy Version (Comparison)",
     "documentation": "Documentation",
     "loc_breakdown": "Lines of Code Breakdown",
     "git_stats": "Git Statistics"
