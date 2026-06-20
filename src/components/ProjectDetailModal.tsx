@@ -126,15 +126,20 @@ function DonutChart({ data, total }: { data: Record<string, number>; total: numb
           const percentage = ((count / total) * 100).toFixed(1);
           const color = languageColors[lang] || '#888888';
           return (
-            <div key={lang} className="flex items-center justify-between text-sm">
-              <div className="flex items-center gap-2">
+            <div key={lang} className="grid grid-cols-[1fr_auto_auto] items-center gap-x-4 text-sm">
+              <div className="flex items-center gap-2 min-w-0">
                 <span 
-                  className="w-3 h-3 rounded-sm" 
+                  className="w-3 h-3 rounded-sm shrink-0" 
                   style={{ backgroundColor: color }}
                 />
-                <span className="text-foreground/80">{lang}</span>
+                <span className="text-foreground/80 truncate">{lang}</span>
               </div>
-              <span className="text-muted-foreground text-xs">{percentage}%</span>
+              <span className="text-foreground/60 text-xs justify-self-end tabular-nums">
+                {count.toLocaleString()}
+              </span>
+              <span className="text-muted-foreground text-xs justify-self-end w-12 text-right tabular-nums">
+                {percentage}%
+              </span>
             </div>
           );
         })}

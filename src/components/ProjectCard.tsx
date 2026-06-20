@@ -82,12 +82,17 @@ function MiniLanguageChart({ data, total }: { data: Record<string, number>; tota
             const percentage = ((count / total) * 100).toFixed(1);
             const color = languageColors[lang] || '#888888';
             return (
-              <div key={lang} className="flex items-center justify-between gap-4 text-xs">
-                <div className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full" style={{ backgroundColor: color }} />
-                  <span>{lang}</span>
+              <div key={lang} className="grid grid-cols-[1fr_auto_auto] items-center gap-x-4 text-xs">
+                <div className="flex items-center gap-2 min-w-0">
+                  <span className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: color }} />
+                  <span className="truncate">{lang}</span>
                 </div>
-                <span className="text-muted-foreground">{percentage}%</span>
+                <span className="text-foreground/75 justify-self-end tabular-nums">
+                  {count.toLocaleString()}
+                </span>
+                <span className="text-muted-foreground justify-self-end w-10 text-right tabular-nums">
+                  {percentage}%
+                </span>
               </div>
             );
           })}
