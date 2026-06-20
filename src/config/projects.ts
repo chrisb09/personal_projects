@@ -744,7 +744,7 @@ export const projects: Project[] = [
   {
     "id": "userbenchmark-scraper",
     "name": "Userbenchmark Web Scraper",
-    "tagline": "Experimental Hardware Benchmark Data Extractor",
+    "tagline": "Distributed Client-Server Web Scraper using Tor exit node routing",
     "year": "2020 - 2021",
     "category": "data-scraping",
     "status": "archived",
@@ -753,45 +753,46 @@ export const projects: Project[] = [
     "sourceType": "open-source",
     "aiUsage": "none",
     "aiUtilization": "no-ai",
-    "description": "An end-to-end data extraction pipeline built in Python. Features a custom job scheduler and Tor network routing to bypass aggressive rate limiting, successfully aggregating a massive hardware dataset.",
-    "purpose": "To collect large-scale hardware benchmark data for analysis and research purposes, building a dataset of approximately 40,000 benchmarks.",
+    "description": "A distributed client-server web scraping system written in Python. It features a centralized coordinator (TCP socket server) that manages a job queue and coordinates multiple regional Docker-based scraping clients. Clients route requests through regional Tor exit nodes to bypass rate limiting, parsing unstructured HTML benchmarks and returning structured JSON data back to the server, which aggregates it into a centralized SQLite database.",
+    "purpose": "To collect large-scale, multi-category hardware benchmark statistics across CPUs, GPUs, SSDs, HDDs, and RAM by distributing traffic across multiple Tor exit nodes and regional IP addresses to prevent rate-limit blocks.",
     "technologies": [
       "Python",
-      "Regex",
+      "TCP Socket Programming",
       "Tor Network",
-      "SQLite"
+      "Docker",
+      "SQLite",
+      "Multi-threading"
     ],
     "dependencies": [
-      "tor-python (modified)",
-      "Requests",
-      "BeautifulSoup4",
-      "SQLAlchemy"
+      "requests",
+      "PySocks",
+      "Tor",
+      "Docker & Docker Compose"
     ],
     "expertise": [
-      "Data Pipeline Engineering",
-      "Custom Job Scheduling",
-      "Network Routing (Tor)",
-      "Regex Parsing"
+      "Distributed Systems",
+      "Socket Programming",
+      "Network Routing & Tor",
+      "Regex Parsing & HTML Scraping",
+      "Multi-threaded Data Pipelines"
     ],
     "strengths": [
-      "Successfully parsed and extracted ~40,000 distinct benchmark records",
-      "Engineered a custom job scheduler to manage asynchronous scraping tasks and error recovery",
-      "Implemented resilient request routing using a modified tor-python client to handle IP blocks",
-      "Highly optimized Regex parsing for unstructured HTML data"
+      "Distributed client-server architecture coordinating multiple concurrent scraping workers",
+      "Tor network exit node manipulation to rotate IP addresses by country code",
+      "Lightweight TCP socket-based communication protocol for job distribution",
+      "Lightweight raw SQLite database integration with thread-safe transactional queueing",
+      "Containerized client deployment using Docker for simple scale-out"
     ],
     "limitations": [
-      "Dependent on website structure (may break with updates)",
-      "Rate limiting required to avoid blocks",
-      "Tor network can be slow for large-scale scraping",
-      "Ethical and legal considerations for data usage",
+      "Dependent on Userbenchmark HTML structure (breaks on layout changes)",
+      "Scraping throughput is limited by Tor relay network speed",
+      "Requires stable server port forwarding/reachability for TCP socket connections",
       "No longer actively maintained"
     ],
-    "installation": "# Install dependencies\npip install requests beautifulsoup4 sqlalchemy\n\n# Install and configure Tor\n# (Modified tor-python client included in repo)\n\n# Initialize database\npython init_db.py",
-    "usage": "# Configure scraping parameters in config.py\nTARGET_CATEGORIES = ['CPU', 'GPU', 'SSD', 'HDD', 'RAM']\nBATCH_SIZE = 100\nUSE_TOR = True\n\n# Run the scraper\npython scraper.py\n\n# Data is stored in SQLite database\npython analyze.py --export csv",
+    "installation": "# Server Setup\npython server_main.py\n\n# Client Setup (requires Tor)\npython client_main.py --host=<server-ip>\n\n# Or build and run via Docker\ndocker build -t scraper-client -f docker/Dockerfile.client .\n",
+    "usage": "# Run the TCP server to coordinate jobs\npython server_main.py\n\n# Spin up Tor-routed client workers\npython client_main.py --host=127.0.0.1",
     "roadmap": [
-      "Project archived - no further development planned",
-      "Could be adapted for other benchmark sites",
-      "Potential for ML-based data analysis"
+      "Project archived - no further development planned"
     ],
     "repos": [
       {
