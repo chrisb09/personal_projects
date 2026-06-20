@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const projectsDir = path.join(__dirname, '../projects');
+const projectsDir = path.join(__dirname, '../config/projects');
 const statsFilePath = path.join(__dirname, '../public/stats.json');
 
 // Helper to parse Link header count for GitHub

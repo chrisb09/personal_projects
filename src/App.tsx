@@ -1,7 +1,7 @@
 import { useState, useMemo, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { projects } from '@/config/projects';
-import headerConfig from '@/config/portfolio-header.json';
+import headerConfig from '../config/portfolio-header.json';
 import type { Project, ProjectCategory } from '@/types/project';
 import { fetchStats, mergeStatsWithProjects } from '@/lib/stats';
 import { initializeTheme } from '@/lib/theme';

@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const { exec } = require('child_process');
 
-const projectsDir = path.join(__dirname, '../projects');
+const projectsDir = path.join(__dirname, '../config/projects');
 const compileScriptPath = path.join(__dirname, 'compile-projects.js');
 
 let debounceTimer = null;

@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const projectsDir = path.join(__dirname, '../projects');
+const projectsDir = path.join(__dirname, '../config/projects');
 const outputTsPath = path.join(__dirname, '../src/config/projects.ts');
 const publicImagesDir = path.join(__dirname, '../public/images/projects');
 
