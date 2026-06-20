@@ -256,7 +256,8 @@ export const projects: Project[] = [
       }
     ],
     "mirrors": [],
-    "screenshots": []
+    "screenshots": [],
+    "logo": "/images/projects/ferienw-am-meer-modernization/logo.png"
   },
   {
     "id": "filament-spool-holder",
