@@ -481,6 +481,73 @@ export const projects: Project[] = [
     ]
   },
   {
+    "id": "image-rename-manual-gui",
+    "name": "Manual Media Renaming GUI",
+    "tagline": "GTK Desktop Application for Quick Manual Media Renaming",
+    "year": "2020-2023",
+    "category": "utility",
+    "status": "archived",
+    "projectType": "software-project",
+    "role": "main-author",
+    "sourceType": "open-source",
+    "aiUsage": "none",
+    "aiUtilization": "no-ai",
+    "description": "A PyGObject and GTK-based desktop application to preview and rename media files (images, animated GIFs, and videos) quickly and comfortably with custom keybindings, resolution scaling, and filename validation.",
+    "purpose": "To streamline manual renaming and filtering/deletion of large sets of media files through an efficient visual interface with keyboard shortcuts.",
+    "technologies": [
+      "Python",
+      "GTK",
+      "Pillow",
+      "GStreamer"
+    ],
+    "dependencies": [
+      "PyGObject",
+      "Pillow"
+    ],
+    "expertise": [
+      "GUI Development",
+      "Media Processing",
+      "Desktop Applications"
+    ],
+    "strengths": [
+      "Supports multiple image formats (.png, .jpg, .gif, .bmp) and video formats (.mp4, .mkv, .avi, .webm)",
+      "Real-time video/GIF playback controls (pause/resume/restart via spacebar)",
+      "Color-coded validation indicating current name suitability (red to green)",
+      "Fully keyboard-navigable for fast bulk processing"
+    ],
+    "limitations": [
+      "Legacy GTK bindings can be complex to install",
+      "GUI scaling is basic and not fully optimized",
+      "GStreamer setup varies across different desktop environments"
+    ],
+    "installation": "python3 -m pip install Pillow\n# Install GStreamer and PyGObject bindings depending on system packaging\npython3 main.py <source_dir> <target_dir>",
+    "usage": "# Run with source and target directories:\npython3 main.py --source=/path/to/source --target=/path/to/target\n\n# Key bindings:\n# ENTER - Accept renaming\n# DELETE - Delete file\n# SPACE - Pause/resume video or GIF\n# F11 - Toggle fullscreen\n# ESC - Exit application",
+    "roadmap": [
+      "Superceded by CrystalBatch (rewritten for broader file renaming capabilities)"
+    ],
+    "repos": [
+      {
+        "name": "image-rename-manual-gui",
+        "url": "https://gitlab.com/christianbrinkmann/image-rename-manual-gui",
+        "type": "gitlab"
+      }
+    ],
+    "relatedProjects": [
+      {
+        "name": "CrystalBatch",
+        "relation": "Successor project (moved to GitHub)",
+        "url": "https://github.com/chrisb09/crystalbatch"
+      }
+    ],
+    "mirrors": [],
+    "screenshots": [
+      "/images/projects/image-rename-manual-gui/screenshot.jpg",
+      "/images/projects/image-rename-manual-gui/screenshot.png",
+      "/images/projects/image-rename-manual-gui/screenshot_large.png"
+    ],
+    "logo": "/images/projects/image-rename-manual-gui/logo.png"
+  },
+  {
     "id": "libretranslate-java",
     "name": "libretranslate-java",
     "tagline": "Java Client for LibreTranslate",

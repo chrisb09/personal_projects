@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-06-20T17:04:05.463Z",
+  "lastUpdated": "2026-06-20T17:12:36.760Z",
   "projects": {
     "advoexport": {
       "stats": {
@@ -216,6 +216,53 @@
       "loc": {
         "total": 0,
         "byLanguage": {}
+      }
+    },
+    "image-rename-manual-gui": {
+      "stats": {
+        "stars": 0,
+        "commits": 33,
+        "branches": 1,
+        "lastCommit": "2023-06-12"
+      },
+      "loc": {
+        "total": 721,
+        "byLanguage": {
+          "Other": 4,
+          "Markdown": 86,
+          "Python": 631
+        }
+      },
+      "repoHashes": {
+        "image-rename-manual-gui": "37e042e7ab479ac9b80874c66f8d0362dc292427"
+      },
+      "repoLocs": {
+        "image-rename-manual-gui": {
+          "total": 721,
+          "byLanguage": {
+            "Other": 4,
+            "Markdown": 86,
+            "Python": 631
+          },
+          "excludeFirstCommit": false
+        }
+      },
+      "repoAuthors": {
+        "image-rename-manual-gui": {
+          "Christian <christian.brinkmann09@gmail.com>": 151,
+          "Christian Frederik Brinkmann <christian.brinkmann09@gmail.com>": 1,
+          "Christian Brinkmann <christian.brinkmann09@gmail.com>": 525,
+          "Christian F. Brinkmann <christian.brinkmann09@gmail.com>": 44
+        }
+      },
+      "repoCommits": {
+        "image-rename-manual-gui": 33
+      },
+      "repoBranches": {
+        "image-rename-manual-gui": 1
+      },
+      "repoLastCommit": {
+        "image-rename-manual-gui": "2023-06-12"
       }
     },
     "libretranslate-java": {
