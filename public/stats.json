@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-06-20T17:12:36.760Z",
+  "lastUpdated": "2026-06-20T18:25:46.277Z",
   "projects": {
     "advoexport": {
       "stats": {
@@ -275,6 +275,58 @@
       "loc": {
         "total": 0,
         "byLanguage": {}
+      }
+    },
+    "mega-tor-downloader": {
+      "stats": {
+        "stars": 0,
+        "commits": 46,
+        "branches": 1,
+        "lastCommit": "2024-08-31"
+      },
+      "loc": {
+        "total": 745,
+        "byLanguage": {
+          "PHP": 89,
+          "Shell": 45,
+          "Markdown": 12,
+          "Other": 7,
+          "CSS": 65,
+          "Python": 527
+        }
+      },
+      "repoHashes": {
+        "mega-tor-downloader": "6d82f969376977da52c156d1b9de5e65f19b8dde"
+      },
+      "repoLocs": {
+        "mega-tor-downloader": {
+          "total": 745,
+          "byLanguage": {
+            "PHP": 89,
+            "Shell": 45,
+            "Markdown": 12,
+            "Other": 7,
+            "CSS": 65,
+            "Python": 527
+          },
+          "excludeFirstCommit": false
+        }
+      },
+      "repoAuthors": {
+        "mega-tor-downloader": {
+          "Christian Brinkmann <kontakt@cloud.christian-f-brinkmann.de>": 162,
+          "Christian Brinkmann <christian.brinkmann09@gmail.com>": 558,
+          "root <root@cloud.christian-f-brinkmann.de>": 25
+        }
+      },
+      "repoCommits": {
+        "mega-tor-downloader": 46
+      },
+      "repoBranches": {
+        "mega-tor-downloader": 1
+      },
+      "repoLastCommit": {
+        "mega-tor-downloader": "2024-08-31"
       }
     },
     "nudenetv2": {

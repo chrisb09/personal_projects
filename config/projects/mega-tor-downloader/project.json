@@ -1,0 +1,59 @@
+{
+  "id": "mega-tor-downloader",
+  "name": "mega-tor-downloader",
+  "tagline": "Mega.nz Downloader routed through Tor to bypass rate limits",
+  "year": "2021-2024",
+  "category": "utility",
+  "status": "active",
+  "projectType": "script-small",
+  "role": "main-author",
+  "sourceType": "open-source",
+  "aiUsage": "none",
+  "aiUtilization": "no-ai",
+  "description": "A multithreaded Python downloader utility that automates fetching files from Mega.nz using Megatools. It routes requests through a local Tor SOCKS5 proxy, dynamically monitoring download progress and automatically rotating Tor circuits to bypass Mega's IP-based download bandwidth limits.",
+  "purpose": "To allow continuous and automated downloading of large datasets from Mega.nz without being blocked or throttled by IP bandwidth quotas.",
+  "technologies": [
+    "Python",
+    "Tor",
+    "Bash",
+    "PHP"
+  ],
+  "dependencies": [
+    "megatools",
+    "requests",
+    "pysocks"
+  ],
+  "expertise": [
+    "Network Routing & Tor",
+    "Scripting",
+    "Automation",
+    "Multithreading"
+  ],
+  "strengths": [
+    "Circumvents Mega.nz bandwidth limits via Tor circuit rotation",
+    "Multithreaded queue-based download manager",
+    "PHP-based web dashboard to monitor download progress and speeds in real-time",
+    "Detailed speed/IP log tracking and timeout validation"
+  ],
+  "limitations": [
+    "Download speed is limited by Tor network bandwidth",
+    "Requires local Tor daemon configuration",
+    "Requires megatools CLI dependency"
+  ],
+  "installation": "sudo apt install megatools tor\npip install -r requirements.txt",
+  "usage": "# Add a download link to queue:\n./add_to_queue.sh <mega-url>\n\n# Start downloader daemon:\npython3 test.py",
+  "roadmap": [
+    "Implement automated Tor service configuration check",
+    "Provide dockerized setup for headless deployment",
+    "Add support for other file hosting platforms"
+  ],
+  "repos": [
+    {
+      "name": "mega-tor-downloader",
+      "url": "https://gitlab.com/christianbrinkmann/mega-tor-downloader",
+      "type": "gitlab"
+    }
+  ],
+  "mirrors": [],
+  "screenshots": []
+}
