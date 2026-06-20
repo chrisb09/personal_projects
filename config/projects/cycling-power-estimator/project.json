@@ -1,0 +1,65 @@
+{
+  "id": "cycling-power-estimator",
+  "name": "Cycling Power Estimator & 3D Visualizer",
+  "tagline": "Full-stack web application to retroactively calculate and visualize cycling power from GPX files",
+  "year": "2026",
+  "category": "fullstack",
+  "status": "active",
+  "projectType": "software-project",
+  "role": "main-author",
+  "sourceType": "open-source",
+  "aiUsage": "major",
+  "aiUtilization": "no-ai",
+  "description": "A full-stack, open-source web application designed to analyze GPS track data (GPX files) and retroactively calculate a cyclist's power output (watts) using physical equations. The platform integrates a FastAPI Python backend for mathematical calculations, coordinate smoothing, and database persistence, with a React frontend featuring Chart.js analytics and Mapbox 3D terrain animations.",
+  "purpose": "To democratize cycling analytics by reverse-engineering power output without expensive physical power meters, and providing a highly engaging 3D visualization of rides.",
+  "technologies": [
+    "React",
+    "FastAPI",
+    "Python",
+    "SQLite",
+    "Mapbox GL JS",
+    "Chart.js",
+    "Docker"
+  ],
+  "dependencies": [
+    "FastAPI",
+    "SQLAlchemy",
+    "Pillow",
+    "Pandas",
+    "NumPy",
+    "Mapbox GL JS",
+    "Chart.js"
+  ],
+  "expertise": [
+    "Full Stack Development",
+    "Data Science & Physics Modeling",
+    "3D Geospatial Visualization",
+    "API Development"
+  ],
+  "strengths": [
+    "Physics modeling (gravity, rolling resistance, aerodynamic drag, kinetic energy)",
+    "3D digital elevation model (DEM) map tracking and path animations",
+    "Interactive synchronized charts (speed, power, elevation)",
+    "Bike configurations and user weight/CdA biological profiles support"
+  ],
+  "limitations": [
+    "Aero drag calculations assume static environmental wind conditions",
+    "Requires high-quality GPX files with fine-grained timestamp points",
+    "Mapbox features require a Mapbox API token"
+  ],
+  "installation": "git clone git@github.com:chrisb09/cycling_power_estimator.git\ncd cycling_power_estimator\ndocker-compose up --build -d",
+  "usage": "# Access the web app at http://localhost\n# Register a user profile and configure your bike mass & position\n# Upload a GPX file and view the calculated power stats & 3D playback",
+  "roadmap": [
+    "Integrate open-source elevation APIs to auto-correct GPS elevation errors",
+    "Support Strava API integration for automatic ride syncing"
+  ],
+  "repos": [
+    {
+      "name": "cycling_power_estimator",
+      "url": "https://github.com/chrisb09/cycling_power_estimator",
+      "type": "github"
+    }
+  ],
+  "mirrors": [],
+  "screenshots": []
+}

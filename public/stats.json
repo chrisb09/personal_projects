@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-06-20T19:09:56.937Z",
+  "lastUpdated": "2026-06-20T20:58:22.025Z",
   "projects": {
     "MusicBot": {
       "stats": {
@@ -17,8 +17,8 @@
           "PROPERTIES": 1,
           "XML": 137,
           "CONF": 17,
-          "Shell": 17,
-          "YAML": 1
+          "YAML": 1,
+          "Shell": 17
         }
       },
       "repoHashes": {
@@ -41,8 +41,8 @@
         "jmb-container": {
           "total": 63,
           "byLanguage": {
-            "Shell": 17,
             "YAML": 1,
+            "Shell": 17,
             "Markdown": 6,
             "Other": 39
           },
@@ -56,10 +56,10 @@
           "Lythus <arvy040207@gmail.com>": 1,
           "unknown <john.a.grosh@gmail.com>": 11,
           "Michaili K <mysteriouscursor+git@protonmail.com>": 254,
-          "Christian F. Brinkmann <christian.brinkmann09@gmail.com>": 234,
-          "MichailiK <39029839+MichailiK@users.noreply.github.com>": 193,
           "Michaili K <git@michaili.dev>": 1010,
+          "Christian F. Brinkmann <christian.brinkmann09@gmail.com>": 234,
           "Lachlan Pond <lachipond@gmail.com>": 7,
+          "MichailiK <39029839+MichailiK@users.noreply.github.com>": 193,
           "Michail <git@michaili.dev>": 54,
           "Timothy Gillespie <tgillespie@FOSSalyze.de>": 1,
           "Moritz Bender <35152647+Morilli@users.noreply.github.com>": 3,
@@ -80,9 +80,9 @@
           "Kevin S <kevin@chilicode.ca>": 1
         },
         "jmb-container": {
-          "Sören Gürtler <soeren@guertler.net>": 80,
-          "root <root@cloud.christian-f-brinkmann.de>": 44,
           "Sören gürtler <soeren@guertler.com>": 11,
+          "root <root@cloud.christian-f-brinkmann.de>": 44,
+          "Sören Gürtler <soeren@guertler.net>": 80,
           "Christian F. Brinkmann (cloud) <mail@christian-f-brinkmann.de>": 19
         }
       },
@@ -167,6 +167,65 @@
         "byLanguage": {}
       }
     },
+    "cycling-power-estimator": {
+      "stats": {
+        "stars": 0,
+        "commits": 34,
+        "branches": 1,
+        "lastCommit": "2026-06-20"
+      },
+      "loc": {
+        "total": 5680,
+        "byLanguage": {
+          "Python": 2267,
+          "Other": 103,
+          "Markdown": 290,
+          "HTML": 18,
+          "JavaScript": 2459,
+          "YAML": 22,
+          "TOML": 32,
+          "CSS": 427,
+          "JSON": 30,
+          "CONF": 32
+        }
+      },
+      "repoHashes": {
+        "cycling_power_estimator": "7e242a26600448fc27efb7890dea8be081bcac41"
+      },
+      "repoLocs": {
+        "cycling_power_estimator": {
+          "total": 5680,
+          "byLanguage": {
+            "Python": 2267,
+            "Other": 103,
+            "Markdown": 290,
+            "HTML": 18,
+            "JavaScript": 2459,
+            "YAML": 22,
+            "TOML": 32,
+            "CSS": 427,
+            "JSON": 30,
+            "CONF": 32
+          },
+          "excludeFirstCommit": false
+        }
+      },
+      "repoAuthors": {
+        "cycling_power_estimator": {
+          "Christian F. Brinkmann <christian.brinkmann09@gmail.com>": 5677,
+          "Christian F. Brinkmann (cloud) <mail@christian-f-brinkmann.de>": 3
+        }
+      },
+      "repoCommits": {
+        "cycling_power_estimator": 34
+      },
+      "repoBranches": {
+        "cycling_power_estimator": 1
+      },
+      "repoLastCommit": {
+        "cycling_power_estimator": "2026-06-20"
+      }
+    },
     "exam-system-backend": {
       "stats": {
         "stars": 0,
@@ -231,18 +290,6 @@
       },
       "repoLastCommit": {
         "github-page.ferienw-am-meer.de": "2026-05-26"
-      }
-    },
-    "filament-spool-holder": {
-      "stats": {
-        "stars": 0,
-        "commits": 0,
-        "branches": 0,
-        "lastCommit": ""
-      },
-      "loc": {
-        "total": 0,
-        "byLanguage": {}
       }
     },
     "find-duplicates": {
@@ -524,11 +571,11 @@
           "Fontany--Legall Brandon <brandon@fontany-legall.xyz>": 4,
           "ipsvn <80017804+ipsvn@users.noreply.github.com>": 1,
           "Matyrobbrt <65940752+Matyrobbrt@users.noreply.github.com>": 2,
+          "astra-OCE <79144169+astra-OCE@users.noreply.github.com>": 2,
           "duncte123 <contact@duncte123.me>": 3,
           "duncte123 <duncan.sterken123@gmail.com>": 3,
           "Andre601 <11576465+andre601@users.noreply.github.com>": 574,
           "Mathias Sand Jahren <the.mather1@gmail.com>": 3,
-          "astra-OCE <79144169+astra-OCE@users.noreply.github.com>": 2,
           "Ethan <ElectronicWizard@users.noreply.github.com>": 1
         }
       },
@@ -564,12 +611,12 @@
       "loc": {
         "total": 1009,
         "byLanguage": {
-          "Python": 172,
           "CSV": 123,
           "Markdown": 24,
           "C#": 347,
           "Java": 95,
-          "CS_PDN": 248
+          "CS_PDN": 248,
+          "Python": 172
         }
       },
       "repoHashes": {
@@ -579,12 +626,12 @@
         "map-color-convert": {
           "total": 1009,
           "byLanguage": {
-            "Python": 172,
             "CSV": 123,
             "Markdown": 24,
             "C#": 347,
             "Java": 95,
-            "CS_PDN": 248
+            "CS_PDN": 248,
+            "Python": 172
           },
           "excludeFirstCommit": false
         }
@@ -614,10 +661,10 @@
       "loc": {
         "total": 745,
         "byLanguage": {
-          "PHP": 89,
           "Shell": 45,
           "Markdown": 12,
           "Other": 7,
+          "PHP": 89,
           "CSS": 65,
           "Python": 527
         }
@@ -629,10 +676,10 @@
         "mega-tor-downloader": {
           "total": 745,
           "byLanguage": {
-            "PHP": 89,
             "Shell": 45,
             "Markdown": 12,
             "Other": 7,
+            "PHP": 89,
             "CSS": 65,
             "Python": 527
           },
@@ -641,9 +688,9 @@
       },
       "repoAuthors": {
         "mega-tor-downloader": {
-          "Christian Brinkmann <kontakt@cloud.christian-f-brinkmann.de>": 162,
           "Christian Brinkmann <christian.brinkmann09@gmail.com>": 558,
-          "root <root@cloud.christian-f-brinkmann.de>": 25
+          "root <root@cloud.christian-f-brinkmann.de>": 25,
+          "Christian Brinkmann <kontakt@cloud.christian-f-brinkmann.de>": 162
         }
       },
       "repoCommits": {
@@ -731,28 +778,35 @@
       },
       "repoAuthors": {
         "pacstall-programs": {
+          "cat-master21 <96554164+cat-master21@users.noreply.github.com>": 123,
+          "Sourajyoti Basak <wiz28@protonmail.com>": 1587,
+          "oklopfer <104327997+oklopfer@users.noreply.github.com>": 31173,
+          "dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>": 6,
           "Plasma <hwengerstickel@protonmail.com>": 741,
           "Henry Wenger-Stickel <hwengerstickel@protonmail.com>": 108,
           "Elsie <elsie19@pm.me>": 4304,
-          "oklopfer <104327997+oklopfer@users.noreply.github.com>": 31173,
-          "dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>": 6,
-          "V <150687949+vigress8@users.noreply.github.com>": 1166,
           "The TwilightBlood <hwengerstickel@protonmail.com>": 178,
           "Marie <marie@kaifa.ch>": 66,
-          "Sourajyoti Basak <wiz28@protonmail.com>": 1587,
-          "Radon Rosborough <radon.neon@gmail.com>": 6,
-          "cat-master21 <96554164+cat-master21@users.noreply.github.com>": 123,
           "Ict <72636637+1ctinus@users.noreply.github.com>": 4,
+          "V <150687949+vigress8@users.noreply.github.com>": 1166,
+          "Henry <hwengerstickel@protonmail.com>": 45,
+          "Elisabeth Wenger-Stickel <ewengerstickel@protonmail.com>": 106,
+          "Louis Brauer <louis@brauer.family>": 2,
+          "Marie <robloxfilmcam@gmail.com>": 17,
+          "Radon Rosborough <radon.neon@gmail.com>": 6,
+          "Elsie Wenger-Stickel <elsie19@pm.me>": 2,
+          "github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>": 4,
           "pre-commit-ci[bot] <66853113+pre-commit-ci[bot]@users.noreply.github.com>": 3,
           "Andrew Barchuk <andrew@raindev.io>": 39,
-          "Diego Queiroz <diegiwg@gmail.com>": 73,
-          "Béné <droppings_cledet@aleeas.com>": 135,
           "James \"Jim\" Ed Randson <053476233@ecampus.ut.ac.id>": 1551,
+          "Diego Queiroz <diegiwg@gmail.com>": 73,
           "villamorrd <villamorrd@students.nu-moa.edu.ph>": 3341,
+          "Aroun <login@b-vo.fr>": 126,
+          "Béné <droppings_cledet@aleeas.com>": 135,
+          "Elsie <hwengerstickel@protonmail.com>": 227,
           "SpaceGuyBob <92336100+spaceguybob@users.noreply.github.com>": 68,
           "rain1598 <70437021+rain1598@users.noreply.github.com>": 70,
           "Luigi311 <git@luigi311.com>": 82,
-          "Elsie <hwengerstickel@protonmail.com>": 227,
           "Moh Anif Yuliansyah <anifyuliansyah@gmail.com>": 21,
           "WRM-42 <y8bsbahy@anonaddy.me>": 80,
           "David Brochero <65723952+D-Brox@users.noreply.github.com>": 555,
@@ -764,7 +818,6 @@
           "KwonNam Son <kwon37xi@gmail.com>": 53,
           "Miren Radia <32646026+mirenradia@users.noreply.github.com>": 14,
           "tranquil-tr0 <lots.of.thingys@gmail.com>": 243,
-          "Aroun <login@b-vo.fr>": 126,
           "Aroun <zahrun@murena.io>": 463,
           "Erik Hedlund <56408966+erikcghedlund@users.noreply.github.com>": 1246,
           "ObsidianPresidium <96147683+ObsidianPresidium@users.noreply.github.com>": 14,
@@ -856,26 +909,20 @@
           "Wildy Sheverando <153343629+wildyrando@users.noreply.github.com>": 12,
           "http.llamaz <90976178+httpllamaz@users.noreply.github.com>": 3,
           "R <reiichi001@gmail.com>": 115,
-          "github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>": 4,
-          "Elsie Wenger-Stickel <elsie19@pm.me>": 2,
-          "Henry <hwengerstickel@protonmail.com>": 45,
-          "Elisabeth Wenger-Stickel <ewengerstickel@protonmail.com>": 106,
-          "Louis Brauer <louis@brauer.family>": 2,
-          "Marie <robloxfilmcam@gmail.com>": 17,
-          "vbrabandt <vbrabandt@proton.me>": 45,
           "Henryws <hwengerstickel@gmail.com>": 17,
+          "vbrabandt <vbrabandt@proton.me>": 45,
           "Zen <warofzen1@protonmail.com>": 2,
           "Kai Stian Olstad <kai.stian.olstad@gmail.com>": 16,
           "new-creation7 <161584341+new-creation7@users.noreply.github.com>": 1,
-          "souhaiebtar <tarhounisouhaieb@gmail.com>": 14,
           "Dheeraj Reddy <dheerajre@proton.me>": 11,
+          "souhaiebtar <tarhounisouhaieb@gmail.com>": 14,
           "Mike Almeloo <git@mikealmel.ooo>": 4,
           "Sourajyoti Basak <basak.sb2006@gmail.com>": 157,
           "Raul Dipeas <github@rauldipeas.com.br>": 23,
-          "NarutoXY <79555780+NarutoXY@users.noreply.github.com>": 118,
           "Frank Lee <71361592+Forest-Lee@users.noreply.github.com>": 8,
           "WRM-42 <83829346+WRM-42@users.noreply.github.com>": 25,
           "WRM-42 <oast92@tutanota.com>": 64,
+          "NarutoXY <79555780+NarutoXY@users.noreply.github.com>": 118,
           "Seraphina <hellosarahehe@gmail.com>": 32,
           "Pavithran <pavithranr@icloud.com>": 9,
           "V. <150687949+vigress8@users.noreply.github.com>": 91,
@@ -884,17 +931,17 @@
           "Aranym <73146467+aranym0@users.noreply.github.com>": 20,
           "Edward Riley <edward@edwardriley.co.uk>": 21,
           "An0nym0us-sh <79490538+An0nym0us-sh@users.noreply.github.com>": 15,
-          "Aaron Madved <aaronmadved@gmail.com>": 12,
           "Surendrajat <surendrajat@protonmail.com>": 5,
+          "Aaron Madved <aaronmadved@gmail.com>": 12,
           "Przemysław Pietras <przemyslawp94@gmail.com>": 1,
           "Cedric Roijakkers <croijakkers@ilionx.com>": 5,
-          "Trenten Miller <62214409+inyourface34456@users.noreply.github.com>": 6,
           "Ilesh Thiada <ileshkt@gmail.com>": 1,
-          "Stéphane Bisinger <stephane@sbisinger.ch>": 1,
+          "Trenten Miller <62214409+inyourface34456@users.noreply.github.com>": 6,
           "Archisman Panigrahi <apandada1@gmail.com>": 14,
+          "Stéphane Bisinger <stephane@sbisinger.ch>": 1,
           "Tom Dryer <tomdryer.com@gmail.com>": 12,
-          "DON <donnisnoni@outlook.com>": 11,
           "Gianluca Mastrolonardo <56590837+GianlucaHex@users.noreply.github.com>": 18,
+          "DON <donnisnoni@outlook.com>": 11,
           "Daniel Zarychta <daniel.zarychta@gmail.com>": 8,
           "Tianyu (Sky) Lu <tianyu@lu.fm>": 17,
           "Pranav JP <138555663+Panda-Code-Master@users.noreply.github.com>": 1,
@@ -924,8 +971,8 @@
           "toast1127 <toast011127@proton.me>": 23,
           "Nico <d3sox@protonmail.com>": 3,
           "D3SOX <d3sox@protonmail.com>": 3,
-          "Korkmatik <fahri.korkmaz@protonmail.ch>": 1,
           "SamarthH <47246334+SamarthH@users.noreply.github.com>": 7,
+          "Korkmatik <fahri.korkmaz@protonmail.ch>": 1,
           "Wildy Sheverando <shiwildy@gmail.com>": 3,
           "Wildy Sheverando <wildyverando@gmail.com>": 1,
           "Jacobus Burger <therealjacoburger@gmail.com>": 3,

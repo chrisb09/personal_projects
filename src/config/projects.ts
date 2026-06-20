@@ -5,13 +5,13 @@ export const projects: Project[] = [
     "id": "MusicBot",
     "name": "JMusicBot Fork",
     "tagline": "Feature-rich self-hosted Discord music bot fork with playback analytics and Docker deployment",
-    "year": "2016-2026",
+    "year": "2024-Present",
     "category": "backend",
     "status": "active",
     "projectType": "software-project",
     "role": "fork-maintainer",
     "sourceType": "open-source",
-    "aiUsage": "none",
+    "aiUsage": "contributed",
     "aiUtilization": "no-ai",
     "description": "A maintained, feature-rich fork of the popular self-hosted JMusicBot Discord music bot. Built with JDA 6 and Java, it includes modern Discord voice encryption (DAVE) support, optional YouTube account login (OAuth2), custom per-channel playback status messages, and JDBC/SQLite playback analytics logging. The project includes a dedicated Docker container deployment path.",
     "purpose": "To keep JMusicBot operational on modern Discord API standards while expanding it with database-backed statistics and native container support.",
@@ -64,6 +64,7 @@ export const projects: Project[] = [
     ],
     "mirrors": [],
     "screenshots": [],
+    "demoUrl": "https://discord.gg/4cp9CvjwaW",
     "logo": "/images/projects/MusicBot/logo.png"
   },
   {
@@ -224,6 +225,72 @@ export const projects: Project[] = [
     "screenshots": []
   },
   {
+    "id": "cycling-power-estimator",
+    "name": "Cycling Power Estimator & 3D Visualizer",
+    "tagline": "Full-stack web application to retroactively calculate and visualize cycling power from GPX files",
+    "year": "2026",
+    "category": "fullstack",
+    "status": "active",
+    "projectType": "software-project",
+    "role": "main-author",
+    "sourceType": "open-source",
+    "aiUsage": "major",
+    "aiUtilization": "no-ai",
+    "description": "A full-stack, open-source web application designed to analyze GPS track data (GPX files) and retroactively calculate a cyclist's power output (watts) using physical equations. The platform integrates a FastAPI Python backend for mathematical calculations, coordinate smoothing, and database persistence, with a React frontend featuring Chart.js analytics and Mapbox 3D terrain animations.",
+    "purpose": "To democratize cycling analytics by reverse-engineering power output without expensive physical power meters, and providing a highly engaging 3D visualization of rides.",
+    "technologies": [
+      "React",
+      "FastAPI",
+      "Python",
+      "SQLite",
+      "Mapbox GL JS",
+      "Chart.js",
+      "Docker"
+    ],
+    "dependencies": [
+      "FastAPI",
+      "SQLAlchemy",
+      "Pillow",
+      "Pandas",
+      "NumPy",
+      "Mapbox GL JS",
+      "Chart.js"
+    ],
+    "expertise": [
+      "Full Stack Development",
+      "Data Science & Physics Modeling",
+      "3D Geospatial Visualization",
+      "API Development"
+    ],
+    "strengths": [
+      "Physics modeling (gravity, rolling resistance, aerodynamic drag, kinetic energy)",
+      "3D digital elevation model (DEM) map tracking and path animations",
+      "Interactive synchronized charts (speed, power, elevation)",
+      "Bike configurations and user weight/CdA biological profiles support"
+    ],
+    "limitations": [
+      "Aero drag calculations assume static environmental wind conditions",
+      "Requires high-quality GPX files with fine-grained timestamp points",
+      "Mapbox features require a Mapbox API token"
+    ],
+    "installation": "git clone git@github.com:chrisb09/cycling_power_estimator.git\ncd cycling_power_estimator\ndocker-compose up --build -d",
+    "usage": "# Access the web app at http://localhost\n# Register a user profile and configure your bike mass & position\n# Upload a GPX file and view the calculated power stats & 3D playback",
+    "roadmap": [
+      "Integrate open-source elevation APIs to auto-correct GPS elevation errors",
+      "Support Strava API integration for automatic ride syncing"
+    ],
+    "repos": [
+      {
+        "name": "cycling_power_estimator",
+        "url": "https://github.com/chrisb09/cycling_power_estimator",
+        "type": "github"
+      }
+    ],
+    "mirrors": [],
+    "screenshots": [],
+    "logo": "/images/projects/cycling-power-estimator/logo.png"
+  },
+  {
     "id": "exam-system-backend",
     "name": "LLM-Integrated Exam System",
     "tagline": "Scaled Backend for University Assessments",
@@ -261,7 +328,8 @@ export const projects: Project[] = [
     "roadmap": [],
     "repos": [],
     "mirrors": [],
-    "screenshots": []
+    "screenshots": [],
+    "logo": "/images/projects/exam-system-backend/logo.png"
   },
   {
     "id": "ferienw-am-meer-modernization",
@@ -325,68 +393,6 @@ export const projects: Project[] = [
     "logo": "/images/projects/ferienw-am-meer-modernization/logo.png"
   },
   {
-    "id": "filament-spool-holder",
-    "name": "Auto-Rewinding Filament Spool Holder",
-    "tagline": "Parametric Mechanical Spool Holder for 3D Printing",
-    "year": "2024",
-    "category": "other",
-    "status": "active",
-    "projectType": "3d-printing",
-    "excludeFromStats": true,
-    "role": "main-author",
-    "sourceType": "open-source",
-    "aiUsage": "none",
-    "aiUtilization": "no-ai",
-    "description": "A parametric auto-rewinding filament spool holder designed for dual-extrusion or multi-material 3D printers. It automatically rewinds the spool when filament is retracted, preventing tangles.",
-    "purpose": "To solve filament tangling issues on multi-material 3D printers during retraction cycles, using a purely mechanical, printed spring mechanism.",
-    "technologies": [
-      "OpenSCAD",
-      "Fusion 360",
-      "3D Printing",
-      "PETG",
-      "PLA"
-    ],
-    "dependencies": [
-      "608ZZ Bearings (x2)",
-      "M3 Screws"
-    ],
-    "expertise": [
-      "Mechanical Design",
-      "Parametric Modeling",
-      "Tolerance Calibration",
-      "Additive Manufacturing"
-    ],
-    "strengths": [
-      "Purely mechanical solution with no electronics needed",
-      "Parametric design supporting spools from 50mm to 100mm wide",
-      "Reliable integrated spring mechanism printed in PETG for elasticity",
-      "Smooth operation utilizing standard 608ZZ skate bearings"
-    ],
-    "limitations": [
-      "Requires precise printer calibration for functional gear clearance",
-      "Integrated spring needs PETG or ABS (PLA is too brittle and creeps over time)"
-    ],
-    "installation": "# Clone the CAD repository\ngit clone https://github.com/example/auto-rewind-spool-holder.git\ncd auto-rewind-spool-holder\n\n# Open the .scad file in OpenSCAD to customize spool dimensions\nopenscad spool_holder.scad",
-    "usage": "1. Customize the dimensions in OpenSCAD or use pre-sliced STLs.\n2. Print the spring in PETG (3 perimeters, 30% infill).\n3. Print the stand and shaft in PLA.\n4. Press-fit two 608ZZ bearings into the spool hubs.\n5. Assemble the shaft, spring, and stand together.\n6. Mount the spool and feed filament into your printer.",
-    "roadmap": [
-      "Add wall-mount adapter plate",
-      "Create drybox-compatible low-profile version",
-      "Design clutch mechanism to prevent over-tensioning"
-    ],
-    "repos": [
-      {
-        "name": "spool-holder-cad",
-        "url": "https://github.com/example/auto-rewind-spool-holder",
-        "type": "github"
-      }
-    ],
-    "mirrors": [],
-    "screenshots": [
-      "/images/projects/filament-spool-holder/spool-holder-1.jpg",
-      "/images/projects/filament-spool-holder/spool-holder-2.jpg"
-    ]
-  },
-  {
     "id": "find-duplicates",
     "name": "find-duplicates",
     "tagline": "Python script to locate duplicate files and replace them with symbolic/hard links",
@@ -396,7 +402,7 @@ export const projects: Project[] = [
     "projectType": "script-small",
     "role": "main-author",
     "sourceType": "open-source",
-    "aiUsage": "none",
+    "aiUsage": "minor",
     "aiUtilization": "no-ai",
     "description": "A Python command-line script that crawls source and destination directories to detect duplicate files by hashing. It can automatically delete target duplicates and replace them with symlinks or hardlinks, optimizing disk space while preserving file organization.",
     "purpose": "To free up storage space (e.g. seeding torrents while maintaining files in library folders on different drives) without duplicating file contents.",
@@ -724,7 +730,7 @@ export const projects: Project[] = [
     "id": "jda-chewtils",
     "name": "JDA-Chewtils",
     "tagline": "Modern, modular tools and utilities extension library for JDA Discord bots",
-    "year": "2016-2025",
+    "year": "2025",
     "category": "library",
     "status": "active",
     "projectType": "software-project",
@@ -846,7 +852,7 @@ export const projects: Project[] = [
     "projectType": "script-small",
     "role": "main-author",
     "sourceType": "open-source",
-    "aiUsage": "none",
+    "aiUsage": "minor",
     "aiUtilization": "no-ai",
     "description": "A Paint.NET (PDN) filter plugin written in C# that simplifies converting standard images to use only the official Minecraft map color palette. This allows previewing how pixel art and custom maps will look in-game before building them.",
     "purpose": "To preview and map standard RGB image colors onto the limited color palette supported by Minecraft in-game maps.",
@@ -957,7 +963,7 @@ export const projects: Project[] = [
     "id": "nudenetv2",
     "name": "NudeNetv2",
     "tagline": "Fork and modernization of NudeNet neural networks for nudity classification and censoring",
-    "year": "2024",
+    "year": "2024-2025",
     "category": "library",
     "status": "active",
     "projectType": "software-project",
@@ -1186,7 +1192,7 @@ export const projects: Project[] = [
     "id": "qbmanage",
     "name": "qbmanage",
     "tagline": "CLI Tool for Auditing and Cleaning up qBittorrent Instances",
-    "year": "2025-2026",
+    "year": "2025-Present",
     "category": "utility",
     "status": "active",
     "projectType": "script-small",
@@ -1303,7 +1309,7 @@ export const projects: Project[] = [
     "projectType": "script-small",
     "role": "main-author",
     "sourceType": "open-source",
-    "aiUsage": "none",
+    "aiUsage": "minor",
     "aiUtilization": "no-ai",
     "description": "A single-file Python 3 utility to split and backup a Redis database into multiple base64 URL-safe text files, making backups git-friendly and easily restorable.",
     "purpose": "To create incremental, text-based, and human-readable backups of Redis data keys and values (handling binary data cleanly via base64) instead of monolithic binary RDB dumps.",

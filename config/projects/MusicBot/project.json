@@ -2,13 +2,13 @@
   "id": "MusicBot",
   "name": "JMusicBot Fork",
   "tagline": "Feature-rich self-hosted Discord music bot fork with playback analytics and Docker deployment",
-  "year": "2016-2026",
+  "year": "2024-Present",
   "category": "backend",
   "status": "active",
   "projectType": "software-project",
   "role": "fork-maintainer",
   "sourceType": "open-source",
-  "aiUsage": "none",
+  "aiUsage": "contributed",
   "aiUtilization": "no-ai",
   "description": "A maintained, feature-rich fork of the popular self-hosted JMusicBot Discord music bot. Built with JDA 6 and Java, it includes modern Discord voice encryption (DAVE) support, optional YouTube account login (OAuth2), custom per-channel playback status messages, and JDBC/SQLite playback analytics logging. The project includes a dedicated Docker container deployment path.",
   "purpose": "To keep JMusicBot operational on modern Discord API standards while expanding it with database-backed statistics and native container support.",
@@ -60,5 +60,6 @@
     }
   ],
   "mirrors": [],
-  "screenshots": []
+  "screenshots": [],
+  "demoUrl": "https://discord.gg/4cp9CvjwaW"
 }

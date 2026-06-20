@@ -8,7 +8,7 @@
   "projectType": "script-small",
   "role": "main-author",
   "sourceType": "open-source",
-  "aiUsage": "none",
+  "aiUsage": "minor",
   "aiUtilization": "no-ai",
   "description": "A Paint.NET (PDN) filter plugin written in C# that simplifies converting standard images to use only the official Minecraft map color palette. This allows previewing how pixel art and custom maps will look in-game before building them.",
   "purpose": "To preview and map standard RGB image colors onto the limited color palette supported by Minecraft in-game maps.",

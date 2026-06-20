@@ -25,6 +25,7 @@
     ".eot",
     ".mp4",
     ".mp3",
+    ".gpx",
     ".svg"
   ],
   "ignoreFiles": [
@@ -42,6 +43,9 @@
     "public",
     "repos",
     "temp",
-    "tmp"
+    "tmp",
+    ".venv",
+    "venv",
+    "env"
   ]
 }

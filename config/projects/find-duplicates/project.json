@@ -8,7 +8,7 @@
   "projectType": "script-small",
   "role": "main-author",
   "sourceType": "open-source",
-  "aiUsage": "none",
+  "aiUsage": "minor",
   "aiUtilization": "no-ai",
   "description": "A Python command-line script that crawls source and destination directories to detect duplicate files by hashing. It can automatically delete target duplicates and replace them with symlinks or hardlinks, optimizing disk space while preserving file organization.",
   "purpose": "To free up storage space (e.g. seeding torrents while maintaining files in library folders on different drives) without duplicating file contents.",
