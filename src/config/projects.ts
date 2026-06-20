@@ -618,17 +618,15 @@ export const projects: Project[] = [
     "description": "A custom web-based viewer for Paint.net (.pdn) project files. Built entirely without heavy frontend frameworks to ensure maximum rendering performance and a lightweight footprint.",
     "purpose": "To make Paint.net project files accessible and shareable on the web, enabling artists to showcase their work and collaborate without requiring everyone to have Paint.net installed.",
     "technologies": [
-      "Python",
+      "JavaScript",
       "HTML",
       "CSS",
-      "JavaScript",
-      "Flask"
+      "Python"
     ],
     "dependencies": [
       "pdnexport (custom tool)",
-      "Pillow",
-      "Flask",
-      "Gunicorn"
+      "pypdn (Paint.net format parser library)",
+      "Pillow"
     ],
     "expertise": [
       "Image Processing",
@@ -676,6 +674,11 @@ export const projects: Project[] = [
       {
         "name": "pdnexport",
         "relation": "Uses for file conversion"
+      },
+      {
+        "name": "pypdn",
+        "relation": "Dependency of pdnexport for Paint.net binary parsing",
+        "url": "https://github.com/addisonElliott/pypdn/"
       },
       {
         "name": "Paint.net",
