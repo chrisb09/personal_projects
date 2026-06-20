@@ -1,0 +1,57 @@
+{
+  "id": "qbmanage",
+  "name": "qbmanage",
+  "tagline": "CLI Tool for Auditing and Cleaning up qBittorrent Instances",
+  "year": "2025-2026",
+  "category": "utility",
+  "status": "active",
+  "projectType": "script-small",
+  "role": "main-author",
+  "sourceType": "open-source",
+  "aiUsage": "minor",
+  "aiUtilization": "no-ai",
+  "description": "A Python-based command-line utility for auditing and cleaning up torrents and files in a qBittorrent instance. It features tracker status checking, finding orphaned/unused files on disk, and identifying unlinked hardlinks to automate cleaning leftovers safely with dry-run protection.",
+  "purpose": "To manage qBittorrent instances, especially in setups where downloads are hardlinked to media folders, by cleaning dead tracker torrents and orphaned download files.",
+  "technologies": [
+    "Python",
+    "qBittorrent API",
+    "YAML"
+  ],
+  "dependencies": [
+    "qbittorrent-api",
+    "PyYAML",
+    "pandas"
+  ],
+  "expertise": [
+    "Automation",
+    "Scripting",
+    "Storage Management",
+    "API Integration"
+  ],
+  "strengths": [
+    "Dry-run inspection before performing any deletion",
+    "Uses regex filters to group/remove torrents based on tracker messages",
+    "Designed around hardlink setups to safely detect orphaned content",
+    "Generates detailed logs and tables for selected torrents/files"
+  ],
+  "limitations": [
+    "Optimized for specific hardlink setups; requires extra caution on standard copy setups",
+    "Requires active Web UI connection with valid credentials",
+    "Requires Python 3.10+"
+  ],
+  "installation": "git clone git@github.com:chrisb09/qbmanage.git\ncd qbmanage\npip install -r requirements.txt",
+  "usage": "# Check connection and count torrents:\npython3 qbmanage.py status\n\n# Audit orphaned files (dry-run):\npython3 qbmanage.py unusedfiles --full\n\n# Safely remove unlinked torrents:\npython3 qbmanage.py unlinkedfiles --include-categories 'movies' --delete",
+  "roadmap": [
+    "Add support for dockerized daemon runs",
+    "Extend notification support (e.g. Discord, Telegram) upon successful cleanup runs"
+  ],
+  "repos": [
+    {
+      "name": "qbmanage",
+      "url": "https://github.com/chrisb09/qbmanage",
+      "type": "github"
+    }
+  ],
+  "mirrors": [],
+  "screenshots": []
+}

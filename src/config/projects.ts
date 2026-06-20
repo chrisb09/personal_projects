@@ -720,6 +720,63 @@ export const projects: Project[] = [
     ]
   },
   {
+    "id": "map-color-convert",
+    "name": "map-color-convert",
+    "tagline": "Paint.NET plugin to preview and convert images to Minecraft map color palettes",
+    "year": "2024-2025",
+    "category": "utility",
+    "status": "active",
+    "projectType": "script-small",
+    "role": "main-author",
+    "sourceType": "open-source",
+    "aiUsage": "none",
+    "aiUtilization": "no-ai",
+    "description": "A Paint.NET (PDN) filter plugin written in C# that simplifies converting standard images to use only the official Minecraft map color palette. This allows previewing how pixel art and custom maps will look in-game before building them.",
+    "purpose": "To preview and map standard RGB image colors onto the limited color palette supported by Minecraft in-game maps.",
+    "technologies": [
+      "C#",
+      "Paint.NET API",
+      "Python",
+      "Java"
+    ],
+    "dependencies": [
+      "Paint.NET"
+    ],
+    "expertise": [
+      "Image Processing",
+      "Plugin Development",
+      "Minecraft Mechanics"
+    ],
+    "strengths": [
+      "Translates arbitrary colors to Minecraft-compatible map colors",
+      "Integrates directly into the Paint.NET Effects menu via installer batch script",
+      "Provides sample C#, Java, and Python color extractors/mappers",
+      "Very fast in-memory execution within the Paint.NET UI"
+    ],
+    "limitations": [
+      "Requires Paint.NET installed on Windows to run the plugin",
+      "Does not handle image resizing (Minecraft maps are 128x128 pixels)",
+      "Limited to the predefined color palette"
+    ],
+    "installation": "1. Extract the MinecraftMapColorPalette.zip file.\n2. Execute the batch installer script.\n3. Open Paint.NET and access the plugin from the Effects menu.",
+    "usage": "# Open an image in Paint.NET\n# Select Effects -> Color Map -> Minecraft Map Color Palette\n# Preview and apply the palette transformation",
+    "roadmap": [
+      "Add customizable dither options to improve converted image gradients",
+      "Implement automated 128x128 image cropping/splitting options"
+    ],
+    "repos": [
+      {
+        "name": "map-color-convert",
+        "url": "https://github.com/chrisb09/map-color-convert",
+        "type": "github"
+      }
+    ],
+    "mirrors": [],
+    "screenshots": [
+      "/images/projects/map-color-convert/sample.png"
+    ]
+  },
+  {
     "id": "mega-tor-downloader",
     "name": "mega-tor-downloader",
     "tagline": "Mega.nz Downloader routed through Tor to bypass rate limits",
@@ -1007,6 +1064,63 @@ export const projects: Project[] = [
         "url": "https://www.getpaint.net/"
       }
     ]
+  },
+  {
+    "id": "qbmanage",
+    "name": "qbmanage",
+    "tagline": "CLI Tool for Auditing and Cleaning up qBittorrent Instances",
+    "year": "2025-2026",
+    "category": "utility",
+    "status": "active",
+    "projectType": "script-small",
+    "role": "main-author",
+    "sourceType": "open-source",
+    "aiUsage": "minor",
+    "aiUtilization": "no-ai",
+    "description": "A Python-based command-line utility for auditing and cleaning up torrents and files in a qBittorrent instance. It features tracker status checking, finding orphaned/unused files on disk, and identifying unlinked hardlinks to automate cleaning leftovers safely with dry-run protection.",
+    "purpose": "To manage qBittorrent instances, especially in setups where downloads are hardlinked to media folders, by cleaning dead tracker torrents and orphaned download files.",
+    "technologies": [
+      "Python",
+      "qBittorrent API",
+      "YAML"
+    ],
+    "dependencies": [
+      "qbittorrent-api",
+      "PyYAML",
+      "pandas"
+    ],
+    "expertise": [
+      "Automation",
+      "Scripting",
+      "Storage Management",
+      "API Integration"
+    ],
+    "strengths": [
+      "Dry-run inspection before performing any deletion",
+      "Uses regex filters to group/remove torrents based on tracker messages",
+      "Designed around hardlink setups to safely detect orphaned content",
+      "Generates detailed logs and tables for selected torrents/files"
+    ],
+    "limitations": [
+      "Optimized for specific hardlink setups; requires extra caution on standard copy setups",
+      "Requires active Web UI connection with valid credentials",
+      "Requires Python 3.10+"
+    ],
+    "installation": "git clone git@github.com:chrisb09/qbmanage.git\ncd qbmanage\npip install -r requirements.txt",
+    "usage": "# Check connection and count torrents:\npython3 qbmanage.py status\n\n# Audit orphaned files (dry-run):\npython3 qbmanage.py unusedfiles --full\n\n# Safely remove unlinked torrents:\npython3 qbmanage.py unlinkedfiles --include-categories 'movies' --delete",
+    "roadmap": [
+      "Add support for dockerized daemon runs",
+      "Extend notification support (e.g. Discord, Telegram) upon successful cleanup runs"
+    ],
+    "repos": [
+      {
+        "name": "qbmanage",
+        "url": "https://github.com/chrisb09/qbmanage",
+        "type": "github"
+      }
+    ],
+    "mirrors": [],
+    "screenshots": []
   },
   {
     "id": "redis-dump-load",

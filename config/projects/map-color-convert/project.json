@@ -1,0 +1,55 @@
+{
+  "id": "map-color-convert",
+  "name": "map-color-convert",
+  "tagline": "Paint.NET plugin to preview and convert images to Minecraft map color palettes",
+  "year": "2024-2025",
+  "category": "utility",
+  "status": "active",
+  "projectType": "script-small",
+  "role": "main-author",
+  "sourceType": "open-source",
+  "aiUsage": "none",
+  "aiUtilization": "no-ai",
+  "description": "A Paint.NET (PDN) filter plugin written in C# that simplifies converting standard images to use only the official Minecraft map color palette. This allows previewing how pixel art and custom maps will look in-game before building them.",
+  "purpose": "To preview and map standard RGB image colors onto the limited color palette supported by Minecraft in-game maps.",
+  "technologies": [
+    "C#",
+    "Paint.NET API",
+    "Python",
+    "Java"
+  ],
+  "dependencies": [
+    "Paint.NET"
+  ],
+  "expertise": [
+    "Image Processing",
+    "Plugin Development",
+    "Minecraft Mechanics"
+  ],
+  "strengths": [
+    "Translates arbitrary colors to Minecraft-compatible map colors",
+    "Integrates directly into the Paint.NET Effects menu via installer batch script",
+    "Provides sample C#, Java, and Python color extractors/mappers",
+    "Very fast in-memory execution within the Paint.NET UI"
+  ],
+  "limitations": [
+    "Requires Paint.NET installed on Windows to run the plugin",
+    "Does not handle image resizing (Minecraft maps are 128x128 pixels)",
+    "Limited to the predefined color palette"
+  ],
+  "installation": "1. Extract the MinecraftMapColorPalette.zip file.\n2. Execute the batch installer script.\n3. Open Paint.NET and access the plugin from the Effects menu.",
+  "usage": "# Open an image in Paint.NET\n# Select Effects -> Color Map -> Minecraft Map Color Palette\n# Preview and apply the palette transformation",
+  "roadmap": [
+    "Add customizable dither options to improve converted image gradients",
+    "Implement automated 128x128 image cropping/splitting options"
+  ],
+  "repos": [
+    {
+      "name": "map-color-convert",
+      "url": "https://github.com/chrisb09/map-color-convert",
+      "type": "github"
+    }
+  ],
+  "mirrors": [],
+  "screenshots": []
+}

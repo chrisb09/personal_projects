@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-06-20T18:31:08.214Z",
+  "lastUpdated": "2026-06-20T18:36:37.616Z",
   "projects": {
     "advoexport": {
       "stats": {
@@ -374,6 +374,56 @@
       "loc": {
         "total": 0,
         "byLanguage": {}
+      }
+    },
+    "map-color-convert": {
+      "stats": {
+        "stars": 1,
+        "commits": 5,
+        "branches": 1,
+        "lastCommit": "2025-05-23"
+      },
+      "loc": {
+        "total": 1009,
+        "byLanguage": {
+          "Python": 172,
+          "CSV": 123,
+          "Markdown": 24,
+          "C#": 347,
+          "Java": 95,
+          "CS_PDN": 248
+        }
+      },
+      "repoHashes": {
+        "map-color-convert": "ff79e3c23b96bda1f64c42efa5fbda8640322f34"
+      },
+      "repoLocs": {
+        "map-color-convert": {
+          "total": 1009,
+          "byLanguage": {
+            "Python": 172,
+            "CSV": 123,
+            "Markdown": 24,
+            "C#": 347,
+            "Java": 95,
+            "CS_PDN": 248
+          },
+          "excludeFirstCommit": false
+        }
+      },
+      "repoAuthors": {
+        "map-color-convert": {
+          "Christian Brinkmann <christian.brinkmann09@gmail.com>": 1009
+        }
+      },
+      "repoCommits": {
+        "map-color-convert": 5
+      },
+      "repoBranches": {
+        "map-color-convert": 1
+      },
+      "repoLastCommit": {
+        "map-color-convert": "2025-05-23"
       }
     },
     "mega-tor-downloader": {
@@ -785,6 +835,53 @@
       "repoLastCommit": {
         "pdnwebview": "2025-04-14",
         "pdnexport": "2022-07-28"
+      }
+    },
+    "qbmanage": {
+      "stats": {
+        "stars": 0,
+        "commits": 7,
+        "branches": 1,
+        "lastCommit": "2026-02-27"
+      },
+      "loc": {
+        "total": 899,
+        "byLanguage": {
+          "YAML": 5,
+          "Markdown": 125,
+          "Other": 5,
+          "Python": 764
+        }
+      },
+      "repoHashes": {
+        "qbmanage": "4541587c9554003a50908334a8d5f3d4021f751e"
+      },
+      "repoLocs": {
+        "qbmanage": {
+          "total": 899,
+          "byLanguage": {
+            "YAML": 5,
+            "Markdown": 125,
+            "Other": 5,
+            "Python": 764
+          },
+          "excludeFirstCommit": false
+        }
+      },
+      "repoAuthors": {
+        "qbmanage": {
+          "Christian F. Brinkmann <christian.brinkmann09@gmail.com>": 694,
+          "Christian F. Brinkmann (cloud) <mail@christian-f-brinkmann.de>": 205
+        }
+      },
+      "repoCommits": {
+        "qbmanage": 7
+      },
+      "repoBranches": {
+        "qbmanage": 1
+      },
+      "repoLastCommit": {
+        "qbmanage": "2026-02-27"
       }
     },
     "redis-dump-load": {
