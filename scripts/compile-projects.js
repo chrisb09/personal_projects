@@ -67,20 +67,6 @@ function compileProjects() {
     }
 
     if (projectData) {
-      // Handle project logo if specified
-      if (projectLogoPath) {
-        const logoExt = path.extname(projectLogoPath);
-        const logoDestPath = path.join(publicImagesDir, projectId, `logo${logoExt}`);
-        const webLogoPath = `/images/projects/${projectId}/logo${logoExt}`;
-
-        // Ensure target directory exists and copy the file
-        fs.mkdirSync(path.dirname(logoDestPath), { recursive: true });
-        fs.copyFileSync(projectLogoPath, logoDestPath);
-        console.log(`Copied logo for ${projectId} to ${logoDestPath}`);
-        
-        projectData.logo = webLogoPath;
-      }
-
       // Handle project-specific media
       if (projectMediaDir) {
         const destMediaDir = path.join(publicImagesDir, projectId);
@@ -102,6 +88,20 @@ function compileProjects() {
         
         // Set screenshots dynamically in the project object
         projectData.screenshots = mediaFiles.map(file => `/images/projects/${projectId}/${file}`);
+      }
+
+      // Handle project logo if specified
+      if (projectLogoPath) {
+        const logoExt = path.extname(projectLogoPath);
+        const logoDestPath = path.join(publicImagesDir, projectId, `logo${logoExt}`);
+        const webLogoPath = `/images/projects/${projectId}/logo${logoExt}`;
+
+        // Ensure target directory exists and copy the file
+        fs.mkdirSync(path.dirname(logoDestPath), { recursive: true });
+        fs.copyFileSync(projectLogoPath, logoDestPath);
+        console.log(`Copied logo for ${projectId} to ${logoDestPath}`);
+        
+        projectData.logo = webLogoPath;
       }
 
       compiledProjects.push(projectData);
