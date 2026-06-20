@@ -41,7 +41,8 @@ import {
   Code,
   Sparkles,
   Cpu,
-  ExternalLink
+  ExternalLink,
+  BookOpen
 } from 'lucide-react';
 
 // AI Legend Component - shows both AI Usage (how it was built) and AI Utilization (does it use AI)
@@ -105,6 +106,7 @@ function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<ProjectCategory | 'all'>('all');
+  const [showAcademicOnly, setShowAcademicOnly] = useState(false);
   const [projectsWithStats, setProjectsWithStats] = useState<Project[]>(projects);
 
   // Initialize theme on mount
@@ -144,9 +146,13 @@ function App() {
         selectedCategory === 'all' || 
         project.category === selectedCategory;
       
-      return matchesSearch && matchesCategory;
+      const matchesAcademic = 
+        !showAcademicOnly || 
+        project.academic === true;
+      
+      return matchesSearch && matchesCategory && matchesAcademic;
     });
-  }, [projectsWithStats, searchQuery, selectedCategory]);
+  }, [projectsWithStats, searchQuery, selectedCategory, showAcademicOnly]);
 
   // Group filtered projects by projectType
   const groupedProjects = useMemo(() => {
@@ -329,6 +335,22 @@ function App() {
 
             {/* Category Filters */}
             <div className="flex flex-wrap gap-1.5 flex-1 items-center justify-start md:justify-end">
+              <button
+                onClick={() => setShowAcademicOnly(!showAcademicOnly)}
+                className={`
+                  px-2.5 py-1.5 rounded-md text-xs font-medium transition-all duration-200 border flex items-center gap-1.5
+                  ${showAcademicOnly 
+                    ? 'bg-teal-500/10 text-teal-600 border-teal-500/30 dark:text-teal-400 shadow-sm' 
+                    : 'bg-muted/50 hover:bg-muted text-muted-foreground hover:text-foreground border-transparent'
+                  }
+                `}
+              >
+                <BookOpen className="w-3.5 h-3.5" />
+                {t('filters.academic_only', 'Academic Projects')}
+              </button>
+
+              <div className="h-4 w-px bg-border/60 mx-1 hidden sm:block" />
+
               {categories.map((category) => (
                 <button
                   key={category}
@@ -413,6 +435,7 @@ function App() {
                 onClick={() => {
                   setSearchQuery('');
                   setSelectedCategory('all');
+                  setShowAcademicOnly(false);
                 }}
               >
                 Clear filters
