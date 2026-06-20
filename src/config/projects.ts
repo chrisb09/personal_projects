@@ -774,10 +774,64 @@ export const projects: Project[] = [
     ]
   },
   {
-    "id": "small-projects",
-    "name": "Small Projects & Scripts",
-    "tagline": "Utility Tools and Helper Scripts",
-    "year": "Various",
+    "id": "redis-dump-load",
+    "name": "redis-dump-load",
+    "tagline": "Redis Data Set Dumper and Loader",
+    "year": "2023",
+    "category": "utility",
+    "status": "maintenance",
+    "projectType": "script-small",
+    "role": "fork-maintainer",
+    "sourceType": "open-source",
+    "aiUsage": "none",
+    "aiUtilization": "no-ai",
+    "description": "A command-line tool and Python module to dump Redis datasets into JSON files and restore them. Stream support allows handling large databases efficiently.",
+    "purpose": "To facilitate long-term storage, transfer, and version-controlling of Redis datasets in a clean, streaming-capable text format (JSON).",
+    "technologies": [
+      "Python",
+      "Redis",
+      "JSON"
+    ],
+    "dependencies": [
+      "redis"
+    ],
+    "expertise": [
+      "Data Processing",
+      "Scripting",
+      "Backup Solutions"
+    ],
+    "strengths": [
+      "Compatible with redis-dump",
+      "Streams data to minimize memory usage",
+      "Preserves TTL and expiration times",
+      "Can be used as a CLI utility or Python module"
+    ],
+    "limitations": [
+      "Dumps to a single JSON file",
+      "Loading speed depends on Redis client latency",
+      "Requires external dependencies (ijson/jsaone) for streaming load"
+    ],
+    "installation": "pip install redis-dump-load\n# Or run directly:\npython redisdl.py --help",
+    "usage": "# Dump database to file\npython redisdl.py -o dump.json\n\n# Load database from file\npython redisdl.py -l dump.json",
+    "roadmap": [
+      "Enhance support for newer Redis data types",
+      "Optimize loading performance"
+    ],
+    "repos": [
+      {
+        "name": "redis-dump-load",
+        "url": "https://github.com/chrisb09/redis-dump-load",
+        "type": "github"
+      }
+    ],
+    "mirrors": [],
+    "screenshots": []
+  },
+  {
+    "id": "redis-load-store",
+    "name": "redis_load_store",
+    "tagline": "Redis Database to Base64 Text Files Backup Utility",
+    "year": "2024",
     "category": "utility",
     "status": "active",
     "projectType": "script-small",
@@ -785,50 +839,40 @@ export const projects: Project[] = [
     "sourceType": "open-source",
     "aiUsage": "none",
     "aiUtilization": "no-ai",
-    "description": "A collection of small but useful utility projects and scripts for various tasks including Redis data management, secure downloading, duplicate file detection, and simple file hosting.",
-    "purpose": "To solve specific, recurring problems with focused, lightweight tools that are easy to understand, use, and modify.",
+    "description": "A single-file Python 3 utility to split and backup a Redis database into multiple base64 URL-safe text files, making backups git-friendly and easily restorable.",
+    "purpose": "To create incremental, text-based, and human-readable backups of Redis data keys and values (handling binary data cleanly via base64) instead of monolithic binary RDB dumps.",
     "technologies": [
       "Python",
-      "Bash",
       "Redis",
-      "Tor"
+      "Base64"
     ],
     "dependencies": [
-      "Varies by project"
+      "redis"
     ],
     "expertise": [
-      "Scripting",
-      "Automation",
       "Data Processing",
-      "Security"
+      "Scripting",
+      "Backup Solutions"
     ],
     "strengths": [
-      "Focused, single-purpose tools",
-      "Simple to understand and modify",
-      "No unnecessary dependencies",
-      "Well-documented usage",
-      "Open source and free to use"
+      "Stores database keys as individual base64 URL-safe files",
+      "Great for version control (git) tracking changes incrementally",
+      "Supports string, list, set, zset, hash, and stream types",
+      "Restores TTL and expiration times relative to restore time"
     ],
     "limitations": [
-      "Limited scope (by design)",
-      "May require technical knowledge to use",
-      "Minimal user interfaces",
-      "Not actively maintained (stable tools)"
+      "Inefficient storage size due to base64 encoding",
+      "Unix socket support is untested",
+      "use_expireat option is currently unimplemented"
     ],
-    "installation": "# Each project has its own setup\n# See individual README files in repositories\n\n# General pattern\ngit clone https://github.com/yourusername/project-name.git\ncd project-name\npip install -r requirements.txt  # if Python\nchmod +x script.sh               # if Bash",
-    "usage": "# redis-load-store\npython redis-load-store.py --import data.json\n\n# Mega-Tor-Downloader\npython mega-tor-downloader.py <mega-url>\n\n# find-duplicates\n./find-duplicates.sh /path/to/search\n\n# host-files-by-hash\npython host-files.py --port 8080 --directory ./files",
+    "installation": "git clone https://gitlab.com/christianbrinkmann/redis_load_store.git\ncd redis_load_store\npip install -r requirements.txt",
+    "usage": "# Store Redis db to folder\n./redis_load_store.py store backup_folder --empty\n\n# Restore Redis db from folder\n./redis_load_store.py load backup_folder --empty",
     "roadmap": [
-      "Add comprehensive test suites",
-      "Create unified documentation",
-      "Package for easier distribution",
-      "Add CI/CD for automated testing"
+      "Implement and test --use_expireat",
+      "Add test coverage for unix sockets",
+      "Optimize file creation and I/O performance"
     ],
     "repos": [
-      {
-        "name": "redis-dump-load",
-        "url": "https://github.com/chrisb09/redis-dump-load",
-        "type": "github"
-      },
       {
         "name": "redis_load_store",
         "url": "https://gitlab.com/christianbrinkmann/redis_load_store",

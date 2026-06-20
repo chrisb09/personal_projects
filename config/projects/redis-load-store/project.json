@@ -1,0 +1,55 @@
+{
+  "id": "redis-load-store",
+  "name": "redis_load_store",
+  "tagline": "Redis Database to Base64 Text Files Backup Utility",
+  "year": "2024",
+  "category": "utility",
+  "status": "active",
+  "projectType": "script-small",
+  "role": "main-author",
+  "sourceType": "open-source",
+  "aiUsage": "none",
+  "aiUtilization": "no-ai",
+  "description": "A single-file Python 3 utility to split and backup a Redis database into multiple base64 URL-safe text files, making backups git-friendly and easily restorable.",
+  "purpose": "To create incremental, text-based, and human-readable backups of Redis data keys and values (handling binary data cleanly via base64) instead of monolithic binary RDB dumps.",
+  "technologies": [
+    "Python",
+    "Redis",
+    "Base64"
+  ],
+  "dependencies": [
+    "redis"
+  ],
+  "expertise": [
+    "Data Processing",
+    "Scripting",
+    "Backup Solutions"
+  ],
+  "strengths": [
+    "Stores database keys as individual base64 URL-safe files",
+    "Great for version control (git) tracking changes incrementally",
+    "Supports string, list, set, zset, hash, and stream types",
+    "Restores TTL and expiration times relative to restore time"
+  ],
+  "limitations": [
+    "Inefficient storage size due to base64 encoding",
+    "Unix socket support is untested",
+    "use_expireat option is currently unimplemented"
+  ],
+  "installation": "git clone https://gitlab.com/christianbrinkmann/redis_load_store.git\ncd redis_load_store\npip install -r requirements.txt",
+  "usage": "# Store Redis db to folder\n./redis_load_store.py store backup_folder --empty\n\n# Restore Redis db from folder\n./redis_load_store.py load backup_folder --empty",
+  "roadmap": [
+    "Implement and test --use_expireat",
+    "Add test coverage for unix sockets",
+    "Optimize file creation and I/O performance"
+  ],
+  "repos": [
+    {
+      "name": "redis_load_store",
+      "url": "https://gitlab.com/christianbrinkmann/redis_load_store",
+      "type": "gitlab"
+    }
+  ],
+  "mirrors": [],
+  "screenshots": []
+}

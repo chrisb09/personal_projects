@@ -1,0 +1,54 @@
+{
+  "id": "redis-dump-load",
+  "name": "redis-dump-load",
+  "tagline": "Redis Data Set Dumper and Loader",
+  "year": "2023",
+  "category": "utility",
+  "status": "maintenance",
+  "projectType": "script-small",
+  "role": "fork-maintainer",
+  "sourceType": "open-source",
+  "aiUsage": "none",
+  "aiUtilization": "no-ai",
+  "description": "A command-line tool and Python module to dump Redis datasets into JSON files and restore them. Stream support allows handling large databases efficiently.",
+  "purpose": "To facilitate long-term storage, transfer, and version-controlling of Redis datasets in a clean, streaming-capable text format (JSON).",
+  "technologies": [
+    "Python",
+    "Redis",
+    "JSON"
+  ],
+  "dependencies": [
+    "redis"
+  ],
+  "expertise": [
+    "Data Processing",
+    "Scripting",
+    "Backup Solutions"
+  ],
+  "strengths": [
+    "Compatible with redis-dump",
+    "Streams data to minimize memory usage",
+    "Preserves TTL and expiration times",
+    "Can be used as a CLI utility or Python module"
+  ],
+  "limitations": [
+    "Dumps to a single JSON file",
+    "Loading speed depends on Redis client latency",
+    "Requires external dependencies (ijson/jsaone) for streaming load"
+  ],
+  "installation": "pip install redis-dump-load\n# Or run directly:\npython redisdl.py --help",
+  "usage": "# Dump database to file\npython redisdl.py -o dump.json\n\n# Load database from file\npython redisdl.py -l dump.json",
+  "roadmap": [
+    "Enhance support for newer Redis data types",
+    "Optimize loading performance"
+  ],
+  "repos": [
+    {
+      "name": "redis-dump-load",
+      "url": "https://github.com/chrisb09/redis-dump-load",
+      "type": "github"
+    }
+  ],
+  "mirrors": [],
+  "screenshots": []
+}
