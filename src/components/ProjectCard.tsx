@@ -181,10 +181,12 @@ export function ProjectCard({ project, onClick }: ProjectCardProps) {
           <div className="flex items-center gap-3 mb-2 text-[11px] text-muted-foreground">
             {project.stats && (
               <>
-                <div className="flex items-center gap-1">
-                  <Star className="w-3 h-3 text-amber-500/80" />
-                  <span>{project.stats.stars}</span>
-                </div>
+                {project.stats.stars !== undefined && project.stats.stars > 0 && (
+                  <div className="flex items-center gap-1">
+                    <Star className="w-3 h-3 text-amber-500/80" />
+                    <span>{project.stats.stars}</span>
+                  </div>
+                )}
                 <div className="flex items-center gap-1">
                   <GitCommit className="w-3 h-3 text-blue-500/80" />
                   <span>{project.stats.commits}</span>

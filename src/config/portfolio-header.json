@@ -1,0 +1,39 @@
+{
+  "badgeText": "Developer Portfolio",
+  "badgeIcon": "Code2",
+  "titlePrefix": "Personal",
+  "titleHighlight": "Projects",
+  "description": "A collection of my work spanning backend systems, web applications, DevOps infrastructure, and open source contributions.",
+  "buttons": [
+    {
+      "text": "GitHub",
+      "icon": "Github",
+      "url": "https://github.com",
+      "invertColor": true
+    },
+    {
+      "text": "GitLab",
+      "icon": "Gitlab",
+      "url": "https://gitlab.com",
+      "invertColor": false
+    },
+    {
+      "text": "GL 2",
+      "icon": "Gitlab",
+      "url": "https://gitlab.instance2.com",
+      "invertColor": false
+    },
+    {
+      "text": "LinkedIn",
+      "icon": "Linkedin",
+      "url": "https://linkedin.com",
+      "invertColor": false
+    },
+    {
+      "text": "Contact",
+      "icon": "Mail",
+      "url": "mailto:contact@example.com",
+      "invertColor": false
+    }
+  ]
+}

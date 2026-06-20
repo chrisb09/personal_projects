@@ -1,6 +1,7 @@
 import { useState, useMemo, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { projects } from '@/config/projects';
+import headerConfig from '@/config/portfolio-header.json';
 import type { Project, ProjectCategory } from '@/types/project';
 import { fetchStats, mergeStatsWithProjects } from '@/lib/stats';
 import { initializeTheme } from '@/lib/theme';
@@ -38,12 +39,28 @@ import {
   FolderGit2,
   Star,
   GitCommit,
+  Cpu,
+  ExternalLink,
+  BookOpen
+} from 'lucide-react';
+
+const iconMap: Record<string, React.ComponentType<any>> = {
+  Github,
+  Gitlab,
+  Linkedin,
+  Mail,
+  Search,
+  Code2,
+  X,
+  FolderGit2,
+  Star,
+  GitCommit,
   Code,
   Sparkles,
   Cpu,
   ExternalLink,
   BookOpen
-} from 'lucide-react';
+};
 
 // AI Legend Component - shows both AI Usage (how it was built) and AI Utilization (does it use AI)
 function AILegend() {
@@ -231,53 +248,42 @@ function App() {
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 md:gap-6">
               <div className="space-y-1.5">
                 <div className="flex items-center gap-1.5 text-muted-foreground">
-                  <Code2 className="w-4 h-4" />
-                  <span className="text-xs font-medium">Developer Portfolio</span>
+                  {(() => {
+                    const BadgeIcon = iconMap[headerConfig.badgeIcon] || Code2;
+                    return <BadgeIcon className="w-4 h-4" />;
+                  })()}
+                  <span className="text-xs font-medium">{headerConfig.badgeText}</span>
                 </div>
                 
                 <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight">
-                  Personal{' '}
+                  {headerConfig.titlePrefix}{' '}
                   <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
-                    Projects
+                    {headerConfig.titleHighlight}
                   </span>
                 </h1>
                 
                 <p className="text-sm md:text-base text-muted-foreground max-w-xl leading-relaxed">
-                  A collection of my work spanning backend systems, web applications, 
-                  DevOps infrastructure, and open source contributions.
+                  {headerConfig.description}
                 </p>
 
                 <div className="flex flex-wrap gap-1.5 pt-0.5">
-                  <Button variant="default" size="sm" className="h-8 gap-2 text-xs" asChild>
-                    <a href="https://github.com" target="_blank" rel="noopener noreferrer">
-                      <Github className="w-3.5 h-3.5" />
-                      GitHub
-                    </a>
-                  </Button>
-                  <Button variant="outline" size="sm" className="h-8 gap-2 text-xs" asChild>
-                    <a href="https://gitlab.com" target="_blank" rel="noopener noreferrer">
-                      <Gitlab className="w-3.5 h-3.5" />
-                      GitLab
-                    </a>
-                  </Button>
-                  <Button variant="outline" size="sm" className="h-8 gap-1.5 text-xs" asChild>
-                    <a href="https://gitlab.instance2.com" target="_blank" rel="noopener noreferrer">
-                      <Gitlab className="w-3 h-3" />
-                      <span className="text-[11px]">GL 2</span>
-                    </a>
-                  </Button>
-                  <Button variant="outline" size="sm" className="h-8 gap-2 text-xs" asChild>
-                    <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
-                      <Linkedin className="w-3.5 h-3.5" />
-                      LinkedIn
-                    </a>
-                  </Button>
-                  <Button variant="outline" size="sm" className="h-8 gap-2 text-xs" asChild>
-                    <a href="mailto:contact@example.com">
-                      <Mail className="w-3.5 h-3.5" />
-                      Contact
-                    </a>
-                  </Button>
+                  {headerConfig.buttons.map((btn, i) => {
+                    const BtnIcon = iconMap[btn.icon] || ExternalLink;
+                    return (
+                      <Button 
+                        key={i}
+                        variant={btn.invertColor ? 'default' : 'outline'}
+                        size="sm"
+                        className="h-8 gap-2 text-xs"
+                        asChild
+                      >
+                        <a href={btn.url} target="_blank" rel="noopener noreferrer">
+                          <BtnIcon className="w-3.5 h-3.5" />
+                          {btn.text}
+                        </a>
+                      </Button>
+                    );
+                  })}
                 </div>
               </div>
 
@@ -457,45 +463,21 @@ function App() {
                 Built with React, TypeScript & Tailwind CSS
               </p>
               <div className="flex items-center gap-4">
-                <a 
-                  href="https://github.com" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  <Github className="w-5 h-5" />
-                </a>
-                <a 
-                  href="https://gitlab.com" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  <Gitlab className="w-5 h-5" />
-                </a>
-                <a 
-                  href="https://gitlab.instance2.com" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-muted-foreground hover:text-foreground transition-colors"
-                  title="GitLab Instance 2"
-                >
-                  <ExternalLink className="w-5 h-5" />
-                </a>
-                <a 
-                  href="https://linkedin.com" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  <Linkedin className="w-5 h-5" />
-                </a>
-                <a 
-                  href="mailto:contact@example.com"
-                  className="text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  <Mail className="w-5 h-5" />
-                </a>
+                {headerConfig.buttons.map((btn, i) => {
+                  const BtnIcon = iconMap[btn.icon] || ExternalLink;
+                  return (
+                    <a 
+                      key={i}
+                      href={btn.url}
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="text-muted-foreground hover:text-foreground transition-colors"
+                      title={btn.text}
+                    >
+                      <BtnIcon className="w-5 h-5" />
+                    </a>
+                  );
+                })}
               </div>
             </div>
           </div>
