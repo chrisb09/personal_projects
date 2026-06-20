@@ -767,7 +767,9 @@ export const projects: Project[] = [
       "requests",
       "PySocks",
       "Tor",
-      "Docker & Docker Compose"
+      "Docker & Docker Compose",
+      "torpyjob (custom-built job coordinator client)",
+      "torpy (modified Tor connection client library)"
     ],
     "expertise": [
       "Distributed Systems",
@@ -799,6 +801,16 @@ export const projects: Project[] = [
         "name": "userbenchmark-web-scraper",
         "url": "https://gitlab.com/christianbrinkmann/userbenchmark-web-scraper",
         "type": "gitlab"
+      },
+      {
+        "name": "torpyjob",
+        "url": "https://github.com/chrisb09/torpyjob",
+        "type": "github"
+      },
+      {
+        "name": "torpy",
+        "url": "https://gitlab.com/christianbrinkmann/torpy",
+        "type": "gitlab"
       }
     ],
     "mirrors": [],
@@ -807,6 +819,16 @@ export const projects: Project[] = [
       {
         "name": "tor-python",
         "relation": "Modified version used"
+      },
+      {
+        "name": "torpyjob",
+        "relation": "Custom client utility for scraper coordination",
+        "url": "https://github.com/chrisb09/torpyjob"
+      },
+      {
+        "name": "torpy",
+        "relation": "Modified Tor networking library utilized by scraper",
+        "url": "https://gitlab.com/christianbrinkmann/torpy"
       }
     ]
   }
