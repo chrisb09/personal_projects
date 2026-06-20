@@ -6,20 +6,20 @@ This guide details how projects are structured, configured, and compiled in this
 
 ## 1. Directory Structure
 
-Rather than being hardcoded inside the web application source code, all project data is kept in the `projects/` directory at the root of the workspace.
+Rather than being hardcoded inside the web application source code, all project data is kept in the `config/projects/` directory at the root of the workspace.
 
 There are two supported formats for defining a project:
 
 ### A. File-based (No Media Assets)
 If a project only has text metadata and does not require local images/screenshots, define it as a single JSON file:
 ```
-projects/your-project-id.json
+config/projects/your-project-id.json
 ```
 
 ### B. Directory-based (With Media Assets)
 If a project has screenshots or local images, define it as a folder named after the project ID:
 ```
-projects/your-project-id/
+config/projects/your-project-id/
 ├── project.json   # Holds the text metadata
 └── media/         # Place screenshots here (e.g. screenshot1.jpg, screenshot2.png)
 ```
@@ -27,8 +27,8 @@ During compilation, all images inside the `media/` directory are automatically c
 
 ### C. Logo Auto-Resolution
 You can associate a custom logo icon (supported: `.png`, `.jpg`, `.jpeg`, `.webp`, `.svg`) with any project:
-- **File-based projects**: Place an image file with the same name as the project ID in the `projects/` directory (e.g. `projects/pdnwebview.png`).
-- **Directory-based projects**: Place an image file named `logo.<ext>` inside the project folder (e.g. `projects/filament-spool-holder/logo.png`).
+- **File-based projects**: Place an image file with the same name as the project ID in the `config/projects/` directory (e.g. `config/projects/pdnwebview.png`).
+- **Directory-based projects**: Place an image file named `logo.<ext>` inside the project folder (e.g. `config/projects/filament-spool-holder/logo.png`).
 
 During compilation, these logo files are copied to the public directory and the compiled project `logo` field is automatically set to `/images/projects/<your-project-id>-logo.<ext>` or `/images/projects/<your-project-id>/logo.<ext>` respectively.
 
@@ -36,7 +36,7 @@ During compilation, these logo files are copied to the public directory and the 
 
 ## 2. Supported Fields in Project Metadata
 
-Each project JSON file (either `projects/<id>.json` or `projects/<id>/project.json`) supports the following fields:
+Each project JSON file (either `config/projects/<id>.json` or `config/projects/<id>/project.json`) supports the following fields:
 
 | Field | Type | Description |
 | :--- | :--- | :--- |
@@ -75,7 +75,7 @@ Each project JSON file (either `projects/<id>.json` or `projects/<id>/project.js
 
 ## 3. Compilation Scripts
 
-We have provided two scripts to compile the `projects/` data into the React app:
+We have provided two scripts to compile the `config/projects/` data into the React app:
 
 ### A. One-Time Compilation
 Combines all project definitions, copies media files, and generates `src/config/projects.ts`:
@@ -85,7 +85,7 @@ npm run compile-projects
 > **Note**: This is automatically executed as part of `npm run build` so that production builds are always up to date.
 
 ### B. Auto-Compiler Watcher
-Watches the `projects/` directory recursively. When a file is added, edited, or deleted, it schedules a compilation task **10 seconds** in the future. If another edit occurs during this 10-second window, the timer resets, preventing redundant rebuilds:
+Watches the `config/projects/` directory recursively. When a file is added, edited, or deleted, it schedules a compilation task **10 seconds** in the future. If another edit occurs during this 10-second window, the timer resets, preventing redundant rebuilds:
 ```bash
 npm run watch-projects
 ```
