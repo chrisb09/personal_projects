@@ -199,6 +199,65 @@ export const projects: Project[] = [
     "screenshots": []
   },
   {
+    "id": "ferienw-am-meer-modernization",
+    "name": "ferienw-am-meer.de",
+    "tagline": "Static Site Modernization & High-Performance Web Engineering",
+    "year": "2026",
+    "category": "frontend",
+    "status": "active",
+    "projectType": "software-project",
+    "role": "main-author",
+    "sourceType": "open-source",
+    "aiUsage": "full",
+    "aiUtilization": "no-ai",
+    "description": "Migrated and completely re-architected a legacy static HTML website into a high-performance, modern web application. Focused on extreme frontend asset optimization, strict type safety, and automated CI/CD deployment pipelines.",
+    "purpose": "To transform an outdated web presence into a blazing-fast, mobile-first experience while establishing an automated infrastructure for media processing and zero-downtime hosting.",
+    "technologies": [
+      "Next.js",
+      "Tailwind CSS v4",
+      "TypeScript",
+      "GitHub Actions",
+      "Node.js"
+    ],
+    "dependencies": [
+      "postcss",
+      "tsconfig",
+      "sharp"
+    ],
+    "expertise": [
+      "Web Performance Optimization (FCP/LCP)",
+      "Automated Media Pipelines",
+      "CI/CD Deployment Automation",
+      "Responsive Frontend Architecture"
+    ],
+    "strengths": [
+      "Engineered a complete architectural overhaul by transitioning legacy HTML into a type-safe Next.js implementation utilizing Tailwind CSS v4",
+      "Optimized critical Core Web Vitals (FCP/LCP) by leveraging experimental native CSS inlining configurations inside the Next.js runtime",
+      "Built a custom automated image processing pipeline converting graphic assets to highly compressed WebP formats for faster loading times",
+      "Implemented automated Low-Quality Image Placeholders (LQIP) via blur placeholders to eliminate visual layout shifts (CLS) during image hydration",
+      "Designed a robust hash-based gallery metadata system to synchronize media states dynamically and ensure correct asset descriptions",
+      "Architected an automated CI/CD deployment workflow via GitHub Actions with complex basePath mapping logic tailored for custom domains"
+    ],
+    "limitations": [
+      "Primarily static presentation architecture, limits dynamic server-side runtime operations",
+      "Gallery updates depend on local script-based metadata generation before deployment"
+    ],
+    "roadmap": [
+      "Integrate a headless CMS layer to decouple content creation from the codebase",
+      "Implement automated end-to-end testing profiles using Playwright or Cypress"
+    ],
+    "demoUrl": "https://ferienw-am-meer.de",
+    "repos": [
+      {
+        "name": "ferienw-am-meer.de",
+        "url": "https://github.com/chrisb09/github-page.ferienw-am-meer.de",
+        "type": "github"
+      }
+    ],
+    "mirrors": [],
+    "screenshots": []
+  },
+  {
     "id": "filament-spool-holder",
     "name": "Auto-Rewinding Filament Spool Holder",
     "tagline": "Parametric Mechanical Spool Holder for 3D Printing",

@@ -8,17 +8,17 @@
     {
       "text": "GitHub",
       "icon": "Github",
-      "url": "https://github.com",
+      "url": "https://github.com/chrisb09",
       "invertColor": true
     },
     {
       "text": "GitLab",
       "icon": "Gitlab",
-      "url": "https://gitlab.com",
+      "url": "https://gitlab.com/christianbrinkmann",
       "invertColor": false
     },
     {
-      "text": "GL 2",
+      "text": "RWTH GitLab",
       "icon": "Gitlab",
       "url": "https://gitlab.instance2.com",
       "invertColor": false
