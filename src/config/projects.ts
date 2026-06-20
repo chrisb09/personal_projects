@@ -533,6 +533,76 @@ export const projects: Project[] = [
     ]
   },
   {
+    "id": "nudenetv2",
+    "name": "NudeNetv2",
+    "tagline": "Fork and modernization of NudeNet neural networks for nudity classification and censoring",
+    "year": "2024",
+    "category": "library",
+    "status": "active",
+    "projectType": "software-project",
+    "role": "fork-maintainer",
+    "sourceType": "open-source",
+    "aiUsage": "none",
+    "aiUtilization": "ai-powered",
+    "description": "A fork of the v2 branch of NudeNet, a popular library for nudity classification, detection, and selective censoring. This fork was created to restore functionality to the library after the original repository's model downloads broke due to GitHub release access changes. It hosts the classification and detection ONNX models directly on GitLab and includes custom extensions, such as support for custom model directory paths via both constructor arguments and environment variables.",
+    "purpose": "To restore and maintain a fully functional, easy-to-use Python package for nudity classification and censoring without requiring official Tor clients or browser logins to download pre-trained weights.",
+    "technologies": [
+      "Python",
+      "ONNX Runtime",
+      "OpenCV",
+      "Pillow",
+      "Deep Learning"
+    ],
+    "dependencies": [
+      "onnxruntime",
+      "opencv-python-headless",
+      "pillow",
+      "pydload",
+      "scikit-image"
+    ],
+    "expertise": [
+      "Library Maintenance",
+      "Deep Learning Inference",
+      "ONNX Models",
+      "Python Package Distribution"
+    ],
+    "strengths": [
+      "Fully functional classifier and detector restored from the broken original NudeNet v2 branch",
+      "ONNX models hosted reliably on GitLab raw storage for direct downloads",
+      "Added support for custom model directories via constructor parameter or NUDENET_MODEL_DIR environment variable",
+      "Cleaned codebase of indecent images in documentation",
+      "Easy installation and PyPI publication packaging"
+    ],
+    "limitations": [
+      "Deep learning model accuracy depends on pre-trained NudeNet weights",
+      "Requires downloading large ONNX checkpoint files on first initialization",
+      "Inference speed is limited by CPU unless GPU-accelerated onnxruntime-gpu is configured"
+    ],
+    "installation": "pip install --upgrade NudeNetv2",
+    "usage": "from NudeNetv2 import NudeClassifier, NudeDetector\n\n# Initialize and download models\nclassifier = NudeClassifier()\ndetector = NudeDetector()\n\n# Classify an image\nresult = classifier.classify('path_to_image.jpg')\nprint(result)\n\n# Detect and censor parts\nboxes = detector.detect('path_to_image.jpg')\ndetector.censor('path_to_image.jpg', out_path='censored.jpg', parts_to_blur=['sexually_explicit'])",
+    "roadmap": [
+      "Optimize video frame extraction performance",
+      "Support more lightweight ONNX model quantization options",
+      "Improve batch inference pipelines"
+    ],
+    "repos": [
+      {
+        "name": "nudenetv2",
+        "url": "https://gitlab.com/christianbrinkmann/nudenetv2",
+        "type": "gitlab"
+      }
+    ],
+    "mirrors": [],
+    "screenshots": [],
+    "relatedProjects": [
+      {
+        "name": "NudeNet",
+        "relation": "Forked from",
+        "url": "https://github.com/notAI-tech/NudeNet"
+      }
+    ]
+  },
+  {
     "id": "pacstall-programs",
     "name": "Pacstall Programs",
     "tagline": "Package Manager for Ubuntu/Debian",
@@ -832,7 +902,8 @@ export const projects: Project[] = [
         "relation": "Modified Tor networking library utilized by scraper",
         "url": "https://gitlab.com/christianbrinkmann/torpy"
       }
-    ]
+    ],
+    "logo": "/images/projects/userbenchmark-scraper/logo.png"
   }
 ];
 

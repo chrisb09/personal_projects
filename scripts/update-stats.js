@@ -359,7 +359,7 @@ async function updateStats() {
             console.log(`Fetched stars for ${projectId} from GitHub: ${fetchedStars}`);
           }
         } else if (gitlabMatch) {
-          const [,, host, owner, repo] = gitlabMatch;
+          const [, host, owner, repo] = gitlabMatch;
           const projectPath = `${owner}/${repo}`;
           const headers = {};
           const envTokenName = `GITLAB_TOKEN_${host.toUpperCase().replace(/[^A-Z0-9]/g, '_')}`;

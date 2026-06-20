@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-06-20T13:01:39.995Z",
+  "lastUpdated": "2026-06-20T13:22:16.411Z",
   "projects": {
     "advoexport": {
       "stats": {
@@ -194,6 +194,54 @@
           "XML": 250,
           "Markdown": 150
         }
+      }
+    },
+    "nudenetv2": {
+      "stats": {
+        "stars": 2,
+        "commits": 4,
+        "branches": 1,
+        "lastCommit": "2025-05-26"
+      },
+      "loc": {
+        "total": 1123,
+        "byLanguage": {
+          "TXT": 2,
+          "Python": 879,
+          "Shell": 13,
+          "Markdown": 125,
+          "Other": 104
+        }
+      },
+      "repoHashes": {
+        "nudenetv2": "532e5ca8ade536e332e7e00dd10fba39263cb047"
+      },
+      "repoLocs": {
+        "nudenetv2": {
+          "total": 1123,
+          "byLanguage": {
+            "TXT": 2,
+            "Python": 879,
+            "Shell": 13,
+            "Markdown": 125,
+            "Other": 104
+          }
+        }
+      },
+      "repoAuthors": {
+        "nudenetv2": {
+          "Christian F. Brinkmann <christian.brinkmann09@gmail.com>": 1123,
+          "Michael King <mking44444@gmail.com>": 74
+        }
+      },
+      "repoCommits": {
+        "nudenetv2": 4
+      },
+      "repoBranches": {
+        "nudenetv2": 1
+      },
+      "repoLastCommit": {
+        "nudenetv2": "2025-05-26"
       }
     },
     "pacstall-programs": {
@@ -527,7 +575,7 @@
     },
     "userbenchmark-scraper": {
       "stats": {
-        "stars": 5,
+        "stars": 0,
         "commits": 365,
         "branches": 3,
         "lastCommit": "2022-08-22"
