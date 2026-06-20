@@ -8,35 +8,27 @@ This guide details how projects are structured, configured, and compiled in this
 
 Rather than being hardcoded inside the web application source code, all project data is kept in the `config/projects/` directory at the root of the workspace.
 
-There are two supported formats for defining a project:
-
-### A. File-based (No Media Assets)
-If a project only has text metadata and does not require local images/screenshots, define it as a single JSON file:
-```
-config/projects/your-project-id.json
-```
-
-### B. Directory-based (With Media Assets)
-If a project has screenshots or local images, define it as a folder named after the project ID:
+Every project must have its own directory named after the project ID:
 ```
 config/projects/your-project-id/
-├── project.json   # Holds the text metadata
-└── media/         # Place screenshots here (e.g. screenshot1.jpg, screenshot2.png)
+├── project.json   # Required. Holds the text metadata.
+├── media/         # Optional. Place screenshots here (e.g. screenshot1.jpg, screenshot2.png).
+└── logo.<ext>     # Optional. Place a custom logo icon here (supported: .png, .jpg, .jpeg, .webp, .svg).
 ```
-During compilation, all images inside the `media/` directory are automatically copied into the web structure (`public/images/projects/your-project-id/`), and the `screenshots` array in the compiled config is dynamically updated to reference their public web URLs.
 
-### C. Logo Auto-Resolution
-You can associate a custom logo icon (supported: `.png`, `.jpg`, `.jpeg`, `.webp`, `.svg`) with any project:
-- **File-based projects**: Place an image file with the same name as the project ID in the `config/projects/` directory (e.g. `config/projects/pdnwebview.png`).
-- **Directory-based projects**: Place an image file named `logo.<ext>` inside the project folder (e.g. `config/projects/filament-spool-holder/logo.png`).
+### A. Media Assets & Screenshots
+If a project directory contains a `media/` subfolder, all images inside it are automatically copied into the web structure (`public/images/projects/your-project-id/`), and the `screenshots` array in the compiled config is dynamically updated to reference their public web URLs.
 
-During compilation, these logo files are copied to the public directory and the compiled project `logo` field is automatically set to `/images/projects/<your-project-id>-logo.<ext>` or `/images/projects/<your-project-id>/logo.<ext>` respectively.
+### B. Logo Auto-Resolution
+You can associate a custom logo icon with any project by placing an image file named `logo.<ext>` inside the project directory (e.g. `config/projects/filament-spool-holder/logo.png`).
+
+During compilation, these logo files are copied to the public directory and the compiled project `logo` field is automatically set to `/images/projects/<your-project-id>/logo.<ext>`.
 
 ---
 
 ## 2. Supported Fields in Project Metadata
 
-Each project JSON file (either `config/projects/<id>.json` or `config/projects/<id>/project.json`) supports the following fields:
+Each project JSON file (`config/projects/<id>/project.json`) supports the following fields:
 
 | Field | Type | Description |
 | :--- | :--- | :--- |

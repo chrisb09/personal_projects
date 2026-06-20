@@ -36,48 +36,33 @@ function compileProjects() {
     const itemPath = path.join(projectsDir, item);
     const stat = fs.statSync(itemPath);
 
-    let projectData = null;
-    let projectId = null;
+    if (!stat.isDirectory()) {
+      continue;
+    }
+
+    const projectId = item;
+    const jsonPath = path.join(itemPath, 'project.json');
+    if (!fs.existsSync(jsonPath)) {
+      console.warn(`No project.json found in folder: config/projects/${item}`);
+      continue;
+    }
+
+    const projectData = JSON.parse(fs.readFileSync(jsonPath, 'utf8'));
     let projectMediaDir = null;
     let projectLogoPath = null;
 
-    if (stat.isDirectory()) {
-      // Directory-based project
-      projectId = item;
-      const jsonPath = path.join(itemPath, 'project.json');
-      if (fs.existsSync(jsonPath)) {
-        projectData = JSON.parse(fs.readFileSync(jsonPath, 'utf8'));
-      } else {
-        console.warn(`No project.json found in folder: projects/${item}`);
-        continue;
-      }
-      
-      // Look for media folder
-      const mediaDir = path.join(itemPath, 'media');
-      if (fs.existsSync(mediaDir)) {
-        projectMediaDir = mediaDir;
-      }
+    // Look for media folder
+    const mediaDir = path.join(itemPath, 'media');
+    if (fs.existsSync(mediaDir)) {
+      projectMediaDir = mediaDir;
+    }
 
-      // Look for logo file inside the directory
-      for (const ext of imageExtensions) {
-        const logoFile = path.join(itemPath, `logo${ext}`);
-        if (fs.existsSync(logoFile)) {
-          projectLogoPath = logoFile;
-          break;
-        }
-      }
-    } else if (item.endsWith('.json')) {
-      // File-based project
-      projectId = path.basename(item, '.json');
-      projectData = JSON.parse(fs.readFileSync(itemPath, 'utf8'));
-
-      // Look for logo file matching the project ID in the projects directory
-      for (const ext of imageExtensions) {
-        const logoFile = path.join(projectsDir, `${projectId}${ext}`);
-        if (fs.existsSync(logoFile)) {
-          projectLogoPath = logoFile;
-          break;
-        }
+    // Look for logo file inside the directory
+    for (const ext of imageExtensions) {
+      const logoFile = path.join(itemPath, `logo${ext}`);
+      if (fs.existsSync(logoFile)) {
+        projectLogoPath = logoFile;
+        break;
       }
     }
 
@@ -85,16 +70,8 @@ function compileProjects() {
       // Handle project logo if specified
       if (projectLogoPath) {
         const logoExt = path.extname(projectLogoPath);
-        let logoDestPath = '';
-        let webLogoPath = '';
-
-        if (stat.isDirectory()) {
-          logoDestPath = path.join(publicImagesDir, projectId, `logo${logoExt}`);
-          webLogoPath = `/images/projects/${projectId}/logo${logoExt}`;
-        } else {
-          logoDestPath = path.join(publicImagesDir, `${projectId}-logo${logoExt}`);
-          webLogoPath = `/images/projects/${projectId}-logo${logoExt}`;
-        }
+        const logoDestPath = path.join(publicImagesDir, projectId, `logo${logoExt}`);
+        const webLogoPath = `/images/projects/${projectId}/logo${logoExt}`;
 
         // Ensure target directory exists and copy the file
         fs.mkdirSync(path.dirname(logoDestPath), { recursive: true });

@@ -26,8 +26,6 @@ function loadProjects() {
       if (fs.existsSync(jsonPath)) {
         projects.push(JSON.parse(fs.readFileSync(jsonPath, 'utf8')));
       }
-    } else if (item.endsWith('.json')) {
-      projects.push(JSON.parse(fs.readFileSync(itemPath, 'utf8')));
     }
   }
   return projects;

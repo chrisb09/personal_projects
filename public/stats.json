@@ -1,6 +1,70 @@
 {
-  "lastUpdated": "2026-06-19T22:34:31.277Z",
+  "lastUpdated": "2026-06-20T11:36:35.694Z",
   "projects": {
+    "advoexport": {
+      "stats": {
+        "stars": 0,
+        "commits": 0,
+        "branches": 0,
+        "lastCommit": ""
+      },
+      "loc": {
+        "total": 0,
+        "byLanguage": {}
+      }
+    },
+    "cpp-ml-interface": {
+      "stats": {
+        "stars": 0,
+        "commits": 0,
+        "branches": 0,
+        "lastCommit": ""
+      },
+      "loc": {
+        "total": 0,
+        "byLanguage": {}
+      }
+    },
+    "custom-orchestration": {
+      "stats": {
+        "stars": 0,
+        "commits": 0,
+        "branches": 0,
+        "lastCommit": ""
+      },
+      "loc": {
+        "total": 0,
+        "byLanguage": {}
+      }
+    },
+    "exam-system-backend": {
+      "stats": {
+        "stars": 0,
+        "commits": 0,
+        "branches": 0,
+        "lastCommit": ""
+      },
+      "loc": {
+        "total": 0,
+        "byLanguage": {}
+      }
+    },
+    "ferienw-am-meer-modernization": {
+      "stats": {
+        "stars": 0,
+        "commits": 79,
+        "branches": 3,
+        "lastCommit": "2026-05-26"
+      },
+      "loc": {
+        "total": 2819,
+        "byLanguage": {
+          "TypeScript": 1766,
+          "JavaScript": 1039,
+          "CSS": 14
+        }
+      }
+    },
     "filament-spool-holder": {
       "stats": {
         "stars": 0,
