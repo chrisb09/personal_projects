@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-06-20T16:13:20.584Z",
+  "lastUpdated": "2026-06-20T16:39:50.570Z",
   "projects": {
     "advoexport": {
       "stats": {
@@ -150,13 +150,60 @@
     "firecord": {
       "stats": {
         "stars": 0,
-        "commits": 0,
-        "branches": 0,
-        "lastCommit": ""
+        "commits": 264,
+        "branches": 4,
+        "lastCommit": "2025-11-06"
       },
       "loc": {
-        "total": 0,
-        "byLanguage": {}
+        "total": 12321,
+        "byLanguage": {
+          "Java": 11359,
+          "XML": 187,
+          "Shell": 45,
+          "Markdown": 317,
+          "PUML": 270,
+          "YML_OLD": 9,
+          "Other": 120,
+          "YAML": 14
+        }
+      },
+      "repoHashes": {
+        "firecord": "1fe51691fdb36cd9e7fae54762dd7b4e921f850d"
+      },
+      "repoLocs": {
+        "firecord": {
+          "total": 12321,
+          "byLanguage": {
+            "Java": 11359,
+            "XML": 187,
+            "Shell": 45,
+            "Markdown": 317,
+            "PUML": 270,
+            "YML_OLD": 9,
+            "Other": 120,
+            "YAML": 14
+          },
+          "excludeFirstCommit": false
+        }
+      },
+      "repoAuthors": {
+        "firecord": {
+          "Christian F. Brinkmann <christian.brinkmann09@gmail.com>": 12131,
+          "FreeSoccerHDX <freesoccerhdx@gmail.com>": 332,
+          "Christian Brinkmann <christian.brinkmann09@gmail.com>": 79,
+          "Christian Brinkmann <christian.brinkmann@gmail.com>": 111,
+          "FreeSoccerHDX <unconfigured@null.spigotmc.org>": 31,
+          "BuildTools <unconfigured@null.spigotmc.org>": 7
+        }
+      },
+      "repoCommits": {
+        "firecord": 264
+      },
+      "repoBranches": {
+        "firecord": 4
+      },
+      "repoLastCommit": {
+        "firecord": "2025-11-06"
       }
     },
     "homeserver": {

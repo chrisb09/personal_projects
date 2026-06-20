@@ -1,7 +1,7 @@
 {
   "id": "firecord",
-  "name": "firecord",
-  "tagline": "Experimental Redisson Alternative",
+  "name": "Firecord",
+  "tagline": "Virtual distributed object memory and cache coherence library for Java and Minecraft servers",
   "year": "2023 - Present",
   "category": "backend",
   "status": "experimental",
@@ -10,46 +10,56 @@
   "sourceType": "open-source",
   "aiUsage": "minor",
   "aiUtilization": "no-ai",
-  "description": "A high-performance, Redis-based automatic object synchronization library for Java. Developed as a lightweight, low-latency alternative to Redisson, heavily utilizing AspectJ for reference-based tracking.",
-  "purpose": "Born from the need to synchronize distributed state in sub-50ms tick environments where standard solutions introduced unacceptable network overhead and latency.",
+  "description": "An experimental virtual distributed shared object memory system for Java. It combines Redis as a backing store with an invalidation-based cache coherence protocol via Redis Pub/Sub, allowing multiple independent processes or Minecraft servers to interact with synchronized objects as if they were local references. Field-level updates and reference changes are intercepted and broadcasted automatically using AspectJ compile-time bytecode weaving.",
+  "purpose": "To provide a low-latency state synchronization layer for Minecraft server environments (Spigot/Paper) and proxies (Velocity) where tick times are constrained to 50ms, bypassing the serialization overhead of traditional ORMs or Redisson's explicit map/list updates.",
   "technologies": [
     "Java",
     "Redis",
     "AspectJ",
-    "Spring Framework"
+    "Maven",
+    "TCP/IP & Pub/Sub"
   ],
   "dependencies": [
-    "Redis 6.0+",
-    "AspectJ Weaver",
-    "Jedis or Lettuce client"
+    "AspectJ Runtime (aspectjrt)",
+    "Jedis (Redis Java Client)",
+    "Spigot/Paper API (optional, for Minecraft servers)",
+    "BungeeCord/Velocity API (optional, for Minecraft proxies)",
+    "JLine (optional, for standalone CLI)"
   ],
   "expertise": [
-    "Distributed Systems Architecture",
-    "Aspect-Oriented Programming (AspectJ)",
-    "Low-Latency Memory Synchronization"
+    "Distributed Shared Memory",
+    "Cache Coherence Protocols",
+    "Bytecode Instrumentation & Weaving",
+    "Spigot & Velocity Plugin Development",
+    "Pub/Sub Messaging Architectures"
   ],
   "strengths": [
-    "Eliminated manual synchronization boilerplate through AspectJ instrumentation",
-    "Significantly reduced network payload sizes via intelligent, reference-based state diffing",
-    "Optimized specifically for latency-critical distributed environments"
+    "Transparent distributed shared object space using AspectJ compile-time weaving to intercept field assignments",
+    "Highly efficient field-level incremental updates instead of full-object serialization",
+    "Native Spigot, Paper, and Velocity integration for high-performance Minecraft multi-server networks",
+    "Redis Pub/Sub invalidation protocol maintaining cache coherence across multiple nodes",
+    "Standalone console mode using JLine for interactive distributed testing"
   ],
   "limitations": [
-    "Experimental status - API may change",
-    "Limited to Redis backend (no other data stores)",
-    "AspectJ instrumentation required",
-    "Smaller community than established alternatives"
+    "Requires AspectJ compile-time weaving plugins configured in the project's build pipeline",
+    "Increased memory usage due to object caching across all nodes",
+    "Prototype status lacking mature distributed features like garbage collection, sorted set support, or parent references"
   ],
-  "installation": "// Add to your pom.xml\n<dependency>\n    <groupId>de.christianfbrinkmann</groupId>\n    <artifactId>firecord</artifactId>\n    <version>0.1.0-SNAPSHOT</version>\n</dependency>\n\n// Configure Redis connection\nfirecord:\n  redis:\n    host: localhost\n    port: 6379",
-  "usage": "// Annotate your shared objects\n@Synchronized\npublic class SharedState {\n    private String data;\n    private int counter;\n    \n    // Getters and setters automatically synchronized\n}\n\n// Use in your application\nSharedState state = firecord.get(SharedState.class, \"state-id\");\nstate.setData(\"Hello, distributed world!\");\n// Changes automatically propagated to all nodes",
+  "installation": "<!-- Add Firecord repository and dependency in pom.xml -->\n<dependency>\n    <groupId>net.legendofwar.firecord</groupId>\n    <artifactId>Firecord</artifactId>\n    <version>${firecord.version}</version>\n</dependency>\n\n<!-- Requires aspectj-maven-plugin configured for compile-time weaving -->\n<plugin>\n    <groupId>org.codehaus.mojo</groupId>\n    <artifactId>aspectj-maven-plugin</artifactId>\n    <version>${aspectj.plugin.version}</version>\n    <configuration>\n        <aspectLibraries>\n            <aspectLibrary>\n                <groupId>org.aspectj</groupId>\n                <artifactId>aspectjrt</artifactId>\n            </aspectLibrary>\n        </aspectLibraries>\n    </configuration>\n</plugin>",
+  "usage": "// 1. Initialize Firecord for Spigot or Standalone mode\nFirecord.init(NodeType.SPIGOT);\n\n// 2. Define a shared object extending AbstractObject\npublic final class PlayerData extends AbstractObject {\n    // Synchronized fields using R-types (or primitives woven by AspectJ)\n    private RInteger level = new RInteger(new Bytes(\"level\"));\n    private RString rank = new RString(new Bytes(\"rank\"));\n    \n    public PlayerData(Bytes key) {\n        super(key);\n    }\n}\n\n// 3. Load or create the object from the distributed memory\nPlayerData data = (PlayerData) AbstractData.create(new Bytes(\"player-123\"));\n\n// 4. Modify fields - changes are automatically woven and broadcasted to other nodes\ndata.getLevel().set(100);",
   "roadmap": [
-    "Add support for Redis Cluster and Sentinel",
-    "Implement configurable consistency levels",
-    "Create comprehensive benchmark suite",
-    "Add Spring Boot starter for easier configuration",
-    "Support for custom serialization strategies",
-    "Add monitoring and metrics integration"
+    "Implement distributed garbage collection for expired memory keys",
+    "Support sorted sets (ZSET) synchronization",
+    "Optimize AspectJ aspects to reduce runtime memory overhead",
+    "Add support for parent-child relationship tracking in nested objects"
   ],
-  "repos": [],
+  "repos": [
+    {
+      "name": "firecord",
+      "url": "https://gitlab.com/legend-of-phoenix/firecord",
+      "type": "gitlab"
+    }
+  ],
   "mirrors": [],
   "screenshots": [],
   "relatedProjects": [
