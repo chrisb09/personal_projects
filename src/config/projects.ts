@@ -318,6 +318,7 @@ export const projects: Project[] = [
       "Integrate open-source elevation APIs to auto-correct GPS elevation errors",
       "Support Strava API integration for automatic ride syncing"
     ],
+    "liveUrl": "https://gpx.christian-f-brinkmann.de",
     "repos": [
       {
         "name": "cycling_power_estimator",
