@@ -649,7 +649,7 @@ export const projects: Project[] = [
     "tagline": "Java Tool to Encode Files into ARGB Images for Unlimited Cloud Storage",
     "year": "2019",
     "category": "utility",
-    "status": "completed",
+    "status": "archived",
     "projectType": "script-small",
     "role": "main-author",
     "sourceType": "open-source",
