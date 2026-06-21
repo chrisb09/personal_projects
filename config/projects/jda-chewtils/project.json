@@ -8,7 +8,7 @@
   "projectType": "software-project",
   "role": "contributor",
   "sourceType": "open-source",
-  "aiUsage": "none",
+  "aiUsage": "contributed",
   "aiUtilization": "no-ai",
   "description": "A modern, modular fork of the classic JDA-Utilities library that provides boilerplate reduction tools for Java Discord API (JDA) bots. It includes helper structures for menu pagination, command parsing, and OAuth2 integration. I contributed to JDA 6.1.1 compatibility upgrades.",
   "purpose": "To simplify Java-based Discord bot development by providing reusable structures for command registering and UI menus.",

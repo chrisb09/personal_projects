@@ -1,7 +1,7 @@
 {
   "id": "cpp-ml-interface",
   "name": "CPP-ML-Interface",
-  "tagline": "Hardware-Accelerated AI Inference Middleware",
+  "tagline": "Modular C++ coupling middleware for low-latency CFD and Machine Learning inference",
   "year": "2025 - 2026",
   "category": "backend",
   "status": "active",
@@ -11,42 +11,81 @@
   "sourceType": "open-source",
   "aiUsage": "contributed",
   "aiUtilization": "ai-powered",
-  "description": "A modular C++ middleware designed to couple complex Computational Fluid Dynamics (CFD) solvers with machine learning inference models. Developed on a Rocky 9 HPC cluster, it abstracts underlying hardware and coupling libraries.",
-  "purpose": "To eliminate interconnect bottlenecks in High-Performance Computing (HPC) by providing a platform-independent data path between physical simulations and AI models.",
+  "description": "A modular, generic C++ middleware designed to couple complex Computational Fluid Dynamics (CFD) solvers with machine learning models. Developed as a core part of a Master's Thesis on a Rocky 9 HPC cluster, it redesigns and generalizes the legacy solver-specific CPP-ML-Interface-MAIA, abstracting underlying communication libraries into a unified, configuration-driven coupling boundary.\n\nThe project is developed inside a larger workspace structure (smartsim_playground) which coordinates several benchmark and validation utilities:\n\n```\nsmartsim/ (smartsim_playground workspace)\n├── CPP-ML-Interface (Redesigned generic interface)\n│   ├── extern/AIxeleratorService\n│   ├── extern/SmartRedis\n│   └── extern/phydll\n├── cpu_benchmark (CPU/GPU inference threading & core affinity benchmarks)\n├── lmod_dependencies (Z3-based HPC module resolver)\n├── mini_app (Toy CFD solver used for prototyping)\n└── module_test (Integration testing with ~600 combinations)\n```\n\nThe interface will soon replace the predecessor library in the MMCP project to couple the MMCP_transformer with the m-aia solver.",
+  "purpose": "To eliminate low-performance file-based and socket bottlenecks in High-Performance Computing (HPC) by providing a low-latency, platform-independent in-memory data path between physical simulations and AI models.",
   "technologies": [
     "C++",
+    "CMake",
+    "Python",
+    "MPI",
     "Slurm",
-    "Rocky Linux (RHEL)",
-    "Python"
+    "Z3 Solver",
+    "Rocky Linux"
   ],
   "dependencies": [
-    "SmartSim",
+    "LibTorch (PyTorch C++ API)",
+    "SmartSim / SmartRedis",
     "PhyDLL",
-    "AixeleratorService",
-    "MPI"
+    "AIxeleratorService"
   ],
   "expertise": [
-    "HPC Architecture",
-    "Low-Latency Memory Management",
-    "Systems Integration",
-    "C++ Middleware Design"
+    "HPC Architecture & MPI",
+    "Low-Latency Middleware Design",
+    "Parallel Inference Optimization",
+    "Multi-threaded CPU Binding & Affinity"
   ],
   "strengths": [
-    "Abstracts heterogeneous coupling libraries (SmartSim, PhyDLL) into a unified configuration-based interface",
-    "Optimized for High-Performance Computing (HPC) environments running Rocky 9",
-    "Handles complex memory-to-memory data transfers between CPU nodes and GPU inference endpoints",
-    "Critical evaluation of Redis-based coupling limitations in soft real-time constraints"
+    "Redesigned from solver-specific code into a highly generic, modular header-only interface",
+    "Integrates heterogeneous coupling libraries (SmartSim, PhyDLL, AIxeleratorService) under a configuration-based layer",
+    "Supports reflection-free subclass registration via an automatic python-clang parsing registry script",
+    "Critically evaluates low-level CPU parallel execution (intra/inter-op threads, OpenMP, core affinity)"
   ],
   "limitations": [
-    "Performance bound by coupling library interconnects under heavy GPU load",
-    "Requires Rocky Linux 9 or RHEL-compatible HPC cluster configuration"
+    "Currently restricted to PyTorch (TorchScript) backend implementations",
+    "Performance is bound by underlying library interconnects (e.g. Redis database roundtrips in SmartSim)",
+    "Requires matching compiler/Clang versions for the registry generator script"
   ],
+  "installation": "# Clone the repository and submodules:\ngit clone --recursive git@github.com:chrisb09/CPP-ML-Interface.git\ncd CPP-ML-Interface\n\n# Install python dependencies for registry generation:\npip install -r requirements.txt\n\n# Compile the library and run regression tests:\n./build.sh",
+  "usage": "# Run verification executable with sample config and dummy steps:\n./build/cpp_ml_interface_executable --config-file example.config.toml --behavior 100",
   "roadmap": [
-    "Implement direct zero-copy memory transfers via GPU-Direct RDMA",
-    "Add support for PyTorch and TensorFlow C++ native API endpoints",
-    "Extend documentation and coupling benchmarker tools"
+    "Integrate the generic prototype into the MMCP simulation project to couple MMCP_transformer and m-aia",
+    "Evaluate zero-copy shared-memory coupling implementations to bypass TCP overhead",
+    "Add support for ONNX Runtime and TensorFlow C++ backends"
   ],
-  "repos": [],
+  "repos": [
+    {
+      "name": "CPP-ML-Interface",
+      "url": "https://github.com/chrisb09/CPP-ML-Interface",
+      "type": "github"
+    }
+  ],
   "mirrors": [],
-  "screenshots": []
+  "screenshots": [],
+  "relatedProjects": [
+    {
+      "name": "MMCP_2026_Artifact_Hybrid_Inference",
+      "relation": "Target application coupling the solver with MMCP_transformer",
+      "url": "https://github.com/chrisb09/MMCP_2026_Artifact_Hybrid_Inference"
+    },
+    {
+      "name": "CPP-ML-Interface-MAIA",
+      "relation": "Legacy non-generic predecessor",
+      "url": "https://github.com/chrisb09/CPP-ML-Interface-MAIA"
+    },
+    {
+      "name": "cpu_benchmark",
+      "relation": "Inference and core-affinity benchmarking tool",
+      "url": "https://github.com/chrisb09/cpu_benchmark"
+    },
+    {
+      "name": "lmod_dependencies",
+      "relation": "Z3-based HPC module resolver script",
+      "url": "https://github.com/chrisb09/lmod_dependencies"
+    },
+    {
+      "name": "smartsim_playground",
+      "relation": "Workspace repository containing integration test suites and playgrounds",
+      "url": "https://github.com/chrisb09/smartsim_playground"
+    }
+  ]
 }

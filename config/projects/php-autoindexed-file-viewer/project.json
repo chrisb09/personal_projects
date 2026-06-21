@@ -8,7 +8,7 @@
   "projectType": "software-project",
   "role": "main-author",
   "sourceType": "open-source",
-  "aiUsage": "major",
+  "aiUsage": "full",
   "aiUtilization": "no-ai",
   "description": "A single-file, self-hosted directory listing and file viewer written in PHP. It automatically generates customizable directory indexes featuring media metadata scans, concurrent background thumbnail generation (for videos, PDFs, and images), real-time path directory watching, and temporary, encrypted share-by-link functionality.",
   "purpose": "To serve a lightweight, dependency-free (frontend) directory index that is easy to deploy while providing a modern, rich media-browsing interface.",

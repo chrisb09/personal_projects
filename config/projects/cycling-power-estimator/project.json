@@ -8,7 +8,7 @@
   "projectType": "software-project",
   "role": "main-author",
   "sourceType": "open-source",
-  "aiUsage": "major",
+  "aiUsage": "full",
   "aiUtilization": "no-ai",
   "description": "A full-stack, open-source web application designed to analyze GPS track data (GPX files) and retroactively calculate a cyclist's power output (watts) using physical equations. The platform integrates a FastAPI Python backend for mathematical calculations, coordinate smoothing, and database persistence, with a React frontend featuring Chart.js analytics and Mapbox 3D terrain animations.",
   "purpose": "To democratize cycling analytics by reverse-engineering power output without expensive physical power meters, and providing a highly engaging 3D visualization of rides.",
