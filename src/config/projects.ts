@@ -162,7 +162,7 @@ export const projects: Project[] = [
       "Performance is bound by underlying library interconnects (e.g. Redis database roundtrips in SmartSim)",
       "Requires matching compiler/Clang versions for the registry generator script"
     ],
-    "installation": "# Clone the repository and submodules:\ngit clone --recursive git@github.com:chrisb09/CPP-ML-Interface.git\ncd CPP-ML-Interface\n\n# Install python dependencies for registry generation:\npip install -r requirements.txt\n\n# Compile the library and run regression tests:\n./build.sh",
+    "installation": "# Setup the cluster environment (modules for compiler, python, clang, etc.).\n# A cluster-specific 'install.sh' is provided for Claix23/RWTH, but manual\n# configuration is needed on other systems.\n# \n# Note: Building and compiling the external submodules/dependencies\n# (SmartSim, PhyDLL, AIxeleratorService) is required and exceeds the scope\n# of this quick start page.\n\n# Clone the repository and submodules:\ngit clone --recursive git@github.com:chrisb09/CPP-ML-Interface.git\ncd CPP-ML-Interface\n\n# Install python dependencies for registry generation:\npip install -r requirements.txt\n\n# Run your system/cluster build wrapper script:\n./build.sh",
     "usage": "# Run verification executable with sample config and dummy steps:\n./build/cpp_ml_interface_executable --config-file example.config.toml --behavior 100",
     "roadmap": [
       "Integrate the generic prototype into the MMCP simulation project to couple MMCP_transformer and m-aia",
