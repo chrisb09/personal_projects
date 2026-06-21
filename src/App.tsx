@@ -123,6 +123,7 @@ function App() {
   const { t } = useTranslation();
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalInitialTab, setModalInitialTab] = useState('overview');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<ProjectCategory | 'all'>('all');
   const [showAcademicOnly, setShowAcademicOnly] = useState(false);
@@ -217,6 +218,13 @@ function App() {
 
   const handleProjectClick = (project: Project) => {
     setSelectedProject(project);
+    setModalInitialTab('overview');
+    setIsModalOpen(true);
+  };
+
+  const handleProjectMediaClick = (project: Project) => {
+    setSelectedProject(project);
+    setModalInitialTab('media');
     setIsModalOpen(true);
   };
 
@@ -301,18 +309,40 @@ function App() {
                   <p className="text-xs text-muted-foreground">{t('stats.total_stars', 'Total Stars')}</p>
                 </div>
                 <div className="text-center md:text-right">
-                  <div className="flex items-center md:justify-end gap-1.5 text-primary">
-                    <GitCommit className="w-4 h-4" />
-                    <p className="text-2xl font-bold">{aggregateStats.totalCommits}</p>
-                  </div>
-                  <p className="text-xs text-muted-foreground">{t('stats.total_commits', 'Total Commits')}</p>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <div className="cursor-help inline-block">
+                          <div className="flex items-center md:justify-end gap-1.5 text-primary">
+                            <GitCommit className="w-4 h-4" />
+                            <p className="text-2xl font-bold">{aggregateStats.totalCommits}</p>
+                          </div>
+                          <p className="text-xs text-muted-foreground">{t('stats.total_commits', 'Total Commits')}</p>
+                        </div>
+                      </TooltipTrigger>
+                      <TooltipContent side="bottom" align="end">
+                        <p className="text-xs max-w-xs">{t('stats.commits_tooltip', 'Commits authored by me on the default branch of all tracked projects.')}</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
                 </div>
                 <div className="text-center md:text-right">
-                  <div className="flex items-center md:justify-end gap-1.5 text-primary">
-                    <Code className="w-4 h-4" />
-                    <p className="text-2xl font-bold">{(totalLOC / 1000).toFixed(1)}k</p>
-                  </div>
-                  <p className="text-xs text-muted-foreground">{t('stats.total_loc', 'Total LOC')}</p>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <div className="cursor-help inline-block">
+                          <div className="flex items-center md:justify-end gap-1.5 text-primary">
+                            <Code className="w-4 h-4" />
+                            <p className="text-2xl font-bold">{(totalLOC / 1000).toFixed(1)}k</p>
+                          </div>
+                          <p className="text-xs text-muted-foreground">{t('stats.total_loc', 'Total LOC')}</p>
+                        </div>
+                      </TooltipTrigger>
+                      <TooltipContent side="bottom" align="end">
+                        <p className="text-xs max-w-xs">{t('stats.loc_tooltip', 'Lines of code authored by me that are currently in the default branch.')}</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
                 </div>
               </div>
             </div>
@@ -422,6 +452,7 @@ function App() {
                             key={project.id}
                             project={project}
                             onClick={() => handleProjectClick(project)}
+                            onMediaClick={() => handleProjectMediaClick(project)}
                           />
                         ))}
                       </div>
@@ -494,6 +525,7 @@ function App() {
           onClose={handleCloseModal}
           onProjectSelect={handleProjectSelect}
           allProjects={projectsWithStats}
+          initialTab={modalInitialTab}
         />
       </div>
     </TooltipProvider>

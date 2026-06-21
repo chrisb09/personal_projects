@@ -66,6 +66,7 @@ interface ProjectDetailModalProps {
   onClose: () => void;
   onProjectSelect?: (projectId: string) => void;
   allProjects?: Project[];
+  initialTab?: string;
 }
 
 // Simple donut chart component for LOC
@@ -361,8 +362,16 @@ function ScreenshotGallery({ screenshots, projectName }: { screenshots: string[]
   );
 }
 
-export function ProjectDetailModal({ project, isOpen, onClose, onProjectSelect, allProjects = [] }: ProjectDetailModalProps) {
+export function ProjectDetailModal({ project, isOpen, onClose, onProjectSelect, allProjects = [], initialTab = 'overview' }: ProjectDetailModalProps) {
   const { t } = useTranslation();
+  const [activeTab, setActiveTab] = useState(initialTab);
+
+  useEffect(() => {
+    if (isOpen) {
+      setActiveTab(initialTab);
+    }
+  }, [project, isOpen, initialTab]);
+
   if (!project) return null;
 
   const hasScreenshots = project.screenshots && project.screenshots.length > 0;
@@ -517,7 +526,7 @@ export function ProjectDetailModal({ project, isOpen, onClose, onProjectSelect, 
           </div>
 
           {/* Content Tabs */}
-          <Tabs defaultValue="overview" className="flex-1 flex flex-col min-h-0">
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="flex-1 flex flex-col min-h-0">
             <div className="px-4 border-b border-border/20 shrink-0">
               <TabsList className="w-full justify-start h-auto bg-transparent p-0 gap-5 flex-wrap">
                 <TabsTrigger 

@@ -24,11 +24,12 @@ import {
   TooltipProvider, 
   TooltipTrigger 
 } from '@/components/ui/tooltip';
-import { ExternalLink, Github, BookOpen, FolderGit2, Star, GitCommit, Code2, Sparkles, Cpu } from 'lucide-react';
+import { ExternalLink, Github, BookOpen, FolderGit2, Star, GitCommit, Code2, Sparkles, Cpu, Image as ImageIcon } from 'lucide-react';
 
 interface ProjectCardProps {
   project: Project;
   onClick: () => void;
+  onMediaClick?: () => void;
 }
 
 // Mini language chart for project card
@@ -102,11 +103,12 @@ function MiniLanguageChart({ data, total }: { data: Record<string, number>; tota
   );
 }
 
-export function ProjectCard({ project, onClick }: ProjectCardProps) {
+export function ProjectCard({ project, onClick, onMediaClick }: ProjectCardProps) {
   const { t } = useTranslation();
   // Get top 3 technologies to display as badges
   const topTechnologies = project.technologies.slice(0, 3);
   const repoCount = project.repos?.length ?? 0;
+  const hasScreenshots = project.screenshots && project.screenshots.length > 0;
   
   return (
     <TooltipProvider>
@@ -293,6 +295,18 @@ export function ProjectCard({ project, onClick }: ProjectCardProps) {
                 >
                   <ExternalLink className="w-3.5 h-3.5" />
                 </a>
+              )}
+              {hasScreenshots && (
+                <button 
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onMediaClick?.();
+                  }}
+                  className="text-muted-foreground hover:text-primary transition-colors p-1 -m-1"
+                  title="Screenshots & Media"
+                >
+                  <ImageIcon className="w-3.5 h-3.5" />
+                </button>
               )}
               {project.liveUrl && (
                 <a 
