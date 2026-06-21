@@ -1204,7 +1204,7 @@ export const projects: Project[] = [
     "projectType": "software-project",
     "role": "main-author",
     "sourceType": "open-source",
-    "aiUsage": "minor",
+    "aiUsage": "major",
     "aiUtilization": "no-ai",
     "description": "A modern, responsive portfolio website built with React, Vite, and Tailwind CSS. It features interactive project categorization, dynamic filtering, detailed project sheets, and custom repository stats aggregated via a Node.js git analysis pipeline.",
     "purpose": "To showcase personal software development work, utilities, and IT projects with actual, verifiably tracked LOC and commit statistics directly gathered from local repositories.",
