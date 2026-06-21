@@ -1195,6 +1195,132 @@ export const projects: Project[] = [
     ]
   },
   {
+    "id": "personal-projects",
+    "name": "personal_projects",
+    "tagline": "Interactive developer portfolio with automated git stats tracking and visualization",
+    "year": "2026",
+    "category": "frontend",
+    "status": "active",
+    "projectType": "software-project",
+    "role": "main-author",
+    "sourceType": "open-source",
+    "aiUsage": "minor",
+    "aiUtilization": "no-ai",
+    "description": "A modern, responsive portfolio website built with React, Vite, and Tailwind CSS. It features interactive project categorization, dynamic filtering, detailed project sheets, and custom repository stats aggregated via a Node.js git analysis pipeline.",
+    "purpose": "To showcase personal software development work, utilities, and IT projects with actual, verifiably tracked LOC and commit statistics directly gathered from local repositories.",
+    "technologies": [
+      "React",
+      "TypeScript",
+      "Vite",
+      "Tailwind CSS",
+      "Node.js",
+      "Git"
+    ],
+    "dependencies": [
+      "React 19",
+      "Vite 5",
+      "Tailwind CSS 3",
+      "Lucide React",
+      "Recharts"
+    ],
+    "expertise": [
+      "Frontend Development",
+      "Component Design",
+      "Git Scripting",
+      "Data Visualization"
+    ],
+    "strengths": [
+      "Automated local git repository analysis",
+      "Interactive project comparison and charts",
+      "Responsive dark mode styling",
+      "Modular project sheet modal overlay"
+    ],
+    "limitations": [
+      "Relies on local clones of private/public repos for statistics collection",
+      "Locally calculated LOC may count vendor or generated files if not strictly ignored"
+    ],
+    "installation": "git clone git@github.com:chrisb09/personal_projects.git\ncd personal_projects\nnpm install",
+    "usage": "# Run development server:\nnpm run dev\n\n# Compile project data:\nnpm run compile-projects\n\n# Update local git repository stats:\nnpm run update-stats -- --force\n\n# Build production bundle:\nnpm run build",
+    "roadmap": [
+      "Add interactive git commit activity heatmaps",
+      "Support automated remote repo cloning via API"
+    ],
+    "repos": [
+      {
+        "name": "personal_projects",
+        "url": "https://github.com/chrisb09/personal_projects",
+        "type": "github"
+      }
+    ],
+    "mirrors": [],
+    "screenshots": []
+  },
+  {
+    "id": "php-autoindexed-file-viewer",
+    "name": "PHP Autoindexed File-Viewer",
+    "tagline": "Single-file, self-hosted directory listing and file viewer in PHP",
+    "year": "2026",
+    "category": "fullstack",
+    "status": "active",
+    "projectType": "software-project",
+    "role": "main-author",
+    "sourceType": "open-source",
+    "aiUsage": "major",
+    "aiUtilization": "no-ai",
+    "description": "A single-file, self-hosted directory listing and file viewer written in PHP. It automatically generates customizable directory indexes featuring media metadata scans, concurrent background thumbnail generation (for videos, PDFs, and images), real-time path directory watching, and temporary, encrypted share-by-link functionality.",
+    "purpose": "To serve a lightweight, dependency-free (frontend) directory index that is easy to deploy while providing a modern, rich media-browsing interface.",
+    "technologies": [
+      "PHP",
+      "SQLite",
+      "Docker",
+      "FFmpeg",
+      "MediaInfo",
+      "Bash"
+    ],
+    "dependencies": [
+      "PHP 8.2+",
+      "poppler-utils",
+      "imagemagick",
+      "mediainfo",
+      "ffmpeg"
+    ],
+    "expertise": [
+      "Full-Stack Web Development",
+      "System Integration",
+      "Background Queue Workers",
+      "API and Media Extraction"
+    ],
+    "strengths": [
+      "No external libraries or build step (entire interface is single-file PHP)",
+      "Concurrently limited background task runner for thumbnails and metadata scans",
+      "On-hover thumbnail previews for images, video frames, and PDFs",
+      "Temporary encrypted share links that bypass basic authentication"
+    ],
+    "limitations": [
+      "High initial CPU utilization on large unindexed media folders",
+      "Requires system CLI tools (FFmpeg, MediaInfo, poppler-utils) for rich preview metadata"
+    ],
+    "installation": "# Clone the repository\ngit clone git@github.com:chrisb09/php-autoindexed-file-viewer.git /var/www/files\ncd /var/www/files\n\n# Run the auto-installer (Debian/Ubuntu)\nsudo bash install.sh",
+    "usage": "# Deploy index.php directly in your web directory or run via Docker\n# Set configuration values at the top of index.php:\n$BASE_DIR = __DIR__ . '/files';\n$CACHE_DIR = __DIR__ . '/.cache_fb';\n$MAX_WORKERS = 3;",
+    "roadmap": [
+      "Optimize load times for large folders with thousands of items",
+      "Support web-based basic authentication setup wizard"
+    ],
+    "demoUrl": "https://demo.files.christian-f-brinkmann.de/",
+    "repos": [
+      {
+        "name": "php-autoindexed-file-viewer",
+        "url": "https://github.com/chrisb09/php-autoindexed-file-viewer",
+        "type": "github"
+      }
+    ],
+    "mirrors": [],
+    "screenshots": [
+      "/images/projects/php-autoindexed-file-viewer/darkmode.png",
+      "/images/projects/php-autoindexed-file-viewer/lightmode.png"
+    ]
+  },
+  {
     "id": "qbmanage",
     "name": "qbmanage",
     "tagline": "CLI Tool for Auditing and Cleaning up qBittorrent Instances",

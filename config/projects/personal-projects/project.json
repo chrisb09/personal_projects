@@ -1,0 +1,61 @@
+{
+  "id": "personal-projects",
+  "name": "personal_projects",
+  "tagline": "Interactive developer portfolio with automated git stats tracking and visualization",
+  "year": "2026",
+  "category": "frontend",
+  "status": "active",
+  "projectType": "software-project",
+  "role": "main-author",
+  "sourceType": "open-source",
+  "aiUsage": "minor",
+  "aiUtilization": "no-ai",
+  "description": "A modern, responsive portfolio website built with React, Vite, and Tailwind CSS. It features interactive project categorization, dynamic filtering, detailed project sheets, and custom repository stats aggregated via a Node.js git analysis pipeline.",
+  "purpose": "To showcase personal software development work, utilities, and IT projects with actual, verifiably tracked LOC and commit statistics directly gathered from local repositories.",
+  "technologies": [
+    "React",
+    "TypeScript",
+    "Vite",
+    "Tailwind CSS",
+    "Node.js",
+    "Git"
+  ],
+  "dependencies": [
+    "React 19",
+    "Vite 5",
+    "Tailwind CSS 3",
+    "Lucide React",
+    "Recharts"
+  ],
+  "expertise": [
+    "Frontend Development",
+    "Component Design",
+    "Git Scripting",
+    "Data Visualization"
+  ],
+  "strengths": [
+    "Automated local git repository analysis",
+    "Interactive project comparison and charts",
+    "Responsive dark mode styling",
+    "Modular project sheet modal overlay"
+  ],
+  "limitations": [
+    "Relies on local clones of private/public repos for statistics collection",
+    "Locally calculated LOC may count vendor or generated files if not strictly ignored"
+  ],
+  "installation": "git clone git@github.com:chrisb09/personal_projects.git\ncd personal_projects\nnpm install",
+  "usage": "# Run development server:\nnpm run dev\n\n# Compile project data:\nnpm run compile-projects\n\n# Update local git repository stats:\nnpm run update-stats -- --force\n\n# Build production bundle:\nnpm run build",
+  "roadmap": [
+    "Add interactive git commit activity heatmaps",
+    "Support automated remote repo cloning via API"
+  ],
+  "repos": [
+    {
+      "name": "personal_projects",
+      "url": "https://github.com/chrisb09/personal_projects",
+      "type": "github"
+    }
+  ],
+  "mirrors": [],
+  "screenshots": []
+}

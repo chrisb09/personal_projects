@@ -1,0 +1,62 @@
+{
+  "id": "php-autoindexed-file-viewer",
+  "name": "PHP Autoindexed File-Viewer",
+  "tagline": "Single-file, self-hosted directory listing and file viewer in PHP",
+  "year": "2026",
+  "category": "fullstack",
+  "status": "active",
+  "projectType": "software-project",
+  "role": "main-author",
+  "sourceType": "open-source",
+  "aiUsage": "major",
+  "aiUtilization": "no-ai",
+  "description": "A single-file, self-hosted directory listing and file viewer written in PHP. It automatically generates customizable directory indexes featuring media metadata scans, concurrent background thumbnail generation (for videos, PDFs, and images), real-time path directory watching, and temporary, encrypted share-by-link functionality.",
+  "purpose": "To serve a lightweight, dependency-free (frontend) directory index that is easy to deploy while providing a modern, rich media-browsing interface.",
+  "technologies": [
+    "PHP",
+    "SQLite",
+    "Docker",
+    "FFmpeg",
+    "MediaInfo",
+    "Bash"
+  ],
+  "dependencies": [
+    "PHP 8.2+",
+    "poppler-utils",
+    "imagemagick",
+    "mediainfo",
+    "ffmpeg"
+  ],
+  "expertise": [
+    "Full-Stack Web Development",
+    "System Integration",
+    "Background Queue Workers",
+    "API and Media Extraction"
+  ],
+  "strengths": [
+    "No external libraries or build step (entire interface is single-file PHP)",
+    "Concurrently limited background task runner for thumbnails and metadata scans",
+    "On-hover thumbnail previews for images, video frames, and PDFs",
+    "Temporary encrypted share links that bypass basic authentication"
+  ],
+  "limitations": [
+    "High initial CPU utilization on large unindexed media folders",
+    "Requires system CLI tools (FFmpeg, MediaInfo, poppler-utils) for rich preview metadata"
+  ],
+  "installation": "# Clone the repository\ngit clone git@github.com:chrisb09/php-autoindexed-file-viewer.git /var/www/files\ncd /var/www/files\n\n# Run the auto-installer (Debian/Ubuntu)\nsudo bash install.sh",
+  "usage": "# Deploy index.php directly in your web directory or run via Docker\n# Set configuration values at the top of index.php:\n$BASE_DIR = __DIR__ . '/files';\n$CACHE_DIR = __DIR__ . '/.cache_fb';\n$MAX_WORKERS = 3;",
+  "roadmap": [
+    "Optimize load times for large folders with thousands of items",
+    "Support web-based basic authentication setup wizard"
+  ],
+  "demoUrl": "https://demo.files.christian-f-brinkmann.de/",
+  "repos": [
+    {
+      "name": "php-autoindexed-file-viewer",
+      "url": "https://github.com/chrisb09/php-autoindexed-file-viewer",
+      "type": "github"
+    }
+  ],
+  "mirrors": [],
+  "screenshots": []
+}
