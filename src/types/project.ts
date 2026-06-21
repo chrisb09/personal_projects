@@ -212,6 +212,7 @@ export const languageColors: Record<string, string> = {
   Go: '#00ADD8',
   Rust: '#dea584',
   'C++': '#f34b7d',
+  'C/C++ Header': '#ff758f',
   C: '#555555',
   'C#': '#178600',
   PHP: '#4F5D95',
