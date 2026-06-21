@@ -148,6 +148,34 @@ function DonutChart({ data, total }: { data: Record<string, number>; total: numb
   );
 }
 
+// Helper to render formatted descriptions containing newlines and code blocks (```)
+function renderFormattedDescription(text: string) {
+  if (!text) return null;
+  const parts = text.split(/```/);
+  return (
+    <span className="whitespace-pre-wrap">
+      {parts.map((part, index) => {
+        if (index % 2 === 1) {
+          const lines = part.split('\n');
+          let code = part;
+          if (lines.length > 0 && /^[a-zA-Z0-9_-]+$/.test(lines[0].trim())) {
+            code = lines.slice(1).join('\n');
+          }
+          return (
+            <pre 
+              key={index} 
+              className="font-mono bg-muted/60 dark:bg-muted/30 border border-border/40 p-3 rounded-md text-xs overflow-x-auto whitespace-pre my-2.5 leading-normal text-foreground/90"
+            >
+              <code>{code.trim()}</code>
+            </pre>
+          );
+        }
+        return <span key={index}>{part}</span>;
+      })}
+    </span>
+  );
+}
+
 // Screenshot Gallery Component
 function ScreenshotGallery({ screenshots, projectName }: { screenshots: string[]; projectName: string }) {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -545,7 +573,7 @@ export function ProjectDetailModal({ project, isOpen, onClose, onProjectSelect, 
                       <Target className="w-3.5 h-3.5" />
                       Description
                     </h4>
-                    <p className="text-sm text-foreground/90 leading-relaxed">{project.description}</p>
+                    <div className="text-sm text-foreground/90 leading-relaxed">{renderFormattedDescription(project.description)}</div>
                   </section>
  
                   <Separator />
@@ -555,7 +583,7 @@ export function ProjectDetailModal({ project, isOpen, onClose, onProjectSelect, 
                       <Lightbulb className="w-3.5 h-3.5" />
                       Purpose
                     </h4>
-                    <p className="text-sm text-foreground/90 leading-relaxed">{project.purpose}</p>
+                    <div className="text-sm text-foreground/90 leading-relaxed">{renderFormattedDescription(project.purpose)}</div>
                   </section>
  
                   <Separator />
