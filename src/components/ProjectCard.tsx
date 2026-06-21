@@ -198,17 +198,35 @@ export function ProjectCard({ project, onClick, onMediaClick }: ProjectCardProps
                     <span>{project.stats.stars}</span>
                   </div>
                 )}
-                <div className="flex items-center gap-1">
-                  <GitCommit className="w-3 h-3 text-blue-500/80" />
-                  <span>{project.stats.commits}</span>
-                </div>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <div className="flex items-center gap-1 cursor-help">
+                      <GitCommit className="w-3 h-3 text-blue-500/80" />
+                      <span>{project.stats.commits}</span>
+                    </div>
+                  </TooltipTrigger>
+                  <TooltipContent side="top">
+                    <p className="text-[10px]">
+                      {t('stats.commits_tooltip', 'Commits authored by me on the default branch of all tracked projects.')}
+                    </p>
+                  </TooltipContent>
+                </Tooltip>
               </>
             )}
             {project.loc && (
-              <div className="flex items-center gap-1">
-                <Code2 className="w-3 h-3 text-green-500/80" />
-                <span>{(project.loc.total / 1000).toFixed(1)}k LOC</span>
-              </div>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <div className="flex items-center gap-1 cursor-help">
+                    <Code2 className="w-3 h-3 text-green-500/80" />
+                    <span>{(project.loc.total / 1000).toFixed(1)}k LOC</span>
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent side="top">
+                  <p className="text-[10px]">
+                    {t('stats.loc_tooltip', 'Lines of code authored by me that are currently in the default branch.')}
+                  </p>
+                </TooltipContent>
+              </Tooltip>
             )}
             {repoCount > 0 && (
               <Tooltip>

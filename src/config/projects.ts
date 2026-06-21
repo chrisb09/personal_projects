@@ -940,9 +940,8 @@ export const projects: Project[] = [
       }
     ],
     "mirrors": [],
-    "screenshots": [
-      "/images/projects/map-color-convert/sample.png"
-    ]
+    "screenshots": [],
+    "logo": "/images/projects/map-color-convert/logo.png"
   },
   {
     "id": "mega-tor-downloader",
