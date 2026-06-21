@@ -508,35 +508,47 @@ async function updateStats() {
             .length;
           totalBranches += repoBranchesCount;
 
-          // 2. Get commit count made by matching author(s)
-          const commitsListOutput = runGit('git log --format="%an <%ae> %H"', repoPath).toString();
-          const commitLines = commitsListOutput.trim().split('\n');
+          // 2. Get commit count and collect files modified by matching author(s)
+          const gitLogOutput = runGit('git log --format="COMMIT:%an <%ae>:%H" --name-only', repoPath).toString();
+          const logLines = gitLogOutput.split('\n');
+
+          let currentCommitIsMine = false;
           let matchedCommits = 0;
-          for (const line of commitLines) {
-            if (line.trim()) {
-              const match = line.match(/^(.*?) <(.*?)> ([a-f0-9]+)$/i);
-              if (match) {
-                const name = match[1];
-                const email = match[2];
-                const commitHash = match[3];
+          const modifiedFilesByMe = new Set();
+
+          for (const line of logLines) {
+            const trimmed = line.trim();
+            if (!trimmed) continue;
+
+            if (trimmed.startsWith('COMMIT:')) {
+              const headerPart = trimmed.substring(7); // remove 'COMMIT:'
+              const colonIndex = headerPart.lastIndexOf(':');
+              if (colonIndex !== -1) {
+                const authorDetails = headerPart.substring(0, colonIndex);
+                const commitHash = headerPart.substring(colonIndex + 1);
+
+                const emailStart = authorDetails.lastIndexOf('<');
+                const emailEnd = authorDetails.lastIndexOf('>');
+
+                let name = authorDetails;
+                let email = '';
+                if (emailStart !== -1 && emailEnd !== -1 && emailEnd > emailStart) {
+                  name = authorDetails.substring(0, emailStart).trim();
+                  email = authorDetails.substring(emailStart + 1, emailEnd);
+                }
+
                 if (excludeFirstCommit && firstCommitHashes.has(commitHash)) {
-                  continue; // Skip counting the first commit
-                }
-                if (matchesAuthor(name, email)) {
+                  currentCommitIsMine = false;
+                } else if (matchesAuthor(name, email)) {
                   matchedCommits++;
+                  currentCommitIsMine = true;
+                } else {
+                  currentCommitIsMine = false;
                 }
-              } else {
-                const matchNoEmail = line.match(/^(.*?) ([a-f0-9]+)$/i);
-                if (matchNoEmail) {
-                  const name = matchNoEmail[1];
-                  const commitHash = matchNoEmail[2];
-                  if (excludeFirstCommit && firstCommitHashes.has(commitHash)) {
-                    continue;
-                  }
-                  if (matchesAuthor(name, '')) {
-                    matchedCommits++;
-                  }
-                }
+              }
+            } else {
+              if (currentCommitIsMine) {
+                modifiedFilesByMe.add(trimmed);
               }
             }
           }
@@ -548,9 +560,10 @@ async function updateStats() {
             latestCommitDate = lastCommitOutput;
           }
 
-          // 4. Analyze tracked files in parallel batches
+          // 4. Analyze tracked files in parallel batches (filtering only those modified by me)
           const filesOutput = runGit('git ls-files', repoPath).toString().trim();
-          const files = filesOutput.split('\n').filter(f => f.trim() !== '');
+          const allFiles = filesOutput.split('\n').filter(f => f.trim() !== '');
+          const files = allFiles.filter(f => modifiedFilesByMe.has(f));
 
           const analysis = await processFilesParallel(files, repoPath, config, matchesAuthor, excludeFirstCommit, firstCommitHashes, 15);
           
