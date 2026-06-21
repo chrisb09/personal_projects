@@ -1301,7 +1301,7 @@ export const projects: Project[] = [
     "year": "2026",
     "category": "fullstack",
     "status": "active",
-    "projectType": "software-project",
+    "projectType": "script-small",
     "role": "main-author",
     "sourceType": "open-source",
     "aiUsage": "full",
