@@ -1,5 +1,5 @@
 {
-  "badgeText": "Developer Portfolio",
+  "badgeText": "Christian F. Brinkmann",
   "badgeIcon": "Code2",
   "titlePrefix": "Personal",
   "titleHighlight": "Projects",
@@ -18,21 +18,21 @@
       "invertColor": false
     },
     {
-      "text": "RWTH GitLab",
+      "text": "NRW GitLab",
       "icon": "Gitlab",
-      "url": "https://gitlab.instance2.com",
+      "url": "https://gitlab.git.nrw/christian.brinkmann09",
       "invertColor": false
     },
     {
       "text": "LinkedIn",
       "icon": "Linkedin",
-      "url": "https://linkedin.com",
+      "url": "https://www.linkedin.com/in/christian-f-brinkmann",
       "invertColor": false
     },
     {
       "text": "Contact",
       "icon": "Mail",
-      "url": "mailto:contact@example.com",
+      "url": "mailto:christian.brinkmann09@gmail.com",
       "invertColor": false
     }
   ]
