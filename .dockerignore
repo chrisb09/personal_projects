@@ -1,0 +1,14 @@
+node_modules
+repos
+.git
+.gitignore
+.next
+dist
+*.log
+.dockerignore
+Dockerfile
+docker-compose.yml
+README.md
+PROJECTS_GUIDE.md
+authors-report.txt
+pnpm-lock.yaml
