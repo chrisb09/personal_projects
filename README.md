@@ -47,3 +47,30 @@ The project includes several utilities to compile data and pull external stats:
 * **Auto-Compiler Watcher (`npm run watch-projects`)**: Monitors the `config/projects/` folder for live edits and compiles changes automatically.
 * **Update Git Stats (`npm run update-stats`)**: Fetches stars, commit counts, branches, and lines of code breakdown from GitHub and GitLab APIs. 
   *(Configure `GITHUB_TOKEN` and `GITLAB_TOKEN` to query private repositories or bypass rate limits).*
+
+---
+
+## Docker Deployment
+
+You can deploy the portfolio website locally or on a server using the provided multi-container Docker Compose setup. It automatically handles config watching, statistics updating, and serving built assets.
+
+### 1. Services Overview
+* **`portfolio-web` (Nginx)**: Serves the compiled production static assets on port `8080`.
+* **`portfolio-builder` (Node.js)**: Runs in the background to handle:
+  - **Initial Build**: Compiles configurations and builds the production site on startup.
+  - **Config Watcher**: Automatically detects edits in the `./config` folder and rebuilds the site 10 seconds after changes stop.
+  - **Stats Scheduler**: Periodically runs `npm run update-stats` to fetch Git stats and rebuilds the site with the latest stats. Persists `stats.json` and images back to your host machine's `./public` folder.
+
+### 2. How to Run
+Spin up the containers in detached mode:
+```bash
+docker-compose up --build -d
+```
+Access the portfolio at `http://localhost:8080`.
+
+### 3. Environment Variables
+Configure these in your environment or directly inside `docker-compose.yml`:
+* `GITHUB_TOKEN`: GitHub personal access token to query private repositories and increase API rate limits.
+* `GITLAB_TOKEN`: GitLab personal access token.
+* `STATS_UPDATE_INTERVAL_HOURS`: How often (in hours) the statistics updater runs. Defaults to `6`.
+
