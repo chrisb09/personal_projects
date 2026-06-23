@@ -7,16 +7,18 @@ const compileScriptPath = path.join(__dirname, 'compile-projects.js');
 
 let debounceTimer = null;
 
+const buildCmd = process.env.WATCH_BUILD_CMD || `node "${compileScriptPath}"`;
+
 function runCompilation() {
-  console.log(`[Watcher] Changes detected! Running compile-projects.js...`);
-  exec(`node "${compileScriptPath}"`, (error, stdout, stderr) => {
+  console.log(`[Watcher] Changes detected! Running build command: ${buildCmd}`);
+  exec(buildCmd, (error, stdout, stderr) => {
     if (error) {
-      console.error(`[Watcher] Compilation error:`, error);
+      console.error(`[Watcher] Build command error:`, error);
       return;
     }
     if (stdout) console.log(stdout.trim());
     if (stderr) console.error(stderr.trim());
-    console.log(`[Watcher] Compilation finished.`);
+    console.log(`[Watcher] Build command finished.`);
   });
 }
 
