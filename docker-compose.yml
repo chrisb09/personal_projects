@@ -3,10 +3,10 @@ services:
     image: nginx:alpine
     container_name: portfolio-web
     ports:
-      - "8080:80"
+      - "8482:80"
     volumes:
       - portfolio-dist:/usr/share/nginx/html:ro
-      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - /container/config/personal_projects/nginx.conf:/etc/nginx/conf.d/default.conf:ro
     restart: unless-stopped
     depends_on:
       - portfolio-builder
@@ -16,17 +16,20 @@ services:
       context: .
       dockerfile: Dockerfile.builder
     container_name: portfolio-builder
+    user: root
     volumes:
+      # We need the SSH keys for auth
+      - /root/.ssh:/root/.ssh:ro
       # Mount config and repos to watch/read changes
-      - ./config:/app/config
-      - ./repos:/app/repos
+      - /container/config/personal_projects/config:/app/config
+      - /container/data/personal_projects/repos:/app/repos
       # Mount public to write compiled images and stats.json back to host
-      - ./public:/app/public
-      # Mount src to write src/config/projects.ts
-      - ./src:/app/src
+      - /container/data/personal_projects/public:/app/public
+      ## Mount src to write src/config/projects.ts
+      ###- /container/config/personal_projects/projects.ts:/app/src/config/projects.ts
       # Shared volume for built assets served by Nginx
       - portfolio-dist:/app/dist
-      - ./vite.config.ts:/app/vite.config.ts:ro
+      - /container/config/personal_projects/vite.config.ts:/app/vite.config.ts:ro
     environment:
       - GITHUB_TOKEN=${GITHUB_TOKEN:-}
       - GITLAB_TOKEN=${GITLAB_TOKEN:-}
