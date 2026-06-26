@@ -26,6 +26,7 @@ services:
       - ./src:/app/src
       # Shared volume for built assets served by Nginx
       - portfolio-dist:/app/dist
+      - ./vite.config.ts:/app/vite.config.ts:ro
     environment:
       - GITHUB_TOKEN=${GITHUB_TOKEN:-}
       - GITLAB_TOKEN=${GITLAB_TOKEN:-}
