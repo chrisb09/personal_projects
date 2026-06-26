@@ -1,7 +1,7 @@
 FROM node:20-alpine
 
 # Install git as git is needed by update-stats.js to inspect repos!
-RUN apk add --no-cache git
+RUN apk add --no-cache git openssh-client
 
 WORKDIR /app
 
