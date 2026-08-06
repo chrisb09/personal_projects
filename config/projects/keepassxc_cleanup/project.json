@@ -1,0 +1,55 @@
+{
+  "id": "keepassxc_cleanup",
+  "name": "KeePassXC Cleanup",
+  "tagline": "CLI tool to find and remove duplicate entries in KeePassXC databases",
+  "year": "2025 - Present",
+  "category": "utility",
+  "status": "maintenance",
+  "projectType": "script-small",
+  "role": "main-author",
+  "sourceType": "open-source",
+  "aiUsage": "minor",
+  "aiUtilization": "no-ai",
+  "description": "A Python command-line tool that helps clean up KeePassXC databases. It scans all entries and groups potential duplicates by a composite key built from the entry URL or app ID, username, and password.\n\nIt provides an interactive deduplication flow: for every set of duplicates it lists the matching entries with their internal paths and asks which entry to keep before saving the database. It can also report which custom properties exist across all entries, which helps to standardize and tidy up entries.",
+  "purpose": "To keep KeePassXC databases tidy and secure by detecting redundant entries, letting users safely remove duplicates after review, and highlighting inconsistent custom property usage.",
+  "technologies": [
+    "Python",
+    "pykeepass"
+  ],
+  "dependencies": [
+    "Python 3",
+    "pykeepass"
+  ],
+  "expertise": [
+    "Scripting",
+    "Password Management",
+    "Data Deduplication",
+    "CLI Tools"
+  ],
+  "strengths": [
+    "Detects duplicates based on URL/app ID, username, and password combination",
+    "Interactive dedup flow lets you choose exactly which entry to keep per duplicate set",
+    "Masks passwords in output so they are never printed in plain text",
+    "Lists custom property usage to help identify and standardize non-standard entries"
+  ],
+  "limitations": [
+    "Deduplication is interactive only; there is no non-interactive batch mode",
+    "Entries without a URL or app ID may not be grouped correctly",
+    "Requires the database master password to be entered interactively via prompt"
+  ],
+  "installation": "git clone git@github.com:chrisb09/keepassxc_cleanup.git\ncd keepassxc_cleanup\npython install_requirements.py",
+  "usage": "# List duplicate entries:\npython main.py <path_to_database> list_duplicates\n\n# Remove duplicate entries after review:\npython main.py <path_to_database> dedup\n\n# List custom properties of all entries:\npython main.py <path_to_database> list_custom_properties",
+  "roadmap": [
+    "Add non-interactive batch deduplication mode",
+    "Support unlocking databases with key files"
+  ],
+  "repos": [
+    {
+      "name": "keepassxc_cleanup",
+      "url": "https://github.com/chrisb09/keepassxc_cleanup",
+      "type": "github"
+    }
+  ],
+  "mirrors": [],
+  "screenshots": []
+}
