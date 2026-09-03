@@ -7,7 +7,7 @@
   "status": "active",
   "projectType": "it-project",
   "role": "main-author",
-  "sourceType": "open-source",
+  "sourceType": "closed-source",
   "aiUsage": "contributed",
   "aiUtilization": "no-ai",
   "description": "A lightweight, low-overhead orchestration platform and automated CI/CD control plane written in Bash. Designed to manage a distributed multi-instance cluster with strict memory isolation, soft real-time execution constraints, and zero-downtime hot-reloads.",

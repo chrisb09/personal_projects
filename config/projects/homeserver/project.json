@@ -7,7 +7,7 @@
   "status": "active",
   "projectType": "it-project",
   "role": "main-author",
-  "sourceType": "open-source",
+  "sourceType": "closed-source",
   "aiUsage": "minor",
   "aiUtilization": "no-ai",
   "description": "A production-grade, self-hosted infrastructure environment operating continuously since 2018. Manages over 100+ TB of storage serving approximately 20 active users with zero major data loss incidents.",

@@ -215,7 +215,7 @@ export const projects: Project[] = [
     "status": "active",
     "projectType": "it-project",
     "role": "main-author",
-    "sourceType": "open-source",
+    "sourceType": "closed-source",
     "aiUsage": "contributed",
     "aiUtilization": "no-ai",
     "description": "A lightweight, low-overhead orchestration platform and automated CI/CD control plane written in Bash. Designed to manage a distributed multi-instance cluster with strict memory isolation, soft real-time execution constraints, and zero-downtime hot-reloads.",
@@ -572,7 +572,7 @@ export const projects: Project[] = [
     "status": "active",
     "projectType": "it-project",
     "role": "main-author",
-    "sourceType": "open-source",
+    "sourceType": "closed-source",
     "aiUsage": "minor",
     "aiUtilization": "no-ai",
     "description": "A production-grade, self-hosted infrastructure environment operating continuously since 2018. Manages over 100+ TB of storage serving approximately 20 active users with zero major data loss incidents.",
@@ -1058,6 +1058,92 @@ export const projects: Project[] = [
     "mirrors": [],
     "screenshots": [],
     "logo": "/images/projects/mega-tor-downloader/logo.png"
+  },
+  {
+    "id": "minecraft-chat-translator",
+    "name": "Minecraft Chat Translator",
+    "tagline": "Fine-tuned 0.5B LLM for real-time EN↔DE gaming chat translation with persistent KV cache",
+    "year": "2026",
+    "category": "backend",
+    "status": "active",
+    "projectType": "software-project",
+    "role": "main-author",
+    "sourceType": "open-source",
+    "aiUsage": "full",
+    "aiUtilization": "ai-powered",
+    "description": "A complete fine-tuning pipeline and inference engine that teaches a small 0.5B parameter language model (Qwen2.5-0.5B-Instruct) to perform real-time bidirectional English↔German chat translation on authentic Minecraft server logs. Training was done entirely on CPU (AMD Zen 4 / AVX-512 BF16) at ~245 tokens/sec over 7 hours 34 minutes, achieving a validation loss reduction from 1.1972 to 0.1005 (91.6%).\n\nThe project includes a multi-LLM async dataset translation pipeline (Gemini + OpenRouter), a ChatML training data synthesizer with 4 linguistic scenarios and 65.9M username permutations, a FastAPI inference engine with persistent per-session KV cache for sub-15ms TTFT, and a side-by-side benchmark tool comparing the fine-tuned model against base Qwen 0.5B, Nemotron 3.5 Lightning 30B, Stealth ox-alpha, and Gemini 3.5 Flash Lite.",
+    "purpose": "To enable real-time transparent translation between English and German players on a mixed-language Minecraft server, running locally on consumer hardware without cloud inference costs, with strict protocol adherence and gaming domain glossary awareness.",
+    "technologies": [
+      "Python",
+      "PyTorch",
+      "Transformers",
+      "PEFT / LoRA",
+      "FastAPI",
+      "Qwen2.5",
+      "Gemini API",
+      "OpenRouter API"
+    ],
+    "dependencies": [
+      "transformers",
+      "peft",
+      "torch",
+      "fastapi",
+      "uvicorn",
+      "openai",
+      "google-genai",
+      "python-dotenv"
+    ],
+    "expertise": [
+      "LLM Fine-Tuning",
+      "CPU-based Training (BF16 / AVX-512)",
+      "KV Cache Inference Optimization",
+      "Async Multi-LLM Data Pipelines",
+      "Model Evaluation & Benchmarking"
+    ],
+    "strengths": [
+      "100% protocol adherence after fine-tuning vs. complete failure of base model zero-shot",
+      "Domain glossary mapping: 'Ansturm' → 'Rush', 'LoW' → 'Legend of War', 'LK' → 'Leistungskurs'",
+      "Handles real chat typos (schwimsmt, vlt, gehn) without preprocessing",
+      "Persistent KV cache yields flat ~54ms TTFT regardless of conversation length",
+      "Entire pipeline (data → train → eval) reproducible from open-source scripts",
+      "Training completed on consumer CPU hardware — no GPU required"
+    ],
+    "limitations": [
+      "Model size (0.5B) limits nuance for complex literary or highly ambiguous text",
+      "Training data is domain-specific (Minecraft / gaming); generalizes poorly to formal registers",
+      "Raw training corpus (server chat logs) not published to protect user privacy"
+    ],
+    "installation": "git clone https://github.com/chrisb09/minecraft-chat-translator.git\ncd minecraft-chat-translator\npip install -r requirements.txt\ncp .env.example .env  # add Gemini/OpenRouter keys if using cloud models",
+    "usage": "# Run the interactive chat CLI\nbash chat.sh\n\n# Start the FastAPI inference server\npython -m uvicorn engine.server:app --host 0.0.0.0 --port 8000\n\n# Run the multi-model benchmark\npython tools/compare_models.py",
+    "roadmap": [
+      "Evaluate Qwen2.5-1.5B as a drop-in upgrade for improved linguistic nuance",
+      "Add streaming WebSocket output to the FastAPI engine",
+      "Publish filtered/anonymized training dataset to Hugging Face Datasets",
+      "Extend to additional language pairs (EN↔FR, EN↔PL)"
+    ],
+    "repos": [
+      {
+        "name": "minecraft-chat-translator",
+        "url": "https://github.com/chrisb09/minecraft-chat-translator",
+        "type": "github"
+      }
+    ],
+    "mirrors": [],
+    "modelReleases": [
+      {
+        "name": "qwen2.5-0.5b-minecraft-chat-translator (merged FP16)",
+        "url": "https://huggingface.co/duLouser/qwen2.5-0.5b-minecraft-chat-translator",
+        "type": "huggingface",
+        "description": "Standalone merged FP16 weights on Hugging Face"
+      },
+      {
+        "name": "qwen2.5-0.5b-minecraft-chat-translator-lora (LoRA adapter)",
+        "url": "https://huggingface.co/duLouser/qwen2.5-0.5b-minecraft-chat-translator-lora",
+        "type": "huggingface",
+        "description": "LoRA adapter weights (34 MB) on Hugging Face"
+      }
+    ],
+    "screenshots": []
   },
   {
     "id": "nudenetv2",
