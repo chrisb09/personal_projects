@@ -380,6 +380,10 @@ export function ProjectDetailModal({ project, isOpen, onClose, onProjectSelect, 
   const hasLOC = project.loc && project.loc.total > 0;
   const hasRepos = project.repos && project.repos.length > 0;
   const hasMirrors = project.mirrors && project.mirrors.length > 0;
+  const hasModelReleases = project.modelReleases && project.modelReleases.length > 0;
+  const hasCodeOrModels = hasRepos || hasMirrors || hasModelReleases;
+  const totalRepoCount = (project.repos?.length ?? 0) + (project.mirrors?.length ?? 0);
+  const totalModelCount = project.modelReleases?.length ?? 0;
 
   return (
     <TooltipProvider>
@@ -457,8 +461,14 @@ export function ProjectDetailModal({ project, isOpen, onClose, onProjectSelect, 
                     </span>
                     {(hasRepos || hasMirrors) && (
                       <span className="text-xs text-muted-foreground flex items-center gap-1">
-                        <Github className="w-3 h-3" />
-                        {(project.repos?.length ?? 0) + (project.mirrors?.length ?? 0)} {((project.repos?.length ?? 0) + (project.mirrors?.length ?? 0)) === 1 ? 'repo' : 'repos'}
+                        <Github className="w-3.5 h-3.5" />
+                        {totalRepoCount} {totalRepoCount === 1 ? 'repo' : 'repos'}
+                      </span>
+                    )}
+                    {hasModelReleases && (
+                      <span className="text-xs text-muted-foreground flex items-center gap-1">
+                        <Cpu className="w-3.5 h-3.5" />
+                        {totalModelCount} {totalModelCount === 1 ? 'model' : 'models'}
                       </span>
                     )}
                   </div>
@@ -514,6 +524,14 @@ export function ProjectDetailModal({ project, isOpen, onClose, onProjectSelect, 
                   </a>
                 </Button>
               ))}
+              {hasModelReleases && project.modelReleases?.map((model, i) => (
+                <Button key={i} size="sm" className="h-8 text-xs gap-2" variant="outline" asChild>
+                  <a href={model.url} target="_blank" rel="noopener noreferrer">
+                    <Cpu className="w-3.5 h-3.5" />
+                    {model.name}
+                  </a>
+                </Button>
+              ))}
               {project.docsUrl && (
                 <Button size="sm" className="h-8 text-xs gap-2" variant="outline" asChild>
                   <a href={project.docsUrl} target="_blank" rel="noopener noreferrer">
@@ -553,12 +571,16 @@ export function ProjectDetailModal({ project, isOpen, onClose, onProjectSelect, 
                 >
                   Stats & Metrics
                 </TabsTrigger>
-                {(hasRepos || hasMirrors) && (
+                {hasCodeOrModels && (
                   <TabsTrigger 
                     value="repositories" 
                     className="px-1 pb-2 pt-1.5 rounded-none text-xs font-semibold border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-primary data-[state=inactive]:text-muted-foreground hover:text-foreground transition-all whitespace-nowrap bg-transparent shadow-none border-t-0 border-x-0"
                   >
-                    {`Repositories (${(project.repos?.length ?? 0) + (project.mirrors?.length ?? 0)})`}
+                    {hasModelReleases && !hasRepos && !hasMirrors
+                      ? `Models (${totalModelCount})`
+                      : hasModelReleases
+                      ? `Code & Models (${totalRepoCount + totalModelCount})`
+                      : `Repositories (${totalRepoCount})`}
                   </TabsTrigger>
                 )}
                 {(hasScreenshots || hasRelatedProjects) && (
@@ -785,8 +807,8 @@ export function ProjectDetailModal({ project, isOpen, onClose, onProjectSelect, 
                   </div>
                 </TabsContent>
  
-                {/* Repositories Tab */}
-                {(hasRepos || hasMirrors) && (
+                {/* Repositories & Models Tab */}
+                {hasCodeOrModels && (
                   <TabsContent value="repositories" className="mt-0 space-y-4 focus-visible:outline-none">
                     {hasRepos && (
                       <section>
@@ -814,8 +836,37 @@ export function ProjectDetailModal({ project, isOpen, onClose, onProjectSelect, 
                       </section>
                     )}
  
-                    {hasRepos && hasMirrors && <Separator />}
- 
+                    {hasRepos && hasModelReleases && <Separator />}
+
+                    {hasModelReleases && (
+                      <section>
+                        <h4 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2 flex items-center gap-1.5">
+                          <Cpu className="w-3.5 h-3.5" />
+                          Model Releases
+                        </h4>
+                        <p className="text-xs text-muted-foreground mb-2">Pretrained weights, fine-tuned checkpoints, and LoRA adapters on Hugging Face.</p>
+                        <div className="space-y-2">
+                          {project.modelReleases?.map((release, i) => (
+                            <a 
+                              key={i}
+                              href={release.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-center justify-between p-2.5 rounded-lg bg-muted/20 border border-border/20 hover:bg-muted/40 hover:border-primary/30 transition-colors group"
+                            >
+                              <div className="min-w-0">
+                                <p className="font-medium text-sm text-foreground/90 group-hover:text-foreground transition-colors">{release.name}</p>
+                                <p className="text-[10px] text-muted-foreground">{release.description || 'Hugging Face Model'}</p>
+                              </div>
+                              <ExternalLink className="w-3.5 h-3.5 text-muted-foreground group-hover:text-primary flex-shrink-0 ml-2 transition-colors" />
+                            </a>
+                          ))}
+                        </div>
+                      </section>
+                    )}
+
+                    {(hasRepos || hasModelReleases) && hasMirrors && <Separator />}
+
                     {hasMirrors && (
                       <section>
                         <h4 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2 flex items-center gap-1.5">

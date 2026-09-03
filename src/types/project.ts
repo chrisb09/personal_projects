@@ -57,6 +57,12 @@ export interface Project {
     type?: 'github' | 'gitlab' | 'gitea' | 'other';
     description?: string;
   }[];
+  modelReleases?: {
+    name: string;
+    url: string;
+    type?: 'huggingface' | 'other';
+    description?: string;
+  }[];
   docsUrl?: string;
   screenshots?: string[];
   logo?: string;

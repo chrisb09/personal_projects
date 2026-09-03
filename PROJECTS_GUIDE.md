@@ -57,8 +57,9 @@ Each project JSON file (`config/projects/<id>/project.json`) supports the follow
 | `demoUrl` | `string` | *Optional.* URL to a live website or demo page. |
 | `docsUrl` | `string` | *Optional.* Link to a documentation page. |
 | `logo` | `string` | *Optional.* Path to custom icon/logo (e.g. `/images/projects/my-logo.png`). |
-| `repos` | `object[]` | List of primary repositories. Element schema: `{ "name": "slug", "url": "https://...", "type": "github" \| "gitlab" }`. |
-| `mirrors` | `object[]` | List of mirrors (same schema as `repos` with an optional `"description"` field). |
+| `repos` | `object[]` | List of primary repositories. Element schema: `{ "name": "slug", "url": "https://...", "type": "github" \| "gitlab" \| "gitea" }`. |
+| `mirrors` | `object[]` | List of Git source mirrors (same schema as `repos` with an optional `"description"` field). |
+| `modelReleases` | `object[]` | List of published model weights/adapters. Schema: `{ "name": "Model name", "url": "https://huggingface.co/...", "type": "huggingface", "description": "optional description" }`. |
 | `relatedProjects` | `object[]` | List of related work. Schema: `{ "name": "Name", "relation": "Description", "url": "https://...", "projectId": "other-project-id" }`. |
 | `stats` | `object` | *Optional.* Static fallback for Git stats (same schema as stats.json) if repo is offline. |
 | `loc` | `object` | *Optional.* Static fallback for LOC breakdown if repo is offline. |

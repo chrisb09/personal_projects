@@ -243,6 +243,21 @@ export function ProjectCard({ project, onClick, onMediaClick }: ProjectCardProps
                 </TooltipContent>
               </Tooltip>
             )}
+            {project.modelReleases && project.modelReleases.length > 0 && (
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <div className="flex items-center gap-1 cursor-help">
+                    <Cpu className="w-3 h-3 text-orange-500/80" />
+                    <span>{project.modelReleases.length} {project.modelReleases.length === 1 ? 'model' : 'models'}</span>
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent side="top">
+                  <p className="text-[10px]">
+                    {project.modelReleases.map(m => m.name).join(', ')}
+                  </p>
+                </TooltipContent>
+              </Tooltip>
+            )}
           </div>
 
           {/* Footer with Status, Source Type, AI Usage, AI Utilization, and Links */}
@@ -354,6 +369,18 @@ export function ProjectCard({ project, onClick, onMediaClick }: ProjectCardProps
                   title="Repository"
                 >
                   <Github className="w-3.5 h-3.5" />
+                </a>
+              )}
+              {project.modelReleases && project.modelReleases.length > 0 && (
+                <a 
+                  href={project.modelReleases[0]?.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => e.stopPropagation()}
+                  className="text-muted-foreground hover:text-primary transition-colors p-1 -m-1"
+                  title={`Model Release: ${project.modelReleases[0]?.name}`}
+                >
+                  <Cpu className="w-3.5 h-3.5" />
                 </a>
               )}
               {project.docsUrl && (
