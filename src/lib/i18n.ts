@@ -1,24 +1,33 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import HttpBackend from 'i18next-http-backend';
 import LanguageDetector from 'i18next-browser-languagedetector';
+import enCommon from '@/locales/en/common.json';
+import enProjects from '@/locales/en/projects.json';
+import deCommon from '@/locales/de/common.json';
+import deProjects from '@/locales/de/projects.json';
+
+const resources = {
+  en: {
+    common: enCommon,
+    projects: enProjects,
+  },
+  de: {
+    common: deCommon,
+    projects: deProjects,
+  },
+};
 
 i18n
-  .use(HttpBackend)
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
+    resources,
     fallbackLng: 'en',
-    supportedLngs: ['en'],
+    supportedLngs: ['en', 'de'],
 
     // Namespaces: 'common' for UI strings, 'projects' for project-specific texts
     ns: ['common', 'projects'],
     defaultNS: 'common',
-
-    // Load translations from public/locales/{lang}/{ns}.json
-    backend: {
-      loadPath: './locales/{{lng}}/{{ns}}.json',
-    },
 
     // Language detection order: cookie > browser navigator > fallback
     detection: {
@@ -33,7 +42,7 @@ i18n
     },
 
     react: {
-      useSuspense: true,
+      useSuspense: false,
     },
   });
 

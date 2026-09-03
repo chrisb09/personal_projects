@@ -551,25 +551,25 @@ export function ProjectDetailModal({ project, isOpen, onClose, onProjectSelect, 
                   value="overview" 
                   className="px-1 pb-2 pt-1.5 rounded-none text-xs font-semibold border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-primary data-[state=inactive]:text-muted-foreground hover:text-foreground transition-all whitespace-nowrap bg-transparent shadow-none border-t-0 border-x-0"
                 >
-                  Overview
+                  {t('modal.overview', 'Overview')}
                 </TabsTrigger>
                 <TabsTrigger 
                   value="technical" 
                   className="px-1 pb-2 pt-1.5 rounded-none text-xs font-semibold border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-primary data-[state=inactive]:text-muted-foreground hover:text-foreground transition-all whitespace-nowrap bg-transparent shadow-none border-t-0 border-x-0"
                 >
-                  Technical
+                  {t('modal.technical', 'Technical')}
                 </TabsTrigger>
                 <TabsTrigger 
                   value="usage" 
                   className="px-1 pb-2 pt-1.5 rounded-none text-xs font-semibold border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-primary data-[state=inactive]:text-muted-foreground hover:text-foreground transition-all whitespace-nowrap bg-transparent shadow-none border-t-0 border-x-0"
                 >
-                  Installation & Usage
+                  {t('modal.installation_usage', 'Installation & Usage')}
                 </TabsTrigger>
                 <TabsTrigger 
                   value="stats" 
                   className="px-1 pb-2 pt-1.5 rounded-none text-xs font-semibold border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-primary data-[state=inactive]:text-muted-foreground hover:text-foreground transition-all whitespace-nowrap bg-transparent shadow-none border-t-0 border-x-0"
                 >
-                  Stats & Metrics
+                  {t('modal.stats_metrics', 'Stats & Metrics')}
                 </TabsTrigger>
                 {hasCodeOrModels && (
                   <TabsTrigger 
@@ -577,10 +577,10 @@ export function ProjectDetailModal({ project, isOpen, onClose, onProjectSelect, 
                     className="px-1 pb-2 pt-1.5 rounded-none text-xs font-semibold border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-primary data-[state=inactive]:text-muted-foreground hover:text-foreground transition-all whitespace-nowrap bg-transparent shadow-none border-t-0 border-x-0"
                   >
                     {hasModelReleases && !hasRepos && !hasMirrors
-                      ? `Models (${totalModelCount})`
+                      ? `${t('modal.models', 'Models')} (${totalModelCount})`
                       : hasModelReleases
-                      ? `Code & Models (${totalRepoCount + totalModelCount})`
-                      : `Repositories (${totalRepoCount})`}
+                      ? `${t('modal.code_models', 'Code & Models')} (${totalRepoCount + totalModelCount})`
+                      : `${t('modal.repositories', 'Repositories')} (${totalRepoCount})`}
                   </TabsTrigger>
                 )}
                 {(hasScreenshots || hasRelatedProjects) && (
@@ -588,7 +588,7 @@ export function ProjectDetailModal({ project, isOpen, onClose, onProjectSelect, 
                     value="media" 
                     className="px-1 pb-2 pt-1.5 rounded-none text-xs font-semibold border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-primary data-[state=inactive]:text-muted-foreground hover:text-foreground transition-all whitespace-nowrap bg-transparent shadow-none border-t-0 border-x-0"
                   >
-                    Media & Links
+                    {t('modal.media_links', 'Media & Links')}
                   </TabsTrigger>
                 )}
               </TabsList>
@@ -602,28 +602,28 @@ export function ProjectDetailModal({ project, isOpen, onClose, onProjectSelect, 
                   <section>
                     <h4 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2 flex items-center gap-1.5">
                       <Target className="w-3.5 h-3.5" />
-                      Description
+                      {t('modal.description', 'Description')}
                     </h4>
                     <div className="text-sm text-foreground/90 leading-relaxed">{renderFormattedDescription(project.description)}</div>
                   </section>
- 
+
                   <Separator />
- 
+
                   <section>
                     <h4 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2 flex items-center gap-1.5">
                       <Lightbulb className="w-3.5 h-3.5" />
-                      Purpose
+                      {t('modal.purpose', 'Purpose')}
                     </h4>
                     <div className="text-sm text-foreground/90 leading-relaxed">{renderFormattedDescription(project.purpose)}</div>
                   </section>
- 
+
                   <Separator />
- 
+
                   <div className="grid md:grid-cols-2 gap-4">
                     <section>
                       <h4 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2 flex items-center gap-1.5">
                         <CheckCircle2 className="w-3.5 h-3.5 text-green-500" />
-                        Strengths
+                        {t('modal.strengths', 'Strengths')}
                       </h4>
                       <ul className="space-y-1.5">
                         {project.strengths.map((strength, i) => (
@@ -634,11 +634,11 @@ export function ProjectDetailModal({ project, isOpen, onClose, onProjectSelect, 
                         ))}
                       </ul>
                     </section>
- 
+
                     <section>
                       <h4 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2 flex items-center gap-1.5">
                         <AlertCircle className="w-3.5 h-3.5 text-amber-500" />
-                        Limitations
+                        {t('modal.limitations', 'Limitations')}
                       </h4>
                       <ul className="space-y-1.5">
                         {project.limitations.map((limitation, i) => (
@@ -651,13 +651,13 @@ export function ProjectDetailModal({ project, isOpen, onClose, onProjectSelect, 
                     </section>
                   </div>
                 </TabsContent>
- 
+
                 {/* Technical Tab */}
                 <TabsContent value="technical" className="mt-0 space-y-4 focus-visible:outline-none">
                   <section>
                     <h4 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2 flex items-center gap-1.5">
                       <Cpu className="w-3.5 h-3.5" />
-                      Technologies
+                      {t('modal.technologies', 'Technologies')}
                     </h4>
                     <div className="flex flex-wrap gap-1.5">
                       {project.technologies.map((tech, i) => (
@@ -667,13 +667,13 @@ export function ProjectDetailModal({ project, isOpen, onClose, onProjectSelect, 
                       ))}
                     </div>
                   </section>
- 
+
                   <Separator />
- 
+
                   <section>
                     <h4 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2 flex items-center gap-1.5">
                       <Package className="w-3.5 h-3.5" />
-                      Dependencies
+                      {t('modal.dependencies', 'Dependencies')}
                     </h4>
                     <div className="flex flex-wrap gap-1.5">
                       {project.dependencies.map((dep, i) => (
@@ -683,13 +683,13 @@ export function ProjectDetailModal({ project, isOpen, onClose, onProjectSelect, 
                       ))}
                     </div>
                   </section>
- 
+
                   <Separator />
- 
+
                   <section>
                     <h4 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2 flex items-center gap-1.5">
                       <Wrench className="w-3.5 h-3.5" />
-                      Expertise Highlighted
+                      {t('modal.expertise', 'Expertise Highlighted')}
                     </h4>
                     <ul className="space-y-1.5">
                       {project.expertise.map((exp, i) => (
@@ -722,7 +722,7 @@ export function ProjectDetailModal({ project, isOpen, onClose, onProjectSelect, 
                     <section>
                       <h4 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2 flex items-center gap-1.5">
                         <Wrench className="w-3.5 h-3.5" />
-                        Usage
+                        {t('modal.usage', 'Usage')}
                       </h4>
                       <pre className="bg-muted/50 rounded-lg p-3 overflow-x-auto text-xs font-mono text-foreground/90 border border-border/50">
                         <code>{project.usage}</code>
@@ -733,7 +733,7 @@ export function ProjectDetailModal({ project, isOpen, onClose, onProjectSelect, 
                   {!project.installation && !project.usage && (
                     <div className="text-center py-10 text-muted-foreground">
                       <Wrench className="w-10 h-10 mx-auto mb-3 opacity-50" />
-                      <p className="text-sm">Installation and usage details coming soon.</p>
+                      <p className="text-sm">{t('modal.no_usage_details', 'Installation and usage details coming soon.')}</p>
                     </div>
                   )}
                 </TabsContent>
@@ -745,34 +745,34 @@ export function ProjectDetailModal({ project, isOpen, onClose, onProjectSelect, 
                       <section className="space-y-2.5">
                         <h4 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3 flex items-center gap-1.5">
                           <Github className="w-3.5 h-3.5" />
-                          Repository Stats
+                          {t('modal.repository_stats', 'Repository Stats')}
                         </h4>
                         <div className="space-y-2 max-w-md">
                           <div className="flex items-center justify-between px-3 py-2 rounded-lg bg-muted/20 border border-border/30">
                             <div className="flex items-center gap-2">
                               <Star className="w-4 h-4 text-amber-500" />
-                              <span className="text-xs font-medium">Stars</span>
+                              <span className="text-xs font-medium">{t('stats.stars', 'Stars')}</span>
                             </div>
                             <span className="text-xs font-semibold">{project.stats?.stars}</span>
                           </div>
                           <div className="flex items-center justify-between px-3 py-2 rounded-lg bg-muted/20 border border-border/30">
                             <div className="flex items-center gap-2">
                               <GitCommit className="w-4 h-4 text-blue-500" />
-                              <span className="text-xs font-medium">Commits</span>
+                              <span className="text-xs font-medium">{t('stats.commits', 'Commits')}</span>
                             </div>
                             <span className="text-xs font-semibold">{project.stats?.commits}</span>
                           </div>
                           <div className="flex items-center justify-between px-3 py-2 rounded-lg bg-muted/20 border border-border/30">
                             <div className="flex items-center gap-2">
                               <GitBranch className="w-4 h-4 text-green-500" />
-                              <span className="text-xs font-medium">Branches</span>
+                              <span className="text-xs font-medium">{t('stats.branches', 'Branches')}</span>
                             </div>
                             <span className="text-xs font-semibold">{project.stats?.branches}</span>
                           </div>
                           <div className="flex items-center justify-between px-3 py-2 rounded-lg bg-muted/20 border border-border/30">
                             <div className="flex items-center gap-2">
                               <Clock className="w-4 h-4 text-purple-500" />
-                              <span className="text-xs font-medium">Last Commit</span>
+                              <span className="text-xs font-medium">{t('stats.last_commit', 'Last Commit')}</span>
                             </div>
                             <span className="text-xs font-semibold truncate max-w-[150px]" title={project.stats?.lastCommit}>
                               {project.stats?.lastCommit}
@@ -787,7 +787,7 @@ export function ProjectDetailModal({ project, isOpen, onClose, onProjectSelect, 
                       <section className="space-y-2.5">
                         <h4 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3 flex items-center gap-1.5">
                           <Code2 className="w-3.5 h-3.5" />
-                          Lines of Code
+                          {t('stats.loc', 'Lines of Code')}
                         </h4>
                         <div className="bg-muted/30 rounded-lg p-3.5 border border-border/50 max-w-md">
                           <DonutChart 
@@ -801,7 +801,7 @@ export function ProjectDetailModal({ project, isOpen, onClose, onProjectSelect, 
                     {!hasStats && !hasLOC && (
                       <div className="text-center py-10 text-muted-foreground col-span-2">
                         <FolderGit2 className="w-10 h-10 mx-auto mb-3 opacity-50" />
-                        <p className="text-sm">No repository statistics or lines of code data available.</p>
+                        <p className="text-sm">{t('modal.no_stats_available', 'No repository statistics or lines of code data available.')}</p>
                       </div>
                     )}
                   </div>
@@ -814,7 +814,7 @@ export function ProjectDetailModal({ project, isOpen, onClose, onProjectSelect, 
                       <section>
                         <h4 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2 flex items-center gap-1.5">
                           <Github className="w-3.5 h-3.5" />
-                          Primary Repositories
+                          {t('modal.primary_repositories', 'Primary Repositories')}
                         </h4>
                         <div className="space-y-2">
                           {project.repos?.map((repo, i) => (
@@ -842,9 +842,9 @@ export function ProjectDetailModal({ project, isOpen, onClose, onProjectSelect, 
                       <section>
                         <h4 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2 flex items-center gap-1.5">
                           <Cpu className="w-3.5 h-3.5" />
-                          Model Releases
+                          {t('modal.model_releases', 'Model Releases')}
                         </h4>
-                        <p className="text-xs text-muted-foreground mb-2">Pretrained weights, fine-tuned checkpoints, and LoRA adapters on Hugging Face.</p>
+                        <p className="text-xs text-muted-foreground mb-2">{t('modal.model_releases_desc', 'Pretrained weights, fine-tuned checkpoints, and LoRA adapters on Hugging Face.')}</p>
                         <div className="space-y-2">
                           {project.modelReleases?.map((release, i) => (
                             <a 
@@ -871,9 +871,9 @@ export function ProjectDetailModal({ project, isOpen, onClose, onProjectSelect, 
                       <section>
                         <h4 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2 flex items-center gap-1.5">
                           <GitBranch className="w-3.5 h-3.5" />
-                          Mirror Repositories
+                          {t('modal.mirror_repositories', 'Mirror Repositories')}
                         </h4>
-                        <p className="text-xs text-muted-foreground mb-2">Mirrors for visibility and accessibility. Stats are counted from primary repository.</p>
+                        <p className="text-xs text-muted-foreground mb-2">{t('modal.mirror_note', 'Mirrors for visibility and accessibility. Stats are counted from primary repository.')}</p>
                         <div className="space-y-2">
                           {project.mirrors?.map((mirror, i) => (
                             <a 
@@ -903,7 +903,7 @@ export function ProjectDetailModal({ project, isOpen, onClose, onProjectSelect, 
                       <section className="space-y-2.5">
                         <h4 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2 flex items-center gap-1.5">
                           <ImageIcon className="w-3.5 h-3.5" />
-                          Screenshots
+                          {t('modal.screenshots', 'Screenshots')}
                         </h4>
                         <div className="max-w-xl">
                           <ScreenshotGallery screenshots={project.screenshots!} projectName={project.name} />
@@ -917,7 +917,7 @@ export function ProjectDetailModal({ project, isOpen, onClose, onProjectSelect, 
                       <section>
                         <h4 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2 flex items-center gap-1.5">
                           <Link2 className="w-3.5 h-3.5" />
-                          Related Projects
+                          {t('modal.related_projects', 'Related Projects')}
                         </h4>
                         <div className="space-y-2">
                           {project.relatedProjects?.map((related, i) => {

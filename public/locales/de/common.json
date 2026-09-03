@@ -1,0 +1,147 @@
+{
+  "site": {
+    "title": "Projekt-Portfolio",
+    "description": "Eine Übersicht persönlicher und Open-Source-Projekte",
+    "footer": "Erstellt mit React, TypeScript & Tailwind CSS"
+  },
+  "header": {
+    "search_placeholder": "Projekte durchsuchen...",
+    "showing": "Angezeigt werden",
+    "of": "von",
+    "projects": "Projekten"
+  },
+  "filters": {
+    "all": "Alle",
+    "category": "Kategorie",
+    "role": "Rolle",
+    "status": "Status",
+    "academic_only": "Akademische Projekte",
+    "no_projects_found": "Keine Projekte gefunden",
+    "try_adjusting": "Versuche die Such- oder Filterkriterien anzupassen",
+    "clear_filters": "Filter zurücksetzen"
+  },
+  "project_types": {
+    "software-project": "Projekte",
+    "script-small": "Skripte und kleine Projekte",
+    "3d-printing": "3D-Druck",
+    "it-project": "IT-Projekte"
+  },
+  "categories": {
+    "backend": "Backend",
+    "frontend": "Frontend",
+    "devops-infrastructure": "DevOps & Infrastruktur",
+    "data-scraping": "Daten & Scraping",
+    "library": "Bibliothek",
+    "package-management": "Paketverwaltung",
+    "cli": "CLI-Tool",
+    "fullstack": "Full Stack",
+    "utility": "Tools & Dienstprogramme",
+    "other": "Sonstiges"
+  },
+  "roles": {
+    "main-author": "Hauptautor",
+    "contributor": "Mitwirkender",
+    "fork-maintainer": "Fork-Maintainer",
+    "backend-co-lead": "Backend Co-Lead"
+  },
+  "statuses": {
+    "active": "Aktiv",
+    "experimental": "Experimentell",
+    "maintenance": "Wartung",
+    "archived": "Archiviert",
+    "completed": "Abgeschlossen"
+  },
+  "source_types": {
+    "open-source": "Open Source",
+    "closed-source": "Closed Source"
+  },
+  "ai_usage": {
+    "none": "Keine KI",
+    "minor": "KI-unterstützt",
+    "contributed": "KI-beigesteuert",
+    "major": "Überwiegend KI",
+    "full": "Vollständig KI"
+  },
+  "ai_usage_descriptions": {
+    "none": "Vollständig ohne KI-Unterstützung entwickelt",
+    "minor": "KI nur für Autovervollständigung und Chat-Assistenz genutzt",
+    "contributed": "KI hat einzelne Funktionen und/oder Tests generiert",
+    "major": "Wesentliche Teile durch KI-Agenten generiert oder unterstützt",
+    "full": "Größtenteils oder vollständig mit KI-Werkzeugen erstellt"
+  },
+  "ai_utilization": {
+    "ai-powered": "KI-basiert",
+    "ai-enhanced": "KI-erweitert",
+    "no-ai": "Keine KI-Funktionen"
+  },
+  "ai_utilization_descriptions": {
+    "ai-powered": "Kernfunktionalität basiert auf KI-/ML-Modellen",
+    "ai-enhanced": "Nutzt KI zur Erweiterung bestimmter Funktionen",
+    "no-ai": "Verwendet weder KI noch maschinelles Lernen"
+  },
+  "labels": {
+    "built_with": "Entwickelt mit",
+    "features": "Funktionen",
+    "academic": "Akademisch",
+    "ai_usage_levels": "KI-Einsatzstufen",
+    "ai_utilization_levels": "KI-Funktionsumfang"
+  },
+  "stats": {
+    "stars": "Sterne",
+    "commits": "Commits",
+    "branches": "Branches",
+    "last_commit": "Letzter Commit",
+    "loc": "LOC",
+    "total_stars": "Sterne gesamt",
+    "total_commits": "Commits gesamt",
+    "total_loc": "LOC gesamt",
+    "commits_tooltip": "Von mir verfasste Commits im Default-Branch aller erfassten Projekte.",
+    "loc_tooltip": "Von mir geschriebene Codezeilen, die sich aktuell im Default-Branch befinden."
+  },
+  "modal": {
+    "overview": "Übersicht",
+    "technical": "Technisch",
+    "installation_usage": "Installation & Verwendung",
+    "stats_metrics": "Statistiken & Metriken",
+    "repositories": "Repositories",
+    "models": "Modelle",
+    "code_models": "Code & Modelle",
+    "media_links": "Medien & Links",
+    "description": "Beschreibung",
+    "purpose": "Zweck",
+    "technologies": "Technologien",
+    "dependencies": "Abhängigkeiten",
+    "expertise": "Schwerpunkte & Expertise",
+    "strengths": "Stärken",
+    "limitations": "Einschränkungen",
+    "installation": "Installation",
+    "usage": "Verwendung",
+    "no_usage_details": "Installations- und Nutzungsdetails folgen in Kürze.",
+    "roadmap": "Roadmap",
+    "related_projects": "Verwandte Projekte",
+    "primary_repositories": "Haupt-Repositories",
+    "model_releases": "Modell-Veröffentlichungen",
+    "model_releases_desc": "Vortrainierte Gewichte, feinabgestimmte Checkpoints und LoRA-Adapter auf Hugging Face.",
+    "mirror_repositories": "Mirror-Repositories",
+    "mirror_note": "Mirrors zur Sichtbarkeit und Zugänglichkeit. Statistiken stammen aus dem primären Repository.",
+    "screenshots": "Screenshots",
+    "live_demo": "Live-Demo",
+    "legacy_version": "Vorgängerversion (Vergleich)",
+    "documentation": "Dokumentation",
+    "loc_breakdown": "Verteilung der Codezeilen",
+    "git_stats": "Git-Statistiken",
+    "repository_stats": "Repository-Statistiken",
+    "no_stats_available": "Keine Repository-Statistiken oder Zeilendaten verfügbar."
+  },
+  "theme": {
+    "select": "Design auswählen",
+    "light": "Hell",
+    "dark": "Dunkel",
+    "system": "System"
+  },
+  "language": {
+    "select": "Sprache",
+    "en": "English",
+    "de": "Deutsch"
+  }
+}

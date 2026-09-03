@@ -1,0 +1,56 @@
+{
+  "firecord": {
+    "name": "firecord",
+    "tagline": "Experimentelle Redisson-Alternative",
+    "description": "Eine hochperformante, Redis-basierte automatische Objektsynchronisations-Bibliothek für Java. Entwickelt als leichtgewichtige Low-Latency-Alternative zu Redisson unter intensiver Nutzung von AspectJ für referenzbasiertes Tracking.",
+    "purpose": "Entstanden aus der Notwendigkeit, verteilte Zustände in Sub-50ms-Tick-Umgebungen zu synchronisieren, in denen Standardlösungen inakzeptablen Netzwerk-Overhead und Latenz verursachten."
+  },
+  "pdnwebview": {
+    "name": "pdnwebview",
+    "tagline": "Web-Viewer für Paint.net-Projektdateien",
+    "description": "Ein maßgeschneiderter webbasierter Viewer für Paint.net (.pdn)-Projektdateien. Vollständig ohne schwere Frontend-Frameworks realisiert, um maximale Rendering-Performance und einen minimalen Ressourcenverbrauch zu gewährleisten.",
+    "purpose": "Um Paint.net-Projektdateien im Web zugänglich und teilbar zu machen, sodass Grafikschaffende ihre Arbeiten präsentieren und zusammenarbeiten können, ohne dass alle Beteiligten Paint.net installiert haben müssen."
+  },
+  "userbenchmark-scraper": {
+    "name": "Userbenchmark Web Scraper",
+    "tagline": "Experimenteller Hardware-Benchmark-Datenextraktor",
+    "description": "Eine End-to-End-Datenextraktions-Pipeline in Python. Verfügt über einen maßgeschneiderten Job-Scheduler und Tor-Netzwerk-Routing zur Umgehung aggressiver Ratenbegrenzungen, wodurch erfolgreich ein umfassender Hardware-Datensatz aufgebaut wurde.",
+    "purpose": "Um umfangreiche Hardware-Benchmark-Daten für Analyse- und Forschungszwecke zu sammeln und einen Datensatz von rund 40.000 Benchmarks aufzubauen."
+  },
+  "homeserver": {
+    "name": "Privater Homeserver",
+    "tagline": "Selbstgehostete Infrastruktur für den Eigenbedarf",
+    "description": "Eine produktionsreife, selbstgehostete Infrastrukturumgebung, die seit 2018 kontinuierlich in Betrieb ist. Verwaltet über 100+ TB Speicherplatz für rund 20 aktive Nutzer ohne nennenswerte Datenverluste.",
+    "purpose": "Schaffung einer datenschutzorientierten, selbstkontrollierten Alternative zu kommerziellen Cloud-Diensten mit verlässlichem Hosting für persönliche Daten und Dienste."
+  },
+  "pacstall-programs": {
+    "name": "Pacstall",
+    "tagline": "Paketmanager für Ubuntu/Debian",
+    "description": "Mitarbeit an Pacstall, einem von AUR inspirierten Paketmanager für Ubuntu- und Debian-Systeme. Schließt die Lücke zwischen neuester Software und stabilen Distributionen.",
+    "purpose": "Neuere Softwareversionen auf stabilen Ubuntu/Debian-Systemen verfügbar zu machen, ohne die Systemstabilität zu gefährden oder auf offizielle Repository-Updates warten zu müssen."
+  },
+  "libretranslate-java": {
+    "name": "libretranslate-java",
+    "tagline": "Java-Client für LibreTranslate",
+    "description": "Eine Java-Client-Bibliothek für die LibreTranslate-API. Ermöglicht die unkomplizierte Integration von Übersetzungsfunktionen in Java-Anwendungen mit einer sauberen, idiomatischen API.",
+    "purpose": "Java-Entwicklern einen einfachen, gut dokumentierten Client für selbstgehostete oder öffentliche LibreTranslate-Instanzen bereitzustellen, um Übersetzungsfunktionen ohne Abhängigkeit von proprietären Drittanbieterdiensten zu nutzen."
+  },
+  "small-projects": {
+    "name": "Kleine Projekte & Skripte",
+    "tagline": "Dienstprogramme und Hilfsskripte",
+    "description": "Eine Sammlung kleiner, nützlicher Hilfsprojekte und Skripte für verschiedene Aufgaben, darunter Redis-Datenverwaltung, sicheres Herunterladen, Duplikaterkennung und einfaches Datei-Hosting.",
+    "purpose": "Spezifische, wiederkehrende Probleme mit fokussierten, leichtgewichtigen Werkzeugen zu lösen, die einfach zu verstehen, anzuwenden und anzupassen sind."
+  },
+  "filament-spool-holder": {
+    "name": "Automatisch aufrollender Filament-Spulenhalter",
+    "tagline": "Parametrischer mechanischer Spulenhalter für 3D-Druck",
+    "description": "Ein parametrischer, automatisch aufrollender Filament-Spulenhalter für Dual-Extrusion- oder Multi-Material-3D-Drucker. Rollt die Spule beim Rückzug des Filaments automatisch auf und verhindert Verheddern.",
+    "purpose": "Verhindern von Filament-Verwicklungen auf Multi-Material-3D-Druckern bei Retraction-Vorgängen durch einen rein mechanischen, gedruckten Federmechanismus."
+  },
+  "cpp-ml-interface": {
+    "name": "CPP-ML-Interface",
+    "tagline": "Hardwarebeschleunigte KI-Inferenz-Middleware",
+    "description": "Eine modulare C++-Middleware zur Kopplung komplexer Computational Fluid Dynamics (CFD)-Solver mit Machine-Learning-Inferenzmodellen. Entwickelt auf einem Rocky-9-HPC-Cluster, abstrahiert sie die zugrunde liegende Hardware und Kopplungsbibliotheken.",
+    "purpose": "Beseitigung von Interconnect-Engpässen im High-Performance Computing (HPC) durch Bereitstellung eines plattformunabhängigen Datenpfads zwischen physikalischen Simulationen und KI-Modellen."
+  }
+}

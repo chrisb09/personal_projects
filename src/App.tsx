@@ -76,7 +76,7 @@ function AILegend() {
       <div className="space-y-4">
         <h4 className="text-sm font-semibold flex items-center gap-2 text-foreground">
           <Sparkles className="w-4 h-4 text-primary" />
-          {t('labels.built_with', 'Built with')} - AI Usage Levels
+          {t('labels.built_with', 'Built with')} - {t('labels.ai_usage_levels', 'AI Usage Levels')}
         </h4>
         <div className="space-y-3">
           {usageLevels.map((level) => (
@@ -98,7 +98,7 @@ function AILegend() {
       <div className="space-y-4">
         <h4 className="text-sm font-semibold flex items-center gap-2 text-foreground">
           <Cpu className="w-4 h-4 text-primary" />
-          {t('labels.features', 'Features')} - AI Utilization
+          {t('labels.features', 'Features')} - {t('labels.ai_utilization_levels', 'AI Utilization')}
         </h4>
         <div className="space-y-3">
           {utilizationLevels.map((level) => (
@@ -465,10 +465,10 @@ function App() {
             <div className="text-center py-20">
               <FolderGit2 className="w-16 h-16 mx-auto mb-4 text-muted-foreground/50" />
               <h3 className="text-lg font-medium text-muted-foreground mb-2">
-                No projects found
+                {t('filters.no_projects_found', 'No projects found')}
               </h3>
               <p className="text-sm text-muted-foreground/70">
-                Try adjusting your search or filter criteria
+                {t('filters.try_adjusting', 'Try adjusting your search or filter criteria')}
               </p>
               <Button 
                 variant="outline" 
@@ -479,7 +479,7 @@ function App() {
                   setShowAcademicOnly(false);
                 }}
               >
-                Clear filters
+                {t('filters.clear_filters', 'Clear filters')}
               </Button>
             </div>
           )}
@@ -495,7 +495,7 @@ function App() {
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <div className="flex flex-col md:flex-row items-center justify-between gap-4">
               <p className="text-sm text-muted-foreground">
-                Built with React, TypeScript & Tailwind CSS
+                {t('site.footer', 'Built with React, TypeScript & Tailwind CSS')}
               </p>
               <div className="flex items-center gap-4">
                 {headerConfig.buttons.map((btn, i) => {

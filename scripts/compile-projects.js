@@ -4,6 +4,8 @@ const path = require('path');
 const projectsDir = path.join(__dirname, '../config/projects');
 const outputTsPath = path.join(__dirname, '../src/config/projects.ts');
 const publicImagesDir = path.join(__dirname, '../public/images/projects');
+const localesSrcDir = path.join(__dirname, '../src/locales');
+const publicLocalesDir = path.join(__dirname, '../public/locales');
 
 // Helper to copy directory recursively
 function copyDirSync(src, dest) {
@@ -26,6 +28,12 @@ function compileProjects() {
   if (!fs.existsSync(projectsDir)) {
     console.error(`Projects directory not found at ${projectsDir}`);
     process.exit(1);
+  }
+
+  // Ensure public locales are in sync
+  if (fs.existsSync(localesSrcDir)) {
+    copyDirSync(localesSrcDir, publicLocalesDir);
+    console.log(`Copied locales to ${publicLocalesDir}`);
   }
 
   const compiledProjects = [];

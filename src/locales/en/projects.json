@@ -1,0 +1,56 @@
+{
+  "firecord": {
+    "name": "firecord",
+    "tagline": "Experimental Redisson Alternative",
+    "description": "A high-performance, Redis-based automatic object synchronization library for Java. Developed as a lightweight, low-latency alternative to Redisson, heavily utilizing AspectJ for reference-based tracking.",
+    "purpose": "Born from the need to synchronize distributed state in sub-50ms tick environments where standard solutions introduced unacceptable network overhead and latency."
+  },
+  "pdnwebview": {
+    "name": "pdnwebview",
+    "tagline": "Web Viewer for Paint.net Project Files",
+    "description": "A custom web-based viewer for Paint.net (.pdn) project files. Built entirely without heavy frontend frameworks to ensure maximum rendering performance and a lightweight footprint.",
+    "purpose": "To make Paint.net project files accessible and shareable on the web, enabling artists to showcase their work and collaborate without requiring everyone to have Paint.net installed."
+  },
+  "userbenchmark-scraper": {
+    "name": "Userbenchmark Web Scraper",
+    "tagline": "Experimental Hardware Benchmark Data Extractor",
+    "description": "An end-to-end data extraction pipeline built in Python. Features a custom job scheduler and Tor network routing to bypass aggressive rate limiting, successfully aggregating a massive hardware dataset.",
+    "purpose": "To collect large-scale hardware benchmark data for analysis and research purposes, building a dataset of approximately 40,000 benchmarks."
+  },
+  "homeserver": {
+    "name": "Private Homeserver",
+    "tagline": "Self-Hosted Infrastructure for Personal Use",
+    "description": "A production-grade, self-hosted infrastructure environment operating continuously since 2018. Manages over 100+ TB of storage serving approximately 20 active users with zero major data loss incidents.",
+    "purpose": "To create a privacy-focused, self-controlled alternative to commercial cloud services, providing reliable hosting for personal data and applications."
+  },
+  "pacstall-programs": {
+    "name": "Pacstall",
+    "tagline": "Package Manager for Ubuntu/Debian",
+    "description": "Contributing to Pacstall, an AUR-inspired package manager for Ubuntu and Debian systems. Helps bridge the gap between bleeding-edge software and stable distributions.",
+    "purpose": "To make newer software versions accessible on stable Ubuntu/Debian systems without compromising system stability or waiting for official repository updates."
+  },
+  "libretranslate-java": {
+    "name": "libretranslate-java",
+    "tagline": "Java Client for LibreTranslate",
+    "description": "A Java client library for the LibreTranslate API. Provides easy integration of translation capabilities into Java applications with a clean, idiomatic API.",
+    "purpose": "To provide Java developers with a simple, well-documented client for self-hosted or public LibreTranslate instances, enabling translation features without external service dependencies."
+  },
+  "small-projects": {
+    "name": "Small Projects & Scripts",
+    "tagline": "Utility Tools and Helper Scripts",
+    "description": "A collection of small but useful utility projects and scripts for various tasks including Redis data management, secure downloading, duplicate file detection, and simple file hosting.",
+    "purpose": "To solve specific, recurring problems with focused, lightweight tools that are easy to understand, use, and modify."
+  },
+  "filament-spool-holder": {
+    "name": "Auto-Rewinding Filament Spool Holder",
+    "tagline": "Parametric Mechanical Spool Holder for 3D Printing",
+    "description": "A parametric auto-rewinding filament spool holder designed for dual-extrusion or multi-material 3D printers. It automatically rewinds the spool when filament is retracted, preventing tangles.",
+    "purpose": "To solve filament tangling issues on multi-material 3D printers during retraction cycles, using a purely mechanical, printed spring mechanism."
+  },
+  "cpp-ml-interface": {
+    "name": "CPP-ML-Interface",
+    "tagline": "Hardware-Accelerated AI Inference Middleware",
+    "description": "A modular C++ middleware designed to couple complex Computational Fluid Dynamics (CFD) solvers with machine learning inference models. Developed on a Rocky 9 HPC cluster, it abstracts underlying hardware and coupling libraries.",
+    "purpose": "To eliminate interconnect bottlenecks in High-Performance Computing (HPC) by providing a platform-independent data path between physical simulations and AI models."
+  }
+}

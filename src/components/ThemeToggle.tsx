@@ -44,15 +44,15 @@ export function ThemeToggle() {
       <DropdownMenuContent align="end">
         <DropdownMenuItem onClick={() => handleThemeChange('light')}>
           <Sun className="mr-2 h-4 w-4" />
-          {t('theme.light')}
+          {t('theme.light', 'Light')}
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => handleThemeChange('dark')}>
           <Moon className="mr-2 h-4 w-4" />
-          {t('theme.dark')}
+          {t('theme.dark', 'Dark')}
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => handleThemeChange('system')}>
           <Monitor className="mr-2 h-4 w-4" />
-          {t('theme.system')}
+          {t('theme.system', 'System')}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

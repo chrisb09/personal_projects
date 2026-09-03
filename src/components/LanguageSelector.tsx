@@ -10,9 +10,7 @@ import {
 
 const SUPPORTED_LANGUAGES = [
   { code: 'en', label: 'English' },
-  // Add more languages here as translations are created:
-  // { code: 'de', label: 'Deutsch' },
-  // { code: 'fr', label: 'Francais' },
+  { code: 'de', label: 'Deutsch' },
 ];
 
 export function LanguageSelector() {
@@ -22,7 +20,7 @@ export function LanguageSelector() {
     i18n.changeLanguage(langCode);
   };
 
-  const currentLang = SUPPORTED_LANGUAGES.find(l => l.code === i18n.language) 
+  const currentLang = SUPPORTED_LANGUAGES.find(l => i18n.language && i18n.language.startsWith(l.code)) 
     || SUPPORTED_LANGUAGES[0];
 
   return (

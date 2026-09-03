@@ -34,6 +34,7 @@ interface ProjectCardProps {
 
 // Mini language chart for project card
 function MiniLanguageChart({ data, total }: { data: Record<string, number>; total: number }) {
+  const { t } = useTranslation();
   const entries = Object.entries(data).sort((a, b) => b[1] - a[1]).slice(0, 3);
   let currentAngle = 0;
   
@@ -78,7 +79,7 @@ function MiniLanguageChart({ data, total }: { data: Record<string, number>; tota
       </TooltipTrigger>
       <TooltipContent side="top" className="max-w-xs">
         <div className="space-y-1">
-          <p className="text-xs font-medium mb-2">Language Breakdown</p>
+          <p className="text-xs font-medium mb-2">{t('modal.loc_breakdown', 'Language Breakdown')}</p>
           {entries.map(([lang, count]) => {
             const percentage = ((count / total) * 100).toFixed(1);
             const color = languageColors[lang] || '#888888';
