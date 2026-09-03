@@ -1217,6 +1217,71 @@ export const projects: Project[] = [
     ]
   },
   {
+    "id": "opencode-antigravity-auth",
+    "name": "opencode-antigravity-auth",
+    "tagline": "OAuth authentication plugin fork connecting OpenCode to Google Antigravity models with Gemini 3.8/3.7 Flash support",
+    "year": "2026",
+    "category": "utility",
+    "status": "active",
+    "projectType": "software-project",
+    "role": "fork-maintainer",
+    "sourceType": "open-source",
+    "aiUsage": "full",
+    "aiUtilization": "ai-powered",
+    "description": "A maintained fork of opencode-antigravity-auth, an authentication plugin for OpenCode that connects to Google Antigravity (Google's AI IDE) via OAuth. It enables developers to authenticate with standard Google accounts to access Claude (Opus 4.6 Thinking, Sonnet 4.6) and Gemini models under Antigravity rate limits and multi-account rotation.\n\nThis fork introduces full support for Gemini 3.8 Flash and 3.7 Flash with dynamic thinking-level mapping to Antigravity CLI tier backend models, fixes the CodeAssist onboarding payload and project discovery to prevent HTTP 400 errors, sends the official CLI User-Agent to resolve HTTP 404s on gated preview models, normalizes functionDeclarations tools for Gemini schema compatibility, and tracks pre-built dist/ artifacts for zero-build direct GitHub installation.",
+    "purpose": "To provide reliable, up-to-date access to the latest Gemini 3.7/3.8 Flash and Claude thinking models within OpenCode by fixing upstream protocol mismatches, User-Agent gating, and installation bottlenecks.",
+    "technologies": [
+      "TypeScript",
+      "Node.js",
+      "OAuth 2.0",
+      "OpenCode Plugin API",
+      "Zod",
+      "Vitest"
+    ],
+    "dependencies": [
+      "@opencode-ai/plugin",
+      "@openauthjs/openauth",
+      "proper-lockfile",
+      "xdg-basedir",
+      "zod"
+    ],
+    "expertise": [
+      "OpenCode Plugin Architecture",
+      "OAuth 2.0 & Token Lifecycle Management",
+      "LLM Provider API Integration",
+      "Reverse Engineering Google Antigravity Protocol",
+      "Multi-Account Quota Scheduling"
+    ],
+    "strengths": [
+      "Adds Gemini 3.8 Flash and 3.7 Flash support with dynamic thinking levels (low/medium/high) resolved to Antigravity CLI backend IDs",
+      "Fixed loadCodeAssist and onboardUser metadata payload to prevent HTTP 400 errors during project discovery",
+      "Emulates official Antigravity CLI User-Agent to access newer preview models gated behind client identification",
+      "Normalizes pre-wrapped Gemini functionDeclarations tools for strict protobuf schema compatibility",
+      "Committed pre-built dist/ artifacts allowing direct installation via GitHub without local build tooling"
+    ],
+    "limitations": [
+      "Relies on unofficial Antigravity endpoints which may change or be restricted without notice",
+      "Subject to Google Terms of Service considerations regarding third-party API client usage",
+      "Downstream fork requiring periodic synchronization with upstream releases"
+    ],
+    "installation": "# Add the plugin fork to ~/.config/opencode/opencode.json:\n{\n  \"plugin\": [\"github:chrisb09/opencode-antigravity-auth\"]\n}\n\n# Authenticate with Google account:\nopencode auth login",
+    "usage": "# Run OpenCode with Gemini 3.8 Flash thinking:\nopencode run \"Analyze codebase architecture\" --model=google/antigravity-gemini-3.8-flash --variant=high\n\n# Run Claude Opus 4.6 with extended thinking:\nopencode run \"Refactor module\" --model=google/antigravity-claude-opus-4-6-thinking --variant=max",
+    "roadmap": [
+      "Keep synced with upstream bug fixes, quota safeguards, and account management improvements",
+      "Track newly released Gemini and Claude model variants as Google rolls them out",
+      "Add automated CI workflows to validate upstream parity and build artifacts"
+    ],
+    "repos": [
+      {
+        "name": "opencode-antigravity-auth",
+        "url": "https://github.com/chrisb09/opencode-antigravity-auth",
+        "type": "github"
+      }
+    ],
+    "mirrors": [],
+    "screenshots": []
+  },
+  {
     "id": "pacstall-programs",
     "name": "Pacstall Programs",
     "tagline": "Package Manager for Ubuntu/Debian",
