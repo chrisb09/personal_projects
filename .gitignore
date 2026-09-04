@@ -5,3 +5,6 @@ dist
 .DS_Store
 repos/
 authors-report.txt
+*.env
+*.env.*
+data/translations/

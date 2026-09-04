@@ -1,6 +1,7 @@
 import { useState, useMemo, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { projects } from '@/config/projects';
+import { useLocalizedProjects } from '@/lib/localizeProject';
 import headerConfig from '../config/portfolio-header.json';
 import type { Project, ProjectCategory } from '@/types/project';
 import { fetchStats, mergeStatsWithProjects } from '@/lib/stats';
@@ -128,6 +129,7 @@ function App() {
   const [selectedCategory, setSelectedCategory] = useState<ProjectCategory | 'all'>('all');
   const [showAcademicOnly, setShowAcademicOnly] = useState(false);
   const [projectsWithStats, setProjectsWithStats] = useState<Project[]>(projects);
+  const localizedProjects = useLocalizedProjects(projectsWithStats);
 
   // Initialize theme on mount
   useEffect(() => {
@@ -148,13 +150,13 @@ function App() {
 
   // Get unique categories from projects
   const categories = useMemo(() => {
-    const cats = new Set(projectsWithStats.map(p => p.category));
+    const cats = new Set(localizedProjects.map(p => p.category));
     return ['all', ...Array.from(cats)] as (ProjectCategory | 'all')[];
-  }, [projectsWithStats]);
+  }, [localizedProjects]);
 
   // Filter projects based on search and category
   const filteredProjects = useMemo(() => {
-    return projectsWithStats.filter(project => {
+    return localizedProjects.filter(project => {
       const matchesSearch = 
         searchQuery === '' ||
         project.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -172,7 +174,7 @@ function App() {
       
       return matchesSearch && matchesCategory && matchesAcademic;
     });
-  }, [projectsWithStats, searchQuery, selectedCategory, showAcademicOnly]);
+  }, [localizedProjects, searchQuery, selectedCategory, showAcademicOnly]);
 
   // Group filtered projects by projectType
   const groupedProjects = useMemo(() => {
@@ -413,7 +415,7 @@ function App() {
           <div className="flex items-center justify-between mb-2">
             <p className="text-xs text-muted-foreground">
               {t('header.showing', 'Showing')} <span className="font-medium text-foreground">{filteredProjects.length}</span> {t('header.of', 'of')}{' '}
-              <span className="font-medium text-foreground">{projectsWithStats.length}</span> {t('header.projects', 'projects')}
+              <span className="font-medium text-foreground">{localizedProjects.length}</span> {t('header.projects', 'projects')}
             </p>
           </div>
 
@@ -524,7 +526,7 @@ function App() {
           isOpen={isModalOpen}
           onClose={handleCloseModal}
           onProjectSelect={handleProjectSelect}
-          allProjects={projectsWithStats}
+          allProjects={localizedProjects}
           initialTab={modalInitialTab}
         />
       </div>

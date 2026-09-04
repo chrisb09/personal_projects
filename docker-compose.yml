@@ -20,9 +20,13 @@ services:
     volumes:
       # We need the SSH keys for auth
       - /root/.ssh:/root/.ssh:ro
+      # Mount AI env for project translation (read-only)
+      - /scripts/ai.env:/run/secrets/ai.env:ro
       # Mount config and repos to watch/read changes
       - /container/config/personal_projects/config:/app/config
       - /container/data/personal_projects/repos:/app/repos
+      # Mount translations persistent cache
+      - /container/data/personal_projects/translations:/app/data/translations
       # Mount public to write compiled images and stats.json back to host
       - /container/data/personal_projects/public:/app/public
       ## Mount src to write src/config/projects.ts

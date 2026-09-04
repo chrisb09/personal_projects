@@ -4,10 +4,11 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
+    "translate-projects": "node scripts/translate-projects.js",
     "compile-projects": "node scripts/compile-projects.js",
     "watch-projects": "node scripts/watch-projects.js",
     "update-stats": "node scripts/update-stats.js",
-    "build": "npm run compile-projects && vite build",
+    "build": "npm run translate-projects && npm run compile-projects && vite build",
     "preview": "vite preview",
     "lint": "eslint ."
   },

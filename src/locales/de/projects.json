@@ -1,39 +1,298 @@
 {
   "firecord": {
-    "name": "firecord",
-    "tagline": "Experimentelle Redisson-Alternative",
-    "description": "Eine hochperformante, Redis-basierte automatische Objektsynchronisations-Bibliothek für Java. Entwickelt als leichtgewichtige Low-Latency-Alternative zu Redisson unter intensiver Nutzung von AspectJ für referenzbasiertes Tracking.",
-    "purpose": "Entstanden aus der Notwendigkeit, verteilte Zustände in Sub-50ms-Tick-Umgebungen zu synchronisieren, in denen Standardlösungen inakzeptablen Netzwerk-Overhead und Latenz verursachten."
+    "name": "Firecord",
+    "tagline": "Virtuelle, verteilte Objektspeicher- und Cache-Kohärenz-Bibliothek für Java- und Minecraft-Server",
+    "description": "Ein experimentelles, virtuelles, verteiltes Shared-Object-Memory-System für Java. Es kombiniert Redis als Backend-Speicher mit einem invalidierungsbasierten Cache-Kohärenz-Protokoll über Redis Pub/Sub, wodurch mehrere unabhängige Prozesse oder Minecraft-Server mit synchronisierten Objekten interagieren können, als wären sie lokale Referenzen. Feld-Änderungen und Referenzwechsel werden automatisch abgefangen und mittels AspectJ Compile-Time Bytecode Weaving übertragen.",
+    "purpose": "Bereitstellung einer Latenzarmen Zustandssynchronisationsschicht für Minecraft-Serverumgebungen (Spigot/Paper) und Proxies (Velocity), bei denen Tick-Zeiten auf 50ms beschränkt sind, wodurch der Serialisierungs-Overhead herkömmlicher ORMs oder expliziter Map-/List-Updates von Redisson umgangen wird.",
+    "strengths": [
+      "Transparenter, verteilter, gemeinsam genutzter Objektraum unter Verwendung von AspectJ Compile-Time Weaving zum Abfangen von Feldzuweisungen",
+      "Hocheffiziente inkrementelle Updates auf Feldebene anstelle der Vollseiten-Serialisierung",
+      "Native Spigot-, Paper- und Velocity-Integration für Hochleistungs-Minecraft-Multi-Server-Netzwerke",
+      "Redis Pub/Sub-Invalidierungsprotokoll zur Aufrechterhaltung der Cache-Kohärenz über mehrere Knoten hinweg",
+      "Eigenständiger Konsolenmodus mit JLine für interaktive, verteilte Tests"
+    ],
+    "limitations": [
+      "Erfordert AspectJ Compile-Time-Weaving-Plugins, die in der Build-Pipeline des Projekts konfiguriert sind",
+      "Erhöhter Speicherbedarf durch Objekt-Caching auf allen Knoten",
+      "Prototyp-Status ohne ausgereifte verteilte Funktionen wie Garbage Collection, Unterstützung für sortierte Mengen oder Eltern-Referenzen"
+    ],
+    "expertise": [
+      "Distributed Shared Memory",
+      "Cache-Kohärenz-Protokolle",
+      "Bytecode-Instrumentierung & Weaving",
+      "Spigot- & Velocity-Plugin-Entwicklung",
+      "Pub/Sub-Messaging-Architekturen"
+    ],
+    "roadmap": [
+      "Implementierung einer verteilten Garbage Collection für abgelaufene Speicherschlüssel",
+      "Unterstützung der Synchronisation von sortierten Mengen (ZSET)",
+      "Optimierung von AspectJ-Aspekten zur Reduzierung des Laufzeitspeicher-Overheads",
+      "Hinzufügen der Unterstützung für die Verfolgung von Eltern-Kind-Beziehungen in geschachtelten Objekten"
+    ],
+    "relatedProjects": [
+      {
+        "index": 0,
+        "relation": "Inspiration und Alternative zu"
+      },
+      {
+        "index": 1,
+        "relation": "Aufgebaut auf"
+      }
+    ],
+    "repos": [
+      {
+        "index": 0,
+        "description": ""
+      }
+    ]
   },
   "pdnwebview": {
     "name": "pdnwebview",
     "tagline": "Web-Viewer für Paint.net-Projektdateien",
-    "description": "Ein maßgeschneiderter webbasierter Viewer für Paint.net (.pdn)-Projektdateien. Vollständig ohne schwere Frontend-Frameworks realisiert, um maximale Rendering-Performance und einen minimalen Ressourcenverbrauch zu gewährleisten.",
-    "purpose": "Um Paint.net-Projektdateien im Web zugänglich und teilbar zu machen, sodass Grafikschaffende ihre Arbeiten präsentieren und zusammenarbeiten können, ohne dass alle Beteiligten Paint.net installiert haben müssen."
+    "description": "Ein maßgeschneiderter, webbasierter Viewer für Paint.net-Projektdateien (.pdn). Komplett ohne schwere Frontend-Frameworks entwickelt, um maximale Renderleistung und einen geringen Ressourcenverbrauch sicherzustellen.",
+    "purpose": "Paint.net-Projektdateien im Web zugänglich und teilbar zu machen, damit Künstler ihre Arbeiten präsentieren und zusammenarbeiten können, ohne dass jeder Paint.net installiert haben muss.",
+    "strengths": [
+      "Hervorragend optimierte Vanilla-Implementierung ohne aufgeblähte JavaScript-Frameworks",
+      "Eigene Backend-Konvertierungspipeline (pdnexport) für schnelle Dateiverarbeitung",
+      "Sauberes, schnelles Rendern komplexer, mehrschichtiger Bildprojekte im Browser"
+    ],
+    "limitations": [
+      "Nur lesend (keine Bearbeitungsfunktionen)",
+      "Erfordert serverseitige Verarbeitung für die Konvertierung",
+      "Beschränkt auf unterstützte Paint.net-Funktionen",
+      "Große Dateien benötigen möglicherweise etwas Zeit zur Verarbeitung"
+    ],
+    "expertise": [
+      "Bildverarbeitung",
+      "Webentwicklung",
+      "Dateiformat-Parsing",
+      "Frontend-Design"
+    ],
+    "roadmap": [
+      "Umschalter für Ebenensichtbarkeit hinzufügen",
+      "Unterstützung für Animationswiedergabe",
+      "Steuerelemente für Zoom und Schwenken implementieren",
+      "Optionen zum Exportieren nach PNG/JPEG hinzufügen",
+      "Browser-Erweiterung für die schnelle Ansicht erstellen",
+      "Unterstützung für neuere Paint.net-Dateiformate"
+    ],
+    "relatedProjects": [
+      {
+        "index": 0,
+        "relation": "Wird für die Dateikonvertierung verwendet"
+      },
+      {
+        "index": 1,
+        "relation": "Abhängigkeit von pdnexport für das binäre Parsing von Paint.net"
+      },
+      {
+        "index": 2,
+        "relation": "Dateiformatunterstützung für"
+      }
+    ],
+    "repos": [
+      {
+        "index": 0,
+        "description": ""
+      },
+      {
+        "index": 1,
+        "description": ""
+      }
+    ]
   },
   "userbenchmark-scraper": {
     "name": "Userbenchmark Web Scraper",
-    "tagline": "Experimenteller Hardware-Benchmark-Datenextraktor",
-    "description": "Eine End-to-End-Datenextraktions-Pipeline in Python. Verfügt über einen maßgeschneiderten Job-Scheduler und Tor-Netzwerk-Routing zur Umgehung aggressiver Ratenbegrenzungen, wodurch erfolgreich ein umfassender Hardware-Datensatz aufgebaut wurde.",
-    "purpose": "Um umfangreiche Hardware-Benchmark-Daten für Analyse- und Forschungszwecke zu sammeln und einen Datensatz von rund 40.000 Benchmarks aufzubauen."
+    "tagline": "Verteiltes Client-Server-Web-Scraping-System unter Verwendung von Tor-Exit-Node-Routing",
+    "description": "Ein in Python geschriebenes, verteiltes Client-Server-Web-Scraping-System. Es verfügt über einen zentralisierten Koordinator (TCP-Socket-Server), der eine Job-Warteschlange und mehrere regionale Docker-basierte Scraping-Clients verwaltet. Die Clients nutzen eine eigens entwickelte Multiprozess-Task-Scheduling-Bibliothek (torpyjob) und eine modifizierte Pure-Python-Tor-Client-Bibliothek (torpy), um Scraping-Aufgaben über isolierte Tor-Schaltungen mit länderspezifischem Exit-Node-Routing auszuführen und so Ratenbegrenzungen zu umgehen. Gescrape unstrukturierte HTML-Benchmark-Daten werden geparst und an den Server zurückgegeben, der sie in einer zentralen SQLite-Datenbank aggregiert.",
+    "purpose": "Sammlung groß angelegter, kategorieübergreifender Hardware-Benchmark-Statistiken über CPUs, GPUs, SSDs, HDDs und Arbeitsspeicher hinweg durch die Verteilung des Datenverkehrs auf mehrere Tor-Exit-Nodes und regionale IP-Adressen, um Ratenbegrenzungssperren zu verhindern.",
+    "strengths": [
+      "Verteilte Client-Server-Architektur zur Koordination mehrerer gleichzeitiger Scraping-Worker",
+      "Eigene Scheduling-Bibliothek (torpyjob) zur Verwaltung gleichzeitiger Jobs mit eindeutigen Tor-Exit-Node-IPs",
+      "Modifikationen an der eigenen Tor-Bibliothek (torpy) zur Unterstützung von SocksServer-Steuerung, Exit-Node-Auswahl und dynamischer Portzuweisung",
+      "Manipulation von Tor-Netzwerk-Exit-Nodes zur Rotation von IP-Adressen nach Ländercode, um Ratenbegrenzungen zu umgehen",
+      "Leichtgewichtigenes TCP-Socket-basiertes Kommunikationsprotokoll für die Job-Verteilung",
+      "Leichtgewichtige, direkte SQLite-Datenbankintegration mit threadsicherer transaktionaler Warteschlangenverwaltung",
+      "Containerisiertes Client-Deployment mittels Docker für einfache Skalierbarkeit"
+    ],
+    "limitations": [
+      "Abhängig von der HTML-Struktur von Userbenchmark (bricht bei Layout-Änderungen)",
+      "Scraping-Durchsatz ist durch die Geschwindigkeit des Tor-Relay-Netzwerks begrenzt",
+      "Erfordert stabiles Server-Port-Forwarding bzw. Erreichbarkeit für TCP-Socket-Verbindungen",
+      "Wird nicht mehr aktiv gewartet"
+    ],
+    "expertise": [
+      "Verteilte Systeme",
+      "Socket-Programmierung",
+      "Netzwerk-Routing & Tor",
+      "Regex-Parsing & HTML-Scraping",
+      "Multiprozess-Task-Scheduling"
+    ],
+    "roadmap": [
+      "Projekt archiviert – keine weitere Entwicklung geplant"
+    ],
+    "relatedProjects": [
+      {
+        "index": 0,
+        "relation": "Modifizierte Version verwendet"
+      },
+      {
+        "index": 1,
+        "relation": "Eigene Client-Hilfsprogramme zur Koordination des Scrapers"
+      },
+      {
+        "index": 2,
+        "relation": "Modifizierte Tor-Netzwerkbibliothek, die vom Scraper genutzt wird"
+      }
+    ],
+    "repos": [
+      {
+        "index": 0,
+        "description": ""
+      },
+      {
+        "index": 1,
+        "description": ""
+      },
+      {
+        "index": 2,
+        "description": ""
+      }
+    ]
   },
   "homeserver": {
     "name": "Privater Homeserver",
-    "tagline": "Selbstgehostete Infrastruktur für den Eigenbedarf",
-    "description": "Eine produktionsreife, selbstgehostete Infrastrukturumgebung, die seit 2018 kontinuierlich in Betrieb ist. Verwaltet über 100+ TB Speicherplatz für rund 20 aktive Nutzer ohne nennenswerte Datenverluste.",
-    "purpose": "Schaffung einer datenschutzorientierten, selbstkontrollierten Alternative zu kommerziellen Cloud-Diensten mit verlässlichem Hosting für persönliche Daten und Dienste."
+    "tagline": "Selbst gehostete Infrastruktur für den persönlichen Gebrauch",
+    "description": "Eine produktionsbereite, selbst gehostete Infrastrukturumgebung, die seit 2018 kontinuierlich betrieben wird. Verwaltet über 100+ TB Speicher für ca. 20 aktive Benutzer ohne nennenswerte Datenverlustvorfälle.",
+    "purpose": "Eine datenschutzorientierte, selbstkontrollierte Alternative zu kommerziellen Cloud-Diensten zu schaffen, die zuverlässiges Hosting für persönliche Daten und Anwendungen bietet.",
+    "strengths": [
+      "8 Jahre kontinuierliche Betriebszeit und Infrastrukturwartung",
+      "Architektur robuster Speicher-Pools mit openZFS für Datendatensicherheit auf Enterprise-Niveau",
+      "Automatisierte Bereitstellung von Web-, Cloud- und KI-Anwendungen über Docker Compose und nginx",
+      "Sicheres Netzwerk-Routing und Remote-Zugriff konfiguriert über WireGuard"
+    ],
+    "limitations": [
+      "Erfordert fortlaufende Wartung und Updates",
+      "Single Point of Failure (Hardware)",
+      "Abhängig von der Heim-Internetverbindung",
+      "Sicherheitsverantwortung liegt beim Administrator",
+      "Komplexität bei der Ersteinrichtung"
+    ],
+    "expertise": [
+      "Site Reliability Engineering (SRE)",
+      "openZFS Speicherarchitektur",
+      "Docker-Orchestrierung",
+      "Netzwerksicherheit & VPNs"
+    ],
+    "roadmap": [
+      "Automatisierte Backups auf externen Speicher implementieren",
+      "Monitoring und Alerting hinzufügen (Prometheus/Grafana)",
+      "Hochverfügbarkeit für kritische Dienste einrichten",
+      "KI/ML-Dienstleistungsangebote erweitern",
+      "Infrastructure as Code (Terraform) implementieren",
+      "Kubernetes für die Container-Orchestrierung hinzufügen"
+    ],
+    "relatedProjects": [
+      {
+        "index": 0,
+        "relation": "Hostet"
+      },
+      {
+        "index": 1,
+        "relation": "Hostet"
+      },
+      {
+        "index": 2,
+        "relation": "Nutzt"
+      }
+    ]
   },
   "pacstall-programs": {
-    "name": "Pacstall",
+    "name": "pacstall-programs",
     "tagline": "Paketmanager für Ubuntu/Debian",
-    "description": "Mitarbeit an Pacstall, einem von AUR inspirierten Paketmanager für Ubuntu- und Debian-Systeme. Schließt die Lücke zwischen neuester Software und stabilen Distributionen.",
-    "purpose": "Neuere Softwareversionen auf stabilen Ubuntu/Debian-Systemen verfügbar zu machen, ohne die Systemstabilität zu gefährden oder auf offizielle Repository-Updates warten zu müssen."
+    "description": "Mitwirkung am Pacstall-Paketarchiv, einem AUR-inspirierten Paketmanager für Ubuntu- und Debian-Systeme. Hilft dabei, die Lücke zwischen modernster Software und stabilen Distributionen zu schließen.",
+    "purpose": "Neuere Softwareversionen auf stabilen Ubuntu-/Debian-Systemen zugänglich zu machen, ohne die Systemstabilität zu beeinträchtigen oder auf offizielle Repositorien-Updates zu warten.",
+    "strengths": [
+      "Zugang zu neueren Softwareversionen",
+      "Community-getriebenes Paketarchiv",
+      "AUR-ähnliche Einfachheit für Debian-Systeme",
+      "Automatische Abhängigkeitsauflösung",
+      "Unterstützung für saubere Deinstallation"
+    ],
+    "limitations": [
+      "Community-Pakete können in der Qualität variieren",
+      "Nicht offizielle Unterstützung durch Ubuntu/Debian",
+      "Mögliche Sicherheitsaspekte bei Benutzerpaketen",
+      "Kleineres Paketarchiv als AUR"
+    ],
+    "expertise": [
+      "Linux-Paketverwaltung",
+      "Shell-Skripting",
+      "Open-Source-Zusammenarbeit",
+      "Qualitätssicherung"
+    ],
+    "roadmap": [
+      "Kontinuierliche Beitragsleistung neuer Pakete",
+      "Verbesserung der Paketqualität und des Testens",
+      "Unterstützung bei Dokumentation und Tutorials",
+      "Beitrag zu Verbesserungen der Kernfunktionalität"
+    ],
+    "relatedProjects": [
+      {
+        "index": 0,
+        "relation": "Inspiriert von"
+      }
+    ],
+    "repos": [
+      {
+        "index": 0,
+        "description": ""
+      }
+    ]
   },
   "libretranslate-java": {
     "name": "libretranslate-java",
     "tagline": "Java-Client für LibreTranslate",
-    "description": "Eine Java-Client-Bibliothek für die LibreTranslate-API. Ermöglicht die unkomplizierte Integration von Übersetzungsfunktionen in Java-Anwendungen mit einer sauberen, idiomatischen API.",
-    "purpose": "Java-Entwicklern einen einfachen, gut dokumentierten Client für selbstgehostete oder öffentliche LibreTranslate-Instanzen bereitzustellen, um Übersetzungsfunktionen ohne Abhängigkeit von proprietären Drittanbieterdiensten zu nutzen."
+    "description": "Eine Java-Client-Bibliothek für die LibreTranslate-API. Ermöglicht die einfache Integration von Übersetzungsfunktionen in Java-Anwendungen mit einer sauberen, idiomatischen API.",
+    "purpose": "Java-Entwicklern einen einfachen, gut dokumentierten Client für selbst gehostete oder öffentliche LibreTranslate-Instanzen zur Verfügung zu stellen, um Übersetzungsfunktionen ohne Abhängigkeiten von externen Diensten zu ermöglichen.",
+    "strengths": [
+      "Sauberes, Java-idiomatisches API-Design",
+      "Unterstützung für synchrone und asynchrone Operationen",
+      "Konfigurierbar für jede LibreTranslate-Instanz",
+      "Leichtgewichtige Bibliothek mit minimalen Abhängigkeiten",
+      "Gut dokumentiert mit Beispielen"
+    ],
+    "limitations": [
+      "Setzt eine laufende LibreTranslate-Instanz voraus",
+      "Übersetzungsqualität hängt von der jeweiligen Instanz ab",
+      "Ratenbegrenzungen bei öffentlichen Instanzen",
+      "Auf unterstützte Sprachen beschränkt"
+    ],
+    "expertise": [
+      "API-Design",
+      "Java-Entwicklung",
+      "RESTful Services",
+      "Bibliotheksentwicklung"
+    ],
+    "roadmap": [
+      "Unterstützung für Stapelübersetzungen (Batch-Translations) hinzufügen",
+      "Caching für wiederholte Übersetzungen implementieren",
+      "Spring Boot Auto-Konfiguration hinzufügen",
+      "Unterstützung für Datei- und Dokumentenübersetzung",
+      "Reactive- / Reactor-Unterstützung hinzufügen"
+    ],
+    "relatedProjects": [
+      {
+        "index": 0,
+        "relation": "Client für"
+      }
+    ],
+    "repos": [
+      {
+        "index": 0,
+        "description": ""
+      }
+    ]
   },
   "small-projects": {
     "name": "Kleine Projekte & Skripte",
@@ -49,8 +308,757 @@
   },
   "cpp-ml-interface": {
     "name": "CPP-ML-Interface",
-    "tagline": "Hardwarebeschleunigte KI-Inferenz-Middleware",
-    "description": "Eine modulare C++-Middleware zur Kopplung komplexer Computational Fluid Dynamics (CFD)-Solver mit Machine-Learning-Inferenzmodellen. Entwickelt auf einem Rocky-9-HPC-Cluster, abstrahiert sie die zugrunde liegende Hardware und Kopplungsbibliotheken.",
-    "purpose": "Beseitigung von Interconnect-Engpässen im High-Performance Computing (HPC) durch Bereitstellung eines plattformunabhängigen Datenpfads zwischen physikalischen Simulationen und KI-Modellen."
+    "tagline": "Modulare C++-Kopplungs-Middleware für Latenzarme CFD- und Machine-Learning-Inferenz",
+    "description": "Eine modulare, generische C++-Middleware zur Kopplung komplexer Computational Fluid Dynamics (CFD)-Solver mit Machine-Learning-Modellen. Entwickelt als Kernbestandteil einer Masterarbeit an der RWTH Aachen University (Lehrstuhl für High Performance Computing, i12), überarbeitet und verallgemeinert sie die bisherige solver-spezifische CPP-ML-Interface-MAIA und abstrahiert zugrundeliegende Kommunikationsbibliotheken in eine einheitliche, konfigurationsgesteuerte Kopplungsschnittstelle.\n\nDie Middleware ist für den Claix23-Cluster optimiert und gebenchmarkt. Zu den Hardware-Zielen gehören Dual-Socket-CPU-Knoten mit 2x Intel Xeon 8468 (Sapphire Rapids) Prozessoren sowie GPU-Knoten mit 4x NVIDIA H100 Beschleunigungskarten, die für parallele Low-Level-CPU-Ausführungskonfigurationen (wie Intra/Inter-Op-Threads, OpenMP-Tasking und Slurm-Core-Affinity-Bindungen) von entscheidender Bedeutung sind.\n\nDas Projekt wird innerhalb einer größeren Workspace-Struktur (smartsim_playground) entwickelt, die mehrere Benchmark- und Validierungshilfsprogramme koordiniert:\n\n```\nsmartsim/ (smartsim_playground workspace)\n├── CPP-ML-Interface (Redesigned generic interface)\n│   ├── extern/AIxeleratorService\n│   ├── extern/SmartRedis\n│   └── extern/phydll\n├── cpu_benchmark (CPU/GPU inference threading & core affinity benchmarks)\n├── lmod_dependencies (Z3-based HPC module resolver)\n├── mini_app (Toy CFD solver used for prototyping)\n└── module_test (Integration testing with ~600 combinations)\n```\n\nDie Schnittstelle wird in Kürze die Vorgängerbibliothek im MMCP-Projekt ersetzen, um den MMCP_transformer mit dem m-aia-Solver zu koppeln.",
+    "purpose": "Beseitigung leistungsschwacher datei- und socketbasierter Engpässe im High-Performance Computing (HPC) durch Bereitstellung eines latenzarmen, plattformunabhängigen In-Memory-Datenpfads zwischen physikalischen Simulationen und KI-Modellen.",
+    "strengths": [
+      "Von solver-spezifischem Code zu einer hochgradig generischen, modularen Header-Only-Schnittstelle umgestaltet",
+      "Integriert heterogene Kopplungsbibliotheken (SmartSim, PhyDLL, AIxeleratorService) unter einer konfigurationsbasierten Schicht",
+      "Unterstützt reflexionsfreie Unterklassen-Registrierung über ein automatisches python-clang-Parsing-Registry-Skript",
+      "Evaluiert kritisch die parallele Low-Level-CPU-Ausführung (Intra/Inter-Op-Threads, OpenMP, Core-Affinity)"
+    ],
+    "limitations": [
+      "Derzeit auf PyTorch (TorchScript) Backend-Implementierungen beschränkt",
+      "Leistung ist an die zugrundeliegenden Bibliotheksverbindungen gebunden (z. B. Redis-Datenbank-Roundtrips in SmartSim)",
+      "Erfordert übereinstimmende Compiler/Clang-Versionen für das Registry-Generator-Skript"
+    ],
+    "expertise": [
+      "HPC-Architektur & MPI",
+      "Latenzarme Middleware-Architektur",
+      "Parallele Inferenz-Optimierung",
+      "Multithreaded CPU-Binding & Affinity"
+    ],
+    "roadmap": [
+      "Integration des generischen Prototyps in das MMCP-Simulationsprojekt zur Kopplung von MMCP_transformer und m-aia",
+      "Evaluierung von Zero-Copy-Shared-Memory-Kopplungsimplementierungen zur Umgehung des TCP-Overheads",
+      "Hinzufügen von Unterstützung für ONNX Runtime- und TensorFlow C++-Backends"
+    ],
+    "relatedProjects": [
+      {
+        "index": 0,
+        "relation": "Zielanwendung zur Kopplung des Solvers mit dem MMCP_transformer"
+      },
+      {
+        "index": 1,
+        "relation": "Älterer, nicht-generischer Vorgänger"
+      },
+      {
+        "index": 2,
+        "relation": "Benchmark-Tool für Inferenz und Core-Affinity"
+      },
+      {
+        "index": 3,
+        "relation": "Z3-basiertes HPC-Modul-Resolver-Skript"
+      },
+      {
+        "index": 4,
+        "relation": "Workspace-Repository mit Integrationstest-Suiten und Playgrounds"
+      }
+    ],
+    "repos": [
+      {
+        "index": 0,
+        "description": ""
+      }
+    ]
+  },
+  "MusicBot": {
+    "name": "JMusicBot Fork",
+    "tagline": "Funktionsreicher, selbstgehosteter Discord-Musikbot-Fork mit Wiedergabe-Analytik und Docker-Deployment",
+    "description": "Ein gewarteter, funktionsreicher Fork des beliebten, selbstgehosteten JMusicBot Discord-Musikbots. Entwickelt mit JDA 6 und Java, bietet er Unterstützung für moderne Discord-Sprachverschlüsselung (DAVE), optionalen YouTube-Konto-Login (OAuth2), benutzerdefinierte Wiedergabestatus-Nachrichten pro Kanal sowie JDBC/SQLite-Wiedergabeanalytik-Logging. Das Projekt enthält einen dedizierten Docker-Container-Deployment-Pfad.",
+    "purpose": "JMusicBot auf modernen Discord-API-Standards betriebsbereit zu halten und es gleichzeitig um datenbankgestützte Statistiken sowie native Container-Unterstützung zu erweitern.",
+    "strengths": [
+      "Vollständig aktualisiert zur Unterstützung von DAVE-Sprachverschlüsselung und JDA 6.1.1",
+      "Umgeht YouTube-Ratenlimits mittels Google-Konto-OAuth2-Login & Besucher-Token",
+      "Integrierte SQLite-Wiedergabeanalytik und Berichte des Zeitplaners",
+      "Inklusive containerisiertem Docker-Deployment und Compose-Konfigurationen"
+    ],
+    "limitations": [
+      "Unterliegt laufenden Änderungen in den YouTube- und Discord-API-Strukturen",
+      "Erfordert manuelle Google-Konto-Login-Konfiguration für eingeschränkte Inhalte",
+      "Erfordert Docker- oder Java 8+-Umgebung zum Selbsthosten"
+    ],
+    "expertise": [
+      "Backend-Entwicklung",
+      "API-Integration",
+      "Containerisierung",
+      "Datenbank-Logging"
+    ],
+    "roadmap": [
+      "Automatisierung von Aktualisierungen für Abhängigkeiten und die lavaplayer-Bibliothek",
+      "Unterstützung für ein datenbankgestütztes Web-Dashboard zum Teilen von Playlists in Echtzeit"
+    ],
+    "repos": [
+      {
+        "index": 0,
+        "description": ""
+      },
+      {
+        "index": 1,
+        "description": ""
+      }
+    ]
+  },
+  "advoexport": {
+    "name": "advoexport",
+    "tagline": "Benutzerdefinierte ETL-Pipeline für die Migration von Altdaten aus juristischen Systemen",
+    "description": "Eine Python-basierte ETL-Pipeline, die entwickelt wurde, um alte Fallakten aus dem Advoware-Kanzleimanagementsystem zu extrahieren, zu transformieren und in eine saubere, dateisystembasierte NAS-Architektur zu migrieren.",
+    "purpose": "Automatisierung der Extraktion unstrukturierter, schlecht zugeordneter Dokumenten-Repositories durch Kreuzvergleich mit exportierten Datenbank-Prozessregistern (.xls), wodurch teure proprietäre Migrationstools überflüssig werden.",
+    "strengths": [
+      "Erfolgreiche Zuordnung und Migration Tausender juristischer Dokumente ohne Datenverlust",
+      "Verarbeitet komplexe Bereinigungen von Zeichenketten, leerzeichengeschützte Verzeichnispfade und Probleme mit Altkodierungen",
+      "Wahrt die Datenintegrität und -struktur über tiefe, verschachtelte Dateisysteme hinweg",
+      "Leichte und frameworkfreie Implementierung, optimiert für die lokale Ausführung"
+    ],
+    "limitations": [],
+    "expertise": [
+      "ETL-Pipelines",
+      "Datentransformation",
+      "Datenbereinigung",
+      "Reverse Engineering"
+    ],
+    "roadmap": [],
+    "repos": [
+      {
+        "index": 0,
+        "description": ""
+      }
+    ]
+  },
+  "custom-orchestration": {
+    "name": "Distributed Linux Service Orchestrator",
+    "tagline": "Maßgeschneiderte Steuerungs-Ebene und CI/CD-Engine für Latenzarme Anwendungsuppets",
+    "description": "Eine schlanke, ressourcenschonende Orchestrierungsplattform und eine automatisierte CI/CD-Steuerungsebene, geschrieben in Bash. Entworfen, um einen verteilten Multi-Instanz-Cluster mit strenger Speicherisolierung, weichen Echtzeit-Ausführungseinschränkungen und Zero-Downtime-Hot-Reloads zu verwalten.",
+    "purpose": "Bereitstellung eines deterministischen Daemon-Lebenszyklusmanagements und der Bereitstellungsautomatisierung in Umgebungen mit hoher Nebenläufigkeit, in denen standardmäßige Containerisierungs-Runtimes inakzeptablen Prozess-Jitter und Latenz-Overhead verursachen.",
+    "strengths": [
+      "Implementierung einer kaskadierenden Prozessbeendigungs-Matrix (Sanfter Befehl -> Emulierte Tasteninjektion -> Fensterbeendigung -> OS-Ebene SIGKILL über Prozessbaum-Verfolgung)",
+      "Entwicklung einer asynchronen, parallelen Task-Ausführung unter Verwendung von Hintergrund-Subshells und dynamischen PID-Tracking-Arrays für gleichzeitige Git-Operationen",
+      "Entwurf einer automatisierten Speicher-Virtualisierung und -Isolierung durch Generierung von 10-GB-Raw-Images, Formatierung von ext4-Dateisystemen und Loop-Mounting, um eine Erschöpfung der Host-Festplatte zu verhindern",
+      "Aufbau eines Echtzeit-Watchdog-Systems zur Überwachung von Protokollkapazitäten, Prozessauslastung und dynamischen Ports mit automatisierten Discord-Webhook-Benachrichtigungen über strukturierte JSON-Nutzdaten",
+      "Fortgeschrittene Nutzung von assoziativen Bash-4+-Arrays zur Abbildung mehrschichtiger Anwendungszustände, Abhängigkeiten und dynamischer Routing-Profile",
+      "Erstellung von Textverarbeitungs-Pipelines mit sed, awk und grep für benutzerdefiniertes dynamisches String-Multiplexing und Mehrkriterien-Server-/Plugin-Auswahl-Logik"
+    ],
+    "limitations": [
+      "Eng gekoppelt mit GNU Screen als Terminal-Multiplexer-Backend",
+      "Konfigurationsmanagement basiert auf eingebundenen Flat-File-Zustandsskripten anstelle deklarativer Syntax (YAML/JSON)",
+      "Plattformabhängige Orchestrierung, primär optimiert für Debian-basierte Systeme"
+    ],
+    "expertise": [
+      "Prozess-Lebenszyklus & Signalverarbeitung",
+      "Parallele Automatisierung (Nebenläufigkeit)",
+      "Speicherisolierung & Loop-Devices",
+      "Log-Analytik & Unix-Textverarbeitungs-Pipeline",
+      "Automatisierte Privilegienerweiterung"
+    ],
+    "roadmap": [
+      "Abstrahierung der Terminal-Multiplexer-Schicht zur direkten Unterstützung von systemd-Slices oder leichten cgroups",
+      "Migration der prozeduralen Bash-Architektur hin zu einem kompilierten, typisierten Plattform-Dienstprogramm (Go/Rust)",
+      "Integration von Prometheus-Exposition-Endpunkten für die strukturierte Telemetriedatenerfassung"
+    ]
+  },
+  "cycling-power-estimator": {
+    "name": "Cycling Power Estimator & 3D Visualizer",
+    "tagline": "Full-Stack-Webanwendung zur nachträglichen Berechnung und Visualisierung von Radsport-Leistungsdaten aus GPX-Dateien",
+    "description": "Eine Open-Source-Full-Stack-Webanwendung zur Analyse von GPS-Track-Daten (GPX-Dateien) und zur nachträglichen Berechnung der Leistung (Watt) eines Radfahrers mithilfe physikalischer Gleichungen. Die Plattform kombiniert ein FastAPI-Python-Backend für mathematische Berechnungen, Koordinatenglättung und Datenbankpersistenz mit einem React-Frontend, das Chart.js-Analysen und Mapbox-3D-Geländeanimationen bietet.",
+    "purpose": "Demokratisierung von Radsport-Analysen durch die Rekonstruktion von Leistungsdaten ohne teure physische Leistungsmesser sowie Bereitstellung einer hochgradig fesselnden 3D-Visualisierung von Fahrten.",
+    "strengths": [
+      "Physikalische Modellierung (Schwerkraft, Rollwiderstand, Luftwiderstand, kinetische Energie)",
+      "3D-Höhenmodell-Kartenverfolgung (DEM) und Pfadanimationen",
+      "Interaktive, synchronisierte Diagramme (Geschwindigkeit, Leistung, Höhe)",
+      "Unterstützung für Fahrradkonfigurationen und biologische Profile für Benutzergewicht/CdA"
+    ],
+    "limitations": [
+      "Berechnungen des Luftwiderstands gehen von statischen Umwelt-Windbedingungen aus",
+      "Erfordert hochwertige GPX-Dateien mit fein granulierten Zeitstempeln",
+      "Mapbox-Funktionen erfordern ein Mapbox-API-Token"
+    ],
+    "expertise": [
+      "Full-Stack-Entwicklung",
+      "Data Science & Physik-Modellierung",
+      "3D-georäumliche Visualisierung",
+      "API-Entwicklung"
+    ],
+    "roadmap": [
+      "Integration von Open-Source-Höhen-APIs zur automatischen Korrektur von GPS-Höhenfehlern",
+      "Unterstützung der Strava-API-Integration zur automatischen Synchronisierung von Fahrten"
+    ],
+    "repos": [
+      {
+        "index": 0,
+        "description": ""
+      }
+    ]
+  },
+  "exam-system-backend": {
+    "name": "LLM-Integrated Exam System",
+    "tagline": "Skaliertes Backend für universitäre Prüfungen",
+    "description": "Erweiterung eines bestehenden digitalen Prüfsystems für eine ukrainische Universität. Entwicklung der Backend-Architektur, des Webschemas und der Microservice-Orchestrierung zur Bewältigung gleichzeitiger Studierendenlasten.",
+    "purpose": "Einführung wissensbasierter Tests in die Prüfungs-Infrastruktur sowie Implementierung einer automatisierten, KI-gestützten Vorbewertung für Freitextantworten zur Entlastung der Prüfenden.",
+    "strengths": [
+      "Erfolgreiche Containerisierung und Bereitstellung des Anwendungs-Stacks mit Kubernetes",
+      "Entwurf skalierbarer SQL-Schemata zur sicheren Verarbeitung gleichzeitiger Prüfungsabgaben",
+      "Integration von LLM-Endpunkten zur automatisierten, vorläufigen Auswertung von Freitextantworten",
+      "Bereitstellung eines robusten Backends unter engen akademischen Projektfristen"
+    ],
+    "limitations": [],
+    "expertise": [
+      "Microservice-Orchestrierung",
+      "Datenbankdesign",
+      "API-Integration",
+      "Containerisierung"
+    ],
+    "roadmap": []
+  },
+  "ferienw-am-meer-modernization": {
+    "name": "ferienw-am-meer.de",
+    "tagline": "Statische Seiten-Modernisierung & High-Performance Web-Engineering",
+    "description": "Migration und komplette Neugestaltung einer veralteten statischen HTML-Website hin zu einer performanten, modernen Webanwendung. Der Fokus lag auf extremem Frontend-Asset-Optimierung, strikter Typsicherheit und automatisierten CI/CD-Deployment-Pipelines.",
+    "purpose": "Umwandlung eines veralteten Webauftritts in ein blitzschnelles Mobile-First-Erlebnis bei gleichzeitiger Etablierung einer automatisierten Infrastruktur für Medienverarbeitung und Zero-Downtime-Hosting.",
+    "strengths": [
+      "Entwicklung einer vollständigen architektonischen Überarbeitung durch die Umstellung von Altsystem-HTML auf eine typsichere Next.js-Implementierung unter Verwendung von Tailwind CSS v4",
+      "Optimierung kritischer Core Web Vitals (FCP/LCP) durch den Einsatz experimenteller nativer CSS-Inlining-Konfigurationen in der Next.js-Runtime",
+      "Erstellung einer benutzerdefinierten, automatisierten Bildverarbeitungspipeline zur Konvertierung von Grafik-Assets in stark komprimierte WebP-Formate für schnellere Ladezeiten",
+      "Implementierung automatisierter Low-Quality Image Placeholders (LQIP) über Weichzeichner-Platzhalter zur Eliminierung visueller Layout-Verschiebungen (CLS) während der Bild-Hydratisierung",
+      "Entwurf eines robusten, hash-basierten Galerie-Metadatensystems zur dynamischen Synchronisierung von Medienzuständen und Sicherstellung korrekter Asset-Beschreibungen",
+      "Architektur eines automatisierten CI/CD-Deployment-Workflows via GitHub Actions mit komplexer basePath-Mapping-Logik, maßgeschneidert für benutzerdefinierte Domains"
+    ],
+    "limitations": [
+      "Primär statische Präsentationsarchitektur, schränkt dynamische serverseitige Laufzeitoperationen ein",
+      "Galerie-Updates hängen von einer lokalen, skriptbasierten Metadatengenerierung vor dem Deployment ab"
+    ],
+    "expertise": [
+      "Web-Performance-Optimierung (FCP/LCP)",
+      "Automatisierte Medien-Pipelines",
+      "CI/CD-Deployment-Automatisierung",
+      "Responsive Frontend-Architektur"
+    ],
+    "roadmap": [
+      "Integration einer Headless-CMS-Schicht zur Entkopplung der Content-Erstellung von der Codebasis",
+      "Implementierung automatisierter End-to-End-Testprofile mit Playwright oder Cypress"
+    ],
+    "repos": [
+      {
+        "index": 0,
+        "description": ""
+      }
+    ]
+  },
+  "find-duplicates": {
+    "name": "find-duplicates",
+    "tagline": "Python-Skript zum Finden doppelt vorhandener Dateien und Ersetzen durch symbolische oder harte Links",
+    "description": "Ein Python-Kommandozeilenskript, das Quell- und Zielverzeichnisse durchsucht, um doppelte Dateien mithilfe von Hashing zu erkennen. Es kann Ziel-Duplikate automatisch löschen und durch Symlinks oder Hardlinks ersetzen, um den Speicherplatz zu optimieren und gleichzeitig die Dateiorganisation beizubehalten.",
+    "purpose": "Speicherplatz freizugeben (z. B. beim Seeden von Torrents unter Beibehaltung von Dateien in Bibliotheksordnern auf verschiedenen Laufwerken), ohne Dateiinhalte zu duplizieren.",
+    "strengths": [
+      "Verwendet spekulatives Caching (Dateiname + Größe) für extrem schnelle nachfolgende Durchläufe",
+      "Unterstützt standardmäßig den Testlauf-Modus (Dry-Run), um Änderungen sicher in der Vorschau anzuzeigen",
+      "Erzeugt saubere Links (Symlinks oder Hardlinks), ohne Dateien zu duplizieren",
+      "Keine externen Abhängigkeiten (nutzt ausschließlich die Python-Standardbibliothek)"
+    ],
+    "limitations": [
+      "Hardlinks können sich nicht über verschiedene physische Laufwerke hinweg erstrecken",
+      "Spekulatives Caching kann bei Dateien mit identischem Namen und gleicher Größe, aber unterschiedlichem Inhalt, zu Fehlzuordnungen führen",
+      "Dateisystemoperationen modifizieren Zielverzeichnisse direkt (Sicherung wird empfohlen)"
+    ],
+    "expertise": [
+      "Datenüberprüfung",
+      "Skripterstellung",
+      "Speicherverwaltung"
+    ],
+    "roadmap": [
+      "Cache-Validierungsalgorithmen verbessern",
+      "Interaktive Bestätigungsaufforderung vor der Erstellung von Links bereitstellen"
+    ],
+    "repos": [
+      {
+        "index": 0,
+        "description": ""
+      }
+    ]
+  },
+  "ibus": {
+    "name": "Ibus",
+    "tagline": "Java-Tool zum Encodieren von Dateien in ARGB-Bilder für unbegrenzten Cloud-Speicher",
+    "description": "Ein Java-basiertes CLI-Dienstprogramm, das Dateien in ARGB-Pixel von PNG-Bildern encodiert und sie in ihren Originalzustand decodiert. Indem Dateien als Bilder dargestellt werden, ermöglicht es die Nutzung unbegrenzter Foto-Cloud-Speicherdienste (wie Google Photos oder Amazon Photos) als Backup-Ziel.",
+    "purpose": "Um Dateihosting-Einschränkungen bei Cloud-Anbietern zu umgehen, indem Binärdateien und Verzeichnisstrukturen in visuelle Bilddateien übersetzt werden.",
+    "strengths": [
+      "Übersetzt beliebige Dateien in Standard-PNG-Bilder (bis zu 64 MB pro Bild)",
+      "Unterstützt optionale 128-Bit-AES-Verschlüsselung/-Entschlüsselung für Datensicherheit",
+      "Stellt ursprüngliche Verzeichnisstrukturen und Zeitstempel für die Dateimodifikation wieder her (seit v2.1)",
+      "Teilt große Dateien automatisch auf mehrere Bildsequenzen auf"
+    ],
+    "limitations": [
+      "Google/Amazon Photos API-Einschränkungen begrenzen die automatisierte Cloud-Integration",
+      "Speichergebundene und Single-Threaded-Codierung",
+      "Der Verlust des AES-Schlüssels führt zu permanentem Datenverlust"
+    ],
+    "expertise": [
+      "Datenkodierung",
+      "Kryptographie",
+      "Dateisysteme"
+    ],
+    "roadmap": [
+      "Native Dateisystemintegration hinzufügen",
+      "Codierungs-/Decodierungsleistung optimieren",
+      "Desktop-Kontextmenükombinationen integrieren"
+    ],
+    "repos": [
+      {
+        "index": 0,
+        "description": ""
+      }
+    ]
+  },
+  "image-rename-manual-gui": {
+    "name": "Manual Media Renaming GUI",
+    "tagline": "GTK-Desktopanwendung zum schnellen manuellen Umbenennen von Mediendateien",
+    "description": "Eine auf PyGObject und GTK basierende Desktopanwendung, um Mediendateien (Bilder, animierte GIFs und Videos) schnell und komfortabel mit benutzerdefinierten Tastenkombinationen, Auflösungsskalierung und Dateinamenvalidierung in der Vorschau anzuzeigen und umzubenennen.",
+    "purpose": "Optimierung der manuellen Umbenennung sowie des Filterns und Löschens großer Mediendatei-Sammlungen über eine effiziente visuelle Oberfläche mit Tastenkombinationen.",
+    "strengths": [
+      "Unterstützt verschiedene Bildformate (.png, .jpg, .gif, .bmp) und Videoformate (.mp4, .mkv, .avi, .webm)",
+      "Echtzeit-Steuerung für Video-/GIF-Wiedergabe (Pause/Fortsetzen/Neustart über die Leertaste)",
+      "Farbcodierte Validierung zur Anzeige der Eignung des aktuellen Namens (von rot bis grün)",
+      "Vollständig über die Tastatur bedienbar für schnelle Massenverarbeitung"
+    ],
+    "limitations": [
+      "Legacy-GTK-Bindings können in der Installation komplex sein",
+      "Die GUI-Skalierung ist einfach gehalten und nicht vollständig optimiert",
+      "Das GStreamer-Setup variiert je nach Desktop-Umgebung"
+    ],
+    "expertise": [
+      "GUI-Entwicklung",
+      "Medienverarbeitung",
+      "Desktop-Anwendungen"
+    ],
+    "roadmap": [
+      "Abgelöst durch CrystalBatch (neu geschrieben für umfassendere Funktionen zum Umbenennen von Dateien)"
+    ],
+    "relatedProjects": [
+      {
+        "index": 0,
+        "relation": "Nachfolgeprojekt (zu GitHub umgezogen)"
+      }
+    ],
+    "repos": [
+      {
+        "index": 0,
+        "description": ""
+      }
+    ]
+  },
+  "jda-chewtils": {
+    "name": "JDA-Chewtils",
+    "tagline": "Moderne, modulare Tools- und Hilfsprogramm-Erweiterungsbibliothek für JDA-Discord-Bots",
+    "description": "Ein moderner, modularer Fork der klassischen JDA-Utilities-Bibliothek, der Tools zur Reduzierung von Boilerplate-Code für Java Discord API (JDA)-Bots bereitstellt. Sie enthält Hilfsstrukturen für Menü-Paginierung, Befehlsanalyse und OAuth2-Integration. Ich habe zu Kompatibilitätsupdates für JDA 6.1.1 beigetragen.",
+    "purpose": "Die Java-basierte Discord-Bot-Entwicklung durch wiederverwendbare Strukturen für Befehlsregistrierung und UI-Menüs zu vereinfachen.",
+    "strengths": [
+      "Modulares Bibliotheksdesign, das Entwicklern erlaubt, nur benötigte Funktionen zu importieren",
+      "Bietet vollständig anpassbare paginierte Menüsysteme",
+      "Aktiv gewartet zur Unterstützung moderner JDA-Versionen",
+      "Vereinfacht die Slash-Befehlsregistrierung und Rechteverwaltung"
+    ],
+    "limitations": [
+      "Eng an API-Aktualisierungen von DV8FromTheWorld/JDA gekoppelt",
+      "Erfordert Java 8 oder höher"
+    ],
+    "expertise": [
+      "Bibliotheksdesign",
+      "API-Integration",
+      "Java-Softwareentwicklung"
+    ],
+    "roadmap": [
+      "Erweiterung der Installationskontexte für moderne Discord-Anwendungsaktionen"
+    ],
+    "repos": [
+      {
+        "index": 0,
+        "description": ""
+      }
+    ]
+  },
+  "keepassxc_cleanup": {
+    "name": "KeePassXC Cleanup",
+    "tagline": "CLI-Tool zum Finden und Entfernen doppelt vorhandener Einträge in KeePassXC-Datenbanken",
+    "description": "Ein Python-Kommandozeilentool, das beim Aufräumen von KeePassXC-Datenbanken hilft. Es durchsucht alle Einträge und gruppiert potenzielle Duplikate anhand eines zusammengesetzten Schlüssels aus Eintrag-URL bzw. App-ID, Benutzername und Passwort.\n\nEs bietet einen interaktiven Deduplizierungsworkflow: Für jede Gruppe von Duplikaten werden die übereinstimmenden Einträge samt ihrer internen Pfade aufgelistet, und es wird gefragt, welcher Eintrag beim Speichern der Datenbank beibehalten werden soll. Zudem kann es berichten, welche benutzerdefinierten Eigenschaften über alle Einträge hinweg existieren, was dabei hilft, Einträge zu standardisieren und aufzuräumen.",
+    "purpose": "KeePassXC-Datenbanken sauber und sicher zu halten, indem redundante Einträge erkannt, Duplikate nach einer Überprüfung sicher entfernt und uneinheitliche Verwendungen benutzerdefinierter Eigenschaften hervorgehoben werden.",
+    "strengths": [
+      "Erkennt Duplikate basierend auf der Kombination aus URL/App-ID, Benutzername und Passwort",
+      "Der interaktive Deduplizierungsworkflow lässt Sie für jede Duplikatgruppe genau auswählen, welcher Eintrag behalten werden soll",
+      "Maskiert Passwörter in der Ausgabe, sodass sie niemals im Klartext gedruckt werden",
+      "Listet die Verwendung benutzerdefinierter Eigenschaften auf, um nicht standardmäßige Einträge zu identifizieren und zu vereinheitlichen"
+    ],
+    "limitations": [
+      "Deduplizierung erfolgt ausschließlich interaktiv; es gibt keinen nicht-interaktiven Batch-Modus",
+      "Einträge ohne URL oder App-ID werden möglicherweise nicht korrekt gruppiert",
+      "Erfordert die interaktive Eingabe des Datenbank-Master-Passworts über die Eingabeaufforderung"
+    ],
+    "expertise": [
+      "Scripting",
+      "Passwortverwaltung",
+      "Datendeduplizierung",
+      "CLI-Tools"
+    ],
+    "roadmap": [
+      "Nicht-interaktiven Batch-Deduplizierungsmodus hinzufügen",
+      "Unterstützung zum Entsperren von Datenbanken mit Schlüsseldateien"
+    ],
+    "repos": [
+      {
+        "index": 0,
+        "description": ""
+      }
+    ]
+  },
+  "map-color-convert": {
+    "name": "map-color-convert",
+    "tagline": "Paint.NET-Plugin zur Vorschau und Konvertierung von Bildern in Minecraft-Farbpaletten für Karten",
+    "description": "Ein in C# geschriebenes Paint.NET (PDN)-Filterplugin, das die Konvertierung von Standardbildern auf die offizielle Minecraft-Kartenfarbpalette vereinfacht. Dies ermöglicht eine Vorschau, wie Pixel-Art und benutzerdefinierte Karten im Spiel aussehen werden, bevor sie gebaut werden.",
+    "purpose": "Vorschau und Zuordnung von Standard-RGB-Bildfarben zur begrenzten Farbpalette, die von Minecraft-In-Game-Karten unterstützt wird.",
+    "strengths": [
+      "Konvertiert beliebige Farben in Minecraft-kompatible Kartenfarben",
+      "Integriert sich über ein Installations-Batch-Skript direkt in das Paint.NET-Effekte-Menü",
+      "Bietet beispielhafte C#-, Java- und Python-Farbextraktoren/-Mapper",
+      "Sehr schnelle In-Memory-Ausführung innerhalb der Paint.NET-Benutzeroberfläche"
+    ],
+    "limitations": [
+      "Setzt ein installiertes Paint.NET unter Windows voraus, um das Plugin auszuführen",
+      "Übernimmt keine Bildgrößenänderung (Minecraft-Karten sind 128x128 Pixel groß)",
+      "Beschränkt auf die vordefinierte Farbpalette"
+    ],
+    "expertise": [
+      "Bildverarbeitung",
+      "Plugin-Entwicklung",
+      "Minecraft-Mechaniken"
+    ],
+    "roadmap": [
+      "Anpassbare Dithering-Optionen hinzufügen, um konvertierte Bildverläufe zu verbessern",
+      "Automatisierte Optionen zum Zuschneiden und Aufteilen von 128x128-Bildern implementieren"
+    ],
+    "repos": [
+      {
+        "index": 0,
+        "description": ""
+      }
+    ]
+  },
+  "mega-tor-downloader": {
+    "name": "mega-tor-downloader",
+    "tagline": "Mega.nz-Downloader über Tor geleitet, um Ratelimitierungen zu umgehen",
+    "description": "Ein multithreaded Python-Download-Hilfsprogramm, das das Abrufen von Dateien von Mega.nz mithilfe von Megatools automatisiert. Es leitet Anfragen über einen lokalen Tor-SOCKS5-Proxy, überwacht den Download-Fortschritt dynamisch und rotiert automatisch Tor-Schaltkreise, um die IP-basierten Download-Bandbreitenlimits von Mega zu umgehen.",
+    "purpose": "Ermöglicht das kontinuierliche und automatisierte Herunterladen großer Datensätze von Mega.nz, ohne durch IP-Bandbreitenkontingente blockiert oder gedrosselt zu werden.",
+    "strengths": [
+      "Umgeht Mega.nz-Bandbreitenlimits durch Tor-Schaltkreis-Rotation",
+      "Multithreaded, warteschlangenbasierter Download-Manager",
+      "PHP-basiertes Web-Dashboard zur Echtzeit-Überwachung von Download-Fortschritt und -Geschwindigkeit",
+      "Detaillierte Geschwindigkeits-/IP-Protokollverfolgung und Timeout-Validierung"
+    ],
+    "limitations": [
+      "Die Download-Geschwindigkeit ist durch die Bandbreite des Tor-Netzwerks begrenzt",
+      "Erfordert die Konfiguration eines lokalen Tor-Daemons",
+      "Setzt die CLI-Abhängigkeit megatools voraus"
+    ],
+    "expertise": [
+      "Netzwerk-Routing & Tor",
+      "Skripting",
+      "Automatisierung",
+      "Multithreading"
+    ],
+    "roadmap": [
+      "Implementierung einer automatisierten Tor-Dienstkonfigurationsprüfung",
+      "Bereitstellung eines dockerisierten Setups für den Headless-Betrieb",
+      "Hinzufügen von Unterstützung für andere File-Hosting-Plattformen"
+    ],
+    "repos": [
+      {
+        "index": 0,
+        "description": ""
+      }
+    ]
+  },
+  "minecraft-chat-translator": {
+    "name": "Minecraft Chat Translator",
+    "tagline": "Fine-getuntes 0.5B LLM für die EN↔DE-Echtzeit-Spielechatübersetzung mit persistentem KV-Cache",
+    "description": "Eine komplette Fine-Tuning-Pipeline und Inferenz-Engine, die einem kleinen Sprachmodell mit 0.5B Parametern (Qwen2.5-0.5B-Instruct) beibringt, bidirektionale Englisch↔Deutsch-Chat-Übersetzungen in Echtzeit anhand authentischer Minecraft-Serverprotokolle durchzuführen. Das Training wurde vollständig auf einer CPU (AMD Zen 4 / AVX-512 BF16) mit ~245 Token/Sek. über 7 Stunden und 34 Minuten durchgeführt, wodurch eine Validierungsverlust-Reduktion von 1,1972 auf 0,1005 (91,6 %) erzielt wurde.\n\nDas Projekt umfasst eine asynchrone Multi-LLM-Datensatz-Übersetzungspipeline (Gemini + OpenRouter), einen ChatML-Trainingsdatensynthesizer mit 4 linguistischen Szenarien und 65,9 Mio. Benutzernamen-Permutationen, eine FastAPI-Inferenz-Engine mit persistentem Pro-Session-KV-Cache für eine TTFT von unter 15 ms sowie ein Side-by-Side-Benchmark-Tool, das das fine-getunte Modell mit dem Basismodell Qwen 0.5B, Nemotron 3.5 Lightning 30B, Stealth ox-alpha und Gemini 3.5 Flash Lite vergleicht.",
+    "purpose": "Ermöglichung einer transparenten Echtzeit-Übersetzung zwischen englischen und deutschen Spielern auf einem sprachgemischten Minecraft-Server, die lokal auf Consumer-Hardware ohne Cloud-Inferenzkosten läuft, bei strikter Protokolltreue und Bewusstsein für das Gaming-Domain-Glossar.",
+    "strengths": [
+      "100 % Protokolltreue nach dem Fine-Tuning im Vergleich zum vollständigen Versagen des Basismodells im Zero-Shot",
+      "Domain-Glossar-Mapping: 'Ansturm' → 'Rush', 'LoW' → 'Legend of War', 'LK' → 'Leistungskurs'",
+      "Verarbeitet echte Chat-Tippfehler (schwimsmt, vlt, gehn) ohne Vorverarbeitung",
+      "Persistenter KV-Cache liefert eine flache TTFT von ~54 ms unabhängig von der Gesprächslänge",
+      "Gesamte Pipeline (Daten → Training → Evaluierung) aus Open-Source-Skripten reproduzierbar",
+      "Training auf Consumer-CPU-Hardware abgeschlossen — keine GPU erforderlich"
+    ],
+    "limitations": [
+      "Modellgröße (0.5B) schränkt Nuancen für komplexe literarische oder hochgradig zweideutige Texte ein",
+      "Trainingsdaten sind domänenspezifisch (Minecraft / Gaming); generalisiert schlecht auf formelle Register",
+      "Unbearbeitetes Trainingskorpus (Server-Chat-Logs) zum Schutz der Nutzerprivatsphäre nicht veröffentlicht"
+    ],
+    "expertise": [
+      "LLM Fine-Tuning",
+      "CPU-basiertes Training (BF16 / AVX-512)",
+      "KV-Cache-Inferenzoptimierung",
+      "Asynchrone Multi-LLM-Datenpipelines",
+      "Modellevaluierung & Benchmarking"
+    ],
+    "roadmap": [
+      "Evaluierung von Qwen2.5-1.5B als Drop-In-Upgrade für verbesserte linguistische Nuancen",
+      "Hinzufügen von Streaming-WebSocket-Ausgabe zur FastAPI-Engine",
+      "Veröffentlichung des gefilterten/anonymisierten Trainingsdatensatzes auf Hugging Face Datasets",
+      "Erweiterung auf zusätzliche Sprachpaare (EN↔FR, EN↔PL)"
+    ],
+    "repos": [
+      {
+        "index": 0,
+        "description": ""
+      }
+    ],
+    "modelReleases": [
+      {
+        "index": 0,
+        "description": "Eigenständige zusammengeführte FP16-Gewichte auf Hugging Face"
+      },
+      {
+        "index": 1,
+        "description": "LoRA-Adapter-Gewichte (34 MB) auf Hugging Face"
+      }
+    ]
+  },
+  "nudenetv2": {
+    "name": "NudeNetv2",
+    "tagline": "Fork und Modernisierung der NudeNet-neuronalen Netze zur Nacktheitsklassifizierung und Zensur",
+    "description": "Ein Fork des v2-Zweigs von NudeNet, einer beliebten Bibliothek zur Nacktheitsklassifizierung, -erkennung und selektiven Zensur. Dieser Fork wurde erstellt, um die Funktionalität der Bibliothek wiederherzustellen, nachdem die Modelldownloads des Original-Repositorys aufgrund von Änderungen beim Zugriff auf GitHub-Releases nicht mehr funktionierten. Die Klassifizierungs- und Erkennungs-ONNX-Modelle werden direkt auf GitLab gehostet und es sind benutzerdefinierte Erweiterungen enthalten, wie etwa die Unterstützung für benutzerdefinierte Modellverzeichnispfade über Konstruktorargumente und Umgebungsvariablen.",
+    "purpose": "Wiederherstellung und Pflege eines voll funktionsfähigen, benutzerfreundlichen Python-Pakets zur Klassifizierung und Zensur von Nacktheit, ohne offizielle Tor-Clients oder Browser-Anmeldungen zu benötigen, um vortrainierte Gewichtungen herunterzuladen.",
+    "strengths": [
+      "Voll funktionsfähiger Klassifizierer und Detektor, wiederhergestellt aus dem defekten originalen NudeNet v2-Zweig",
+      "Zuverlässig auf GitLab Raw Storage gehostete ONNX-Modelle für direkte Downloads",
+      "Unterstützung für benutzerdefinierte Modellverzeichnisse über Konstruktorparameter oder die Umgebungsvariable NUDENET_MODEL_DIR hinzugefügt",
+      "Bereinigte Codebasis von unanständigen Bildern in der Dokumentation",
+      "Einfache Installation und Paketierung für die PyPI-Veröffentlichung"
+    ],
+    "limitations": [
+      "Die Genauigkeit der Modelle für tiefes Lernen hängt von den vortrainierten NudeNet-Gewichtungen ab",
+      "Erfordert das Herunterladen großer ONNX-Checkpunktdateien bei der ersten Initialisierung",
+      "Die Inferenzgeschwindigkeit ist durch die CPU begrenzt, es sei denn, onnxruntime-gpu ist GPU-beschleunigt konfiguriert"
+    ],
+    "expertise": [
+      "Bibliothekswartung",
+      "Deep-Learning-Inferenz",
+      "ONNX-Modelle",
+      "Python-Paketverteilung"
+    ],
+    "roadmap": [
+      "Optimierung der Leistung bei der Videobildextraktion",
+      "Unterstützung für leichtgewichtige ONNX-Modellquantisierungsoptionen",
+      "Verbesserung von Batch-Inferenz-Pipelines"
+    ],
+    "relatedProjects": [
+      {
+        "index": 0,
+        "relation": "Geforkt von"
+      }
+    ],
+    "repos": [
+      {
+        "index": 0,
+        "description": ""
+      }
+    ]
+  },
+  "opencode-antigravity-auth": {
+    "name": "opencode-antigravity-auth",
+    "tagline": "OAuth-Authentifizierungs-Plugin-Fork, der OpenCode mit Google Antigravity Modellen und Gemini 3.8/3.7 Flash Unterstützung verbindet",
+    "description": "Ein gepflegter Fork von opencode-antigravity-auth, einem Authentifizierungs-Plugin für OpenCode, das sich über OAuth mit Google Antigravity (Googles KI-IDE) verbindet. Es ermöglicht Entwicklern, sich mit Standard-Google-Konten zu authentifizieren, um auf Claude (Opus 4.6 Thinking, Sonnet 4.6) und Gemini-Modelle im Rahmen der Antigravity-Ratenlimits und der Multi-Account-Rotation zuzugreifen.\n\nDieser Fork führt die vollständige Unterstützung für Gemini 3.8 Flash und 3.7 Flash mit dynamischem Thinking-Level-Mapping zu Antigravity CLI Tier Backend-Modellen ein, behebt die CodeAssist Onboarding-Nutzdaten und die Projekterkennung zur Vermeidung von HTTP-400-Fehlern, sendet den offiziellen CLI User-Agent zur Behebung von HTTP-404-Fehlern bei geschützten Preview-Modellen, normalisiert functionDeclarations-Tools für die Gemini-Schema-Kompatibilität und verfolgt vorgefertigte dist/-Artefakte für eine direkte GitHub-Installation ohne Build-Prozess.",
+    "purpose": "Bereitstellung eines zuverlässigen, aktuellen Zugriffs auf die neuesten Gemini 3.7/3.8 Flash und Claude Thinking-Modelle innerhalb von OpenCode durch Behebung von Upstream-Protokoll-Inkompatibilitäten, User-Agent-Beschränkungen und Installationsengpässen.",
+    "strengths": [
+      "Fügt Unterstützung für Gemini 3.8 Flash und 3.7 Flash mit dynamischen Thinking-Levels (low/medium/high) hinzu, die auf Antigravity CLI Backend-IDs aufgelöst werden",
+      "Behebung von loadCodeAssist und onboardUser Metadaten-Nutzdaten zur Verhinderung von HTTP-400-Fehlern während der Projekterkennung",
+      "Emuliert den offiziellen Antigravity CLI User-Agent für den Zugriff auf neuere Preview-Modelle, die hinter einer Client-Identifizierung verborgen sind",
+      "Normalisiert vorgepackte Gemini functionDeclarations-Tools für strenge Protobuf-Schema-Kompatibilität",
+      "Enthält eingecheckte, vorgefertigte dist/-Artefakte, die eine direkte Installation über GitHub ohne lokale Build-Tools ermöglichen"
+    ],
+    "limitations": [
+      "Verlässt sich auf inoffizielle Antigravity-Endpunkte, die sich ohne vorherige Ankündigung ändern oder eingeschränkt werden können",
+      "Unterliegt den Bestimmungen der Google-Nutzungsbedingungen bezüglich der Nutzung von APIs von Drittanbietern",
+      "Downstream-Fork, der eine regelmäßige Synchronisation mit Upstream-Releases erfordert"
+    ],
+    "expertise": [
+      "OpenCode-Plugin-Architektur",
+      "OAuth 2.0 & Token-Lifecycle-Management",
+      "LLM-Provider-API-Integration",
+      "Reverse Engineering des Google Antigravity Protokolls",
+      "Multi-Account-Quoten-Planung"
+    ],
+    "roadmap": [
+      "Synchronisation mit Upstream-Fehlerbehebungen, Quotenschutzmaßnahmen und Verbesserungen der Kontoverwaltung beibehalten",
+      "Neu veröffentlichte Gemini- und Claude-Modellvarianten bei der Einführung durch Google verfolgen",
+      "Automatisierte CI-Workflows hinzufügen, um die Upstream-Parität und Build-Artefakte zu validieren"
+    ],
+    "repos": [
+      {
+        "index": 0,
+        "description": ""
+      }
+    ]
+  },
+  "personal-projects": {
+    "name": "personal_projects",
+    "tagline": "Interaktives Entwickler-Portfolio mit automatisierter Git-Statistikverfolgung und -visualisierung",
+    "description": "Eine moderne, responsive Portfolio-Website, entwickelt mit React, Vite und Tailwind CSS. Sie bietet eine interaktive Projektkategorisierung, dynamische Filterung, detaillierte Projektansichten und benutzerdefinierte Repository-Statistiken, die über eine Node.js-Git-Analysepipeline aggregiert werden.",
+    "purpose": "Präsentation persönlicher Softwareentwicklungsprojekte, Dienstprogramme und IT-Projekte mit tatsächlichen, nachweisbar erfassten Zeilen Code (LOC) und Commit-Statistiken, die direkt aus lokalen Repositories ermittelt wurden.",
+    "strengths": [
+      "Automatisierte Analyse lokaler Git-Repositories",
+      "Interaktiver Projektvergleich und Diagramme",
+      "Responsives Dark-Mode-Design",
+      "Modulares Projekt-Sheet-Modal-Overlay"
+    ],
+    "limitations": [
+      "Basierend auf lokalen Klonen von privaten/öffentlichen Repositories zur Datenerfassung",
+      "Lokal berechnete LOC können Bibliotheken oder generierte Dateien enthalten, wenn sie nicht strikt ignoriert werden"
+    ],
+    "expertise": [
+      "Frontend-Entwicklung",
+      "Komponentendesign",
+      "Git-Skripterstellung",
+      "Datenvisualisierung"
+    ],
+    "roadmap": [
+      "Hinzufügen interaktiver Git-Commit-Aktivitäts-Heatmaps",
+      "Unterstützung für das automatisierte Klonen von Remote-Repos über APIs"
+    ],
+    "repos": [
+      {
+        "index": 0,
+        "description": ""
+      }
+    ]
+  },
+  "php-autoindexed-file-viewer": {
+    "name": "PHP Autoindexed File-Viewer",
+    "tagline": "Einzeldateibasierter, selbstgehosteter Verzeichnisdienst und Dateibetrachter in PHP",
+    "description": "Ein einzeldateibasierter, selbstgehosteter Verzeichnisdienst und Dateibetrachter, geschrieben in PHP. Er generiert automatisch anpassbare Verzeichnisindizes mit Medien-Metadatenscans, paralleler Hintergrund-Thumbnail-Generierung (für Videos, PDFs und Bilder), Echtzeit-Verzeichnisüberwachung (Path Directory Watching) sowie temporärer, verschlüsselter Link-Freigabefunktion.",
+    "purpose": "Bereitstellung eines leichtgewichtigen, abhängigkeitsfreien (Frontend) Verzeichnisindex, der einfach zu implementieren ist und gleichzeitig eine moderne, funktionsreiche Medien-Browser-Oberfläche bietet.",
+    "strengths": [
+      "Keine externen Bibliotheken oder Build-Schritte (die gesamte Oberfläche besteht aus einer einzigen PHP-Datei)",
+      "Parallel limitierter Hintergrund-Task-Runner für Vorschaubilder und Metadatenscans",
+      "Thumbnail-Vorschau beim Hovern für Bilder, Videoframes und PDFs",
+      "Temporäre, verschlüsselte Freigabe-Links, die die Standard-Authentifizierung umgehen"
+    ],
+    "limitations": [
+      "Hohe anfängliche CPU-Auslastung bei großen, unindizierten Medienordnern",
+      "Erfordert System-CLI-Tools (FFmpeg, MediaInfo, poppler-utils) für erweiterte Vorschaumetadaten"
+    ],
+    "expertise": [
+      "Full-Stack-Webentwicklung",
+      "Systemintegration",
+      "Hintergrund-Queue-Worker",
+      "API- und Medienextraktion"
+    ],
+    "roadmap": [
+      "Optimierung der Ladezeiten für große Ordner mit Tausenden von Elementen",
+      "Unterstützung für webbasierten Einrichtungsassistenten zur Standard-Authentifizierung"
+    ],
+    "repos": [
+      {
+        "index": 0,
+        "description": ""
+      }
+    ]
+  },
+  "qbmanage": {
+    "name": "qbmanage",
+    "tagline": "CLI-Tool zum Überprüfen und Bereinigen von qBittorrent-Instanzen",
+    "description": "Ein Python-basiertes Kommandozeilen-Dienstprogramm zum Überprüfen und Bereinigen von Torrents und Dateien in einer qBittorrent-Instanz. Es bietet Funktionen zur Überprüfung des Tracker-Status, zum Finden verwaister/nicht verwendeter Dateien auf der Festplatte und zur Identifizierung ungenutzter Hardlinks, um das sichere Bereinigen von Rückständen mit Trockenlauf-Schutz (Dry-Run) zu automatisieren.",
+    "purpose": "Zur Verwaltung von qBittorrent-Instanzen – insbesondere in Setups, in denen Downloads per Hardlink mit Medienordnern verknüpft sind – durch das Bereinigen von Torrents mit toten Trackern und verwaisten Download-Dateien.",
+    "strengths": [
+      "Trockenlauf-Inspektion (Dry-Run) vor der Durchführung von Löschvorgängen",
+      "Verwendet Regex-Filter zum Gruppieren/Entfernen von Torrents basierend auf Tracker-Meldungen",
+      "Speziell für Hardlink-Setups entwickelt, um verwaiste Inhalte sicher zu erkennen",
+      "Generiert detaillierte Protokolle und Tabellen für ausgewählte Torrents/Dateien"
+    ],
+    "limitations": [
+      "Optimiert für spezifische Hardlink-Setups; erfordert besondere Vorsicht bei Standard-Kopier-Setups",
+      "Erfordert eine aktive Web-UI-Verbindung mit gültigen Anmeldedaten",
+      "Erfordert Python 3.10+"
+    ],
+    "expertise": [
+      "Automatisierung",
+      "Skripterstellung",
+      "Speicherverwaltung",
+      "API-Integration"
+    ],
+    "roadmap": [
+      "Unterstützung für den Betrieb in Docker-Containern hinzufügen",
+      "Benachrichtigungsfunktionen (z. B. Discord, Telegram) nach erfolgreichen Bereinigungsdurchläufen erweitern"
+    ],
+    "repos": [
+      {
+        "index": 0,
+        "description": ""
+      }
+    ]
+  },
+  "redis-dump-load": {
+    "name": "redis-dump-load",
+    "tagline": "Redis-Datensatz-Dumper und -Loader",
+    "description": "Ein Befehlszeilenwerkzeug und Python-Modul zum Sichern von Redis-Datensätzen in JSON-Dateien und zu deren Wiederherstellung. Stream-Unterstützung ermöglicht die effiziente Verarbeitung großer Datenbanken.",
+    "purpose": "Erleichterung der langfristigen Speicherung, der Übertragung und der Versionskontrolle von Redis-Datensätzen in einem sauberen, streaming-fähigen Textformat (JSON).",
+    "strengths": [
+      "Kompatibel mit redis-dump",
+      "Streamt Daten zur Minimierung der Speicherauslastung",
+      "Erhält TTL- und Ablaufzeiten",
+      "Als CLI-Dienstprogramm oder Python-Modul verwendbar"
+    ],
+    "limitations": [
+      "Sichert in eine einzelne JSON-Datei",
+      "Ladezeit hängt von der Redis-Client-Latenz ab",
+      "Erfordert externe Abhängigkeiten (ijson/jsaone) für das Streaming-Laden"
+    ],
+    "expertise": [
+      "Datenverarbeitung",
+      "Skripterstellung",
+      "Backup-Lösungen"
+    ],
+    "roadmap": [
+      "Erweiterte Unterstützung für neuere Redis-Datentypen",
+      "Optimierung der Ladeleistung"
+    ],
+    "repos": [
+      {
+        "index": 0,
+        "description": ""
+      }
+    ]
+  },
+  "redis-load-store": {
+    "name": "redis_load_store",
+    "tagline": "Dienstprogramm zum Sichern einer Redis-Datenbank in Base64-Textdateien",
+    "description": "Ein einzelnes Python-3-Skript zum Aufteilen und Sichern einer Redis-Datenbank in mehrere Base64-URL-sichere Textdateien, wodurch Backups Git-freundlich und einfach wiederherstellbar werden.",
+    "purpose": "Erstellung inkrementeller, textbasierter und menschenlesbarer Backups von Redis-Daten-Keys und -Values (saubere Handhabung von Binärdaten über Base64) anstelle monolithischer Binär-RDB Dumps.",
+    "strengths": [
+      "Speichert Datenbank-Keys als einzelne, Base64-URL-sichere Dateien",
+      "Ideal für die Versionskontrolle (Git) zur inkrementellen Änderungserfassung",
+      "Unterstützt die Typen string, list, set, zset, hash und stream",
+      "Stellt TTL und Ablaufzeiten relativ zur Wiederherstellungszeit wieder her"
+    ],
+    "limitations": [
+      "Ineffiziente Speichergröße aufgrund der Base64-Kodierung",
+      "Unterstützung für Unix-Sockets ist ungetestet",
+      "Die Option use_expireat ist derzeit nicht implementiert"
+    ],
+    "expertise": [
+      "Datenverarbeitung",
+      "Skripterstellung",
+      "Backup-Lösungen"
+    ],
+    "roadmap": [
+      "--use_expireat implementieren und testen",
+      "Testabdeckung für Unix-Sockets hinzufügen",
+      "Dateierstellung und I/O-Leistung optimieren"
+    ],
+    "repos": [
+      {
+        "index": 0,
+        "description": ""
+      }
+    ]
   }
 }

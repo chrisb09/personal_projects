@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useLocalizedProject } from '@/lib/localizeProject';
 import type { Project } from '@/types/project';
 import { 
   categoryLabels, 
@@ -362,7 +363,9 @@ function ScreenshotGallery({ screenshots, projectName }: { screenshots: string[]
   );
 }
 
-export function ProjectDetailModal({ project, isOpen, onClose, onProjectSelect, allProjects = [], initialTab = 'overview' }: ProjectDetailModalProps) {
+export function ProjectDetailModal({ project: rawProject, isOpen, onClose, onProjectSelect, allProjects = [], initialTab = 'overview' }: ProjectDetailModalProps) {
+  const localized = useLocalizedProject(rawProject);
+  const project = localized || rawProject;
   const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState(initialTab);
 

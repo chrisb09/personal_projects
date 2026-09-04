@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next';
+import { useLocalizedProject } from '@/lib/localizeProject';
 import type { Project } from '@/types/project';
 import { 
   categoryLabels, 
@@ -104,7 +105,8 @@ function MiniLanguageChart({ data, total }: { data: Record<string, number>; tota
   );
 }
 
-export function ProjectCard({ project, onClick, onMediaClick }: ProjectCardProps) {
+export function ProjectCard({ project: rawProject, onClick, onMediaClick }: ProjectCardProps) {
+  const project = useLocalizedProject(rawProject) || rawProject;
   const { t } = useTranslation();
   // Get top 3 technologies to display as badges
   const topTechnologies = project.technologies.slice(0, 3);
