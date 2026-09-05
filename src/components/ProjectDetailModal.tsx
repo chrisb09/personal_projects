@@ -391,7 +391,10 @@ export function ProjectDetailModal({ project: rawProject, isOpen, onClose, onPro
   return (
     <TooltipProvider>
       <Dialog open={isOpen} onOpenChange={onClose}>
-        <DialogContent className="w-[90vw] max-w-[90vw] md:max-w-[85vw] lg:max-w-[80vw] xl:max-w-7xl h-[88vh] max-h-[88vh] p-0 overflow-hidden bg-background/95 backdrop-blur-xl border border-border/50 rounded-xl flex flex-col">
+        <DialogContent 
+          onOpenAutoFocus={(e) => e.preventDefault()}
+          className="w-[90vw] max-w-[90vw] md:max-w-[85vw] lg:max-w-[80vw] xl:max-w-7xl h-[88vh] max-h-[88vh] p-0 overflow-hidden bg-background/95 backdrop-blur-xl border border-border/50 rounded-xl flex flex-col"
+        >
           {/* Header */}
           <div className="relative bg-gradient-to-br from-primary/10 via-primary/5 to-transparent p-4 pb-3 shrink-0">
             <DialogHeader>
@@ -552,32 +555,32 @@ export function ProjectDetailModal({ project: rawProject, isOpen, onClose, onPro
               <TabsList className="w-full justify-start h-auto bg-transparent p-0 gap-5 flex-wrap">
                 <TabsTrigger 
                   value="overview" 
-                  className="px-1 pb-2 pt-1.5 rounded-none text-xs font-semibold border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-primary data-[state=inactive]:text-muted-foreground hover:text-foreground transition-all whitespace-nowrap bg-transparent shadow-none border-t-0 border-x-0"
+                  className="px-1 pb-2 pt-1.5 rounded-none text-xs font-semibold border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-primary data-[state=inactive]:text-muted-foreground hover:text-foreground transition-all whitespace-nowrap bg-transparent shadow-none border-t-0 border-x-0 focus-visible:ring-0 focus-visible:outline-none focus:outline-none focus-visible:border-b-primary focus-visible:text-primary"
                 >
                   {t('modal.overview', 'Overview')}
                 </TabsTrigger>
                 <TabsTrigger 
                   value="technical" 
-                  className="px-1 pb-2 pt-1.5 rounded-none text-xs font-semibold border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-primary data-[state=inactive]:text-muted-foreground hover:text-foreground transition-all whitespace-nowrap bg-transparent shadow-none border-t-0 border-x-0"
+                  className="px-1 pb-2 pt-1.5 rounded-none text-xs font-semibold border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-primary data-[state=inactive]:text-muted-foreground hover:text-foreground transition-all whitespace-nowrap bg-transparent shadow-none border-t-0 border-x-0 focus-visible:ring-0 focus-visible:outline-none focus:outline-none focus-visible:border-b-primary focus-visible:text-primary"
                 >
                   {t('modal.technical', 'Technical')}
                 </TabsTrigger>
                 <TabsTrigger 
                   value="usage" 
-                  className="px-1 pb-2 pt-1.5 rounded-none text-xs font-semibold border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-primary data-[state=inactive]:text-muted-foreground hover:text-foreground transition-all whitespace-nowrap bg-transparent shadow-none border-t-0 border-x-0"
+                  className="px-1 pb-2 pt-1.5 rounded-none text-xs font-semibold border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-primary data-[state=inactive]:text-muted-foreground hover:text-foreground transition-all whitespace-nowrap bg-transparent shadow-none border-t-0 border-x-0 focus-visible:ring-0 focus-visible:outline-none focus:outline-none focus-visible:border-b-primary focus-visible:text-primary"
                 >
                   {t('modal.installation_usage', 'Installation & Usage')}
                 </TabsTrigger>
                 <TabsTrigger 
                   value="stats" 
-                  className="px-1 pb-2 pt-1.5 rounded-none text-xs font-semibold border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-primary data-[state=inactive]:text-muted-foreground hover:text-foreground transition-all whitespace-nowrap bg-transparent shadow-none border-t-0 border-x-0"
+                  className="px-1 pb-2 pt-1.5 rounded-none text-xs font-semibold border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-primary data-[state=inactive]:text-muted-foreground hover:text-foreground transition-all whitespace-nowrap bg-transparent shadow-none border-t-0 border-x-0 focus-visible:ring-0 focus-visible:outline-none focus:outline-none focus-visible:border-b-primary focus-visible:text-primary"
                 >
                   {t('modal.stats_metrics', 'Stats & Metrics')}
                 </TabsTrigger>
                 {hasCodeOrModels && (
                   <TabsTrigger 
                     value="repositories" 
-                    className="px-1 pb-2 pt-1.5 rounded-none text-xs font-semibold border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-primary data-[state=inactive]:text-muted-foreground hover:text-foreground transition-all whitespace-nowrap bg-transparent shadow-none border-t-0 border-x-0"
+                    className="px-1 pb-2 pt-1.5 rounded-none text-xs font-semibold border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-primary data-[state=inactive]:text-muted-foreground hover:text-foreground transition-all whitespace-nowrap bg-transparent shadow-none border-t-0 border-x-0 focus-visible:ring-0 focus-visible:outline-none focus:outline-none focus-visible:border-b-primary focus-visible:text-primary"
                   >
                     {hasModelReleases && !hasRepos && !hasMirrors
                       ? `${t('modal.models', 'Models')} (${totalModelCount})`
@@ -589,7 +592,7 @@ export function ProjectDetailModal({ project: rawProject, isOpen, onClose, onPro
                 {(hasScreenshots || hasRelatedProjects) && (
                   <TabsTrigger 
                     value="media" 
-                    className="px-1 pb-2 pt-1.5 rounded-none text-xs font-semibold border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-primary data-[state=inactive]:text-muted-foreground hover:text-foreground transition-all whitespace-nowrap bg-transparent shadow-none border-t-0 border-x-0"
+                    className="px-1 pb-2 pt-1.5 rounded-none text-xs font-semibold border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-primary data-[state=inactive]:text-muted-foreground hover:text-foreground transition-all whitespace-nowrap bg-transparent shadow-none border-t-0 border-x-0 focus-visible:ring-0 focus-visible:outline-none focus:outline-none focus-visible:border-b-primary focus-visible:text-primary"
                   >
                     {t('modal.media_links', 'Media & Links')}
                   </TabsTrigger>
