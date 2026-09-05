@@ -28,6 +28,8 @@
     "try_adjusting": "Try adjusting your search or filter criteria",
     "clear_filters": "Clear filters",
     "clear_all": "Clear all",
+    "expand_all": "Expand all",
+    "collapse_all": "Collapse all",
     "filters_button": "Filters",
     "filter_projects": "Filter Projects",
     "active_filters": "Active filters",

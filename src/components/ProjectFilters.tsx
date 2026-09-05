@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   SlidersHorizontal,
@@ -13,14 +13,13 @@ import {
   Layers,
   Code2,
   Lock,
-  GitFork,
+  ChevronDown,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { Separator } from '@/components/ui/separator';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -39,7 +38,6 @@ import {
   type FilterState,
   getActiveFilterCount,
   getFacetStats,
-  projectHasLanguage,
   projectHasMedia,
   projectHasStars,
 } from '@/lib/filters';
@@ -63,6 +61,37 @@ export function ProjectFilters({
   const isMobile = useIsMobile();
   const [techSearch, setTechSearch] = useState('');
   const [isOpen, setIsOpen] = useState(false);
+  const lastCloseTimeRef = useRef<number>(0);
+
+  // Track expanded / collapsed state for each facet group
+  const [openSections, setOpenSections] = useState<Record<string, boolean>>({
+    signals: true,
+    categories: false,
+    languages: false,
+    technologies: false,
+    ai: false,
+    details: false,
+  });
+
+  const toggleSection = (id: string) => {
+    setOpenSections(prev => ({ ...prev, [id]: !prev[id] }));
+  };
+
+  const areAllExpanded = useMemo(() => {
+    return Object.values(openSections).every(Boolean);
+  }, [openSections]);
+
+  const toggleAllSections = () => {
+    const nextVal = !areAllExpanded;
+    setOpenSections({
+      signals: nextVal,
+      categories: nextVal,
+      languages: nextVal,
+      technologies: nextVal,
+      ai: nextVal,
+      details: nextVal,
+    });
+  };
 
   const activeCount = getActiveFilterCount(filters);
 
@@ -161,11 +190,59 @@ export function ProjectFilters({
     onFilterChange({ ...filters, ...partial });
   };
 
-  // Reusable facet section rendering
+  const handleOpenChange = (open: boolean) => {
+    if (!open) {
+      lastCloseTimeRef.current = Date.now();
+    }
+    setIsOpen(open);
+  };
+
+  // Active filter count per section
+  const signalsActiveCount = (filters.hasStars ? 1 : 0) + (filters.hasMedia ? 1 : 0) + (filters.academicOnly ? 1 : 0);
+  const categoriesActiveCount = filters.categories.length;
+  const languagesActiveCount = filters.languages.length;
+  const technologiesActiveCount = filters.technologies.length;
+  const aiActiveCount = filters.aiUtilization.length + filters.aiUsage.length;
+  const detailsActiveCount = filters.sourceTypes.length + filters.roles.length + filters.statuses.length + filters.projectTypes.length;
+
+  const renderSectionHeader = (
+    id: string,
+    title: string,
+    icon: React.ReactNode,
+    count: number
+  ) => {
+    const isSectionOpen = !!openSections[id];
+    return (
+      <button
+        type="button"
+        onClick={() => toggleSection(id)}
+        className="flex items-center justify-between w-full py-1.5 px-2 rounded-md hover:bg-muted/50 transition-colors text-left select-none group"
+      >
+        <div className="flex items-center gap-2">
+          <span className="text-primary">{icon}</span>
+          <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground group-hover:text-foreground transition-colors">
+            {title}
+          </span>
+          {count > 0 && (
+            <span className="px-1.5 py-0.2 rounded-full bg-primary/15 text-primary border border-primary/25 text-[10px] font-semibold tabular-nums">
+              {count}
+            </span>
+          )}
+        </div>
+        <ChevronDown
+          className={`w-3.5 h-3.5 text-muted-foreground transition-transform duration-200 ${
+            isSectionOpen ? 'rotate-180 text-foreground' : ''
+          }`}
+        />
+      </button>
+    );
+  };
+
+  // Reusable facet panel content
   const filterPanelContent = (
-    <div className="flex flex-col h-full max-h-[75vh] md:max-h-[600px]">
-      {/* Header with Title and Reset */}
-      <div className="flex items-center justify-between px-4 py-3 border-b border-border/40 shrink-0">
+    <div className="flex flex-col h-full max-h-[min(480px,65vh)]">
+      {/* Header with Title, Expand/Collapse, and Reset */}
+      <div className="flex items-center justify-between px-3.5 py-2.5 border-b border-border/40 shrink-0">
         <div className="flex items-center gap-2">
           <SlidersHorizontal className="w-4 h-4 text-primary" />
           <h3 className="font-semibold text-sm">
@@ -177,298 +254,155 @@ export function ProjectFilters({
             </Badge>
           )}
         </div>
-        {activeCount > 0 && (
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={onReset}
-            className="h-7 px-2 text-xs text-muted-foreground hover:text-foreground gap-1.5"
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={toggleAllSections}
+            className="text-[11px] text-muted-foreground hover:text-foreground transition-colors"
           >
-            <RotateCcw className="w-3 h-3" />
-            {t('filters.clear_all', 'Clear all')}
-          </Button>
-        )}
+            {areAllExpanded ? t('filters.collapse_all', 'Collapse all') : t('filters.expand_all', 'Expand all')}
+          </button>
+          {activeCount > 0 && (
+            <>
+              <span className="text-border/60 text-xs">|</span>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={onReset}
+                className="h-6 px-1.5 text-xs text-muted-foreground hover:text-foreground gap-1"
+              >
+                <RotateCcw className="w-3 h-3" />
+                {t('filters.clear_all', 'Clear all')}
+              </Button>
+            </>
+          )}
+        </div>
       </div>
 
       {/* Scrollable Facet Body */}
-      <ScrollArea className="flex-1 px-4 py-3 overflow-y-auto">
-        <div className="space-y-5 pb-4">
-          {/* Quick Signals / Toggles */}
-          <div className="space-y-2">
-            <h4 className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground flex items-center gap-1.5">
-              <Sparkles className="w-3 h-3 text-primary" />
-              {t('filters.group_signals', 'Media & Signals')}
-            </h4>
-            <div className="grid grid-cols-2 gap-1.5">
-              <button
-                type="button"
-                onClick={() => update({ hasStars: !filters.hasStars })}
-                className={`flex items-center justify-between p-2 rounded-lg border text-xs text-left transition-all ${
-                  filters.hasStars
-                    ? 'bg-amber-500/10 border-amber-500/30 text-amber-600 dark:text-amber-400 font-medium'
-                    : 'bg-muted/30 border-border/40 hover:bg-muted/60 text-muted-foreground'
-                }`}
-              >
-                <div className="flex items-center gap-1.5">
-                  <Star className="w-3.5 h-3.5 text-amber-500" />
-                  <span>{t('filters.has_stars', 'Has Stars')}</span>
-                </div>
-                <span className="text-[10px] opacity-75 tabular-nums">{starsCount}</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => update({ hasMedia: !filters.hasMedia })}
-                className={`flex items-center justify-between p-2 rounded-lg border text-xs text-left transition-all ${
-                  filters.hasMedia
-                    ? 'bg-purple-500/10 border-purple-500/30 text-purple-600 dark:text-purple-400 font-medium'
-                    : 'bg-muted/30 border-border/40 hover:bg-muted/60 text-muted-foreground'
-                }`}
-              >
-                <div className="flex items-center gap-1.5">
-                  <ImageIcon className="w-3.5 h-3.5 text-purple-500" />
-                  <span>{t('filters.has_media', 'Has Media')}</span>
-                </div>
-                <span className="text-[10px] opacity-75 tabular-nums">{mediaCount}</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => update({ academicOnly: !filters.academicOnly })}
-                className={`flex items-center justify-between p-2 rounded-lg border text-xs text-left transition-all col-span-2 ${
-                  filters.academicOnly
-                    ? 'bg-teal-500/10 border-teal-500/30 text-teal-600 dark:text-teal-400 font-medium'
-                    : 'bg-muted/30 border-border/40 hover:bg-muted/60 text-muted-foreground'
-                }`}
-              >
-                <div className="flex items-center gap-1.5">
-                  <GraduationCap className="w-3.5 h-3.5 text-teal-500" />
-                  <span>{t('filters.academic_only', 'Academic Projects')}</span>
-                </div>
-                <span className="text-[10px] opacity-75 tabular-nums">{academicCount}</span>
-              </button>
-            </div>
-          </div>
-
-          <Separator className="opacity-50" />
-
-          {/* Categories */}
-          <div className="space-y-2">
-            <h4 className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground flex items-center gap-1.5">
-              <Layers className="w-3 h-3 text-primary" />
-              {t('filters.category', 'Category')}
-            </h4>
-            <div className="flex flex-wrap gap-1.5">
-              {categories.map(({ id, count }) => {
-                const isSelected = filters.categories.includes(id);
-                return (
-                  <button
-                    key={id}
-                    type="button"
-                    onClick={() => update({ categories: toggleItem(filters.categories, id) })}
-                    className={`px-2.5 py-1 rounded-md text-xs transition-all border flex items-center gap-1.5 ${
-                      isSelected
-                        ? 'bg-primary text-primary-foreground border-primary font-medium shadow-xs'
-                        : 'bg-muted/40 border-border/40 text-muted-foreground hover:text-foreground hover:bg-muted'
-                    }`}
-                  >
-                    <span>{t(`categories.${id}`, categoryLabels[id])}</span>
-                    <span className={`text-[10px] tabular-nums ${isSelected ? 'opacity-90' : 'opacity-60'}`}>
-                      {count}
-                    </span>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
-          <Separator className="opacity-50" />
-
-          {/* Programming Languages */}
-          <div className="space-y-2">
-            <h4 className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground flex items-center gap-1.5">
-              <Code2 className="w-3 h-3 text-primary" />
-              {t('filters.languages', 'Programming Languages')}
-            </h4>
-            <div className="flex flex-wrap gap-1.5">
-              {facetStats.languages.map(({ name, count }) => {
-                const isSelected = filters.languages.includes(name);
-                const color = languageColors[name] || '#888888';
-                return (
-                  <button
-                    key={name}
-                    type="button"
-                    onClick={() => update({ languages: toggleItem(filters.languages, name) })}
-                    className={`px-2.5 py-1 rounded-md text-xs transition-all border flex items-center gap-1.5 ${
-                      isSelected
-                        ? 'bg-primary text-primary-foreground border-primary font-medium shadow-xs'
-                        : 'bg-muted/40 border-border/40 text-muted-foreground hover:text-foreground hover:bg-muted'
-                    }`}
-                  >
-                    <span className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: color }} />
-                    <span>{name}</span>
-                    <span className={`text-[10px] tabular-nums ${isSelected ? 'opacity-90' : 'opacity-60'}`}>
-                      {count}
-                    </span>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
-          <Separator className="opacity-50" />
-
-          {/* Technologies / Tools with inline search */}
-          <div className="space-y-2">
-            <div className="flex items-center justify-between">
-              <h4 className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
-                {t('filters.technologies', 'Technologies & Tools')}
-              </h4>
-              {filters.technologies.length > 0 && (
+      <ScrollArea className="flex-1 px-3 py-2 overflow-y-auto">
+        <div className="space-y-1.5 pb-2">
+          {/* 1. Media & Signals */}
+          <div className="rounded-lg border border-border/40 bg-card/40 overflow-hidden">
+            {renderSectionHeader(
+              'signals',
+              t('filters.group_signals', 'Media & Signals'),
+              <Sparkles className="w-3.5 h-3.5" />,
+              signalsActiveCount
+            )}
+            {openSections.signals && (
+              <div className="px-2.5 pb-2.5 pt-1 grid grid-cols-2 gap-1.5">
                 <button
                   type="button"
-                  onClick={() => update({ technologies: [] })}
-                  className="text-[10px] text-muted-foreground hover:text-foreground"
+                  onClick={() => update({ hasStars: !filters.hasStars })}
+                  className={`flex items-center justify-between p-2 rounded-lg border text-xs text-left transition-all ${
+                    filters.hasStars
+                      ? 'bg-amber-500/10 border-amber-500/30 text-amber-600 dark:text-amber-400 font-medium'
+                      : 'bg-muted/30 border-border/40 hover:bg-muted/60 text-muted-foreground'
+                  }`}
                 >
-                  Reset ({filters.technologies.length})
+                  <div className="flex items-center gap-1.5">
+                    <Star className="w-3.5 h-3.5 text-amber-500" />
+                    <span>{t('filters.has_stars', 'Has Stars')}</span>
+                  </div>
+                  <span className="text-[10px] opacity-75 tabular-nums">{starsCount}</span>
                 </button>
-              )}
-            </div>
-            <div className="relative">
-              <Search className="w-3 h-3 absolute left-2.5 top-1/2 -translate-y-1/2 text-muted-foreground" />
-              <Input
-                type="text"
-                placeholder={t('filters.search_tech', 'Search technologies...')}
-                value={techSearch}
-                onChange={e => setTechSearch(e.target.value)}
-                className="h-7 text-xs pl-7 pr-7 bg-muted/20"
-              />
-              {techSearch && (
+
                 <button
                   type="button"
-                  onClick={() => setTechSearch('')}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                  onClick={() => update({ hasMedia: !filters.hasMedia })}
+                  className={`flex items-center justify-between p-2 rounded-lg border text-xs text-left transition-all ${
+                    filters.hasMedia
+                      ? 'bg-purple-500/10 border-purple-500/30 text-purple-600 dark:text-purple-400 font-medium'
+                      : 'bg-muted/30 border-border/40 hover:bg-muted/60 text-muted-foreground'
+                  }`}
                 >
-                  <X className="w-3 h-3" />
+                  <div className="flex items-center gap-1.5">
+                    <ImageIcon className="w-3.5 h-3.5 text-purple-500" />
+                    <span>{t('filters.has_media', 'Has Media')}</span>
+                  </div>
+                  <span className="text-[10px] opacity-75 tabular-nums">{mediaCount}</span>
                 </button>
-              )}
-            </div>
-            <div className="flex flex-wrap gap-1 max-h-36 overflow-y-auto pt-1 pr-1">
-              {filteredTechs.map(({ name, count }) => {
-                const isSelected = filters.technologies.includes(name);
-                return (
-                  <button
-                    key={name}
-                    type="button"
-                    onClick={() => update({ technologies: toggleItem(filters.technologies, name) })}
-                    className={`px-2 py-0.5 rounded text-[11px] transition-all border flex items-center gap-1 ${
-                      isSelected
-                        ? 'bg-primary text-primary-foreground border-primary font-medium'
-                        : 'bg-muted/30 border-border/30 text-muted-foreground hover:text-foreground hover:bg-muted'
-                    }`}
-                  >
-                    <span>{name}</span>
-                    <span className={`text-[9px] tabular-nums ${isSelected ? 'opacity-90' : 'opacity-60'}`}>
-                      {count}
-                    </span>
-                  </button>
-                );
-              })}
-            </div>
+
+                <button
+                  type="button"
+                  onClick={() => update({ academicOnly: !filters.academicOnly })}
+                  className={`flex items-center justify-between p-2 rounded-lg border text-xs text-left transition-all col-span-2 ${
+                    filters.academicOnly
+                      ? 'bg-teal-500/10 border-teal-500/30 text-teal-600 dark:text-teal-400 font-medium'
+                      : 'bg-muted/30 border-border/40 hover:bg-muted/60 text-muted-foreground'
+                  }`}
+                >
+                  <div className="flex items-center gap-1.5">
+                    <GraduationCap className="w-3.5 h-3.5 text-teal-500" />
+                    <span>{t('filters.academic_only', 'Academic Projects')}</span>
+                  </div>
+                  <span className="text-[10px] opacity-75 tabular-nums">{academicCount}</span>
+                </button>
+              </div>
+            )}
           </div>
 
-          <Separator className="opacity-50" />
-
-          {/* AI Features & Usage */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            {/* AI Utilization */}
-            <div className="space-y-1.5">
-              <h4 className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground flex items-center gap-1">
-                <Cpu className="w-3 h-3 text-primary" />
-                {t('labels.features', 'Features')} (AI)
-              </h4>
-              <div className="space-y-1">
-                {aiUtilizations.map(({ id, count }) => {
-                  const isSelected = filters.aiUtilization.includes(id);
+          {/* 2. Categories */}
+          <div className="rounded-lg border border-border/40 bg-card/40 overflow-hidden">
+            {renderSectionHeader(
+              'categories',
+              t('filters.category', 'Category'),
+              <Layers className="w-3.5 h-3.5" />,
+              categoriesActiveCount
+            )}
+            {openSections.categories && (
+              <div className="px-2.5 pb-2.5 pt-1 flex flex-wrap gap-1.5">
+                {categories.map(({ id, count }) => {
+                  const isSelected = filters.categories.includes(id);
                   return (
-                    <label
+                    <button
                       key={id}
-                      className={`flex items-center justify-between p-1.5 rounded-md border text-xs cursor-pointer transition-colors ${
-                        isSelected ? 'bg-accent/70 border-primary/40 font-medium' : 'hover:bg-muted/30 border-transparent'
+                      type="button"
+                      onClick={() => update({ categories: toggleItem(filters.categories, id) })}
+                      className={`px-2.5 py-1 rounded-md text-xs transition-all border flex items-center gap-1.5 ${
+                        isSelected
+                          ? 'bg-primary text-primary-foreground border-primary font-medium shadow-xs'
+                          : 'bg-muted/40 border-border/40 text-muted-foreground hover:text-foreground hover:bg-muted'
                       }`}
                     >
-                      <div className="flex items-center gap-2">
-                        <Checkbox
-                          checked={isSelected}
-                          onCheckedChange={() => update({ aiUtilization: toggleItem(filters.aiUtilization, id) })}
-                        />
-                        <span>{t(`ai_utilization.${id}`, aiUtilizationLabels[id])}</span>
-                      </div>
-                      <span className="text-[10px] text-muted-foreground tabular-nums">{count}</span>
-                    </label>
+                      <span>{t(`categories.${id}`, categoryLabels[id])}</span>
+                      <span className={`text-[10px] tabular-nums ${isSelected ? 'opacity-90' : 'opacity-60'}`}>
+                        {count}
+                      </span>
+                    </button>
                   );
                 })}
               </div>
-            </div>
-
-            {/* AI Usage */}
-            <div className="space-y-1.5">
-              <h4 className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground flex items-center gap-1">
-                <Sparkles className="w-3 h-3 text-primary" />
-                {t('labels.built_with', 'Built with')} (AI)
-              </h4>
-              <div className="space-y-1">
-                {aiUsages.map(({ id, count }) => {
-                  const isSelected = filters.aiUsage.includes(id);
-                  return (
-                    <label
-                      key={id}
-                      className={`flex items-center justify-between p-1.5 rounded-md border text-xs cursor-pointer transition-colors ${
-                        isSelected ? 'bg-accent/70 border-primary/40 font-medium' : 'hover:bg-muted/30 border-transparent'
-                      }`}
-                    >
-                      <div className="flex items-center gap-2">
-                        <Checkbox
-                          checked={isSelected}
-                          onCheckedChange={() => update({ aiUsage: toggleItem(filters.aiUsage, id) })}
-                        />
-                        <span>{t(`ai_usage.${id}`, aiUsageLabels[id])}</span>
-                      </div>
-                      <span className="text-[10px] text-muted-foreground tabular-nums">{count}</span>
-                    </label>
-                  );
-                })}
-              </div>
-            </div>
+            )}
           </div>
 
-          <Separator className="opacity-50" />
-
-          {/* Project Details: Source Type, Role, Status, Project Type */}
-          <div className="space-y-3">
-            <h4 className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground flex items-center gap-1.5">
-              <Lock className="w-3 h-3 text-primary" />
-              {t('filters.group_details', 'Project Details')}
-            </h4>
-
-            {/* Source Availability */}
-            <div className="space-y-1">
-              <p className="text-xs text-muted-foreground">{t('filters.source_type', 'Source Availability')}:</p>
-              <div className="flex flex-wrap gap-1.5">
-                {sourceTypes.map(({ id, count }) => {
-                  const isSelected = filters.sourceTypes.includes(id);
+          {/* 3. Programming Languages */}
+          <div className="rounded-lg border border-border/40 bg-card/40 overflow-hidden">
+            {renderSectionHeader(
+              'languages',
+              t('filters.languages', 'Programming Languages'),
+              <Code2 className="w-3.5 h-3.5" />,
+              languagesActiveCount
+            )}
+            {openSections.languages && (
+              <div className="px-2.5 pb-2.5 pt-1 flex flex-wrap gap-1.5">
+                {facetStats.languages.map(({ name, count }) => {
+                  const isSelected = filters.languages.includes(name);
+                  const color = languageColors[name] || '#888888';
                   return (
                     <button
-                      key={id}
+                      key={name}
                       type="button"
-                      onClick={() => update({ sourceTypes: toggleItem(filters.sourceTypes, id) })}
+                      onClick={() => update({ languages: toggleItem(filters.languages, name) })}
                       className={`px-2.5 py-1 rounded-md text-xs transition-all border flex items-center gap-1.5 ${
                         isSelected
-                          ? 'bg-primary text-primary-foreground border-primary font-medium'
+                          ? 'bg-primary text-primary-foreground border-primary font-medium shadow-xs'
                           : 'bg-muted/40 border-border/40 text-muted-foreground hover:text-foreground hover:bg-muted'
                       }`}
                     >
-                      <span>{t(`source_types.${id}`, sourceTypeLabels[id])}</span>
+                      <span className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: color }} />
+                      <span>{name}</span>
                       <span className={`text-[10px] tabular-nums ${isSelected ? 'opacity-90' : 'opacity-60'}`}>
                         {count}
                       </span>
@@ -476,94 +410,260 @@ export function ProjectFilters({
                   );
                 })}
               </div>
-            </div>
+            )}
+          </div>
 
-            {/* Role */}
-            <div className="space-y-1">
-              <p className="text-xs text-muted-foreground">{t('filters.role', 'Role')}:</p>
-              <div className="flex flex-wrap gap-1.5">
-                {roles.map(({ id, count }) => {
-                  const isSelected = filters.roles.includes(id);
-                  return (
+          {/* 4. Technologies & Tools with inline search */}
+          <div className="rounded-lg border border-border/40 bg-card/40 overflow-hidden">
+            {renderSectionHeader(
+              'technologies',
+              t('filters.technologies', 'Technologies & Tools'),
+              <Search className="w-3.5 h-3.5" />,
+              technologiesActiveCount
+            )}
+            {openSections.technologies && (
+              <div className="px-2.5 pb-2.5 pt-1 space-y-2">
+                <div className="relative">
+                  <Search className="w-3 h-3 absolute left-2.5 top-1/2 -translate-y-1/2 text-muted-foreground" />
+                  <Input
+                    type="text"
+                    placeholder={t('filters.search_tech', 'Search technologies...')}
+                    value={techSearch}
+                    onChange={e => setTechSearch(e.target.value)}
+                    className="h-7 text-xs pl-7 pr-7 bg-muted/20"
+                  />
+                  {techSearch && (
                     <button
-                      key={id}
                       type="button"
-                      onClick={() => update({ roles: toggleItem(filters.roles, id) })}
-                      className={`px-2.5 py-1 rounded-md text-xs transition-all border flex items-center gap-1.5 ${
-                        isSelected
-                          ? 'bg-primary text-primary-foreground border-primary font-medium'
-                          : 'bg-muted/40 border-border/40 text-muted-foreground hover:text-foreground hover:bg-muted'
-                      }`}
+                      onClick={() => setTechSearch('')}
+                      className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
                     >
-                      <span>{t(`roles.${id}`, roleLabels[id])}</span>
-                      <span className={`text-[10px] tabular-nums ${isSelected ? 'opacity-90' : 'opacity-60'}`}>
-                        {count}
-                      </span>
+                      <X className="w-3 h-3" />
                     </button>
-                  );
-                })}
+                  )}
+                </div>
+                <div className="flex flex-wrap gap-1 max-h-32 overflow-y-auto pt-0.5 pr-0.5">
+                  {filteredTechs.map(({ name, count }) => {
+                    const isSelected = filters.technologies.includes(name);
+                    return (
+                      <button
+                        key={name}
+                        type="button"
+                        onClick={() => update({ technologies: toggleItem(filters.technologies, name) })}
+                        className={`px-2 py-0.5 rounded text-[11px] transition-all border flex items-center gap-1 ${
+                          isSelected
+                            ? 'bg-primary text-primary-foreground border-primary font-medium'
+                            : 'bg-muted/30 border-border/30 text-muted-foreground hover:text-foreground hover:bg-muted'
+                        }`}
+                      >
+                        <span>{name}</span>
+                        <span className={`text-[9px] tabular-nums ${isSelected ? 'opacity-90' : 'opacity-60'}`}>
+                          {count}
+                        </span>
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
-            </div>
+            )}
+          </div>
 
-            {/* Status */}
-            <div className="space-y-1">
-              <p className="text-xs text-muted-foreground">{t('filters.status', 'Status')}:</p>
-              <div className="flex flex-wrap gap-1.5">
-                {statuses.map(({ id, count }) => {
-                  const isSelected = filters.statuses.includes(id);
-                  return (
-                    <button
-                      key={id}
-                      type="button"
-                      onClick={() => update({ statuses: toggleItem(filters.statuses, id) })}
-                      className={`px-2.5 py-1 rounded-md text-xs transition-all border flex items-center gap-1.5 ${
-                        isSelected
-                          ? 'bg-primary text-primary-foreground border-primary font-medium'
-                          : 'bg-muted/40 border-border/40 text-muted-foreground hover:text-foreground hover:bg-muted'
-                      }`}
-                    >
-                      <span>{t(`statuses.${id}`, statusLabels[id])}</span>
-                      <span className={`text-[10px] tabular-nums ${isSelected ? 'opacity-90' : 'opacity-60'}`}>
-                        {count}
-                      </span>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
+          {/* 5. AI Features & Usage */}
+          <div className="rounded-lg border border-border/40 bg-card/40 overflow-hidden">
+            {renderSectionHeader(
+              'ai',
+              t('filters.group_ai', 'AI Features & Usage'),
+              <Cpu className="w-3.5 h-3.5" />,
+              aiActiveCount
+            )}
+            {openSections.ai && (
+              <div className="px-2.5 pb-2.5 pt-1 grid grid-cols-1 md:grid-cols-2 gap-2.5">
+                {/* AI Utilization */}
+                <div className="space-y-1">
+                  <p className="text-[11px] font-medium text-muted-foreground">
+                    {t('labels.features', 'Features')} (AI)
+                  </p>
+                  <div className="space-y-1">
+                    {aiUtilizations.map(({ id, count }) => {
+                      const isSelected = filters.aiUtilization.includes(id);
+                      return (
+                        <label
+                          key={id}
+                          className={`flex items-center justify-between p-1.5 rounded-md border text-xs cursor-pointer transition-colors ${
+                            isSelected ? 'bg-accent/70 border-primary/40 font-medium' : 'hover:bg-muted/30 border-transparent'
+                          }`}
+                        >
+                          <div className="flex items-center gap-2">
+                            <Checkbox
+                              checked={isSelected}
+                              onCheckedChange={() => update({ aiUtilization: toggleItem(filters.aiUtilization, id) })}
+                            />
+                            <span>{t(`ai_utilization.${id}`, aiUtilizationLabels[id])}</span>
+                          </div>
+                          <span className="text-[10px] text-muted-foreground tabular-nums">{count}</span>
+                        </label>
+                      );
+                    })}
+                  </div>
+                </div>
 
-            {/* Project Type */}
-            <div className="space-y-1">
-              <p className="text-xs text-muted-foreground">{t('filters.project_type', 'Project Type')}:</p>
-              <div className="flex flex-wrap gap-1.5">
-                {projectTypes.map(({ id, count }) => {
-                  const isSelected = filters.projectTypes.includes(id);
-                  return (
-                    <button
-                      key={id}
-                      type="button"
-                      onClick={() => update({ projectTypes: toggleItem(filters.projectTypes, id) })}
-                      className={`px-2.5 py-1 rounded-md text-xs transition-all border flex items-center gap-1.5 ${
-                        isSelected
-                          ? 'bg-primary text-primary-foreground border-primary font-medium'
-                          : 'bg-muted/40 border-border/40 text-muted-foreground hover:text-foreground hover:bg-muted'
-                      }`}
-                    >
-                      <span>{t(`project_types.${id}`, projectTypeLabels[id])}</span>
-                      <span className={`text-[10px] tabular-nums ${isSelected ? 'opacity-90' : 'opacity-60'}`}>
-                        {count}
-                      </span>
-                    </button>
-                  );
-                })}
+                {/* AI Usage */}
+                <div className="space-y-1">
+                  <p className="text-[11px] font-medium text-muted-foreground">
+                    {t('labels.built_with', 'Built with')} (AI)
+                  </p>
+                  <div className="space-y-1">
+                    {aiUsages.map(({ id, count }) => {
+                      const isSelected = filters.aiUsage.includes(id);
+                      return (
+                        <label
+                          key={id}
+                          className={`flex items-center justify-between p-1.5 rounded-md border text-xs cursor-pointer transition-colors ${
+                            isSelected ? 'bg-accent/70 border-primary/40 font-medium' : 'hover:bg-muted/30 border-transparent'
+                          }`}
+                        >
+                          <div className="flex items-center gap-2">
+                            <Checkbox
+                              checked={isSelected}
+                              onCheckedChange={() => update({ aiUsage: toggleItem(filters.aiUsage, id) })}
+                            />
+                            <span>{t(`ai_usage.${id}`, aiUsageLabels[id])}</span>
+                          </div>
+                          <span className="text-[10px] text-muted-foreground tabular-nums">{count}</span>
+                        </label>
+                      );
+                    })}
+                  </div>
+                </div>
               </div>
-            </div>
+            )}
+          </div>
+
+          {/* 6. Project Details */}
+          <div className="rounded-lg border border-border/40 bg-card/40 overflow-hidden">
+            {renderSectionHeader(
+              'details',
+              t('filters.group_details', 'Project Details'),
+              <Lock className="w-3.5 h-3.5" />,
+              detailsActiveCount
+            )}
+            {openSections.details && (
+              <div className="px-2.5 pb-2.5 pt-1 space-y-2.5">
+                {/* Source Availability */}
+                <div className="space-y-1">
+                  <p className="text-xs text-muted-foreground">{t('filters.source_type', 'Source Availability')}:</p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {sourceTypes.map(({ id, count }) => {
+                      const isSelected = filters.sourceTypes.includes(id);
+                      return (
+                        <button
+                          key={id}
+                          type="button"
+                          onClick={() => update({ sourceTypes: toggleItem(filters.sourceTypes, id) })}
+                          className={`px-2 py-0.5 rounded-md text-xs transition-all border flex items-center gap-1.5 ${
+                            isSelected
+                              ? 'bg-primary text-primary-foreground border-primary font-medium'
+                              : 'bg-muted/40 border-border/40 text-muted-foreground hover:text-foreground hover:bg-muted'
+                          }`}
+                        >
+                          <span>{t(`source_types.${id}`, sourceTypeLabels[id])}</span>
+                          <span className={`text-[10px] tabular-nums ${isSelected ? 'opacity-90' : 'opacity-60'}`}>
+                            {count}
+                          </span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Role */}
+                <div className="space-y-1">
+                  <p className="text-xs text-muted-foreground">{t('filters.role', 'Role')}:</p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {roles.map(({ id, count }) => {
+                      const isSelected = filters.roles.includes(id);
+                      return (
+                        <button
+                          key={id}
+                          type="button"
+                          onClick={() => update({ roles: toggleItem(filters.roles, id) })}
+                          className={`px-2 py-0.5 rounded-md text-xs transition-all border flex items-center gap-1.5 ${
+                            isSelected
+                              ? 'bg-primary text-primary-foreground border-primary font-medium'
+                              : 'bg-muted/40 border-border/40 text-muted-foreground hover:text-foreground hover:bg-muted'
+                          }`}
+                        >
+                          <span>{t(`roles.${id}`, roleLabels[id])}</span>
+                          <span className={`text-[10px] tabular-nums ${isSelected ? 'opacity-90' : 'opacity-60'}`}>
+                            {count}
+                          </span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Status */}
+                <div className="space-y-1">
+                  <p className="text-xs text-muted-foreground">{t('filters.status', 'Status')}:</p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {statuses.map(({ id, count }) => {
+                      const isSelected = filters.statuses.includes(id);
+                      return (
+                        <button
+                          key={id}
+                          type="button"
+                          onClick={() => update({ statuses: toggleItem(filters.statuses, id) })}
+                          className={`px-2 py-0.5 rounded-md text-xs transition-all border flex items-center gap-1.5 ${
+                            isSelected
+                              ? 'bg-primary text-primary-foreground border-primary font-medium'
+                              : 'bg-muted/40 border-border/40 text-muted-foreground hover:text-foreground hover:bg-muted'
+                          }`}
+                        >
+                          <span>{t(`statuses.${id}`, statusLabels[id])}</span>
+                          <span className={`text-[10px] tabular-nums ${isSelected ? 'opacity-90' : 'opacity-60'}`}>
+                            {count}
+                          </span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Project Type */}
+                <div className="space-y-1">
+                  <p className="text-xs text-muted-foreground">{t('filters.project_type', 'Project Type')}:</p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {projectTypes.map(({ id, count }) => {
+                      const isSelected = filters.projectTypes.includes(id);
+                      return (
+                        <button
+                          key={id}
+                          type="button"
+                          onClick={() => update({ projectTypes: toggleItem(filters.projectTypes, id) })}
+                          className={`px-2 py-0.5 rounded-md text-xs transition-all border flex items-center gap-1.5 ${
+                            isSelected
+                              ? 'bg-primary text-primary-foreground border-primary font-medium'
+                              : 'bg-muted/40 border-border/40 text-muted-foreground hover:text-foreground hover:bg-muted'
+                          }`}
+                        >
+                          <span>{t(`project_types.${id}`, projectTypeLabels[id])}</span>
+                          <span className={`text-[10px] tabular-nums ${isSelected ? 'opacity-90' : 'opacity-60'}`}>
+                            {count}
+                          </span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </ScrollArea>
 
       {/* Footer count indicator */}
-      <div className="p-3 border-t border-border/40 bg-muted/20 flex items-center justify-between text-xs text-muted-foreground shrink-0">
+      <div className="p-2.5 border-t border-border/40 bg-muted/20 flex items-center justify-between text-xs text-muted-foreground shrink-0">
         <span>
           {t('header.showing', 'Showing')}{' '}
           <strong className="text-foreground font-semibold">{filteredCount}</strong>{' '}
@@ -580,6 +680,13 @@ export function ProjectFilters({
     <Button
       variant="outline"
       size="sm"
+      onClick={(e) => {
+        if (isOpen) return;
+        if (Date.now() - lastCloseTimeRef.current < 250) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+      }}
       className={`h-9 gap-2 text-xs font-medium border-border/70 hover:border-primary/40 shrink-0 ${
         activeCount > 0 ? 'border-primary/40 bg-primary/5 text-primary' : ''
       }`}
@@ -596,9 +703,9 @@ export function ProjectFilters({
 
   if (isMobile) {
     return (
-      <Sheet open={isOpen} onOpenChange={setIsOpen}>
+      <Sheet open={isOpen} onOpenChange={handleOpenChange}>
         <SheetTrigger asChild>{filterTriggerButton}</SheetTrigger>
-        <SheetContent side="bottom" className="p-0 h-[85vh] rounded-t-xl overflow-hidden">
+        <SheetContent side="bottom" className="p-0 h-[80vh] max-h-[580px] rounded-t-xl overflow-hidden">
           <SheetHeader className="sr-only">
             <SheetTitle>{t('filters.filter_projects', 'Filter Projects')}</SheetTitle>
           </SheetHeader>
@@ -609,9 +716,19 @@ export function ProjectFilters({
   }
 
   return (
-    <Popover open={isOpen} onOpenChange={setIsOpen}>
+    <Popover open={isOpen} onOpenChange={handleOpenChange}>
       <PopoverTrigger asChild>{filterTriggerButton}</PopoverTrigger>
-      <PopoverContent align="end" className="w-[460px] max-w-[95vw] p-0 shadow-xl border-border/60">
+      <PopoverContent
+        align="end"
+        side="bottom"
+        sideOffset={6}
+        collisionPadding={16}
+        avoidCollisions={true}
+        onPointerDownOutside={() => {
+          lastCloseTimeRef.current = Date.now();
+        }}
+        className="w-[420px] max-w-[95vw] p-0 shadow-xl border-border/60"
+      >
         {filterPanelContent}
       </PopoverContent>
     </Popover>

@@ -12,7 +12,7 @@ import {
   getActiveFilterCount,
 } from '@/lib/filters';
 import headerConfig from '../config/portfolio-header.json';
-import type { Project } from '@/types/project';
+import type { Project, ProjectCategory } from '@/types/project';
 import { fetchStats, mergeStatsWithProjects } from '@/lib/stats';
 import { initializeTheme } from '@/lib/theme';
 import { 
@@ -227,6 +227,25 @@ function App() {
 
   const hasActiveFilters = getActiveFilterCount(filters) > 0 || Boolean(searchQuery.trim());
 
+  // Categories present across localized projects
+  const availableCategories = useMemo(() => {
+    const counts: Record<string, number> = {};
+    localizedProjects.forEach(p => {
+      counts[p.category] = (counts[p.category] || 0) + 1;
+    });
+    return (Object.keys(categoryLabels) as ProjectCategory[])
+      .filter(cat => (counts[cat] || 0) > 0)
+      .map(cat => ({ id: cat, count: counts[cat] || 0 }))
+      .sort((a, b) => b.count - a.count);
+  }, [localizedProjects]);
+
+  const handleCategoryToggle = (catId: ProjectCategory) => {
+    const newCategories = filters.categories.includes(catId)
+      ? filters.categories.filter(c => c !== catId)
+      : [...filters.categories, catId];
+    updateFiltersAndUrl({ ...filters, categories: newCategories });
+  };
+
   // Group filtered projects by projectType
   const groupedProjects = useMemo(() => {
     const groups: Record<string, Project[]> = {
@@ -434,25 +453,63 @@ function App() {
         <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 md:py-5">
           {/* Search and Filters bar */}
           <div className="flex items-center gap-2 mb-2.5">
-            {/* Search */}
-            <div className="relative flex-1">
+            {/* Search: flex-1 on mobile, neat max-width on desktop */}
+            <div className="relative flex-1 md:flex-initial md:w-64 lg:w-72 shrink-0">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
               <Input
                 type="text"
                 placeholder={t('header.search_placeholder', 'Search projects, technologies, descriptions...')}
                 value={searchQuery}
                 onChange={(e) => handleSearchChange(e.target.value)}
-                className="pl-10 pr-10 h-9 text-sm bg-card/60 border-border/70 shadow-xs"
+                className="pl-9 pr-8 h-9 text-sm bg-card/60 border-border/70 shadow-xs"
               />
               {searchQuery && (
                 <button
                   type="button"
                   onClick={() => handleSearchChange('')}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  <X className="w-4 h-4" />
+                  <X className="w-3.5 h-3.5" />
                 </button>
               )}
+            </div>
+
+            {/* Desktop Inline Category Quick Filters (visible on md screens and above) */}
+            <div className="hidden md:flex flex-1 items-center gap-1.5 overflow-x-auto no-scrollbar min-w-0 py-0.5">
+              {/* All Projects button */}
+              <button
+                type="button"
+                onClick={() => updateFiltersAndUrl({ ...filters, categories: [] })}
+                className={`px-2.5 py-1.5 rounded-md text-xs font-medium transition-all shrink-0 border ${
+                  filters.categories.length === 0
+                    ? 'bg-primary text-primary-foreground border-primary shadow-xs'
+                    : 'bg-muted/40 hover:bg-muted text-muted-foreground hover:text-foreground border-border/50'
+                }`}
+              >
+                {t('filters.all', 'All')}
+              </button>
+
+              {/* Category buttons */}
+              {availableCategories.map(({ id, count }) => {
+                const isSelected = filters.categories.includes(id);
+                return (
+                  <button
+                    key={id}
+                    type="button"
+                    onClick={() => handleCategoryToggle(id)}
+                    className={`px-2.5 py-1.5 rounded-md text-xs font-medium transition-all shrink-0 border flex items-center gap-1.5 ${
+                      isSelected
+                        ? 'bg-primary text-primary-foreground border-primary shadow-xs'
+                        : 'bg-muted/40 hover:bg-muted text-muted-foreground hover:text-foreground border-border/50'
+                    }`}
+                  >
+                    <span>{t(`categories.${id}`, categoryLabels[id])}</span>
+                    <span className={`text-[10px] tabular-nums ${isSelected ? 'opacity-90' : 'opacity-60'}`}>
+                      {count}
+                    </span>
+                  </button>
+                );
+              })}
             </div>
 
             {/* Faceted Filter Component (Popover on desktop, Sheet on mobile) */}
