@@ -131,6 +131,7 @@ function App() {
   const [projectsWithStats, setProjectsWithStats] = useState<Project[]>(projects);
   const localizedProjects = useLocalizedProjects(projectsWithStats);
   const closeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const lastCloseTimeRef = useRef(0);
 
   // Initialize theme on mount
   useEffect(() => {
@@ -225,6 +226,10 @@ function App() {
   const totalLOC = Object.values(locByLanguage).reduce((sum, count) => sum + count, 0);
 
   const handleProjectClick = (project: Project) => {
+    // Ignore click-through immediately after closing a modal
+    if (Date.now() - lastCloseTimeRef.current < 400) {
+      return;
+    }
     if (closeTimeoutRef.current) {
       clearTimeout(closeTimeoutRef.current);
       closeTimeoutRef.current = null;
@@ -235,6 +240,10 @@ function App() {
   };
 
   const handleProjectMediaClick = (project: Project) => {
+    // Ignore click-through immediately after closing a modal
+    if (Date.now() - lastCloseTimeRef.current < 400) {
+      return;
+    }
     if (closeTimeoutRef.current) {
       clearTimeout(closeTimeoutRef.current);
       closeTimeoutRef.current = null;
@@ -256,6 +265,7 @@ function App() {
   };
 
   const handleCloseModal = () => {
+    lastCloseTimeRef.current = Date.now();
     if (closeTimeoutRef.current) {
       clearTimeout(closeTimeoutRef.current);
     }
@@ -263,7 +273,7 @@ function App() {
     closeTimeoutRef.current = setTimeout(() => {
       setSelectedProject(null);
       closeTimeoutRef.current = null;
-    }, 300);
+    }, 250);
   };
 
   return (

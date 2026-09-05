@@ -393,10 +393,6 @@ export function ProjectDetailModal({ project: rawProject, isOpen, onClose, onPro
       <Dialog open={isOpen} onOpenChange={(open) => { if (!open) onClose(); }}>
         <DialogContent 
           onOpenAutoFocus={(e) => e.preventDefault()}
-          onPointerDownOutside={(e) => {
-            e.preventDefault();
-            onClose();
-          }}
           className="w-[90vw] max-w-[90vw] md:max-w-[85vw] lg:max-w-[80vw] xl:max-w-7xl h-[88vh] max-h-[88vh] p-0 overflow-hidden bg-background/95 backdrop-blur-xl border border-border/50 rounded-xl flex flex-col"
         >
           {/* Header */}
