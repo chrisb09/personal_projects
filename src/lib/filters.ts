@@ -22,6 +22,7 @@ export interface FilterState {
   academicOnly: boolean;
   hasStars: boolean;
   hasMedia: boolean;
+  hasDemo: boolean;
 }
 
 export const defaultFilterState: FilterState = {
@@ -37,6 +38,7 @@ export const defaultFilterState: FilterState = {
   academicOnly: false,
   hasStars: false,
   hasMedia: false,
+  hasDemo: false,
 };
 
 // Normalized list of recognized programming languages (excludes non-code formats like Markdown, XML, JSON, etc.)
@@ -64,6 +66,10 @@ export function projectHasMedia(project: Project): boolean {
 
 export function projectHasStars(project: Project): boolean {
   return (project.stats?.stars || 0) > 0;
+}
+
+export function projectHasDemo(project: Project): boolean {
+  return Boolean(project.demoUrl || project.liveUrl);
 }
 
 export function projectHasLanguage(project: Project, lang: string): boolean {
@@ -173,6 +179,10 @@ export function matchesFilters(
     return false;
   }
 
+  if (filters.hasDemo && !projectHasDemo(project)) {
+    return false;
+  }
+
   return true;
 }
 
@@ -189,7 +199,8 @@ export function getActiveFilterCount(filters: FilterState): number {
     filters.technologies.length +
     (filters.academicOnly ? 1 : 0) +
     (filters.hasStars ? 1 : 0) +
-    (filters.hasMedia ? 1 : 0)
+    (filters.hasMedia ? 1 : 0) +
+    (filters.hasDemo ? 1 : 0)
   );
 }
 
@@ -215,6 +226,7 @@ export function parseFiltersFromUrl(queryString: string): { filters: FilterState
   filters.academicOnly = params.get('academic') === '1' || params.get('academic') === 'true';
   filters.hasStars = params.get('stars') === '1' || params.get('stars') === 'true';
   filters.hasMedia = params.get('media') === '1' || params.get('media') === 'true';
+  filters.hasDemo = params.get('demo') === '1' || params.get('demo') === 'true';
 
   const search = params.get('q') || '';
   return { filters, search };
@@ -246,6 +258,7 @@ export function filtersToSearchParams(filters: FilterState, searchQuery: string)
   if (filters.academicOnly) params.set('academic', '1');
   if (filters.hasStars) params.set('stars', '1');
   if (filters.hasMedia) params.set('media', '1');
+  if (filters.hasDemo) params.set('demo', '1');
 
   return params;
 }

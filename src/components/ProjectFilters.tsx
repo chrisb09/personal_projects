@@ -1,4 +1,4 @@
-import { useState, useMemo, useRef } from 'react';
+import { useState, useMemo, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   SlidersHorizontal,
@@ -14,6 +14,7 @@ import {
   Code2,
   Lock,
   ChevronDown,
+  Globe,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -40,6 +41,7 @@ import {
   getFacetStats,
   projectHasMedia,
   projectHasStars,
+  projectHasDemo,
 } from '@/lib/filters';
 
 interface ProjectFiltersProps {
@@ -62,6 +64,16 @@ export function ProjectFilters({
   const [techSearch, setTechSearch] = useState('');
   const [isOpen, setIsOpen] = useState(false);
   const lastCloseTimeRef = useRef<number>(0);
+
+  // Close popover on page scroll to eliminate lag/jumping
+  useEffect(() => {
+    if (!isOpen || isMobile) return;
+    const handleScroll = () => {
+      setIsOpen(false);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [isOpen, isMobile]);
 
   // Track expanded / collapsed state for each facet group
   const [openSections, setOpenSections] = useState<Record<string, boolean>>({
@@ -173,6 +185,7 @@ export function ProjectFilters({
   // Counts for signal toggles
   const starsCount = useMemo(() => projects.filter(projectHasStars).length, [projects]);
   const mediaCount = useMemo(() => projects.filter(projectHasMedia).length, [projects]);
+  const demoCount = useMemo(() => projects.filter(projectHasDemo).length, [projects]);
   const academicCount = useMemo(() => projects.filter(p => p.academic).length, [projects]);
 
   // Filtered technologies by search input
@@ -198,7 +211,11 @@ export function ProjectFilters({
   };
 
   // Active filter count per section
-  const signalsActiveCount = (filters.hasStars ? 1 : 0) + (filters.hasMedia ? 1 : 0) + (filters.academicOnly ? 1 : 0);
+  const signalsActiveCount =
+    (filters.hasStars ? 1 : 0) +
+    (filters.hasMedia ? 1 : 0) +
+    (filters.hasDemo ? 1 : 0) +
+    (filters.academicOnly ? 1 : 0);
   const categoriesActiveCount = filters.categories.length;
   const languagesActiveCount = filters.languages.length;
   const technologiesActiveCount = filters.technologies.length;
@@ -240,8 +257,10 @@ export function ProjectFilters({
 
   // Reusable facet panel content
   const filterPanelContent = (
-    <div className="flex flex-col h-full max-h-[min(480px,65vh)]">
-      {/* Header with Title, Expand/Collapse, and Reset */}
+    <div className={`flex flex-col h-full ${
+      isMobile ? '' : 'max-h-[min(440px,calc(var(--radix-popover-content-available-height,440px)-16px))]'
+    }`}>
+      {/* Header with Title, Expand/Collapse, Reset, and optional mobile Close */}
       <div className="flex items-center justify-between px-3.5 py-2.5 border-b border-border/40 shrink-0">
         <div className="flex items-center gap-2">
           <SlidersHorizontal className="w-4 h-4 text-primary" />
@@ -276,22 +295,36 @@ export function ProjectFilters({
               </Button>
             </>
           )}
+          {isMobile && (
+            <>
+              <span className="text-border/60 text-xs">|</span>
+              <button
+                type="button"
+                onClick={() => setIsOpen(false)}
+                className="p-1 text-muted-foreground hover:text-foreground transition-colors rounded"
+                aria-label="Close"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </>
+          )}
         </div>
       </div>
 
       {/* Scrollable Facet Body */}
-      <ScrollArea className="flex-1 px-3 py-2 overflow-y-auto">
+      <ScrollArea className="flex-1 min-h-0 px-3 py-2 overflow-y-auto">
         <div className="space-y-1.5 pb-2">
-          {/* 1. Media & Signals */}
+          {/* 1. Quick Filter (Media & Signals) */}
           <div className="rounded-lg border border-border/40 bg-card/40 overflow-hidden">
             {renderSectionHeader(
               'signals',
-              t('filters.group_signals', 'Media & Signals'),
+              t('filters.group_signals', 'Quick Filter'),
               <Sparkles className="w-3.5 h-3.5" />,
               signalsActiveCount
             )}
             {openSections.signals && (
               <div className="px-2.5 pb-2.5 pt-1 grid grid-cols-2 gap-1.5">
+                {/* Has Git Stars */}
                 <button
                   type="button"
                   onClick={() => update({ hasStars: !filters.hasStars })}
@@ -303,11 +336,12 @@ export function ProjectFilters({
                 >
                   <div className="flex items-center gap-1.5">
                     <Star className="w-3.5 h-3.5 text-amber-500" />
-                    <span>{t('filters.has_stars', 'Has Stars')}</span>
+                    <span>{t('filters.has_stars', 'Has Git Stars')}</span>
                   </div>
                   <span className="text-[10px] opacity-75 tabular-nums">{starsCount}</span>
                 </button>
 
+                {/* Has Media */}
                 <button
                   type="button"
                   onClick={() => update({ hasMedia: !filters.hasMedia })}
@@ -324,10 +358,28 @@ export function ProjectFilters({
                   <span className="text-[10px] opacity-75 tabular-nums">{mediaCount}</span>
                 </button>
 
+                {/* Has Demo */}
+                <button
+                  type="button"
+                  onClick={() => update({ hasDemo: !filters.hasDemo })}
+                  className={`flex items-center justify-between p-2 rounded-lg border text-xs text-left transition-all ${
+                    filters.hasDemo
+                      ? 'bg-blue-500/10 border-blue-500/30 text-blue-600 dark:text-blue-400 font-medium'
+                      : 'bg-muted/30 border-border/40 hover:bg-muted/60 text-muted-foreground'
+                  }`}
+                >
+                  <div className="flex items-center gap-1.5">
+                    <Globe className="w-3.5 h-3.5 text-blue-500" />
+                    <span>{t('filters.has_demo', 'Has Demo')}</span>
+                  </div>
+                  <span className="text-[10px] opacity-75 tabular-nums">{demoCount}</span>
+                </button>
+
+                {/* Academic Projects */}
                 <button
                   type="button"
                   onClick={() => update({ academicOnly: !filters.academicOnly })}
-                  className={`flex items-center justify-between p-2 rounded-lg border text-xs text-left transition-all col-span-2 ${
+                  className={`flex items-center justify-between p-2 rounded-lg border text-xs text-left transition-all ${
                     filters.academicOnly
                       ? 'bg-teal-500/10 border-teal-500/30 text-teal-600 dark:text-teal-400 font-medium'
                       : 'bg-muted/30 border-border/40 hover:bg-muted/60 text-muted-foreground'
@@ -663,7 +715,7 @@ export function ProjectFilters({
       </ScrollArea>
 
       {/* Footer count indicator */}
-      <div className="p-2.5 border-t border-border/40 bg-muted/20 flex items-center justify-between text-xs text-muted-foreground shrink-0">
+      <div className="p-3 border-t border-border/40 bg-muted/20 flex items-center justify-between text-xs text-muted-foreground shrink-0 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
         <span>
           {t('header.showing', 'Showing')}{' '}
           <strong className="text-foreground font-semibold">{filteredCount}</strong>{' '}
@@ -705,7 +757,11 @@ export function ProjectFilters({
     return (
       <Sheet open={isOpen} onOpenChange={handleOpenChange}>
         <SheetTrigger asChild>{filterTriggerButton}</SheetTrigger>
-        <SheetContent side="bottom" className="p-0 h-[80vh] max-h-[580px] rounded-t-xl overflow-hidden">
+        <SheetContent
+          side="bottom"
+          showCloseButton={false}
+          className="p-0 h-[80vh] max-h-[580px] rounded-t-xl overflow-hidden flex flex-col"
+        >
           <SheetHeader className="sr-only">
             <SheetTitle>{t('filters.filter_projects', 'Filter Projects')}</SheetTitle>
           </SheetHeader>
@@ -722,12 +778,12 @@ export function ProjectFilters({
         align="end"
         side="bottom"
         sideOffset={6}
-        collisionPadding={16}
+        collisionPadding={20}
         avoidCollisions={true}
         onPointerDownOutside={() => {
           lastCloseTimeRef.current = Date.now();
         }}
-        className="w-[420px] max-w-[95vw] p-0 shadow-xl border-border/60"
+        className="w-[420px] max-w-[95vw] p-0 shadow-xl border-border/60 max-h-[calc(var(--radix-popover-content-available-height,500px)-16px)]"
       >
         {filterPanelContent}
       </PopoverContent>

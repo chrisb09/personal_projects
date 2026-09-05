@@ -10,6 +10,9 @@ import {
   parseFiltersFromUrl,
   filtersToSearchParams,
   getActiveFilterCount,
+  projectHasStars,
+  projectHasMedia,
+  projectHasDemo,
 } from '@/lib/filters';
 import headerConfig from '../config/portfolio-header.json';
 import type { Project, ProjectCategory } from '@/types/project';
@@ -62,6 +65,7 @@ import {
   RotateCcw,
   SlidersHorizontal,
   Image as ImageIcon,
+  Globe,
 } from 'lucide-react';
 
 const iconMap: Record<string, React.ComponentType<any>> = {
@@ -227,24 +231,11 @@ function App() {
 
   const hasActiveFilters = getActiveFilterCount(filters) > 0 || Boolean(searchQuery.trim());
 
-  // Categories present across localized projects
-  const availableCategories = useMemo(() => {
-    const counts: Record<string, number> = {};
-    localizedProjects.forEach(p => {
-      counts[p.category] = (counts[p.category] || 0) + 1;
-    });
-    return (Object.keys(categoryLabels) as ProjectCategory[])
-      .filter(cat => (counts[cat] || 0) > 0)
-      .map(cat => ({ id: cat, count: counts[cat] || 0 }))
-      .sort((a, b) => b.count - a.count);
-  }, [localizedProjects]);
-
-  const handleCategoryToggle = (catId: ProjectCategory) => {
-    const newCategories = filters.categories.includes(catId)
-      ? filters.categories.filter(c => c !== catId)
-      : [...filters.categories, catId];
-    updateFiltersAndUrl({ ...filters, categories: newCategories });
-  };
+  // Quick Filter counts for desktop toolbar
+  const starsCount = useMemo(() => localizedProjects.filter(projectHasStars).length, [localizedProjects]);
+  const mediaCount = useMemo(() => localizedProjects.filter(projectHasMedia).length, [localizedProjects]);
+  const demoCount = useMemo(() => localizedProjects.filter(projectHasDemo).length, [localizedProjects]);
+  const academicCount = useMemo(() => localizedProjects.filter(p => p.academic).length, [localizedProjects]);
 
   // Group filtered projects by projectType
   const groupedProjects = useMemo(() => {
@@ -474,42 +465,75 @@ function App() {
               )}
             </div>
 
-            {/* Desktop Inline Category Quick Filters (visible on md screens and above) */}
+            {/* Desktop Inline Quick Filters (visible on md screens and above) */}
             <div className="hidden md:flex flex-1 items-center gap-1.5 overflow-x-auto no-scrollbar min-w-0 py-0.5">
-              {/* All Projects button */}
+              {/* Has Git Stars */}
               <button
                 type="button"
-                onClick={() => updateFiltersAndUrl({ ...filters, categories: [] })}
-                className={`px-2.5 py-1.5 rounded-md text-xs font-medium transition-all shrink-0 border ${
-                  filters.categories.length === 0
-                    ? 'bg-primary text-primary-foreground border-primary shadow-xs'
+                onClick={() => updateFiltersAndUrl({ ...filters, hasStars: !filters.hasStars })}
+                className={`px-2.5 py-1.5 rounded-md text-xs font-medium transition-all shrink-0 border flex items-center gap-1.5 ${
+                  filters.hasStars
+                    ? 'bg-amber-500/10 border-amber-500/30 text-amber-600 dark:text-amber-400 shadow-xs'
                     : 'bg-muted/40 hover:bg-muted text-muted-foreground hover:text-foreground border-border/50'
                 }`}
               >
-                {t('filters.all', 'All')}
+                <Star className={`w-3.5 h-3.5 ${filters.hasStars ? 'text-amber-500 fill-amber-500' : 'text-amber-500'}`} />
+                <span>{t('filters.has_stars', 'Has Git Stars')}</span>
+                <span className={`text-[10px] tabular-nums ${filters.hasStars ? 'opacity-90' : 'opacity-60'}`}>
+                  {starsCount}
+                </span>
               </button>
 
-              {/* Category buttons */}
-              {availableCategories.map(({ id, count }) => {
-                const isSelected = filters.categories.includes(id);
-                return (
-                  <button
-                    key={id}
-                    type="button"
-                    onClick={() => handleCategoryToggle(id)}
-                    className={`px-2.5 py-1.5 rounded-md text-xs font-medium transition-all shrink-0 border flex items-center gap-1.5 ${
-                      isSelected
-                        ? 'bg-primary text-primary-foreground border-primary shadow-xs'
-                        : 'bg-muted/40 hover:bg-muted text-muted-foreground hover:text-foreground border-border/50'
-                    }`}
-                  >
-                    <span>{t(`categories.${id}`, categoryLabels[id])}</span>
-                    <span className={`text-[10px] tabular-nums ${isSelected ? 'opacity-90' : 'opacity-60'}`}>
-                      {count}
-                    </span>
-                  </button>
-                );
-              })}
+              {/* Has Media */}
+              <button
+                type="button"
+                onClick={() => updateFiltersAndUrl({ ...filters, hasMedia: !filters.hasMedia })}
+                className={`px-2.5 py-1.5 rounded-md text-xs font-medium transition-all shrink-0 border flex items-center gap-1.5 ${
+                  filters.hasMedia
+                    ? 'bg-purple-500/10 border-purple-500/30 text-purple-600 dark:text-purple-400 shadow-xs'
+                    : 'bg-muted/40 hover:bg-muted text-muted-foreground hover:text-foreground border-border/50'
+                }`}
+              >
+                <ImageIcon className="w-3.5 h-3.5 text-purple-500" />
+                <span>{t('filters.has_media', 'Has Media')}</span>
+                <span className={`text-[10px] tabular-nums ${filters.hasMedia ? 'opacity-90' : 'opacity-60'}`}>
+                  {mediaCount}
+                </span>
+              </button>
+
+              {/* Has Demo */}
+              <button
+                type="button"
+                onClick={() => updateFiltersAndUrl({ ...filters, hasDemo: !filters.hasDemo })}
+                className={`px-2.5 py-1.5 rounded-md text-xs font-medium transition-all shrink-0 border flex items-center gap-1.5 ${
+                  filters.hasDemo
+                    ? 'bg-blue-500/10 border-blue-500/30 text-blue-600 dark:text-blue-400 shadow-xs'
+                    : 'bg-muted/40 hover:bg-muted text-muted-foreground hover:text-foreground border-border/50'
+                }`}
+              >
+                <Globe className="w-3.5 h-3.5 text-blue-500" />
+                <span>{t('filters.has_demo', 'Has Demo')}</span>
+                <span className={`text-[10px] tabular-nums ${filters.hasDemo ? 'opacity-90' : 'opacity-60'}`}>
+                  {demoCount}
+                </span>
+              </button>
+
+              {/* Academic Projects */}
+              <button
+                type="button"
+                onClick={() => updateFiltersAndUrl({ ...filters, academicOnly: !filters.academicOnly })}
+                className={`px-2.5 py-1.5 rounded-md text-xs font-medium transition-all shrink-0 border flex items-center gap-1.5 ${
+                  filters.academicOnly
+                    ? 'bg-teal-500/10 border-teal-500/30 text-teal-600 dark:text-teal-400 shadow-xs'
+                    : 'bg-muted/40 hover:bg-muted text-muted-foreground hover:text-foreground border-border/50'
+                }`}
+              >
+                <BookOpen className="w-3.5 h-3.5 text-teal-500" />
+                <span>{t('filters.academic_only', 'Academic Projects')}</span>
+                <span className={`text-[10px] tabular-nums ${filters.academicOnly ? 'opacity-90' : 'opacity-60'}`}>
+                  {academicCount}
+                </span>
+              </button>
             </div>
 
             {/* Faceted Filter Component (Popover on desktop, Sheet on mobile) */}
@@ -765,7 +789,7 @@ function App() {
                   className="h-6 gap-1 px-2 text-[11px] font-normal border border-amber-500/30 text-amber-600 dark:text-amber-400 bg-amber-500/10"
                 >
                   <Star className="w-3 h-3 text-amber-500 fill-amber-500" />
-                  <span>{t('filters.has_stars', 'Has Stars')}</span>
+                  <span>{t('filters.has_stars', 'Has Git Stars')}</span>
                   <button
                     type="button"
                     onClick={() => updateFiltersAndUrl({ ...filters, hasStars: false })}
@@ -788,6 +812,24 @@ function App() {
                     type="button"
                     onClick={() => updateFiltersAndUrl({ ...filters, hasMedia: false })}
                     className="ml-0.5 text-purple-600 hover:text-purple-800 dark:text-purple-400"
+                  >
+                    <X className="w-3 h-3" />
+                  </button>
+                </Badge>
+              )}
+
+              {/* Has Demo */}
+              {filters.hasDemo && (
+                <Badge
+                  variant="secondary"
+                  className="h-6 gap-1 px-2 text-[11px] font-normal border border-blue-500/30 text-blue-600 dark:text-blue-400 bg-blue-500/10"
+                >
+                  <Globe className="w-3 h-3 text-blue-500" />
+                  <span>{t('filters.has_demo', 'Has Demo')}</span>
+                  <button
+                    type="button"
+                    onClick={() => updateFiltersAndUrl({ ...filters, hasDemo: false })}
+                    className="ml-0.5 text-blue-600 hover:text-blue-800 dark:text-blue-400"
                   >
                     <X className="w-3 h-3" />
                   </button>
