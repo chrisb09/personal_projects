@@ -2,19 +2,32 @@ import { useState, useMemo, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { projects } from '@/config/projects';
 import { useLocalizedProjects } from '@/lib/localizeProject';
+import { ProjectFilters } from '@/components/ProjectFilters';
+import {
+  type FilterState,
+  defaultFilterState,
+  matchesFilters,
+  parseFiltersFromUrl,
+  filtersToSearchParams,
+  getActiveFilterCount,
+} from '@/lib/filters';
 import headerConfig from '../config/portfolio-header.json';
-import type { Project, ProjectCategory } from '@/types/project';
+import type { Project } from '@/types/project';
 import { fetchStats, mergeStatsWithProjects } from '@/lib/stats';
 import { initializeTheme } from '@/lib/theme';
 import { 
   categoryLabels, 
+  statusLabels,
+  roleLabels,
+  sourceTypeLabels,
   aiUsageLabels, 
   aiUsageColors, 
-  aiUsageDescriptions,
-  aiUtilizationLabels,
-  aiUtilizationColors,
-  aiUtilizationDescriptions,
+  aiUsageDescriptions, 
+  aiUtilizationLabels, 
+  aiUtilizationColors, 
+  aiUtilizationDescriptions, 
   projectTypeLabels,
+  languageColors,
 } from '@/types/project';
 import { ProjectCard } from '@/components/ProjectCard';
 import { ProjectDetailModal } from '@/components/ProjectDetailModal';
@@ -22,6 +35,7 @@ import { ThemeToggle } from '@/components/ThemeToggle';
 import { LanguageSelector } from '@/components/LanguageSelector';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { 
   Tooltip, 
@@ -31,20 +45,23 @@ import {
 } from '@/components/ui/tooltip';
 import { 
   Github, 
-  Gitlab,
-  Linkedin,
+  Gitlab, 
+  Linkedin, 
   Mail, 
-  Search,
-  Code2,
-  X,
-  FolderGit2,
-  Star,
-  GitCommit,
-  Code,
-  Sparkles,
-  Cpu,
-  ExternalLink,
-  BookOpen
+  Search, 
+  Code2, 
+  X, 
+  FolderGit2, 
+  Star, 
+  GitCommit, 
+  Code, 
+  Sparkles, 
+  Cpu, 
+  ExternalLink, 
+  BookOpen,
+  RotateCcw,
+  SlidersHorizontal,
+  Image as ImageIcon,
 } from 'lucide-react';
 
 const iconMap: Record<string, React.ComponentType<any>> = {
@@ -125,9 +142,18 @@ function App() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalInitialTab, setModalInitialTab] = useState('overview');
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState<ProjectCategory | 'all'>('all');
-  const [showAcademicOnly, setShowAcademicOnly] = useState(false);
+  const [filters, setFilters] = useState<FilterState>(() => {
+    if (typeof window !== 'undefined') {
+      return parseFiltersFromUrl(window.location.search).filters;
+    }
+    return defaultFilterState;
+  });
+  const [searchQuery, setSearchQuery] = useState<string>(() => {
+    if (typeof window !== 'undefined') {
+      return parseFiltersFromUrl(window.location.search).search;
+    }
+    return '';
+  });
   const [projectsWithStats, setProjectsWithStats] = useState<Project[]>(projects);
   const localizedProjects = useLocalizedProjects(projectsWithStats);
   const closeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -155,33 +181,51 @@ function App() {
     loadStats();
   }, []);
 
-  // Get unique categories from projects
-  const categories = useMemo(() => {
-    const cats = new Set(localizedProjects.map(p => p.category));
-    return ['all', ...Array.from(cats)] as (ProjectCategory | 'all')[];
-  }, [localizedProjects]);
+  // Sync with browser back/forward buttons
+  useEffect(() => {
+    const handlePopState = () => {
+      const parsed = parseFiltersFromUrl(window.location.search);
+      setFilters(parsed.filters);
+      setSearchQuery(parsed.search);
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
 
-  // Filter projects based on search and category
+  const updateFiltersAndUrl = (newFilters: FilterState) => {
+    setFilters(newFilters);
+    const params = filtersToSearchParams(newFilters, searchQuery);
+    const qs = params.toString();
+    const newUrl = qs ? `${window.location.pathname}?${qs}` : window.location.pathname;
+    if (newUrl !== `${window.location.pathname}${window.location.search}`) {
+      window.history.pushState(null, '', newUrl);
+    }
+  };
+
+  const handleSearchChange = (query: string) => {
+    setSearchQuery(query);
+    const params = filtersToSearchParams(filters, query);
+    const qs = params.toString();
+    const newUrl = qs ? `${window.location.pathname}?${qs}` : window.location.pathname;
+    window.history.replaceState(null, '', newUrl);
+  };
+
+  const handleResetFilters = () => {
+    setFilters(defaultFilterState);
+    setSearchQuery('');
+    if (window.location.search) {
+      window.history.pushState(null, '', window.location.pathname);
+    }
+  };
+
+  // Filter projects based on faceted filters and text search
   const filteredProjects = useMemo(() => {
-    return localizedProjects.filter(project => {
-      const matchesSearch = 
-        searchQuery === '' ||
-        project.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        project.tagline.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        project.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        project.technologies.some(t => t.toLowerCase().includes(searchQuery.toLowerCase()));
-      
-      const matchesCategory = 
-        selectedCategory === 'all' || 
-        project.category === selectedCategory;
-      
-      const matchesAcademic = 
-        !showAcademicOnly || 
-        project.academic === true;
-      
-      return matchesSearch && matchesCategory && matchesAcademic;
-    });
-  }, [localizedProjects, searchQuery, selectedCategory, showAcademicOnly]);
+    return localizedProjects.filter(project =>
+      matchesFilters(project, filters, searchQuery)
+    );
+  }, [localizedProjects, filters, searchQuery]);
+
+  const hasActiveFilters = getActiveFilterCount(filters) > 0 || Boolean(searchQuery.trim());
 
   // Group filtered projects by projectType
   const groupedProjects = useMemo(() => {
@@ -388,21 +432,22 @@ function App() {
 
         {/* Main Content */}
         <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 md:py-5">
-          {/* Filters */}
-          <div className="flex flex-col md:flex-row md:items-center gap-3 mb-3">
+          {/* Search and Filters bar */}
+          <div className="flex items-center gap-2 mb-2.5">
             {/* Search */}
-            <div className="relative flex-1 max-w-md">
+            <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
               <Input
                 type="text"
-                placeholder={t('header.search_placeholder', 'Search projects...')}
+                placeholder={t('header.search_placeholder', 'Search projects, technologies, descriptions...')}
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 pr-10 h-9 text-sm"
+                onChange={(e) => handleSearchChange(e.target.value)}
+                className="pl-10 pr-10 h-9 text-sm bg-card/60 border-border/70 shadow-xs"
               />
               {searchQuery && (
                 <button
-                  onClick={() => setSearchQuery('')}
+                  type="button"
+                  onClick={() => handleSearchChange('')}
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
                 >
                   <X className="w-4 h-4" />
@@ -410,41 +455,300 @@ function App() {
               )}
             </div>
 
-            {/* Category Filters */}
-            <div className="flex flex-wrap gap-1.5 flex-1 items-center justify-start md:justify-end">
-              <button
-                onClick={() => setShowAcademicOnly(!showAcademicOnly)}
-                className={`
-                  px-2.5 py-1.5 rounded-md text-xs font-medium transition-all duration-200 border flex items-center gap-1.5
-                  ${showAcademicOnly 
-                    ? 'bg-teal-500/10 text-teal-600 border-teal-500/30 dark:text-teal-400 shadow-sm' 
-                    : 'bg-muted/50 hover:bg-muted text-muted-foreground hover:text-foreground border-transparent'
-                  }
-                `}
-              >
-                <BookOpen className="w-3.5 h-3.5" />
-                {t('filters.academic_only', 'Academic Projects')}
-              </button>
-
-              <div className="h-4 w-px bg-border/60 mx-1 hidden sm:block" />
-
-              {categories.map((category) => (
-                <button
-                  key={category}
-                  onClick={() => setSelectedCategory(category)}
-                  className={`
-                    px-2.5 py-1.5 rounded-md text-xs font-medium transition-all duration-200 border
-                    ${selectedCategory === category 
-                      ? 'bg-primary/10 text-primary border-primary/30 shadow-sm' 
-                      : 'bg-muted/50 hover:bg-muted text-muted-foreground hover:text-foreground border-transparent'
-                    }
-                  `}
-                >
-                  {category === 'all' ? t('filters.all', 'All') : t(`categories.${category}`, categoryLabels[category])}
-                </button>
-              ))}
-            </div>
+            {/* Faceted Filter Component (Popover on desktop, Sheet on mobile) */}
+            <ProjectFilters
+              filters={filters}
+              onFilterChange={updateFiltersAndUrl}
+              onReset={handleResetFilters}
+              projects={localizedProjects}
+              filteredCount={filteredProjects.length}
+            />
           </div>
+
+          {/* Active Filter Chips Bar */}
+          {hasActiveFilters && (
+            <div className="flex flex-wrap items-center gap-1.5 mb-3 p-2 rounded-lg bg-muted/30 border border-border/40 text-xs">
+              <span className="text-muted-foreground font-medium mr-1 flex items-center gap-1 text-[11px]">
+                <SlidersHorizontal className="w-3 h-3 text-primary" />
+                {t('filters.active_filters', 'Active filters')}:
+              </span>
+
+              {/* Text Search query chip */}
+              {searchQuery.trim() && (
+                <Badge
+                  variant="secondary"
+                  className="h-6 gap-1 px-2 text-[11px] font-normal border border-border/50 bg-background/80"
+                >
+                  <span className="text-muted-foreground text-[10px]">Text:</span>
+                  <span className="font-medium max-w-[120px] truncate">{searchQuery}</span>
+                  <button
+                    type="button"
+                    onClick={() => handleSearchChange('')}
+                    className="ml-0.5 text-muted-foreground hover:text-foreground"
+                  >
+                    <X className="w-3 h-3" />
+                  </button>
+                </Badge>
+              )}
+
+              {/* Categories */}
+              {filters.categories.map(cat => (
+                <Badge
+                  key={cat}
+                  variant="secondary"
+                  className="h-6 gap-1 px-2 text-[11px] font-normal border border-border/50 bg-background/80"
+                >
+                  <span>{t(`categories.${cat}`, categoryLabels[cat])}</span>
+                  <button
+                    type="button"
+                    onClick={() => updateFiltersAndUrl({
+                      ...filters,
+                      categories: filters.categories.filter(c => c !== cat)
+                    })}
+                    className="ml-0.5 text-muted-foreground hover:text-foreground"
+                  >
+                    <X className="w-3 h-3" />
+                  </button>
+                </Badge>
+              ))}
+
+              {/* Project Types */}
+              {filters.projectTypes.map(type => (
+                <Badge
+                  key={type}
+                  variant="secondary"
+                  className="h-6 gap-1 px-2 text-[11px] font-normal border border-border/50 bg-background/80"
+                >
+                  <span>{t(`project_types.${type}`, projectTypeLabels[type])}</span>
+                  <button
+                    type="button"
+                    onClick={() => updateFiltersAndUrl({
+                      ...filters,
+                      projectTypes: filters.projectTypes.filter(t => t !== type)
+                    })}
+                    className="ml-0.5 text-muted-foreground hover:text-foreground"
+                  >
+                    <X className="w-3 h-3" />
+                  </button>
+                </Badge>
+              ))}
+
+              {/* Programming Languages */}
+              {filters.languages.map(lang => (
+                <Badge
+                  key={lang}
+                  variant="secondary"
+                  className="h-6 gap-1 px-2 text-[11px] font-normal border border-border/50 bg-background/80"
+                >
+                  <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ backgroundColor: languageColors[lang] || '#888' }} />
+                  <span>{lang}</span>
+                  <button
+                    type="button"
+                    onClick={() => updateFiltersAndUrl({
+                      ...filters,
+                      languages: filters.languages.filter(l => l !== lang)
+                    })}
+                    className="ml-0.5 text-muted-foreground hover:text-foreground"
+                  >
+                    <X className="w-3 h-3" />
+                  </button>
+                </Badge>
+              ))}
+
+              {/* Technologies */}
+              {filters.technologies.map(tech => (
+                <Badge
+                  key={tech}
+                  variant="secondary"
+                  className="h-6 gap-1 px-2 text-[11px] font-normal border border-border/50 bg-background/80"
+                >
+                  <span>{tech}</span>
+                  <button
+                    type="button"
+                    onClick={() => updateFiltersAndUrl({
+                      ...filters,
+                      technologies: filters.technologies.filter(t => t !== tech)
+                    })}
+                    className="ml-0.5 text-muted-foreground hover:text-foreground"
+                  >
+                    <X className="w-3 h-3" />
+                  </button>
+                </Badge>
+              ))}
+
+              {/* AI Utilization */}
+              {filters.aiUtilization.map(util => (
+                <Badge
+                  key={util}
+                  variant="secondary"
+                  className="h-6 gap-1 px-2 text-[11px] font-normal border border-border/50 bg-background/80"
+                >
+                  <Cpu className="w-3 h-3 text-primary" />
+                  <span>{t(`ai_utilization.${util}`, aiUtilizationLabels[util])}</span>
+                  <button
+                    type="button"
+                    onClick={() => updateFiltersAndUrl({
+                      ...filters,
+                      aiUtilization: filters.aiUtilization.filter(u => u !== util)
+                    })}
+                    className="ml-0.5 text-muted-foreground hover:text-foreground"
+                  >
+                    <X className="w-3 h-3" />
+                  </button>
+                </Badge>
+              ))}
+
+              {/* AI Usage */}
+              {filters.aiUsage.map(usage => (
+                <Badge
+                  key={usage}
+                  variant="secondary"
+                  className="h-6 gap-1 px-2 text-[11px] font-normal border border-border/50 bg-background/80"
+                >
+                  <Sparkles className="w-3 h-3 text-primary" />
+                  <span>{t(`ai_usage.${usage}`, aiUsageLabels[usage])}</span>
+                  <button
+                    type="button"
+                    onClick={() => updateFiltersAndUrl({
+                      ...filters,
+                      aiUsage: filters.aiUsage.filter(u => u !== usage)
+                    })}
+                    className="ml-0.5 text-muted-foreground hover:text-foreground"
+                  >
+                    <X className="w-3 h-3" />
+                  </button>
+                </Badge>
+              ))}
+
+              {/* Roles */}
+              {filters.roles.map(role => (
+                <Badge
+                  key={role}
+                  variant="secondary"
+                  className="h-6 gap-1 px-2 text-[11px] font-normal border border-border/50 bg-background/80"
+                >
+                  <span>{t(`roles.${role}`, roleLabels[role])}</span>
+                  <button
+                    type="button"
+                    onClick={() => updateFiltersAndUrl({
+                      ...filters,
+                      roles: filters.roles.filter(r => r !== role)
+                    })}
+                    className="ml-0.5 text-muted-foreground hover:text-foreground"
+                  >
+                    <X className="w-3 h-3" />
+                  </button>
+                </Badge>
+              ))}
+
+              {/* Source Types */}
+              {filters.sourceTypes.map(st => (
+                <Badge
+                  key={st}
+                  variant="secondary"
+                  className="h-6 gap-1 px-2 text-[11px] font-normal border border-border/50 bg-background/80"
+                >
+                  <span>{t(`source_types.${st}`, sourceTypeLabels[st])}</span>
+                  <button
+                    type="button"
+                    onClick={() => updateFiltersAndUrl({
+                      ...filters,
+                      sourceTypes: filters.sourceTypes.filter(s => s !== st)
+                    })}
+                    className="ml-0.5 text-muted-foreground hover:text-foreground"
+                  >
+                    <X className="w-3 h-3" />
+                  </button>
+                </Badge>
+              ))}
+
+              {/* Statuses */}
+              {filters.statuses.map(st => (
+                <Badge
+                  key={st}
+                  variant="secondary"
+                  className="h-6 gap-1 px-2 text-[11px] font-normal border border-border/50 bg-background/80"
+                >
+                  <span>{t(`statuses.${st}`, statusLabels[st])}</span>
+                  <button
+                    type="button"
+                    onClick={() => updateFiltersAndUrl({
+                      ...filters,
+                      statuses: filters.statuses.filter(s => s !== st)
+                    })}
+                    className="ml-0.5 text-muted-foreground hover:text-foreground"
+                  >
+                    <X className="w-3 h-3" />
+                  </button>
+                </Badge>
+              ))}
+
+              {/* Academic */}
+              {filters.academicOnly && (
+                <Badge
+                  variant="secondary"
+                  className="h-6 gap-1 px-2 text-[11px] font-normal border border-teal-500/30 text-teal-600 dark:text-teal-400 bg-teal-500/10"
+                >
+                  <BookOpen className="w-3 h-3" />
+                  <span>{t('filters.academic_only', 'Academic Projects')}</span>
+                  <button
+                    type="button"
+                    onClick={() => updateFiltersAndUrl({ ...filters, academicOnly: false })}
+                    className="ml-0.5 text-teal-600 hover:text-teal-800 dark:text-teal-400"
+                  >
+                    <X className="w-3 h-3" />
+                  </button>
+                </Badge>
+              )}
+
+              {/* Has Stars */}
+              {filters.hasStars && (
+                <Badge
+                  variant="secondary"
+                  className="h-6 gap-1 px-2 text-[11px] font-normal border border-amber-500/30 text-amber-600 dark:text-amber-400 bg-amber-500/10"
+                >
+                  <Star className="w-3 h-3 text-amber-500 fill-amber-500" />
+                  <span>{t('filters.has_stars', 'Has Stars')}</span>
+                  <button
+                    type="button"
+                    onClick={() => updateFiltersAndUrl({ ...filters, hasStars: false })}
+                    className="ml-0.5 text-amber-600 hover:text-amber-800 dark:text-amber-400"
+                  >
+                    <X className="w-3 h-3" />
+                  </button>
+                </Badge>
+              )}
+
+              {/* Has Media */}
+              {filters.hasMedia && (
+                <Badge
+                  variant="secondary"
+                  className="h-6 gap-1 px-2 text-[11px] font-normal border border-purple-500/30 text-purple-600 dark:text-purple-400 bg-purple-500/10"
+                >
+                  <ImageIcon className="w-3 h-3 text-purple-500" />
+                  <span>{t('filters.has_media', 'Has Media')}</span>
+                  <button
+                    type="button"
+                    onClick={() => updateFiltersAndUrl({ ...filters, hasMedia: false })}
+                    className="ml-0.5 text-purple-600 hover:text-purple-800 dark:text-purple-400"
+                  >
+                    <X className="w-3 h-3" />
+                  </button>
+                </Badge>
+              )}
+
+              {/* Clear All */}
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={handleResetFilters}
+                className="h-6 px-2 text-xs text-muted-foreground hover:text-foreground gap-1 ml-auto"
+              >
+                <RotateCcw className="w-3 h-3" />
+                {t('filters.clear_all', 'Clear all')}
+              </Button>
+            </div>
+          )}
 
           {/* Results count */}
           <div className="flex items-center justify-between mb-2">
@@ -510,11 +814,7 @@ function App() {
               <Button 
                 variant="outline" 
                 className="mt-4"
-                onClick={() => {
-                  setSearchQuery('');
-                  setSelectedCategory('all');
-                  setShowAcademicOnly(false);
-                }}
+                onClick={handleResetFilters}
               >
                 {t('filters.clear_filters', 'Clear filters')}
               </Button>
