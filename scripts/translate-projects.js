@@ -6,6 +6,7 @@ const crypto = require('crypto');
 // Paths Configuration
 // =====================================================================
 const projectsDir = path.join(__dirname, '../config/projects');
+const headerConfigPath = path.join(__dirname, '../config/portfolio-header.json');
 const srcLocalesDePath = path.join(__dirname, '../src/locales/de/projects.json');
 const publicLocalesDePath = path.join(__dirname, '../public/locales/de/projects.json');
 const configDeCatalogPath = path.join(__dirname, '../config/projects-de.json');
@@ -393,6 +394,117 @@ ${JSON.stringify(payload, null, 2)}`;
 }
 
 // =====================================================================
+// Header Translation Requester
+// =====================================================================
+async function translateHeaderWithAi(quotaTracker, payload) {
+  const prompt = `You are a professional software engineering translator.
+Translate the following JSON object representing the portfolio website's top header from English to natural, professional, and idiomatic German.
+
+STRICT RULES:
+1. Translate "titlePrefix" (e.g. "Personal" -> "Persönliche").
+2. Translate "titleHighlight" (e.g. "Projects" -> "Projekte").
+3. Translate "description" into natural, professional German prose.
+4. Translate any generic button labels (e.g. "Contact" -> "Kontakt"), but keep brand names ("GitHub", "GitLab", "LinkedIn", etc.) unchanged.
+5. Return ONLY a valid JSON object matching this schema:
+{
+  "title_prefix": "string",
+  "title_highlight": "string",
+  "description": "string",
+  "buttons": {
+    "contact": "string"
+  }
+}
+
+Input:
+${JSON.stringify(payload, null, 2)}`;
+
+  const estimatedTokens = Math.ceil(prompt.length / 3) + 200;
+  const maxAttempts = quotaTracker.models.length * quotaTracker.apiKeys.length;
+
+  for (let attempt = 0; attempt < maxAttempts; attempt++) {
+    const lease = quotaTracker.selectModelAndKey(estimatedTokens);
+    if (!lease) {
+      await new Promise(r => setTimeout(r, 2000));
+      continue;
+    }
+
+    const { model, key, release } = lease;
+    const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model.id)}:generateContent?key=${encodeURIComponent(key)}`;
+
+    try {
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [{ parts: [{ text: prompt }] }],
+          generationConfig: {
+            temperature: 0.1,
+            responseMimeType: 'application/json',
+          },
+        }),
+      });
+
+      if (response.status === 429) {
+        const retryAfter = response.headers.get('retry-after');
+        const retrySec = retryAfter ? parseInt(retryAfter, 10) : 60;
+        release(false, true, retrySec);
+        continue;
+      }
+
+      if (!response.ok) {
+        release(false, false);
+        continue;
+      }
+
+      const data = await response.json();
+      const rawText = data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
+      let cleanedText = rawText.trim();
+      if (cleanedText.startsWith('```json')) cleanedText = cleanedText.slice(7);
+      else if (cleanedText.startsWith('```')) cleanedText = cleanedText.slice(3);
+      if (cleanedText.endsWith('```')) cleanedText = cleanedText.slice(0, -3);
+      cleanedText = cleanedText.trim();
+
+      const parsed = JSON.parse(cleanedText);
+      release(true, false);
+      return { translation: parsed, modelUsed: model.id };
+    } catch (err) {
+      release(false, false);
+    }
+  }
+
+  throw new Error('Failed to translate portfolio header.');
+}
+
+function updateHeaderInCommonJson(translation) {
+  const dePaths = [
+    path.join(__dirname, '../src/locales/de/common.json'),
+    path.join(__dirname, '../public/locales/de/common.json'),
+    '/container/data/personal_projects/public/locales/de/common.json',
+  ];
+
+  for (const p of dePaths) {
+    if (fs.existsSync(p)) {
+      try {
+        const content = JSON.parse(fs.readFileSync(p, 'utf8'));
+        content.header = {
+          ...content.header,
+          title_prefix: translation.title_prefix || content.header?.title_prefix,
+          title_highlight: translation.title_highlight || content.header?.title_highlight,
+          description: translation.description || content.header?.description,
+          buttons: {
+            ...content.header?.buttons,
+            ...translation.buttons,
+          },
+        };
+        fs.writeFileSync(p, JSON.stringify(content, null, 2), 'utf8');
+      } catch (err) {
+        console.warn(`[Translate] Could not update header in ${p}:`, err.message);
+      }
+    }
+  }
+}
+
+// =====================================================================
 // Main Translation Pipeline
 // =====================================================================
 async function main() {
@@ -433,6 +545,32 @@ async function main() {
     } catch {}
   }
 
+  // Check headerConfig
+  let headerNeedsTranslation = false;
+  let headerPayload = null;
+  let headerHash = null;
+
+  if (fs.existsSync(headerConfigPath)) {
+    try {
+      const headerData = JSON.parse(fs.readFileSync(headerConfigPath, 'utf8'));
+      headerPayload = {
+        titlePrefix: headerData.titlePrefix || '',
+        titleHighlight: headerData.titleHighlight || '',
+        description: headerData.description || '',
+        buttons: headerData.buttons?.map(b => ({ text: b.text })) || [],
+      };
+      headerHash = computePayloadHash(headerPayload);
+
+      if (cache['__portfolio_header__']?.translation) {
+        updateHeaderInCommonJson(cache['__portfolio_header__'].translation);
+      }
+
+      if (isForce || !cache['__portfolio_header__'] || cache['__portfolio_header__'].hash !== headerHash) {
+        headerNeedsTranslation = true;
+      }
+    } catch {}
+  }
+
   for (const projectId of projectFolders) {
     const jsonPath = path.join(projectsDir, projectId, 'project.json');
     const projectData = JSON.parse(fs.readFileSync(jsonPath, 'utf8'));
@@ -449,10 +587,10 @@ async function main() {
     }
   }
 
-  console.log(`[Translate] Projects status: ${projectFolders.length - translationQueue.length} cached / up-to-date, ${translationQueue.length} require translation.`);
+  console.log(`[Translate] Projects status: ${projectFolders.length - translationQueue.length} cached / up-to-date, ${translationQueue.length} require translation. Header status: ${headerNeedsTranslation ? 'needs translation' : 'up-to-date'}.`);
 
   // 3. If nothing needs translation, write catalog and exit cleanly
-  if (translationQueue.length === 0) {
+  if (translationQueue.length === 0 && !headerNeedsTranslation) {
     console.log('[Translate] All project translations are up-to-date with cache.');
     saveCatalogs(finalCatalog, cache, cachePath);
     return;
@@ -479,6 +617,24 @@ async function main() {
   }
 
   const tracker = new QuotaTracker(pool.apiKeys, pool.models);
+
+  // Translate header if needed
+  if (headerNeedsTranslation && headerPayload) {
+    console.log('[Translate] Translating portfolio header...');
+    try {
+      const { translation, modelUsed } = await translateHeaderWithAi(tracker, headerPayload);
+      cache['__portfolio_header__'] = {
+        hash: headerHash,
+        translation,
+        translatedAt: new Date().toISOString(),
+        model: modelUsed,
+      };
+      updateHeaderInCommonJson(translation);
+      console.log(`[Translate] ✓ Portfolio header translated successfully with ${modelUsed}.`);
+    } catch (err) {
+      console.warn('[Translate] ✗ Could not translate portfolio header:', err.message);
+    }
+  }
 
   // 5. Translate each queued project
   let translatedCount = 0;

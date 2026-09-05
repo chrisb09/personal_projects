@@ -270,19 +270,20 @@ function App() {
                 </div>
                 
                 <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight">
-                  {headerConfig.titlePrefix}{' '}
+                  {t('header.title_prefix', headerConfig.titlePrefix)}{' '}
                   <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
-                    {headerConfig.titleHighlight}
+                    {t('header.title_highlight', headerConfig.titleHighlight)}
                   </span>
                 </h1>
                 
                 <p className="text-sm md:text-base text-muted-foreground max-w-xl leading-relaxed">
-                  {headerConfig.description}
+                  {t('header.description', headerConfig.description)}
                 </p>
 
                 <div className="flex flex-wrap gap-1.5 pt-0.5">
                   {headerConfig.buttons.map((btn, i) => {
                     const BtnIcon = iconMap[btn.icon] || ExternalLink;
+                    const btnLabel = t(`header.buttons.${btn.text.toLowerCase()}`, btn.text);
                     return (
                       <Button 
                         key={i}
@@ -293,7 +294,7 @@ function App() {
                       >
                         <a href={btn.url} target="_blank" rel="noopener noreferrer">
                           <BtnIcon className="w-3.5 h-3.5" />
-                          {btn.text}
+                          {btnLabel}
                         </a>
                       </Button>
                     );
@@ -502,6 +503,7 @@ function App() {
               <div className="flex items-center gap-4">
                 {headerConfig.buttons.map((btn, i) => {
                   const BtnIcon = iconMap[btn.icon] || ExternalLink;
+                  const btnLabel = t(`header.buttons.${btn.text.toLowerCase()}`, btn.text);
                   return (
                     <a 
                       key={i}
@@ -509,7 +511,7 @@ function App() {
                       target="_blank" 
                       rel="noopener noreferrer"
                       className="text-muted-foreground hover:text-foreground transition-colors"
-                      title={btn.text}
+                      title={btnLabel}
                     >
                       <BtnIcon className="w-5 h-5" />
                     </a>

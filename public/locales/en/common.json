@@ -5,10 +5,16 @@
     "footer": "Built with React, TypeScript & Tailwind CSS"
   },
   "header": {
+    "title_prefix": "Personal",
+    "title_highlight": "Projects",
+    "description": "A collection of my work spanning backend systems, web applications, DevOps infrastructure, and open source contributions.",
     "search_placeholder": "Search projects...",
     "showing": "Showing",
     "of": "of",
-    "projects": "projects"
+    "projects": "projects",
+    "buttons": {
+      "contact": "Contact"
+    }
   },
   "filters": {
     "all": "All",
