@@ -29,12 +29,13 @@ i18n
     ns: ['common', 'projects'],
     defaultNS: 'common',
 
-    // Language detection order: cookie > browser navigator > fallback
+    // Language detection order: localStorage > cookie > browser navigator > fallback
     detection: {
-      order: ['cookie', 'navigator'],
-      caches: ['cookie'],
-      cookieMinutes: 525600, // 1 year
+      order: ['localStorage', 'cookie', 'navigator'],
+      caches: ['localStorage', 'cookie'],
+      lookupLocalStorage: 'i18nextLng',
       lookupCookie: 'i18next',
+      cookieMinutes: 525600, // 1 year
     },
 
     interpolation: {
@@ -45,5 +46,14 @@ i18n
       useSuspense: false,
     },
   });
+
+if (typeof document !== 'undefined') {
+  if (i18n.language) {
+    document.documentElement.lang = i18n.language.split('-')[0];
+  }
+  i18n.on('languageChanged', (lng) => {
+    document.documentElement.lang = (lng || 'en').split('-')[0];
+  });
+}
 
 export default i18n;
