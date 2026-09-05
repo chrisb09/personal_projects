@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { projects } from '@/config/projects';
 import { useLocalizedProjects } from '@/lib/localizeProject';
@@ -130,10 +130,16 @@ function App() {
   const [showAcademicOnly, setShowAcademicOnly] = useState(false);
   const [projectsWithStats, setProjectsWithStats] = useState<Project[]>(projects);
   const localizedProjects = useLocalizedProjects(projectsWithStats);
+  const closeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Initialize theme on mount
   useEffect(() => {
     initializeTheme();
+    return () => {
+      if (closeTimeoutRef.current) {
+        clearTimeout(closeTimeoutRef.current);
+      }
+    };
   }, []);
 
   // Fetch and merge stats on component mount
@@ -219,18 +225,30 @@ function App() {
   const totalLOC = Object.values(locByLanguage).reduce((sum, count) => sum + count, 0);
 
   const handleProjectClick = (project: Project) => {
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current);
+      closeTimeoutRef.current = null;
+    }
     setSelectedProject(project);
     setModalInitialTab('overview');
     setIsModalOpen(true);
   };
 
   const handleProjectMediaClick = (project: Project) => {
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current);
+      closeTimeoutRef.current = null;
+    }
     setSelectedProject(project);
     setModalInitialTab('media');
     setIsModalOpen(true);
   };
 
   const handleProjectSelect = (projectId: string) => {
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current);
+      closeTimeoutRef.current = null;
+    }
     const project = projectsWithStats.find(p => p.id === projectId);
     if (project) {
       setSelectedProject(project);
@@ -238,8 +256,14 @@ function App() {
   };
 
   const handleCloseModal = () => {
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current);
+    }
     setIsModalOpen(false);
-    setTimeout(() => setSelectedProject(null), 300);
+    closeTimeoutRef.current = setTimeout(() => {
+      setSelectedProject(null);
+      closeTimeoutRef.current = null;
+    }, 300);
   };
 
   return (
