@@ -1,100 +1,102 @@
 {
-  "lastUpdated": "2026-06-21T12:33:58.004Z",
+  "lastUpdated": "2026-09-28T07:54:43.120Z",
   "projects": {
     "MusicBot": {
       "stats": {
-        "stars": 13,
-        "commits": 62,
+        "stars": 15,
+        "commits": 65,
         "branches": 6,
-        "lastCommit": "2026-06-19"
+        "lastCommit": "2026-08-23"
       },
       "loc": {
-        "total": 5023,
+        "total": 5463,
         "byLanguage": {
-          "Java": 4355,
+          "Java": 4639,
           "PROPERTIES": 1,
-          "XML": 137,
           "Markdown": 454,
-          "Other": 41,
+          "Other": 67,
+          "XML": 138,
           "CONF": 17,
-          "YAML": 1,
-          "Shell": 17
+          "Shell": 146,
+          "YAML": 1
         }
       },
       "repoHashes": {
-        "MusicBot": "838ff6909051ca4425eca58aec40624e86b35ea1",
-        "jmb-container": "29d7fd47532f6ab9ff61e9c8efeb2bbb96843109"
+        "MusicBot": "3886ccbe6573c69976ac2cbc4ac4a1f17e2fd2f5",
+        "jmb-container": "5d0b4662aaa77dc57534356b8693e8693299b6ac"
       },
       "repoLocs": {
         "MusicBot": {
-          "total": 4960,
+          "total": 5245,
           "byLanguage": {
-            "Java": 4355,
+            "Java": 4639,
             "PROPERTIES": 1,
-            "XML": 137,
             "Markdown": 448,
             "Other": 2,
+            "XML": 138,
             "CONF": 17
           },
           "excludeFirstCommit": false
         },
         "jmb-container": {
-          "total": 63,
+          "total": 218,
           "byLanguage": {
+            "Shell": 146,
             "YAML": 1,
-            "Shell": 17,
             "Markdown": 6,
-            "Other": 39
+            "Other": 65
           },
           "excludeFirstCommit": false
         }
       },
       "repoAuthors": {
         "MusicBot": {
-          "John Grosh <john.a.grosh@gmail.com>": 4759,
+          "John Grosh <john.a.grosh@gmail.com>": 4825,
+          "Christian F. Brinkmann <christian.brinkmann09@gmail.com>": 233,
+          "MichailiK <39029839+MichailiK@users.noreply.github.com>": 192,
+          "Michaili K <git@michaili.dev>": 591,
           "Michaili K <mysteriouscursor+git@protonmail.com>": 108,
-          "Christian F. Brinkmann (cloud) <mail@christian-f-brinkmann.de>": 4707,
-          "Michaili K <git@michaili.dev>": 393,
-          "Christian F. Brinkmann <christian.brinkmann09@gmail.com>": 234,
-          "Moritz Bender <35152647+Morilli@users.noreply.github.com>": 3,
-          "unknown <john.a.grosh@gmail.com>": 3,
-          "dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>": 1,
-          "M R S E <Maurice.Craft@t-online.de>": 1,
+          "Christian F. Brinkmann (cloud) <mail@christian-f-brinkmann.de>": 4705,
           "root <root@cloud.christian-f-brinkmann.de>": 19,
           "Lythus <arvy040207@gmail.com>": 1,
           "Wolfgang Schwendtbauer <wolfgang.schwendtbauer@gmail.com>": 126,
           "Louk <64579257+yo-louk@users.noreply.github.com>": 5,
           "Michaili <39029839+MichailiK@users.noreply.github.com>": 8,
-          "MichailiK <39029839+MichailiK@users.noreply.github.com>": 192,
+          "Michail <git@michaili.dev>": 54,
+          "root <root@h255.christian-f-brinkmann.de>": 288,
           "Lachlan Pond <lachipond@gmail.com>": 7,
-          "Michail <git@michaili.dev>": 26,
           "Kevin S <t3rminus@users.noreply.github.com>": 21,
+          "Moritz Bender <35152647+Morilli@users.noreply.github.com>": 3,
+          "unknown <john.a.grosh@gmail.com>": 3,
+          "dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>": 1,
+          "M R S E <Maurice.Craft@t-online.de>": 1,
           "Rick Fontein <r.fontein.95@gmail.com>": 80,
           "Maoyue 貓月 <95519633+MagicTeaMC@users.noreply.github.com>": 27,
           "Michaili K <39029839+MichailiK@users.noreply.github.com>": 29,
+          "Kevin S <kevin@chilicode.ca>": 1,
           "lrbn86 <lrbn86@gmail.com>": 1,
           "Xiao Quan 全笑 <58939349+all-laugh@users.noreply.github.com>": 5,
-          "njezi <jbm.pl34@gmail.com>": 1,
-          "Kevin S <kevin@chilicode.ca>": 1
+          "njezi <jbm.pl34@gmail.com>": 1
         },
         "jmb-container": {
-          "Sören gürtler <soeren@guertler.com>": 11,
-          "root <root@cloud.christian-f-brinkmann.de>": 44,
           "Sören Gürtler <soeren@guertler.net>": 16,
-          "Christian F. Brinkmann (cloud) <mail@christian-f-brinkmann.de>": 19
+          "root <root@cloud.christian-f-brinkmann.de>": 38,
+          "root <root@h255.christian-f-brinkmann.de>": 167,
+          "Sören gürtler <soeren@guertler.com>": 11,
+          "Christian F. Brinkmann (cloud) <mail@christian-f-brinkmann.de>": 13
         }
       },
       "repoCommits": {
-        "MusicBot": 52,
-        "jmb-container": 10
+        "MusicBot": 54,
+        "jmb-container": 11
       },
       "repoBranches": {
         "MusicBot": 5,
         "jmb-container": 1
       },
       "repoLastCommit": {
-        "MusicBot": "2026-06-19",
-        "jmb-container": "2026-03-06"
+        "MusicBot": "2026-08-23",
+        "jmb-container": "2026-08-23"
       }
     },
     "advoexport": {
@@ -144,58 +146,66 @@
     "cpp-ml-interface": {
       "stats": {
         "stars": 0,
-        "commits": 66,
-        "branches": 2,
-        "lastCommit": "2026-05-26"
+        "commits": 183,
+        "branches": 3,
+        "lastCommit": "2026-09-18"
       },
       "loc": {
-        "total": 14321,
+        "total": 29790,
         "byLanguage": {
-          "TOML": 33,
-          "Shell": 638,
+          "Shell": 1398,
+          "Other": 203,
+          "YAML": 49,
+          "Markdown": 830,
+          "DOX": 25,
+          "C/C++ Header": 11338,
+          "TOML": 39,
           "PUML": 281,
-          "C/C++ Header": 6897,
-          "C++": 775,
-          "Python": 5313,
-          "Markdown": 354,
-          "Other": 30
+          "Python": 10087,
+          "C++": 4543,
+          "F90": 886,
+          "SBATCH": 111
         }
       },
       "repoHashes": {
-        "CPP-ML-Interface": "c124dea90915fd932d9f2e1776038562ba7fb0fe"
+        "CPP-ML-Interface": "283892e76686bd177474908eaf0328f6a2fad490"
       },
       "repoLocs": {
         "CPP-ML-Interface": {
-          "total": 14321,
+          "total": 29790,
           "byLanguage": {
-            "TOML": 33,
-            "Shell": 638,
+            "Shell": 1398,
+            "Other": 203,
+            "YAML": 49,
+            "Markdown": 830,
+            "DOX": 25,
+            "C/C++ Header": 11338,
+            "TOML": 39,
             "PUML": 281,
-            "C/C++ Header": 6897,
-            "C++": 775,
-            "Python": 5313,
-            "Markdown": 354,
-            "Other": 30
+            "Python": 10087,
+            "C++": 4543,
+            "F90": 886,
+            "SBATCH": 111
           },
           "excludeFirstCommit": false
         }
       },
       "repoAuthors": {
         "CPP-ML-Interface": {
-          "Christian F. Brinkmann <christian.brinkmann09@gmail.com>": 3297,
-          "Christian F. Brinkmann <christian.brinkmann@rwth-aachen.de>": 10868,
+          "Christian F. Brinkmann <christian.brinkmann@rwth-aachen.de>": 26486,
+          "Christian F. Brinkmann <christian.brinkmann09@gmail.com>": 3160,
           "ro092286 <ro092286@login23-2.hpc.itc.rwth-aachen.de>": 78,
-          "ro092286 <ro092286@login23-g-1.hpc.itc.rwth-aachen.de>": 78
+          "ro092286 <ro092286@login23-g-1.hpc.itc.rwth-aachen.de>": 66
         }
       },
       "repoCommits": {
-        "CPP-ML-Interface": 66
+        "CPP-ML-Interface": 183
       },
       "repoBranches": {
-        "CPP-ML-Interface": 2
+        "CPP-ML-Interface": 3
       },
       "repoLastCommit": {
-        "CPP-ML-Interface": "2026-05-26"
+        "CPP-ML-Interface": "2026-09-18"
       }
     },
     "custom-orchestration": {
@@ -223,13 +233,13 @@
           "Python": 2267,
           "Other": 103,
           "Markdown": 290,
-          "JavaScript": 2459,
           "YAML": 22,
           "TOML": 32,
           "CSS": 427,
           "JSON": 30,
           "CONF": 32,
-          "HTML": 18
+          "HTML": 18,
+          "JavaScript": 2459
         }
       },
       "repoHashes": {
@@ -242,13 +252,13 @@
             "Python": 2267,
             "Other": 103,
             "Markdown": 290,
-            "JavaScript": 2459,
             "YAML": 22,
             "TOML": 32,
             "CSS": 427,
             "JSON": 30,
             "CONF": 32,
-            "HTML": 18
+            "HTML": 18,
+            "JavaScript": 2459
           },
           "excludeFirstCommit": false
         }
@@ -368,11 +378,11 @@
       },
       "repoAuthors": {
         "find-duplicates": {
-          "root <root@christian-f-brinkmann.de>": 26,
-          "Christian F. Brinkmann (cloud) <mail@christian-f-brinkmann.de>": 1,
           "root <root@cloud.christian-f-brinkmann.de>": 337,
           "Christian F. Brinkmann <christian@xiaomi-notebook-pro-kubuntu-22.04>": 102,
-          "Christian F. Brinkmann <christian.brinkmann09@gmail.com>": 21
+          "Christian F. Brinkmann <christian.brinkmann09@gmail.com>": 21,
+          "root <root@christian-f-brinkmann.de>": 26,
+          "Christian F. Brinkmann (cloud) <mail@christian-f-brinkmann.de>": 1
         }
       },
       "repoCommits": {
@@ -388,37 +398,37 @@
     "firecord": {
       "stats": {
         "stars": 0,
-        "commits": 264,
+        "commits": 271,
         "branches": 4,
-        "lastCommit": "2025-11-06"
+        "lastCommit": "2026-09-26"
       },
       "loc": {
-        "total": 12321,
+        "total": 17155,
         "byLanguage": {
-          "Java": 11359,
-          "XML": 187,
+          "Java": 16087,
           "Shell": 45,
-          "Markdown": 317,
-          "PUML": 270,
           "YML_OLD": 9,
-          "Other": 120,
+          "Other": 121,
+          "XML": 245,
+          "Markdown": 364,
+          "PUML": 270,
           "YAML": 14
         }
       },
       "repoHashes": {
-        "firecord": "1fe51691fdb36cd9e7fae54762dd7b4e921f850d"
+        "firecord": "0783e65ee71009755c197b95e7ab176169a77815"
       },
       "repoLocs": {
         "firecord": {
-          "total": 12321,
+          "total": 17155,
           "byLanguage": {
-            "Java": 11359,
-            "XML": 187,
+            "Java": 16087,
             "Shell": 45,
-            "Markdown": 317,
-            "PUML": 270,
             "YML_OLD": 9,
-            "Other": 120,
+            "Other": 121,
+            "XML": 245,
+            "Markdown": 364,
+            "PUML": 270,
             "YAML": 14
           },
           "excludeFirstCommit": false
@@ -426,22 +436,23 @@
       },
       "repoAuthors": {
         "firecord": {
-          "Christian F. Brinkmann <christian.brinkmann09@gmail.com>": 12131,
+          "Christian F. Brinkmann <christian.brinkmann09@gmail.com>": 16975,
           "FreeSoccerHDX <freesoccerhdx@gmail.com>": 332,
-          "Christian Brinkmann <christian.brinkmann09@gmail.com>": 79,
-          "Christian Brinkmann <christian.brinkmann@gmail.com>": 111,
+          "Christian Brinkmann <christian.brinkmann@gmail.com>": 110,
+          "Christian Brinkmann <christian.brinkmann09@gmail.com>": 70,
           "BuildTools <unconfigured@null.spigotmc.org>": 7,
-          "FreeSoccerHDX <unconfigured@null.spigotmc.org>": 29
+          "FreeSoccerHDX <unconfigured@null.spigotmc.org>": 28,
+          "legendofwar <mail@legendofwar.net>": 1011
         }
       },
       "repoCommits": {
-        "firecord": 264
+        "firecord": 271
       },
       "repoBranches": {
         "firecord": 4
       },
       "repoLastCommit": {
-        "firecord": "2025-11-06"
+        "firecord": "2026-09-26"
       }
     },
     "homeserver": {
@@ -554,7 +565,7 @@
     },
     "jda-chewtils": {
       "stats": {
-        "stars": 77,
+        "stars": 76,
         "commits": 1,
         "branches": 11,
         "lastCommit": "2025-12-17"
@@ -563,8 +574,8 @@
         "total": 13,
         "byLanguage": {
           "YAML": 2,
-          "GRADLE": 1,
-          "Java": 10
+          "Java": 10,
+          "GRADLE": 1
         }
       },
       "repoHashes": {
@@ -575,8 +586,8 @@
           "total": 13,
           "byLanguage": {
             "YAML": 2,
-            "GRADLE": 1,
-            "Java": 10
+            "Java": 10,
+            "GRADLE": 1
           },
           "excludeFirstCommit": false
         }
@@ -585,20 +596,20 @@
         "JDA-Chewtils": {
           "Olivia <chew@chew.pw>": 463,
           "Christian F. Brinkmann <christian.brinkmann09@gmail.com>": 13,
+          "ZephyrKaOne <74645571+ZephyrKaOne@users.noreply.github.com>": 1,
+          "Chew <chew@chew.pw>": 55,
+          "Andre_601 <github@andre601.ch>": 10,
+          "Mathias Sand Jahren <the.mather1@gmail.com>": 3,
           "Almighty Alpaca <aljoschagrebe@gmail.com>": 109,
           "John Grosh <john.a.grosh@gmail.com>": 3,
           "TheMonitorLizard <kaidangustave@yahoo.com>": 16,
           "Kaidan Gustave <KaidanGustave@yahoo.com>": 129,
           "ROM <rom.void95@gmail.com>": 6,
           "rtm516 <rtm516@users.noreply.github.com>": 1,
-          "Chew <chew@chew.pw>": 55,
           "JellyBrick <shlee1503@naver.com>": 2,
           "Martin Husted Hartvig <martin@hartvig.cc>": 1,
           "Hasan Demirtaş <utsukushihito@outlook.com>": 2,
-          "Michael Ritter <ritter.michael92@gmail.com>": 5,
-          "ZephyrKaOne <74645571+ZephyrKaOne@users.noreply.github.com>": 1,
-          "Andre_601 <github@andre601.ch>": 10,
-          "Mathias Sand Jahren <the.mather1@gmail.com>": 3
+          "Michael Ritter <ritter.michael92@gmail.com>": 5
         }
       },
       "repoCommits": {
@@ -609,6 +620,49 @@
       },
       "repoLastCommit": {
         "JDA-Chewtils": "2025-12-17"
+      }
+    },
+    "keepassxc_cleanup": {
+      "stats": {
+        "stars": 1,
+        "commits": 4,
+        "branches": 1,
+        "lastCommit": "2026-07-10"
+      },
+      "loc": {
+        "total": 201,
+        "byLanguage": {
+          "Python": 154,
+          "Markdown": 47
+        }
+      },
+      "repoHashes": {
+        "keepassxc_cleanup": "93a614b2cf3dfb42dd0bd95491f1fe3b82826944"
+      },
+      "repoLocs": {
+        "keepassxc_cleanup": {
+          "total": 201,
+          "byLanguage": {
+            "Python": 154,
+            "Markdown": 47
+          },
+          "excludeFirstCommit": false
+        }
+      },
+      "repoAuthors": {
+        "keepassxc_cleanup": {
+          "Christian Brinkmann <christian.brinkmann09@gmail.com>": 201,
+          "Joe Ashcraft <joeashcraft@gmail.com>": 1
+        }
+      },
+      "repoCommits": {
+        "keepassxc_cleanup": 4
+      },
+      "repoBranches": {
+        "keepassxc_cleanup": 1
+      },
+      "repoLastCommit": {
+        "keepassxc_cleanup": "2026-07-10"
       }
     },
     "libretranslate-java": {
@@ -668,9 +722,9 @@
           "Python": 172,
           "CSV": 123,
           "Markdown": 24,
-          "C#": 347,
           "Java": 95,
-          "CS_PDN": 248
+          "CS_PDN": 248,
+          "C#": 347
         }
       },
       "repoHashes": {
@@ -683,9 +737,9 @@
             "Python": 172,
             "CSV": 123,
             "Markdown": 24,
-            "C#": 347,
             "Java": 95,
-            "CS_PDN": 248
+            "CS_PDN": 248,
+            "C#": 347
           },
           "excludeFirstCommit": false
         }
@@ -718,8 +772,8 @@
           "Shell": 45,
           "Markdown": 12,
           "Other": 7,
-          "PHP": 89,
           "CSS": 65,
+          "PHP": 89,
           "Python": 527
         }
       },
@@ -733,8 +787,8 @@
             "Shell": 45,
             "Markdown": 12,
             "Other": 7,
-            "PHP": 89,
             "CSS": 65,
+            "PHP": 89,
             "Python": 527
           },
           "excludeFirstCommit": false
@@ -757,6 +811,58 @@
         "mega-tor-downloader": "2024-08-31"
       }
     },
+    "minecraft-chat-translator": {
+      "stats": {
+        "stars": 0,
+        "commits": 3,
+        "branches": 1,
+        "lastCommit": "2026-09-06"
+      },
+      "loc": {
+        "total": 5475,
+        "byLanguage": {
+          "Shell": 33,
+          "Python": 3695,
+          "Markdown": 433,
+          "Other": 33,
+          "EXAMPLE": 28,
+          "SERVICE": 17,
+          "JSON": 1236
+        }
+      },
+      "repoHashes": {
+        "minecraft-chat-translator": "ca17967e06e3ea988894a714bad841c151c2324a"
+      },
+      "repoLocs": {
+        "minecraft-chat-translator": {
+          "total": 5475,
+          "byLanguage": {
+            "Shell": 33,
+            "Python": 3695,
+            "Markdown": 433,
+            "Other": 33,
+            "EXAMPLE": 28,
+            "SERVICE": 17,
+            "JSON": 1236
+          },
+          "excludeFirstCommit": false
+        }
+      },
+      "repoAuthors": {
+        "minecraft-chat-translator": {
+          "chrisb09 <chrisb09@users.noreply.github.com>": 5475
+        }
+      },
+      "repoCommits": {
+        "minecraft-chat-translator": 3
+      },
+      "repoBranches": {
+        "minecraft-chat-translator": 1
+      },
+      "repoLastCommit": {
+        "minecraft-chat-translator": "2026-09-06"
+      }
+    },
     "nudenetv2": {
       "stats": {
         "stars": 2,
@@ -767,9 +873,9 @@
       "loc": {
         "total": 110,
         "byLanguage": {
-          "Markdown": 3,
+          "Other": 104,
           "Python": 3,
-          "Other": 104
+          "Markdown": 3
         }
       },
       "repoHashes": {
@@ -779,17 +885,17 @@
         "nudenetv2": {
           "total": 110,
           "byLanguage": {
-            "Markdown": 3,
+            "Other": 104,
             "Python": 3,
-            "Other": 104
+            "Markdown": 3
           },
           "excludeFirstCommit": true
         }
       },
       "repoAuthors": {
         "nudenetv2": {
-          "Original Codebase <imported@repo>": 398,
-          "Christian F. Brinkmann <christian.brinkmann09@gmail.com>": 110
+          "Christian F. Brinkmann <christian.brinkmann09@gmail.com>": 110,
+          "Original Codebase <imported@repo>": 398
         }
       },
       "repoCommits": {
@@ -802,82 +908,151 @@
         "nudenetv2": "2025-05-26"
       }
     },
-    "pacstall-programs": {
+    "opencode-antigravity-auth": {
       "stats": {
-        "stars": 215,
-        "commits": 47,
-        "branches": 2,
-        "lastCommit": "2026-06-18"
+        "stars": 1,
+        "commits": 4,
+        "branches": 1,
+        "lastCommit": "2026-09-03"
       },
       "loc": {
-        "total": 812,
+        "total": 508,
         "byLanguage": {
-          "Other": 462,
-          "PACSCRIPT": 350
+          "TypeScript": 473,
+          "Markdown": 33,
+          "YAML": 2
         }
       },
       "repoHashes": {
-        "pacstall-programs": "c1fb140498065a59bd9fa9710ad2d9dcc443af59"
+        "opencode-antigravity-auth": "f494626c9a7d9be322912218e22a0d0edd7ed7b4"
+      },
+      "repoLocs": {
+        "opencode-antigravity-auth": {
+          "total": 508,
+          "byLanguage": {
+            "TypeScript": 473,
+            "Markdown": 33,
+            "YAML": 2
+          },
+          "excludeFirstCommit": false
+        }
+      },
+      "repoAuthors": {
+        "opencode-antigravity-auth": {
+          "Noe <nfbr.9819@gmail.com>": 3851,
+          "chrisb09 <chrisb09@users.noreply.github.com>": 258,
+          "tctinh <tctinh@tma.com.vn>": 3151,
+          "Chris George <chrisgeo@users.noreply.github.com>": 6062,
+          "Christian F. Brinkmann <christian.brinkmann09@gmail.com>": 250,
+          "Giulio Vaccari <io@giuliovaccari.it>": 5,
+          "ndycode <devzeian@gmail.com>": 1,
+          "MinhDung <113178405+d-init-d@users.noreply.github.com>": 2,
+          "phuctruong <bfbdarkness498@gmail.com>": 25,
+          "happycastle <soungmin114@gmail.com>": 37,
+          "emilioarvidisaksson <106881482+emilioarvidisaksson@users.noreply.github.com>": 268,
+          "Frank Yang <frank.ekn@gmail.com>": 144,
+          "Dmitry Starkov <21260939+starkdmi@users.noreply.github.com>": 190,
+          "Tinh To <88414894+tctinh@users.noreply.github.com>": 10,
+          "CasualDeveloper <10153929+CasualDeveloper@users.noreply.github.com>": 54,
+          "Nick Roth <nlr06886@gmail.com>": 12,
+          "FrescoFlacko <FrescoFlacko@users.noreply.github.com>": 1,
+          "Aaron Sewall <aaronsewall@gmail.com>": 10,
+          "Tiago Rodrigues <tiago.rodrigues@developh.co>": 418,
+          "Ben Vargas <ben@vargas.com>": 3,
+          "Chirag Panwar <cprsm24@gmail.com>": 24,
+          "Parasitic-Hollow <Parasitic-Hollow@users.noreply.github.com>": 5,
+          "Cris R. <232431073+processtrader@users.noreply.github.com>": 2,
+          "bilalbayram <bilalbayram@me.com>": 1
+        }
+      },
+      "repoCommits": {
+        "opencode-antigravity-auth": 4
+      },
+      "repoBranches": {
+        "opencode-antigravity-auth": 1
+      },
+      "repoLastCommit": {
+        "opencode-antigravity-auth": "2026-09-03"
+      }
+    },
+    "pacstall-programs": {
+      "stats": {
+        "stars": 217,
+        "commits": 131,
+        "branches": 6,
+        "lastCommit": "2026-09-26"
+      },
+      "loc": {
+        "total": 1248,
+        "byLanguage": {
+          "Other": 752,
+          "PACSCRIPT": 496
+        }
+      },
+      "repoHashes": {
+        "pacstall-programs": "12509bea02898fe74e2898fe31027b0181afab4a"
       },
       "repoLocs": {
         "pacstall-programs": {
-          "total": 812,
+          "total": 1248,
           "byLanguage": {
-            "Other": 462,
-            "PACSCRIPT": 350
+            "Other": 752,
+            "PACSCRIPT": 496
           },
           "excludeFirstCommit": false
         }
       },
       "repoAuthors": {
         "pacstall-programs": {
-          "Christian F. Brinkmann <christian.brinkmann09@gmail.com>": 812,
-          "oklopfer <104327997+oklopfer@users.noreply.github.com>": 11785,
-          "Elsie <elsie19@pm.me>": 1185,
-          "villamorrd <villamorrd@students.nu-moa.edu.ph>": 1059,
-          "medaey <medaey@hotmail.com>": 4,
+          "Christian F. Brinkmann <christian.brinkmann09@gmail.com>": 1248,
           "Béné <droppings_cledet@aleeas.com>": 24,
-          "James \"Jim\" Ed Randson <053476233@ecampus.ut.ac.id>": 451,
+          "James \"Jim\" Ed Randson <053476233@ecampus.ut.ac.id>": 441,
+          "villamorrd <villamorrd@students.nu-moa.edu.ph>": 1002,
           "The TwilightBlood <hwengerstickel@protonmail.com>": 47,
+          "oklopfer <104327997+oklopfer@users.noreply.github.com>": 11777,
           "SpaceGuyBob <92336100+spaceguybob@users.noreply.github.com>": 6,
+          "Abhinandan <nmabhinandan@users.noreply.github.com>": 20,
           "rain1598 <70437021+rain1598@users.noreply.github.com>": 63,
-          "Luigi311 <git@luigi311.com>": 23,
+          "Luigi311 <git@luigi311.com>": 21,
           "Plasma <hwengerstickel@protonmail.com>": 32,
           "Elsie <hwengerstickel@protonmail.com>": 3,
           "Moh Anif Yuliansyah <anifyuliansyah@gmail.com>": 3,
           "WRM-42 <y8bsbahy@anonaddy.me>": 25,
-          "David Brochero <65723952+D-Brox@users.noreply.github.com>": 179,
+          "David Brochero <65723952+D-Brox@users.noreply.github.com>": 173,
           "Aroun <10415894+Zahrun@users.noreply.github.com>": 7,
+          "Lobanokivan11 <59411324+Lobanokivan11@users.noreply.github.com>": 30,
           "echometerain <70437021+echometerain@users.noreply.github.com>": 16,
           "Mike A <32306794+DismissedGuy@users.noreply.github.com>": 1,
-          "Tobias Heinlein <46030637+niontrix@users.noreply.github.com>": 43,
+          "Tobias Heinlein <46030637+niontrix@users.noreply.github.com>": 211,
           "V <150687949+vigress8@users.noreply.github.com>": 25,
-          "Akqir <142222025+aKqir24@users.noreply.github.com>": 900,
+          "Akqir <142222025+aKqir24@users.noreply.github.com>": 1251,
           "KwonNam Son <kwon37xi@gmail.com>": 7,
-          "cat-master21 <96554164+cat-master21@users.noreply.github.com>": 10,
+          "cat-master21 <96554164+cat-master21@users.noreply.github.com>": 16,
           "Miren Radia <32646026+mirenradia@users.noreply.github.com>": 3,
           "tranquil-tr0 <lots.of.thingys@gmail.com>": 15,
-          "Aroun <login@b-vo.fr>": 31,
-          "Aroun <zahrun@murena.io>": 137,
-          "Erik Hedlund <56408966+erikcghedlund@users.noreply.github.com>": 367,
+          "Aroun <login@b-vo.fr>": 30,
+          "Aroun <zahrun@murena.io>": 116,
+          "Erik Hedlund <56408966+erikcghedlund@users.noreply.github.com>": 394,
           "ObsidianPresidium <96147683+ObsidianPresidium@users.noreply.github.com>": 6,
           "Aozora <61007475+AozoraDev@users.noreply.github.com>": 147,
           "Sourajyoti Basak <wiz28@protonmail.com>": 29,
           "Eric Renfro <psi-jack@linux-help.org>": 12,
           "ty1118 <83207399+ty1118@users.noreply.github.com>": 1,
-          "Davius <66792063+Xdavius@users.noreply.github.com>": 874,
+          "DON <donnisnoni@outlook.com>": 246,
+          "Davius <66792063+Xdavius@users.noreply.github.com>": 871,
           "Ramtin <ramtintoosi@gmail.com>": 5,
           "Rouven Hi! <3582050+RouHim@users.noreply.github.com>": 1,
+          "Elsie <elsie19@pm.me>": 697,
           "Naruto Uzumaki <79555780+NarutoXY@users.noreply.github.com>": 2,
           "ajstrongdev <90976178+ajstrongdev@users.noreply.github.com>": 33,
-          "AJ <90976178+ajstrongdev@users.noreply.github.com>": 1,
+          "AJ <90976178+ajstrongdev@users.noreply.github.com>": 19,
           "0x262D <112124572+0x262D@users.noreply.github.com>": 9,
-          "Rodrigo Tavares <1831465+rodrigost23@users.noreply.github.com>": 185,
+          "Rodrigo Tavares <1831465+rodrigost23@users.noreply.github.com>": 202,
           "Marie <marie@kaifa.ch>": 8,
           "JonBoyleCoding <programmerfalcon@gmail.com>": 2,
           "Luca Fabbian <luca.fabbian.1999@gmail.com>": 14,
-          "Huang Rui <vowstar@users.noreply.github.com>": 78,
-          "Matthias Mailänder <Mailaender@users.noreply.github.com>": 72,
+          "Huang Rui <vowstar@users.noreply.github.com>": 74,
+          "Matthias Mailänder <Mailaender@users.noreply.github.com>": 73,
           "Gianluca <56590837+Rockstar9604@users.noreply.github.com>": 8,
           "Ham <88493761+warofzen@users.noreply.github.com>": 1,
           "awollgarten <smokeythemonkey@posteo.net>": 1,
@@ -886,28 +1061,30 @@
           "Mike Almeloo <32306794+DismissedGuy@users.noreply.github.com>": 1,
           "Poseidon <dheerajre@proton.me>": 36,
           "Henry Wenger-Stickel <hwengerstickel@protonmail.com>": 8,
-          "Sarim Bin Waseem <42667306+sarimbinwaseem@users.noreply.github.com>": 151,
+          "Sarim Bin Waseem <42667306+sarimbinwaseem@users.noreply.github.com>": 135,
           "faelau <92048093+faelau@users.noreply.github.com>": 79,
+          "CiccioBro <203853964+CiccioBro17@users.noreply.github.com>": 86,
           "Paul Cosma <paul.cosma97@gmail.com>": 7,
-          "Diego Queiroz <diegiwg@gmail.com>": 12,
+          "Diego Queiroz <diegiwg@gmail.com>": 11,
           "soumyatheman <72045785+soumyatheman@users.noreply.github.com>": 9,
           "Pinak Paliwal <37413746+pythoncrazy@users.noreply.github.com>": 19,
           "Diego Magdaleno <38844659+DiegoMagdaleno@users.noreply.github.com>": 2,
           "Mario Jiménez Redondo <101522353+nezred@users.noreply.github.com>": 2,
           "Luiz Fernando Romanini <33027938+lfromanini@users.noreply.github.com>": 16,
           "vvaibhavv11 <141448219+vvaibhavv11@users.noreply.github.com>": 51,
-          "Balian of Ibelin <balian1belin@yandex.ru>": 335,
+          "Balian of Ibelin <balian1belin@yandex.ru>": 324,
           "fang64 <fang64@gmail.com>": 28,
           "Marcin Puc <tranzystorek.io@protonmail.com>": 1,
+          "Jochen Hörmann <jochen.hoermann@gmail.com>": 23,
           "D Brox <65723952+D-Brox@users.noreply.github.com>": 2,
-          "vbrabandt2005 <vbrabandt@proton.me>": 37,
+          "vbrabandt2005 <vbrabandt@proton.me>": 36,
           "Alexander <70070040+raik199x@users.noreply.github.com>": 34,
           "Harshwardhan Mehrotra <harshwardhanmehrotra@gmail.com>": 2,
           "Rodrigo Tavares <rodrigost23@users.noreply.github.com>": 20,
-          "Don Alfons <donnisnoni@outlook.com>": 108,
-          "tranquil <182271540+tranquil-tr0@users.noreply.github.com>": 42,
+          "Don Alfons <donnisnoni@outlook.com>": 91,
+          "tranquil <182271540+tranquil-tr0@users.noreply.github.com>": 38,
           "Harriet O'Brien <hobrien@alumni.cmu.edu>": 16,
-          "pejuton <277419959+pejuton@users.noreply.github.com>": 179,
+          "pejuton <277419959+pejuton@users.noreply.github.com>": 193,
           "Thomas <thomas@9bitbyte.com>": 3,
           "kodxana <romanrex19@int.pl>": 1,
           "Gonçalo Negrier Duarte <68701049+MrDuartePT@users.noreply.github.com>": 67,
@@ -916,6 +1093,7 @@
           "Lanius <98239679+laniusone@users.noreply.github.com>": 3,
           "Rémy Huet <32484913+huetremy@users.noreply.github.com>": 2,
           "Chadano <90976178+Chadano@users.noreply.github.com>": 5,
+          "Haocheng Yang <cabbagehao@qq.com>": 13,
           "Adam Reisenauer <58893124+Mythbusters123@users.noreply.github.com>": 1,
           "Fabio Di Giorgio <ravnos@duck.com>": 18,
           "soumyaDghosh <72045785+soumyaDghosh@users.noreply.github.com>": 1,
@@ -927,18 +1105,22 @@
           "vbrabandt2005 <vbrabandt@gmail.com>": 2,
           "Haidar Ali <76838857+heyzsh@users.noreply.github.com>": 5,
           "Damian <54457902+dbednar230@users.noreply.github.com>": 1,
-          "Alxhr0 <92590433+Alxhr0@users.noreply.github.com>": 69,
+          "Alxhr0 <92590433+Alxhr0@users.noreply.github.com>": 76,
           "Cameron <6525179+computercam@users.noreply.github.com>": 1,
           "Issa M. Omais <issa20omais@outlook.com>": 2,
           "wren54 <152688728+wren54@users.noreply.github.com>": 1,
           "AloneER0 <92590433+AloneER0@users.noreply.github.com>": 2,
           "Hepno <me@hepno.dev>": 2,
-          "Imran Mohammed <121319594+IMYdev@users.noreply.github.com>": 17,
+          "Imran Mohammed <121319594+IMYdev@users.noreply.github.com>": 54,
           "Tal <83217276+talwat@users.noreply.github.com>": 1,
+          "Elisabeth Wenger-Stickel <elsie19@pm.me>": 671,
+          "Ren Tatsumoto <tatsu@autistici.org>": 36,
           "Béné <y8bsbahy@anonaddy.me>": 1,
           "James Rose <92864596+RoseBlume@users.noreply.github.com>": 1,
           "Jon Banafato <jon@jonafato.com>": 1,
           "Jon Banafato <jonathan.banafato@gmail.com>": 1,
+          "Omran Mohamed <121319594+IMYdev@users.noreply.github.com>": 87,
+          "Philipp Soldunov <69530789+psoldunov@users.noreply.github.com>": 15,
           "Pure Cheekbones <52796958+pure-cheekbones@users.noreply.github.com>": 1,
           "Charitarth Chugh <37895518+charitarthchugh@users.noreply.github.com>": 1,
           "System Coding <68456596+systemcoding@users.noreply.github.com>": 1,
@@ -948,50 +1130,47 @@
           "Bahar KURT <168406273+kurtbahartr@users.noreply.github.com>": 100,
           "vlprokopenko <vladislavprokopenko@disroot.org>": 22,
           "l.paci <github@object.ninja>": 21,
+          "Omran Mohammed <121319594+IMYdev@users.noreply.github.com>": 15,
           "Korkmatik <39222224+Korkmatik@users.noreply.github.com>": 1,
           "awollgarten <awollgarten@posteo.net>": 3,
           "Wildy Sheverando <153343629+wildyrando@users.noreply.github.com>": 2,
           "http.llamaz <90976178+httpllamaz@users.noreply.github.com>": 1,
           "R <reiichi001@gmail.com>": 30,
+          "medaey <medaey@hotmail.com>": 4,
           "Aranym <73146467+aranym0@users.noreply.github.com>": 2,
-          "vbrabandt <vbrabandt@proton.me>": 16,
-          "souhaiebtar <tarhounisouhaieb@gmail.com>": 4,
-          "Dheeraj Reddy <dheerajre@proton.me>": 4,
+          "vbrabandt <vbrabandt@proton.me>": 13,
+          "souhaiebtar <tarhounisouhaieb@gmail.com>": 3,
+          "Dheeraj Reddy <dheerajre@proton.me>": 1,
+          "Tai Lam <47955724+taivlam@users.noreply.github.com>": 21,
           "Raul Dipeas <github@rauldipeas.com.br>": 6,
-          "Frank Lee <71361592+Forest-Lee@users.noreply.github.com>": 3,
           "Seraphina <hellosarahehe@gmail.com>": 10,
-          "Pavithran <pavithranr@icloud.com>": 3,
-          "V. <150687949+vigress8@users.noreply.github.com>": 26,
+          "V. <150687949+vigress8@users.noreply.github.com>": 22,
+          "toast1127 <toast011127@proton.me>": 19,
           "Aaron Madved <aaronmadved@gmail.com>": 4,
           "Cedric Roijakkers <croijakkers@ilionx.com>": 1,
           "Trenten Miller <62214409+inyourface34456@users.noreply.github.com>": 2,
-          "Archisman Panigrahi <apandada1@gmail.com>": 4,
+          "Archisman Panigrahi <apandada1@gmail.com>": 5,
           "Gianluca Mastrolonardo <56590837+GianlucaHex@users.noreply.github.com>": 7,
-          "DON <donnisnoni@outlook.com>": 3,
           "Daniel Zarychta <daniel.zarychta@gmail.com>": 3,
           "Tianyu (Sky) Lu <tianyu@lu.fm>": 6,
-          "Javier Luque Rodríguez <52297980+jluquer@users.noreply.github.com>": 5,
           "medaey <16074153+medaey@users.noreply.github.com>": 1,
           "James \"Jim\" Ed Randson <jimedrand@disroot.org>": 20,
           "old <152850693+CelestifyX@users.noreply.github.com>": 3,
           "andy <tsa.andy@live.de>": 9,
-          "Niamot <58494481+niam0t@users.noreply.github.com>": 3,
           "Charles Malouin <dev@vysp3r.com>": 2,
-          "Elisabeth Wenger-Stickel <elsie19@pm.me>": 6,
           "ook37 <oren+12345@taumoda.com>": 2,
-          "toast1127 <toast011127@proton.me>": 9,
           "Wildy Sheverando <shiwildy@gmail.com>": 1,
           "SomeEngineer42 <SomeEngineer42@gmail.com>": 3
         }
       },
       "repoCommits": {
-        "pacstall-programs": 47
+        "pacstall-programs": 131
       },
       "repoBranches": {
-        "pacstall-programs": 2
+        "pacstall-programs": 6
       },
       "repoLastCommit": {
-        "pacstall-programs": "2026-06-18"
+        "pacstall-programs": "2026-09-26"
       }
     },
     "pdnwebview": {
@@ -1004,12 +1183,12 @@
       "loc": {
         "total": 8440,
         "byLanguage": {
-          "LESS": 1836,
-          "CSS": 2782,
           "HTML": 194,
           "JSON": 6,
           "Markdown": 78,
           "Other": 14,
+          "LESS": 1836,
+          "CSS": 2782,
           "SCSS": 1836,
           "JavaScript": 1469,
           "Python": 225
@@ -1023,12 +1202,12 @@
         "pdnwebview": {
           "total": 8089,
           "byLanguage": {
-            "LESS": 1836,
-            "CSS": 2782,
             "HTML": 83,
             "JSON": 6,
             "Markdown": 72,
             "Other": 5,
+            "LESS": 1836,
+            "CSS": 2782,
             "SCSS": 1836,
             "JavaScript": 1469
           },
@@ -1070,54 +1249,61 @@
     "personal-projects": {
       "stats": {
         "stars": 0,
-        "commits": 25,
+        "commits": 91,
         "branches": 3,
-        "lastCommit": "2026-06-20"
+        "lastCommit": "2026-09-05"
       },
       "loc": {
-        "total": 10621,
+        "total": 18581,
         "byLanguage": {
-          "JSON": 967,
-          "Markdown": 164,
-          "Other": 5,
-          "JavaScript": 692,
+          "JSON": 4570,
+          "Markdown": 251,
+          "BUILDER": 21,
+          "Other": 53,
+          "JavaScript": 1911,
+          "CONF": 23,
           "HTML": 12,
-          "TypeScript": 8616,
-          "CSS": 165
+          "YAML": 45,
+          "CSS": 165,
+          "TypeScript": 11530
         }
       },
       "repoHashes": {
-        "personal_projects": "80cd4d8c5c185c1092f8dc45e68f199ef37ad842"
+        "personal_projects": "9b46fe2d539d97969f6799908033f4751da98483"
       },
       "repoLocs": {
         "personal_projects": {
-          "total": 10621,
+          "total": 18581,
           "byLanguage": {
-            "JSON": 967,
-            "Markdown": 164,
-            "Other": 5,
-            "JavaScript": 692,
+            "JSON": 4570,
+            "Markdown": 251,
+            "BUILDER": 21,
+            "Other": 53,
+            "JavaScript": 1911,
+            "CONF": 23,
             "HTML": 12,
-            "TypeScript": 8616,
-            "CSS": 165
+            "YAML": 45,
+            "CSS": 165,
+            "TypeScript": 11530
           },
           "excludeFirstCommit": false
         }
       },
       "repoAuthors": {
         "personal_projects": {
-          "Christian F. Brinkmann <christian.brinkmann09@gmail.com>": 10621,
-          "v0 <v0[bot]@users.noreply.github.com>": 503
+          "Christian F. Brinkmann <christian.brinkmann09@gmail.com>": 12983,
+          "Christian F. Brinkmann (cloud) <mail@christian-f-brinkmann.de>": 5598,
+          "v0 <v0[bot]@users.noreply.github.com>": 496
         }
       },
       "repoCommits": {
-        "personal_projects": 25
+        "personal_projects": 91
       },
       "repoBranches": {
         "personal_projects": 3
       },
       "repoLastCommit": {
-        "personal_projects": "2026-06-20"
+        "personal_projects": "2026-09-05"
       }
     },
     "php-autoindexed-file-viewer": {
@@ -1279,8 +1465,8 @@
       "loc": {
         "total": 375,
         "byLanguage": {
-          "Markdown": 118,
           "Other": 2,
+          "Markdown": 118,
           "Python": 255
         }
       },
@@ -1291,8 +1477,8 @@
         "redis_load_store": {
           "total": 375,
           "byLanguage": {
-            "Markdown": 118,
             "Other": 2,
+            "Markdown": 118,
             "Python": 255
           },
           "excludeFirstCommit": false

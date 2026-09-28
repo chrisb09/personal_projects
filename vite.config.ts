@@ -17,9 +17,10 @@ export default defineConfig({
     allowedHosts: ['projects.christian-f-brinkmann.de', 'christian-f-brinkmann.de'],
     // Optionally use the running portfolio's freshly updated stats in local previews.
     proxy: {
-      ...(process.env.PORTFOLIO_STATS_PROXY
-        ? { '/stats.json': { target: process.env.PORTFOLIO_STATS_PROXY, changeOrigin: true } }
-        : {}),
+      '/stats.json': {
+        target: process.env.PORTFOLIO_STATS_PROXY || 'http://localhost:8482',
+        changeOrigin: true,
+      },
       '/api/chat': {
         target: process.env.PORTFOLIO_CHAT_PROXY || 'http://localhost:8482',
         changeOrigin: true,

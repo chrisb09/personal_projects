@@ -52,8 +52,10 @@ services:
       - /container/data/personal_projects/translations:/app/data/translations
       # Mount public to write compiled images and stats.json back to host
       - /container/data/personal_projects/public:/app/public
-      ## Mount src to write src/config/projects.ts
-      ###- /container/config/personal_projects/projects.ts:/app/src/config/projects.ts
+      # Mount src, scripts and index.html for live builds
+      - ./src:/app/src
+      - ./scripts:/app/scripts
+      - ./index.html:/app/index.html
       # Shared volume for built assets served by Nginx
       - portfolio-dist:/app/dist
       - /container/config/personal_projects/vite.config.ts:/app/vite.config.ts:ro
