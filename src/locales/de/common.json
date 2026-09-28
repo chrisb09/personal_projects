@@ -211,6 +211,7 @@
     "starter_projects": "Welche Projekte nutzen Python, C++ oder TypeScript?",
     "starter_background": "Was ist Christians Ausbildung und Hintergrund?",
     "rate_limited": "Der KI-Assistent ist vorübergehend ausgelastet. Bitte kurz warten.",
+    "region_blocked": "Der KI-Assistent ist in Ihrer Region leider nicht verfügbar.",
     "network_error": "Verbindung zum Assistenten fehlgeschlagen. Bitte Verbindung prüfen."
   }
 }

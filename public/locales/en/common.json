@@ -211,6 +211,7 @@
     "starter_projects": "Which projects use Python, C++, or TypeScript?",
     "starter_background": "What is Christian's background and education?",
     "rate_limited": "The AI assistant is temporarily rate-limited. Please wait a moment.",
+    "region_blocked": "The AI assistant is not available in your region.",
     "network_error": "Failed to connect to the assistant service. Please check your connection."
   }
 }

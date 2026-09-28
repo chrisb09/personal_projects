@@ -55,6 +55,20 @@ interface ChatMessage {
 }
 
 const STORAGE_KEY = 'portfolio_chat_messages_v1';
+const SESSION_ID_KEY = 'portfolio_chat_session_id_v1';
+
+function getOrCreateSessionId(): string {
+  try {
+    let sid = sessionStorage.getItem(SESSION_ID_KEY);
+    if (!sid) {
+      sid = 'sess_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 8);
+      sessionStorage.setItem(SESSION_ID_KEY, sid);
+    }
+    return sid;
+  } catch {
+    return 'sess_' + Date.now().toString(36);
+  }
+}
 
 // Large curated pool of 32 starter questions (bilingual)
 const STARTER_QUESTIONS: { en: string; de: string }[] = [
@@ -332,11 +346,19 @@ export const ChatWidget: React.FC = () => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
+          sessionId: getOrCreateSessionId(),
           messages: newHistory.map(m => ({ role: m.role, content: m.content })),
           lang: i18n.language || 'en',
         }),
         signal: abortController.signal,
       });
+
+      if (res.status === 403) {
+        setErrorBanner(t('chat.region_blocked', 'The AI assistant is not available in your region.'));
+        setIsStreaming(false);
+        setMessages(prev => prev.filter(m => m.id !== assistantMsgId));
+        return;
+      }
 
       if (res.status === 429) {
         setErrorBanner(t('chat.rate_limited', 'The AI assistant is temporarily rate-limited. Please wait a moment.'));

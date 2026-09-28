@@ -33,6 +33,9 @@ services:
       - chat-data:/app/data
     environment:
       - LLM_PROVIDER=${LLM_PROVIDER:-openrouter}
+      - DISCORD_WEBHOOK_URL=${DISCORD_WEBHOOK_URL:-}
+      - DISCORD_MENTION_ID=${DISCORD_MENTION_ID:-}
+      - PAID_CHAT_BUDGET_24H=${PAID_CHAT_BUDGET_24H:-0.10}
     restart: unless-stopped
 
   portfolio-builder:
