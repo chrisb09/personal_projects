@@ -10,7 +10,7 @@
   "sourceType": "open-source",
   "aiUsage": "full",
   "aiUtilization": "no-ai",
-  "description": "A modern, responsive portfolio website built with React, Vite, and Tailwind CSS. It features interactive project categorization, dynamic filtering, detailed project sheets, and custom repository stats aggregated via a Node.js git analysis pipeline.",
+  "description": "This site lists my projects with search, filters and detailed project views. A Node.js script reads repository history to update the commit and code statistics shown alongside them.",
   "purpose": "To showcase personal software development work, utilities, and IT projects with actual, verifiably tracked LOC and commit statistics directly gathered from local repositories.",
   "technologies": [
     "React",

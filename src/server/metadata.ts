@@ -33,7 +33,7 @@ export function getProjectsMetadata(): MetadataResponse {
     projects: projects.map(project => ({
       id: project.id,
       name: project.name,
-      repoUrl: project.repoUrl,
+      repoUrl: project.repos?.[0]?.url,
       docsUrl: project.docsUrl,
       demoUrl: project.demoUrl,
     })),

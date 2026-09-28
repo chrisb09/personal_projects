@@ -6,16 +6,10 @@ import {
   categoryLabels, 
   statusLabels, 
   roleLabels,
-  sourceTypeLabels,
   categoryColors, 
-  roleColors,
-  sourceTypeColors,
   aiUsageLabels, 
-  aiUsageColors,
   aiUsageDescriptions,
   aiUtilizationLabels,
-  aiUtilizationColors,
-  aiUtilizationDescriptions,
   languageColors,
 } from '@/types/project';
 import {
@@ -28,12 +22,6 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Separator } from '@/components/ui/separator';
-import { 
-  Tooltip, 
-  TooltipContent, 
-  TooltipProvider, 
-  TooltipTrigger 
-} from '@/components/ui/tooltip';
 import { 
   ExternalLink, 
   Github, 
@@ -55,7 +43,6 @@ import {
   GitBranch,
   Clock,
   Code2,
-  Sparkles,
   ChevronLeft,
   ChevronRight,
   X
@@ -106,13 +93,13 @@ function DonutChart({ data, total }: { data: Record<string, number>; total: numb
                 key={lang}
                 d={path}
                 fill={color}
-                stroke="white"
+                  stroke="hsl(var(--card))"
                 strokeWidth="1"
               />
             );
           })}
           {/* Center hole */}
-          <circle cx="50" cy="50" r="25" fill="hsl(var(--background))" />
+          <circle cx="50" cy="50" r="25" fill="hsl(var(--card))" />
         </svg>
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="text-center">
@@ -380,7 +367,7 @@ export function ProjectDetailModal({ project: rawProject, isOpen, onClose, onPro
   const hasScreenshots = project.screenshots && project.screenshots.length > 0;
   const hasRelatedProjects = project.relatedProjects && project.relatedProjects.length > 0;
   const hasStats = project.stats && Object.keys(project.stats).length > 0;
-  const hasLOC = project.loc && project.loc.total > 0;
+  const hasLOC = Boolean(project.loc?.total && project.loc.byLanguage);
   const hasRepos = project.repos && project.repos.length > 0;
   const hasMirrors = project.mirrors && project.mirrors.length > 0;
   const hasModelReleases = project.modelReleases && project.modelReleases.length > 0;
@@ -389,16 +376,15 @@ export function ProjectDetailModal({ project: rawProject, isOpen, onClose, onPro
   const totalModelCount = project.modelReleases?.length ?? 0;
 
   return (
-    <TooltipProvider>
       <Dialog open={isOpen} onOpenChange={(open) => { if (!open) onClose(); }}>
         <DialogContent 
           onOpenAutoFocus={(e) => e.preventDefault()}
-          className="w-[90vw] max-w-[90vw] md:max-w-[85vw] lg:max-w-[80vw] xl:max-w-7xl h-[88vh] max-h-[88vh] p-0 overflow-hidden bg-background/95 backdrop-blur-xl border border-border/50 rounded-xl flex flex-col"
+          className="w-screen max-w-none h-[100dvh] max-h-[100dvh] rounded-none border-0 bg-card p-0 gap-0 overflow-hidden shadow-2xl flex flex-col data-[state=open]:!animate-none data-[state=closed]:!animate-none sm:w-[calc(100vw-2rem)] sm:max-w-5xl sm:h-auto sm:max-h-[min(85dvh,850px)] sm:rounded-2xl sm:border sm:border-border"
         >
           {/* Header */}
-          <div className="relative bg-gradient-to-br from-primary/10 via-primary/5 to-transparent p-4 pb-3 shrink-0">
-            <DialogHeader>
-              <div className="flex items-start gap-3.5">
+          <div className="relative border-b border-border bg-card px-5 pb-4 pt-5 pr-12 sm:px-8 sm:pb-5 sm:pt-7 sm:pr-14 shrink-0">
+             <DialogHeader className="text-left">
+               <div className="flex items-start gap-4">
                 {/* Logo */}
                 <div className={`w-12 h-12 rounded-xl border border-primary/20 shadow-md shadow-primary/10 shrink-0 overflow-hidden flex items-center justify-center ${
                   project.logo ? 'bg-transparent' : 'bg-gradient-to-br from-primary/30 to-primary/10'
@@ -410,11 +396,11 @@ export function ProjectDetailModal({ project: rawProject, isOpen, onClose, onPro
                   )}
                 </div>
                 
-                <div className="flex-1 min-w-0">
+                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap mb-0.5">
-                    <DialogTitle className="text-xl font-bold">{project.name}</DialogTitle>
+                    <DialogTitle className="text-xl sm:text-2xl font-bold tracking-tight leading-snug">{project.name}</DialogTitle>
                   </div>
-                  <p className="text-xs md:text-sm text-muted-foreground leading-snug">{project.tagline}</p>
+                  <p className="text-sm text-muted-foreground leading-relaxed max-w-2xl">{project.tagline}</p>
                   <div className="flex items-center gap-1.5 mt-1.5 flex-wrap">
                     <Badge 
                       variant="outline" 
@@ -433,34 +419,6 @@ export function ProjectDetailModal({ project: rawProject, isOpen, onClose, onPro
                     <Badge variant="secondary" className="text-[10px] px-1.5 py-0.5 leading-none">
                       {t(`statuses.${project.status}`, statusLabels[project.status])}
                     </Badge>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <Badge 
-                          variant="outline" 
-                          className={`${aiUsageColors[project.aiUsage]} text-[10px] px-1.5 py-0.5 leading-none cursor-help`}
-                        >
-                          <Sparkles className="w-3 h-3 mr-0.5" />
-                          {t(`ai_usage.${project.aiUsage}`, aiUsageLabels[project.aiUsage])}
-                        </Badge>
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p className="text-xs max-w-xs">{t(`ai_usage_descriptions.${project.aiUsage}`, aiUsageDescriptions[project.aiUsage])}</p>
-                      </TooltipContent>
-                    </Tooltip>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <Badge 
-                          variant="outline" 
-                          className={`${aiUtilizationColors[project.aiUtilization]} text-[10px] px-1.5 py-0.5 leading-none cursor-help`}
-                        >
-                          <Cpu className="w-3 h-3 mr-0.5" />
-                          {t(`ai_utilization.${project.aiUtilization}`, aiUtilizationLabels[project.aiUtilization])}
-                        </Badge>
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p className="text-xs max-w-xs">{t(`ai_utilization_descriptions.${project.aiUtilization}`, aiUtilizationDescriptions[project.aiUtilization])}</p>
-                      </TooltipContent>
-                    </Tooltip>
                     <span className="text-xs text-muted-foreground flex items-center gap-1">
                       <Calendar className="w-3 h-3" />
                       {project.year}
@@ -483,7 +441,7 @@ export function ProjectDetailModal({ project: rawProject, isOpen, onClose, onPro
             </DialogHeader>
 
             {/* Action Buttons */}
-            <div className="flex gap-2 mt-2.5 flex-wrap">
+            <div className="flex gap-2 mt-4 flex-wrap">
               {project.demoUrl && (
                 <Button size="sm" className="h-8 text-xs gap-2" variant="default" asChild>
                   <a href={project.demoUrl} target="_blank" rel="noopener noreferrer">
@@ -514,30 +472,14 @@ export function ProjectDetailModal({ project: rawProject, isOpen, onClose, onPro
                   </a>
                 </Button>
               )}
-              {hasRepos && project.repos?.map((repo, i) => (
-                <Button key={i} size="sm" className="h-8 text-xs gap-2" variant="outline" asChild>
-                  <a href={repo.url} target="_blank" rel="noopener noreferrer">
+              {project.repos?.[0] && (
+                <Button size="sm" className="h-8 text-xs gap-2" variant="outline" asChild>
+                  <a href={project.repos[0].url} target="_blank" rel="noopener noreferrer">
                     <Github className="w-3.5 h-3.5" />
-                    {repo.name || 'Repository'}
+                    {t('modal.source_code', 'Source code')}
                   </a>
                 </Button>
-              ))}
-              {hasMirrors && project.mirrors?.map((mirror, i) => (
-                <Button key={i} size="sm" className="h-8 text-xs gap-2" variant="outline" asChild>
-                  <a href={mirror.url} target="_blank" rel="noopener noreferrer">
-                    <Github className="w-3.5 h-3.5" />
-                    {mirror.name} (Mirror)
-                  </a>
-                </Button>
-              ))}
-              {hasModelReleases && project.modelReleases?.map((model, i) => (
-                <Button key={i} size="sm" className="h-8 text-xs gap-2" variant="outline" asChild>
-                  <a href={model.url} target="_blank" rel="noopener noreferrer">
-                    <Cpu className="w-3.5 h-3.5" />
-                    {model.name}
-                  </a>
-                </Button>
-              ))}
+              )}
               {project.docsUrl && (
                 <Button size="sm" className="h-8 text-xs gap-2" variant="outline" asChild>
                   <a href={project.docsUrl} target="_blank" rel="noopener noreferrer">
@@ -550,37 +492,37 @@ export function ProjectDetailModal({ project: rawProject, isOpen, onClose, onPro
           </div>
 
           {/* Content Tabs */}
-          <Tabs value={activeTab} onValueChange={setActiveTab} className="flex-1 flex flex-col min-h-0">
-            <div className="px-4 border-b border-border/20 shrink-0">
-              <TabsList className="w-full justify-start h-auto bg-transparent p-0 gap-5 flex-wrap">
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="flex-1 flex flex-col min-h-0 gap-0">
+            <div className="px-5 sm:px-8 border-b border-border shrink-0 overflow-x-auto">
+              <TabsList className="w-max min-w-full justify-start h-auto bg-transparent p-0 gap-5 sm:gap-8 flex-nowrap">
                 <TabsTrigger 
                   value="overview" 
-                  className="px-1 pb-2 pt-1.5 rounded-none text-xs font-semibold border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-primary data-[state=inactive]:text-muted-foreground hover:text-foreground transition-all whitespace-nowrap bg-transparent shadow-none border-t-0 border-x-0 focus-visible:ring-0 focus-visible:outline-none focus:outline-none focus-visible:border-b-primary focus-visible:text-primary"
+                  className="flex-none px-1 pb-3 pt-3 rounded-none text-sm font-semibold border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-primary data-[state=active]:!bg-transparent data-[state=active]:!shadow-none data-[state=inactive]:text-muted-foreground hover:text-foreground transition-all whitespace-nowrap bg-transparent shadow-none border-t-0 border-x-0 focus-visible:ring-0 focus-visible:outline-none focus:outline-none focus-visible:border-b-primary focus-visible:text-primary"
                 >
                   {t('modal.overview', 'Overview')}
                 </TabsTrigger>
                 <TabsTrigger 
                   value="technical" 
-                  className="px-1 pb-2 pt-1.5 rounded-none text-xs font-semibold border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-primary data-[state=inactive]:text-muted-foreground hover:text-foreground transition-all whitespace-nowrap bg-transparent shadow-none border-t-0 border-x-0 focus-visible:ring-0 focus-visible:outline-none focus:outline-none focus-visible:border-b-primary focus-visible:text-primary"
+                  className="flex-none px-1 pb-3 pt-3 rounded-none text-sm font-semibold border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-primary data-[state=active]:!bg-transparent data-[state=active]:!shadow-none data-[state=inactive]:text-muted-foreground hover:text-foreground transition-all whitespace-nowrap bg-transparent shadow-none border-t-0 border-x-0 focus-visible:ring-0 focus-visible:outline-none focus:outline-none focus-visible:border-b-primary focus-visible:text-primary"
                 >
                   {t('modal.technical', 'Technical')}
                 </TabsTrigger>
-                <TabsTrigger 
-                  value="usage" 
-                  className="px-1 pb-2 pt-1.5 rounded-none text-xs font-semibold border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-primary data-[state=inactive]:text-muted-foreground hover:text-foreground transition-all whitespace-nowrap bg-transparent shadow-none border-t-0 border-x-0 focus-visible:ring-0 focus-visible:outline-none focus:outline-none focus-visible:border-b-primary focus-visible:text-primary"
+                {(project.installation || project.usage) && <TabsTrigger
+                  value="usage"
+                  className="flex-none px-1 pb-3 pt-3 rounded-none text-sm font-semibold border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-primary data-[state=active]:!bg-transparent data-[state=active]:!shadow-none data-[state=inactive]:text-muted-foreground hover:text-foreground transition-all whitespace-nowrap bg-transparent shadow-none border-t-0 border-x-0 focus-visible:ring-0 focus-visible:outline-none focus:outline-none focus-visible:border-b-primary focus-visible:text-primary"
                 >
                   {t('modal.installation_usage', 'Installation & Usage')}
-                </TabsTrigger>
-                <TabsTrigger 
-                  value="stats" 
-                  className="px-1 pb-2 pt-1.5 rounded-none text-xs font-semibold border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-primary data-[state=inactive]:text-muted-foreground hover:text-foreground transition-all whitespace-nowrap bg-transparent shadow-none border-t-0 border-x-0 focus-visible:ring-0 focus-visible:outline-none focus:outline-none focus-visible:border-b-primary focus-visible:text-primary"
+                </TabsTrigger>}
+                {(hasStats || hasLOC) && <TabsTrigger
+                  value="stats"
+                  className="flex-none px-1 pb-3 pt-3 rounded-none text-sm font-semibold border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-primary data-[state=active]:!bg-transparent data-[state=active]:!shadow-none data-[state=inactive]:text-muted-foreground hover:text-foreground transition-all whitespace-nowrap bg-transparent shadow-none border-t-0 border-x-0 focus-visible:ring-0 focus-visible:outline-none focus:outline-none focus-visible:border-b-primary focus-visible:text-primary"
                 >
                   {t('modal.stats_metrics', 'Stats & Metrics')}
-                </TabsTrigger>
+                </TabsTrigger>}
                 {hasCodeOrModels && (
                   <TabsTrigger 
                     value="repositories" 
-                    className="px-1 pb-2 pt-1.5 rounded-none text-xs font-semibold border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-primary data-[state=inactive]:text-muted-foreground hover:text-foreground transition-all whitespace-nowrap bg-transparent shadow-none border-t-0 border-x-0 focus-visible:ring-0 focus-visible:outline-none focus:outline-none focus-visible:border-b-primary focus-visible:text-primary"
+                    className="flex-none px-1 pb-3 pt-3 rounded-none text-sm font-semibold border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-primary data-[state=active]:!bg-transparent data-[state=active]:!shadow-none data-[state=inactive]:text-muted-foreground hover:text-foreground transition-all whitespace-nowrap bg-transparent shadow-none border-t-0 border-x-0 focus-visible:ring-0 focus-visible:outline-none focus:outline-none focus-visible:border-b-primary focus-visible:text-primary"
                   >
                     {hasModelReleases && !hasRepos && !hasMirrors
                       ? `${t('modal.models', 'Models')} (${totalModelCount})`
@@ -592,7 +534,7 @@ export function ProjectDetailModal({ project: rawProject, isOpen, onClose, onPro
                 {(hasScreenshots || hasRelatedProjects) && (
                   <TabsTrigger 
                     value="media" 
-                    className="px-1 pb-2 pt-1.5 rounded-none text-xs font-semibold border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-primary data-[state=inactive]:text-muted-foreground hover:text-foreground transition-all whitespace-nowrap bg-transparent shadow-none border-t-0 border-x-0 focus-visible:ring-0 focus-visible:outline-none focus:outline-none focus-visible:border-b-primary focus-visible:text-primary"
+                    className="flex-none px-1 pb-3 pt-3 rounded-none text-sm font-semibold border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-primary data-[state=active]:!bg-transparent data-[state=active]:!shadow-none data-[state=inactive]:text-muted-foreground hover:text-foreground transition-all whitespace-nowrap bg-transparent shadow-none border-t-0 border-x-0 focus-visible:ring-0 focus-visible:outline-none focus:outline-none focus-visible:border-b-primary focus-visible:text-primary"
                   >
                     {t('modal.media_links', 'Media & Links')}
                   </TabsTrigger>
@@ -602,15 +544,19 @@ export function ProjectDetailModal({ project: rawProject, isOpen, onClose, onPro
 
             {/* Scrollable content area — fills remaining modal height */}
             <div className="overflow-y-auto flex-1 min-h-0">
-              <div className="p-4 min-w-0">
+              <div className="px-5 py-6 sm:px-8 sm:py-8 min-w-0">
                 {/* Overview Tab */}
-                <TabsContent value="overview" className="mt-0 space-y-4 focus-visible:outline-none">
+                <TabsContent value="overview" className="mt-0 grid data-[state=inactive]:hidden gap-8 lg:grid-cols-[minmax(0,1fr)_240px] focus-visible:outline-none">
+                  <div className="min-w-0 max-w-[70ch] space-y-6">
+                  {hasScreenshots && (
+                    <ScreenshotGallery screenshots={project.screenshots!} projectName={project.name} />
+                  )}
                   <section>
                     <h4 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2 flex items-center gap-1.5">
                       <Target className="w-3.5 h-3.5" />
                       {t('modal.description', 'Description')}
                     </h4>
-                    <div className="text-sm text-foreground/90 leading-relaxed">{renderFormattedDescription(project.description)}</div>
+                    <div className="text-sm sm:text-base text-foreground/90 leading-relaxed">{renderFormattedDescription(project.description)}</div>
                   </section>
 
                   <Separator />
@@ -620,13 +566,13 @@ export function ProjectDetailModal({ project: rawProject, isOpen, onClose, onPro
                       <Lightbulb className="w-3.5 h-3.5" />
                       {t('modal.purpose', 'Purpose')}
                     </h4>
-                    <div className="text-sm text-foreground/90 leading-relaxed">{renderFormattedDescription(project.purpose)}</div>
+                    <div className="text-sm sm:text-base text-foreground/90 leading-relaxed">{renderFormattedDescription(project.purpose)}</div>
                   </section>
 
-                  <Separator />
+                  {(project.strengths.length > 0 || project.limitations.length > 0) && <Separator />}
 
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <section>
+                  {(project.strengths.length > 0 || project.limitations.length > 0) && <div className="grid sm:grid-cols-2 gap-6">
+                    {project.strengths.length > 0 && <section>
                       <h4 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2 flex items-center gap-1.5">
                         <CheckCircle2 className="w-3.5 h-3.5 text-green-500" />
                         {t('modal.strengths', 'Strengths')}
@@ -639,9 +585,9 @@ export function ProjectDetailModal({ project: rawProject, isOpen, onClose, onPro
                           </li>
                         ))}
                       </ul>
-                    </section>
+                    </section>}
 
-                    <section>
+                    {project.limitations.length > 0 && <section>
                       <h4 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2 flex items-center gap-1.5">
                         <AlertCircle className="w-3.5 h-3.5 text-amber-500" />
                         {t('modal.limitations', 'Limitations')}
@@ -654,8 +600,28 @@ export function ProjectDetailModal({ project: rawProject, isOpen, onClose, onPro
                           </li>
                         ))}
                       </ul>
-                    </section>
+                    </section>}
+                  </div>}
                   </div>
+                  <aside className="h-fit space-y-5 rounded-xl border border-border bg-background p-5 text-sm">
+                    <div>
+                      <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">{t('filters.role', 'Role')}</p>
+                      <p className="mt-1 font-medium">{t(`roles.${project.role}`, roleLabels[project.role])}</p>
+                    </div>
+                    <div>
+                      <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">{t('modal.technologies', 'Technologies')}</p>
+                      <div className="mt-2 flex flex-wrap gap-1.5">{project.technologies.slice(0, 5).map(tech => <Badge key={tech} variant="secondary" className="font-normal">{tech}</Badge>)}</div>
+                    </div>
+                    <div className="border-t border-border pt-4">
+                      <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">{t('filters.ai_usage', 'AI used in development')}</p>
+                      <p className="mt-1 font-medium">{t(`ai_usage.${project.aiUsage}`, aiUsageLabels[project.aiUsage])}</p>
+                      <p className="mt-1 text-xs leading-relaxed text-muted-foreground">{t(`ai_usage_descriptions.${project.aiUsage}`, aiUsageDescriptions[project.aiUsage])}</p>
+                    </div>
+                    <div>
+                      <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">{t('filters.ai_utilization', 'AI features in project')}</p>
+                      <p className="mt-1 font-medium">{t(`ai_utilization.${project.aiUtilization}`, aiUtilizationLabels[project.aiUtilization])}</p>
+                    </div>
+                  </aside>
                 </TabsContent>
 
                 {/* Technical Tab */}
@@ -674,9 +640,9 @@ export function ProjectDetailModal({ project: rawProject, isOpen, onClose, onPro
                     </div>
                   </section>
 
-                  <Separator />
+                  {project.dependencies.length > 0 && <Separator />}
 
-                  <section>
+                  {project.dependencies.length > 0 && <section>
                     <h4 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2 flex items-center gap-1.5">
                       <Package className="w-3.5 h-3.5" />
                       {t('modal.dependencies', 'Dependencies')}
@@ -688,11 +654,11 @@ export function ProjectDetailModal({ project: rawProject, isOpen, onClose, onPro
                         </Badge>
                       ))}
                     </div>
-                  </section>
+                  </section>}
 
-                  <Separator />
+                  {project.expertise.length > 0 && <Separator />}
 
-                  <section>
+                  {project.expertise.length > 0 && <section>
                     <h4 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2 flex items-center gap-1.5">
                       <Wrench className="w-3.5 h-3.5" />
                       {t('modal.expertise', 'Expertise Highlighted')}
@@ -705,11 +671,11 @@ export function ProjectDetailModal({ project: rawProject, isOpen, onClose, onPro
                         </li>
                       ))}
                     </ul>
-                  </section>
+                  </section>}
                 </TabsContent>
  
                 {/* Usage Tab */}
-                <TabsContent value="usage" className="mt-0 space-y-4 focus-visible:outline-none">
+                <TabsContent value="usage" className="mt-0 max-w-[75ch] space-y-4 focus-visible:outline-none">
                   {project.installation && (
                     <section>
                       <h4 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2 flex items-center gap-1.5">
@@ -797,8 +763,8 @@ export function ProjectDetailModal({ project: rawProject, isOpen, onClose, onPro
                         </h4>
                         <div className="bg-muted/30 rounded-lg p-3.5 border border-border/50 max-w-md">
                           <DonutChart 
-                            data={project.loc!.byLanguage} 
-                            total={project.loc!.total} 
+                            data={project.loc!.byLanguage!}
+                            total={project.loc!.total!}
                           />
                         </div>
                       </section>
@@ -972,6 +938,5 @@ export function ProjectDetailModal({ project: rawProject, isOpen, onClose, onPro
           </Tabs>
         </DialogContent>
       </Dialog>
-    </TooltipProvider>
   );
 }

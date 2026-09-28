@@ -4,7 +4,7 @@ export const projects: Project[] = [
   {
     "id": "MusicBot",
     "name": "JMusicBot Fork",
-    "tagline": "Feature-rich self-hosted Discord music bot fork with playback analytics and Docker deployment",
+    "tagline": "Maintained JMusicBot fork with JDA 6 support, playback logs and Docker deployment",
     "year": "2024-Present",
     "category": "backend",
     "status": "active",
@@ -13,7 +13,7 @@ export const projects: Project[] = [
     "sourceType": "open-source",
     "aiUsage": "contributed",
     "aiUtilization": "no-ai",
-    "description": "A maintained, feature-rich fork of the popular self-hosted JMusicBot Discord music bot. Built with JDA 6 and Java, it includes modern Discord voice encryption (DAVE) support, optional YouTube account login (OAuth2), custom per-channel playback status messages, and JDBC/SQLite playback analytics logging. The project includes a dedicated Docker container deployment path.",
+    "description": "I maintain a fork of JMusicBot, a self-hosted Discord music bot. It runs on JDA 6 and supports Discord voice encryption (DAVE). The fork also adds optional YouTube account login, per-channel playback status, SQLite playback logs and a Docker deployment.",
     "purpose": "To keep JMusicBot operational on modern Discord API standards while expanding it with database-backed statistics and native container support.",
     "technologies": [
       "Java",
@@ -34,10 +34,10 @@ export const projects: Project[] = [
       "Database Logging"
     ],
     "strengths": [
-      "Fully updated to support DAVE voice encryption and JDA 6.1.1",
-      "Bypasses YouTube rate limits via Google account OAuth2 login & visitor tokens",
-      "Built-in SQLite playback analytics and scheduling scheduler reports",
-      "Comes with containerized Docker deployment and compose configurations"
+      "JDA 6 and DAVE voice encryption support",
+      "Optional Google account login for YouTube playback",
+      "SQLite playback logs and scheduled reports",
+      "Docker image and Compose configuration"
     ],
     "limitations": [
       "Subject to ongoing changes in YouTube and Discord API structures",
@@ -118,7 +118,7 @@ export const projects: Project[] = [
   {
     "id": "cpp-ml-interface",
     "name": "CPP-ML-Interface",
-    "tagline": "Modular C++ coupling middleware for low-latency CFD and Machine Learning inference",
+    "tagline": "C++ interface linking CFD solvers to machine-learning backends",
     "year": "2025 - 2026",
     "category": "backend",
     "status": "active",
@@ -128,8 +128,8 @@ export const projects: Project[] = [
     "sourceType": "open-source",
     "aiUsage": "contributed",
     "aiUtilization": "ai-powered",
-    "description": "A modular, generic C++ middleware designed to couple complex Computational Fluid Dynamics (CFD) solvers with machine learning models. Developed as a core part of a Master's Thesis at RWTH Aachen University (Chair for High Performance Computing, i12), it redesigns and generalizes the legacy solver-specific CPP-ML-Interface-MAIA, abstracting underlying communication libraries into a unified, configuration-driven coupling boundary.\n\nThe middleware is optimized for and benchmarked on the Claix23 cluster. Hardware targets include dual-socket CPU nodes equipped with 2x Intel Xeon 8468 (Sapphire Rapids) processors, and GPU nodes equipped with 4x NVIDIA H100 acceleration cards, which are critical for low-level CPU parallel execution configurations (such as intra/inter-op threads, OpenMP tasking, and Slurm core affinity bindings).\n\nThe project is developed inside a larger workspace structure (smartsim_playground) which coordinates several benchmark and validation utilities:\n\n```\nsmartsim/ (smartsim_playground workspace)\n├── CPP-ML-Interface (Redesigned generic interface)\n│   ├── extern/AIxeleratorService\n│   ├── extern/SmartRedis\n│   └── extern/phydll\n├── cpu_benchmark (CPU/GPU inference threading & core affinity benchmarks)\n├── lmod_dependencies (Z3-based HPC module resolver)\n├── mini_app (Toy CFD solver used for prototyping)\n└── module_test (Integration testing with ~600 combinations)\n```\n\nThe interface will soon replace the predecessor library in the MMCP project to couple the MMCP_transformer with the m-aia solver.",
-    "purpose": "To eliminate low-performance file-based and socket bottlenecks in High-Performance Computing (HPC) by providing a low-latency, platform-independent in-memory data path between physical simulations and AI models.",
+    "description": "For my master's thesis at RWTH Aachen, I redesigned a solver-specific C++ interface so CFD solvers can exchange data with machine-learning backends through a configurable API. It supports SmartSim/SmartRedis, PhyDLL and AIxeleratorService.\n\nI used the Claix23 cluster to benchmark CPU and GPU inference settings, including thread counts and core affinity. A small CFD solver and integration tests cover the coupling paths. The interface is intended for use with the MMCP transformer and m-aia solver.",
+    "purpose": "To connect CFD solvers to machine-learning models without tying each solver to a single communication backend.",
     "technologies": [
       "C++",
       "CMake",
@@ -209,7 +209,7 @@ export const projects: Project[] = [
   {
     "id": "custom-orchestration",
     "name": "Distributed Linux Service Orchestrator",
-    "tagline": "Bespoke Control Plane and CI/CD Engine for Low-Latency Application Clusters",
+    "tagline": "Bash scripts for deployment and service lifecycle management",
     "year": "2023 - Present",
     "category": "devops-infrastructure",
     "status": "active",
@@ -218,8 +218,8 @@ export const projects: Project[] = [
     "sourceType": "closed-source",
     "aiUsage": "contributed",
     "aiUtilization": "no-ai",
-    "description": "A lightweight, low-overhead orchestration platform and automated CI/CD control plane written in Bash. Designed to manage a distributed multi-instance cluster with strict memory isolation, soft real-time execution constraints, and zero-downtime hot-reloads.",
-    "purpose": "To deliver deterministic daemon lifecycle management and deployment automation in high-concurrency environments where standard containerization runtimes introduce unacceptable process jitter and latency overhead.",
+    "description": "I use Bash scripts to start, stop and deploy services across several Linux machines. They coordinate Git updates, process shutdown, log checks and disk images for per-service storage.",
+    "purpose": "To automate deployments and process management on my Linux infrastructure.",
     "technologies": [
       "Bash",
       "Linux",
@@ -275,7 +275,7 @@ export const projects: Project[] = [
     "sourceType": "open-source",
     "aiUsage": "full",
     "aiUtilization": "no-ai",
-    "description": "A full-stack, open-source web application designed to analyze GPS track data (GPX files) and retroactively calculate a cyclist's power output (watts) using physical equations. The platform integrates a FastAPI Python backend for mathematical calculations, coordinate smoothing, and database persistence, with a React frontend featuring Chart.js analytics and Mapbox 3D terrain animations.",
+    "description": "Upload a GPX track to estimate cycling power from route data and view the results in charts and a 3D map. A FastAPI backend handles the calculations; the React frontend displays the ride.",
     "purpose": "To democratize cycling analytics by reverse-engineering power output without expensive physical power meters, and providing a highly engaging 3D visualization of rides.",
     "technologies": [
       "React",
@@ -333,7 +333,7 @@ export const projects: Project[] = [
   {
     "id": "exam-system-backend",
     "name": "LLM-Integrated Exam System",
-    "tagline": "Scaled Backend for University Assessments",
+    "tagline": "Team-built exam platform with an LLM-assisted grading workflow",
     "year": "2025",
     "category": "backend",
     "status": "completed",
@@ -343,8 +343,8 @@ export const projects: Project[] = [
     "sourceType": "closed-source",
     "aiUsage": "minor",
     "aiUtilization": "ai-enhanced",
-    "description": "Extended an existing digital examination system for a Ukrainian university. Engineered the backend architecture, database schema, and microservice orchestration to handle concurrent student loads.",
-    "purpose": "To introduce knowledge-based testing to the examination infrastructure and introduce automated, AI-assisted preliminary grading for free-text answers to reduce examiner workload.",
+    "description": "As a backend co-lead on a team, I worked on the database schema, services and Kubernetes deployment for a university exam platform. The system uses an LLM for preliminary evaluation of free-text answers.",
+    "purpose": "To add free-text questions and preliminary grading to an existing examination system for a Ukrainian university.",
     "technologies": [
       "Kubernetes",
       "SQL",
@@ -359,10 +359,9 @@ export const projects: Project[] = [
       "Containerization"
     ],
     "strengths": [
-      "Successfully containerized and deployed the application stack using Kubernetes",
-      "Designed scalable SQL schemas to handle concurrent exam submissions securely",
-      "Integrated LLM endpoints for automated, preliminary evaluation of free-text responses",
-      "Delivered a robust backend under tight academic project deadlines"
+      "Deployed the application stack with Kubernetes",
+      "Designed SQL schemas for exam submissions",
+      "Connected LLM endpoints for preliminary feedback on free-text answers"
     ],
     "limitations": [],
     "roadmap": [],
@@ -374,7 +373,7 @@ export const projects: Project[] = [
   {
     "id": "ferienw-am-meer-modernization",
     "name": "ferienw-am-meer.de",
-    "tagline": "Static Site Modernization & High-Performance Web Engineering",
+    "tagline": "Rebuild of a holiday rental website with Next.js and an image pipeline",
     "year": "2026",
     "category": "frontend",
     "status": "active",
@@ -383,8 +382,8 @@ export const projects: Project[] = [
     "sourceType": "open-source",
     "aiUsage": "full",
     "aiUtilization": "no-ai",
-    "description": "Migrated and completely re-architected a legacy static HTML website into a high-performance, modern web application. Focused on extreme frontend asset optimization, strict type safety, and automated CI/CD deployment pipelines.",
-    "purpose": "To transform an outdated web presence into a blazing-fast, mobile-first experience while establishing an automated infrastructure for media processing and zero-downtime hosting.",
+    "description": "I rebuilt an older static HTML holiday rental site in Next.js and TypeScript. The work includes image conversion and placeholders for the gallery, plus a GitHub Actions deployment workflow.",
+    "purpose": "To make the site's photos and information easier to browse on phones and simpler to update.",
     "technologies": [
       "Next.js",
       "Tailwind CSS v4",
@@ -566,7 +565,7 @@ export const projects: Project[] = [
   {
     "id": "homeserver",
     "name": "Private Homeserver",
-    "tagline": "Self-Hosted Infrastructure for Personal Use",
+    "tagline": "Self-hosted storage, media and application services",
     "year": "2018 - Present",
     "category": "devops-infrastructure",
     "status": "active",
@@ -575,7 +574,7 @@ export const projects: Project[] = [
     "sourceType": "closed-source",
     "aiUsage": "minor",
     "aiUtilization": "no-ai",
-    "description": "A production-grade, self-hosted infrastructure environment operating continuously since 2018. Manages over 100+ TB of storage serving approximately 20 active users with zero major data loss incidents.",
+    "description": "I run a self-hosted server with openZFS storage, Docker services and WireGuard access. Built up since 2018, it now serves around 20 people and manages more than 100 TB of storage.",
     "purpose": "To create a privacy-focused, self-controlled alternative to commercial cloud services, providing reliable hosting for personal data and applications.",
     "technologies": [
       "Docker",
@@ -769,7 +768,7 @@ export const projects: Project[] = [
   {
     "id": "jda-chewtils",
     "name": "JDA-Chewtils",
-    "tagline": "Modern, modular tools and utilities extension library for JDA Discord bots",
+    "tagline": "Java helpers for Discord bot commands and menus",
     "year": "2025",
     "category": "library",
     "status": "active",
@@ -778,7 +777,7 @@ export const projects: Project[] = [
     "sourceType": "open-source",
     "aiUsage": "contributed",
     "aiUtilization": "no-ai",
-    "description": "A modern, modular fork of the classic JDA-Utilities library that provides boilerplate reduction tools for Java Discord API (JDA) bots. It includes helper structures for menu pagination, command parsing, and OAuth2 integration. I contributed to JDA 6.1.1 compatibility upgrades.",
+    "description": "JDA-Chewtils provides Java helpers for Discord bot commands, menus and OAuth. I contributed changes for JDA 6.1.1 compatibility.",
     "purpose": "To simplify Java-based Discord bot development by providing reusable structures for command registering and UI menus.",
     "technologies": [
       "Java",
@@ -885,8 +884,8 @@ export const projects: Project[] = [
     "sourceType": "open-source",
     "aiUsage": "minor",
     "aiUtilization": "no-ai",
-    "description": "A Java client library for the LibreTranslate API. Provides easy integration of translation capabilities into Java applications with a clean, idiomatic API.",
-    "purpose": "To provide Java developers with a simple, well-documented client for self-hosted or public LibreTranslate instances, enabling translation features without external service dependencies.",
+    "description": "A Java client for LibreTranslate instances, with synchronous and asynchronous translation calls. I contribute to the client library.",
+    "purpose": "To use LibreTranslate from Java applications against self-hosted or public instances.",
     "technologies": [
       "Java",
       "HTTP Client",
@@ -1282,9 +1281,150 @@ export const projects: Project[] = [
     "screenshots": []
   },
   {
+    "id": "opencode-kiconnect",
+    "name": "opencode-kiconnect",
+    "tagline": "KI:connect model access for OpenCode",
+    "year": "2026",
+    "category": "utility",
+    "status": "active",
+    "projectType": "software-project",
+    "role": "main-author",
+    "sourceType": "open-source",
+    "aiUsage": "full",
+    "aiUtilization": "ai-powered",
+    "loc": {
+      "total": 810,
+      "byLanguage": {
+        "TypeScript": 528,
+        "Markdown": 214,
+        "JSON": 68
+      }
+    },
+    "description": "An OpenCode plugin for models from KI:connect, the RWTH/NRW gateway. It configures locally hosted open-weight models and commercial models routed to external providers, using a KI:connect API key. It was built separately from opencode-antigravity-auth, which served as an integration reference.",
+    "purpose": "To access KI:connect models from OpenCode while keeping their hosting and quota differences visible.",
+    "technologies": [
+      "TypeScript",
+      "Node.js",
+      "OpenCode Plugin API",
+      "AI SDK"
+    ],
+    "dependencies": [
+      "@opencode-ai/plugin",
+      "@ai-sdk/openai-compatible"
+    ],
+    "expertise": [
+      "OpenCode provider integration",
+      "Model configuration",
+      "API-key handling"
+    ],
+    "strengths": [
+      "Registers KI:connect models in OpenCode via its chat-completions API",
+      "Supports API keys from OpenCode auth or environment variables",
+      "Distinguishes RWTH-hosted models from externally hosted options in the documentation"
+    ],
+    "limitations": [
+      "Requires access to KI:connect and an API key",
+      "Model IDs, availability and quotas depend on the gateway",
+      "Commercial models may route requests to external providers"
+    ],
+    "roadmap": [],
+    "installation": "Build with `bun install` and `bun run build`, add the plugin path to your OpenCode configuration, then configure your KI:connect API key with `opencode auth login` or `KICONNECT_API_KEY`.",
+    "repos": [
+      {
+        "name": "opencode-kiconnect",
+        "url": "https://github.com/chrisb09/opencode-kiconnect",
+        "type": "github"
+      }
+    ],
+    "mirrors": [],
+    "screenshots": [],
+    "relatedProjects": [
+      {
+        "name": "opencode-antigravity-auth",
+        "relation": "Reference for the plugin integration (not a fork)",
+        "projectId": "opencode-antigravity-auth"
+      },
+      {
+        "name": "opencode-oneprovider",
+        "relation": "Another OpenCode provider plugin",
+        "projectId": "opencode-oneprovider"
+      }
+    ]
+  },
+  {
+    "id": "opencode-oneprovider",
+    "name": "opencode-oneprovider",
+    "tagline": "OneProvider model configuration and API-key handling for OpenCode",
+    "year": "2026",
+    "category": "utility",
+    "status": "active",
+    "projectType": "software-project",
+    "role": "main-author",
+    "sourceType": "open-source",
+    "aiUsage": "full",
+    "aiUtilization": "ai-powered",
+    "loc": {
+      "total": 703,
+      "byLanguage": {
+        "TypeScript": 528,
+        "Markdown": 107,
+        "JSON": 68
+      }
+    },
+    "description": "An OpenCode plugin that registers OneProvider models with their pricing and context limits. It reads an API key from OpenCode auth, the environment or provider settings. This is a separate project; opencode-antigravity-auth served as an integration reference, not as a codebase to fork.",
+    "purpose": "To use OneProvider models in OpenCode without maintaining model definitions and prices by hand.",
+    "technologies": [
+      "TypeScript",
+      "Node.js",
+      "OpenCode Plugin API",
+      "AI SDK"
+    ],
+    "dependencies": [
+      "@opencode-ai/plugin",
+      "@ai-sdk/openai"
+    ],
+    "expertise": [
+      "OpenCode provider integration",
+      "Model configuration",
+      "API-key handling"
+    ],
+    "strengths": [
+      "Registers OneProvider models and their context limits",
+      "Configures input, output and cache token prices",
+      "Accepts API keys from OpenCode auth, the environment or provider settings"
+    ],
+    "limitations": [
+      "Requires a OneProvider account and API key",
+      "Model availability and prices must be kept in sync with OneProvider"
+    ],
+    "roadmap": [],
+    "installation": "Add \"opencode-oneprovider\" to the plugin array in your OpenCode configuration, then run `opencode auth login` and select OneProvider.",
+    "repos": [
+      {
+        "name": "opencode-oneprovider",
+        "url": "https://github.com/chrisb09/opencode-oneprovider",
+        "type": "github"
+      }
+    ],
+    "mirrors": [],
+    "screenshots": [],
+    "relatedProjects": [
+      {
+        "name": "opencode-antigravity-auth",
+        "relation": "Reference for the plugin integration (not a fork)",
+        "projectId": "opencode-antigravity-auth"
+      },
+      {
+        "name": "opencode-kiconnect",
+        "relation": "Another OpenCode provider plugin",
+        "projectId": "opencode-kiconnect"
+      }
+    ]
+  },
+  {
     "id": "pacstall-programs",
     "name": "Pacstall Programs",
-    "tagline": "Package Manager for Ubuntu/Debian",
+    "tagline": "Contributions to Pacstall's package repository",
     "year": "2025 - Present",
     "category": "package-management",
     "status": "active",
@@ -1293,8 +1433,8 @@ export const projects: Project[] = [
     "sourceType": "open-source",
     "aiUsage": "minor",
     "aiUtilization": "no-ai",
-    "description": "Contributing to the Pacstall package repository, an AUR-inspired package manager for Ubuntu and Debian systems. Helps bridge the gap between bleeding-edge software and stable distributions.",
-    "purpose": "To make newer software versions accessible on stable Ubuntu/Debian systems without compromising system stability or waiting for official repository updates.",
+    "description": "I contribute to Pacstall's community package repository for Ubuntu and Debian. Pacstall is an AUR-inspired package manager; my contributions are to its package catalog, not the package manager itself.",
+    "purpose": "To help maintain installable packages for Ubuntu and Debian users outside the distribution repositories.",
     "technologies": [
       "Bash",
       "Linux",
@@ -1313,13 +1453,7 @@ export const projects: Project[] = [
       "Open Source Collaboration",
       "Quality Assurance"
     ],
-    "strengths": [
-      "Access to newer software versions",
-      "Community-driven package repository",
-      "AUR-like simplicity for Debian systems",
-      "Automatic dependency resolution",
-      "Clean uninstallation support"
-    ],
+    "strengths": [],
     "limitations": [
       "Community packages may vary in quality",
       "Not officially supported by Ubuntu/Debian",
@@ -1365,7 +1499,7 @@ export const projects: Project[] = [
     "sourceType": "open-source",
     "aiUsage": "none",
     "aiUtilization": "no-ai",
-    "description": "A custom web-based viewer for Paint.net (.pdn) project files. Built entirely without heavy frontend frameworks to ensure maximum rendering performance and a lightweight footprint.",
+    "description": "A web viewer for Paint.NET .pdn files. A Python conversion step prepares the files; the browser view uses plain JavaScript, HTML and CSS.",
     "purpose": "To make Paint.net project files accessible and shareable on the web, enabling artists to showcase their work and collaborate without requiring everyone to have Paint.net installed.",
     "technologies": [
       "JavaScript",
@@ -1451,7 +1585,7 @@ export const projects: Project[] = [
     "sourceType": "open-source",
     "aiUsage": "full",
     "aiUtilization": "no-ai",
-    "description": "A modern, responsive portfolio website built with React, Vite, and Tailwind CSS. It features interactive project categorization, dynamic filtering, detailed project sheets, and custom repository stats aggregated via a Node.js git analysis pipeline.",
+    "description": "This site lists my projects with search, filters and detailed project views. A Node.js script reads repository history to update the commit and code statistics shown alongside them.",
     "purpose": "To showcase personal software development work, utilities, and IT projects with actual, verifiably tracked LOC and commit statistics directly gathered from local repositories.",
     "technologies": [
       "React",

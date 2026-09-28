@@ -1,0 +1,40 @@
+{
+  "id": "opencode-kiconnect",
+  "name": "opencode-kiconnect",
+  "tagline": "KI:connect model access for OpenCode",
+  "year": "2026",
+  "category": "utility",
+  "status": "active",
+  "projectType": "software-project",
+  "role": "main-author",
+  "sourceType": "open-source",
+  "aiUsage": "full",
+  "aiUtilization": "ai-powered",
+  "loc": { "total": 810, "byLanguage": { "TypeScript": 528, "Markdown": 214, "JSON": 68 } },
+  "description": "An OpenCode plugin for models from KI:connect, the RWTH/NRW gateway. It configures locally hosted open-weight models and commercial models routed to external providers, using a KI:connect API key. It was built separately from opencode-antigravity-auth, which served as an integration reference.",
+  "purpose": "To access KI:connect models from OpenCode while keeping their hosting and quota differences visible.",
+  "technologies": ["TypeScript", "Node.js", "OpenCode Plugin API", "AI SDK"],
+  "dependencies": ["@opencode-ai/plugin", "@ai-sdk/openai-compatible"],
+  "expertise": ["OpenCode provider integration", "Model configuration", "API-key handling"],
+  "strengths": [
+    "Registers KI:connect models in OpenCode via its chat-completions API",
+    "Supports API keys from OpenCode auth or environment variables",
+    "Distinguishes RWTH-hosted models from externally hosted options in the documentation"
+  ],
+  "limitations": [
+    "Requires access to KI:connect and an API key",
+    "Model IDs, availability and quotas depend on the gateway",
+    "Commercial models may route requests to external providers"
+  ],
+  "roadmap": [],
+  "installation": "Build with `bun install` and `bun run build`, add the plugin path to your OpenCode configuration, then configure your KI:connect API key with `opencode auth login` or `KICONNECT_API_KEY`.",
+  "repos": [
+    { "name": "opencode-kiconnect", "url": "https://github.com/chrisb09/opencode-kiconnect", "type": "github" }
+  ],
+  "mirrors": [],
+  "screenshots": [],
+  "relatedProjects": [
+    { "name": "opencode-antigravity-auth", "relation": "Reference for the plugin integration (not a fork)", "projectId": "opencode-antigravity-auth" },
+    { "name": "opencode-oneprovider", "relation": "Another OpenCode provider plugin", "projectId": "opencode-oneprovider" }
+  ]
+}

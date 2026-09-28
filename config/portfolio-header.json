@@ -3,7 +3,7 @@
   "badgeIcon": "Code2",
   "titlePrefix": "Personal",
   "titleHighlight": "Projects",
-  "description": "A collection of my work spanning backend systems, web applications, DevOps infrastructure, and open source contributions.",
+  "description": "Backend software, developer tools and research projects. Some I built, some I maintain, and some were team efforts.",
   "buttons": [
     {
       "text": "GitHub",

@@ -15,7 +15,7 @@ import {
   projectHasDemo,
 } from '@/lib/filters';
 import headerConfig from '../config/portfolio-header.json';
-import type { Project, ProjectCategory } from '@/types/project';
+import type { Project } from '@/types/project';
 import { fetchStats, mergeStatsWithProjects } from '@/lib/stats';
 import { initializeTheme } from '@/lib/theme';
 import { 
@@ -24,28 +24,20 @@ import {
   roleLabels,
   sourceTypeLabels,
   aiUsageLabels, 
-  aiUsageColors, 
-  aiUsageDescriptions, 
   aiUtilizationLabels, 
-  aiUtilizationColors, 
-  aiUtilizationDescriptions, 
   projectTypeLabels,
   languageColors,
 } from '@/types/project';
 import { ProjectCard } from '@/components/ProjectCard';
 import { ProjectDetailModal } from '@/components/ProjectDetailModal';
+import { GitActivity } from '@/components/GitActivity';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { LanguageSelector } from '@/components/LanguageSelector';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
-import { 
-  Tooltip, 
-  TooltipContent, 
-  TooltipProvider, 
-  TooltipTrigger 
-} from '@/components/ui/tooltip';
+import { TooltipProvider } from '@/components/ui/tooltip';
 import { 
   Github, 
   Gitlab, 
@@ -56,8 +48,8 @@ import {
   X, 
   FolderGit2, 
   Star, 
-  GitCommit, 
-  Code, 
+  GitCommit,
+  Code,
   Sparkles, 
   Cpu, 
   ExternalLink, 
@@ -85,61 +77,6 @@ const iconMap: Record<string, React.ComponentType<any>> = {
   ExternalLink,
   BookOpen
 };
-
-// AI Legend Component - shows both AI Usage (how it was built) and AI Utilization (does it use AI)
-function AILegend() {
-  const { t } = useTranslation();
-  const usageLevels: Array<'none' | 'minor' | 'contributed' | 'major' | 'full'> = ['none', 'minor', 'contributed', 'major', 'full'];
-  const utilizationLevels: Array<'ai-powered' | 'ai-enhanced' | 'no-ai'> = ['no-ai', 'ai-enhanced', 'ai-powered'];
-  
-  return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-muted/30 rounded-lg p-6 border border-border/50">
-      {/* Column 1: AI Usage Levels */}
-      <div className="space-y-4">
-        <h4 className="text-sm font-semibold flex items-center gap-2 text-foreground">
-          <Sparkles className="w-4 h-4 text-primary" />
-          {t('labels.built_with', 'Built with')} - {t('labels.ai_usage_levels', 'AI Usage Levels')}
-        </h4>
-        <div className="space-y-3">
-          {usageLevels.map((level) => (
-            <div key={level} className="flex items-center gap-3">
-              <span 
-                className={`${aiUsageColors[level]} px-2.5 py-1 rounded-full text-[11px] font-medium border shrink-0 min-w-[100px] text-center`}
-              >
-                {t(`ai_usage.${level}`, aiUsageLabels[level])}
-              </span>
-              <span className="text-xs text-muted-foreground leading-relaxed">
-                {t(`ai_usage_descriptions.${level}`, aiUsageDescriptions[level])}
-              </span>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Column 2: AI Utilization */}
-      <div className="space-y-4">
-        <h4 className="text-sm font-semibold flex items-center gap-2 text-foreground">
-          <Cpu className="w-4 h-4 text-primary" />
-          {t('labels.features', 'Features')} - {t('labels.ai_utilization_levels', 'AI Utilization')}
-        </h4>
-        <div className="space-y-3">
-          {utilizationLevels.map((level) => (
-            <div key={level} className="flex items-center gap-3">
-              <span 
-                className={`${aiUtilizationColors[level]} px-2.5 py-1 rounded-full text-[11px] font-medium border shrink-0 min-w-[110px] text-center`}
-              >
-                {t(`ai_utilization.${level}`, aiUtilizationLabels[level])}
-              </span>
-              <span className="text-xs text-muted-foreground leading-relaxed">
-                {t(`ai_utilization_descriptions.${level}`, aiUtilizationDescriptions[level])}
-              </span>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-}
 
 function App() {
   const { t } = useTranslation();
@@ -222,20 +159,33 @@ function App() {
     }
   };
 
+  const hasActiveFilters = getActiveFilterCount(filters) > 0 || Boolean(searchQuery.trim());
+
   // Filter projects based on faceted filters and text search
   const filteredProjects = useMemo(() => {
-    return localizedProjects.filter(project =>
-      matchesFilters(project, filters, searchQuery)
-    );
+    const priority = ['MusicBot', 'cpp-ml-interface', 'exam-system-backend', 'pacstall-programs'];
+    const matches = localizedProjects.filter(project => matchesFilters(project, filters, searchQuery));
+    return hasActiveFilters ? matches : matches.sort((a, b) => {
+      const aIndex = priority.indexOf(a.id);
+      const bIndex = priority.indexOf(b.id);
+      return (aIndex < 0 ? priority.length : aIndex) - (bIndex < 0 ? priority.length : bIndex);
+    });
   }, [localizedProjects, filters, searchQuery]);
-
-  const hasActiveFilters = getActiveFilterCount(filters) > 0 || Boolean(searchQuery.trim());
 
   // Quick Filter counts for desktop toolbar
   const starsCount = useMemo(() => localizedProjects.filter(projectHasStars).length, [localizedProjects]);
   const mediaCount = useMemo(() => localizedProjects.filter(projectHasMedia).length, [localizedProjects]);
   const demoCount = useMemo(() => localizedProjects.filter(projectHasDemo).length, [localizedProjects]);
   const academicCount = useMemo(() => localizedProjects.filter(p => p.academic).length, [localizedProjects]);
+
+  const aggregateStats = useMemo(() => {
+    const totalStars = projectsWithStats
+      .filter(p => p.role === 'main-author' || p.role === 'fork-maintainer')
+      .reduce((sum, p) => sum + (p.stats?.stars || 0), 0);
+    const totalCommits = projectsWithStats.reduce((sum, p) => sum + (p.stats?.commits || 0), 0);
+    const totalLOC = projectsWithStats.reduce((sum, p) => sum + (p.loc?.total || 0), 0);
+    return { totalStars, totalCommits, totalLOC };
+  }, [projectsWithStats]);
 
   // Group filtered projects by projectType
   const groupedProjects = useMemo(() => {
@@ -256,28 +206,6 @@ function App() {
     
     return groups;
   }, [filteredProjects]);
-
-  // Get aggregate stats from projects with stats
-  const aggregateStats = useMemo(() => {
-    const totalStars = projectsWithStats
-      .filter(p => p.role === 'main-author' || p.role === 'fork-maintainer')
-      .reduce((sum, p) => sum + (p.stats?.stars || 0), 0);
-    const totalCommits = projectsWithStats.reduce((sum, p) => sum + (p.stats?.commits || 0), 0);
-    return { totalStars, totalCommits };
-  }, [projectsWithStats]);
-
-  const locByLanguage = useMemo(() => {
-    const languages: Record<string, number> = {};
-    projectsWithStats.forEach(p => {
-      if (p.loc?.byLanguage) {
-        Object.entries(p.loc.byLanguage).forEach(([lang, count]) => {
-          languages[lang] = (languages[lang] || 0) + count;
-        });
-      }
-    });
-    return languages;
-  }, [projectsWithStats]);
-  const totalLOC = Object.values(locByLanguage).reduce((sum, count) => sum + count, 0);
 
   const handleProjectClick = (project: Project) => {
     // Ignore click-through immediately after closing a modal
@@ -335,10 +263,7 @@ function App() {
       <div className="min-h-screen bg-background">
         {/* Hero Section */}
         <header className="relative overflow-hidden border-b border-border/50">
-          {/* Background gradient */}
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/3 pointer-events-none" />
-          <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-          <div className="absolute bottom-0 left-0 w-64 h-64 bg-primary/3 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
+          <div className="absolute inset-0 bg-gradient-to-br from-card via-background to-primary/5 pointer-events-none" />
           
           {/* Top bar with theme and language controls */}
           <div className="relative flex items-center justify-end gap-1 px-4 sm:px-6 lg:px-8 pt-2 max-w-6xl mx-auto">
@@ -346,9 +271,9 @@ function App() {
             <ThemeToggle />
           </div>
           
-          <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-5 pt-1.5 md:pb-6 md:pt-2">
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 md:gap-6">
-              <div className="space-y-1.5">
+          <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-7 pt-2 md:pb-12 md:pt-5">
+            <div className="grid items-center gap-6 md:grid-cols-[minmax(0,1fr)_320px] md:gap-8 lg:grid-cols-[minmax(0,1fr)_430px]">
+              <div className="min-w-0 space-y-3">
                 <div className="flex items-center gap-1.5 text-muted-foreground">
                   {(() => {
                     const BadgeIcon = iconMap[headerConfig.badgeIcon] || Code2;
@@ -357,27 +282,30 @@ function App() {
                   <span className="text-xs font-medium">{headerConfig.badgeText}</span>
                 </div>
                 
-                <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight">
+                <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight leading-tight">
                   {t('header.title_prefix', headerConfig.titlePrefix)}{' '}
                   <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
                     {t('header.title_highlight', headerConfig.titleHighlight)}
                   </span>
                 </h1>
                 
-                <p className="text-sm md:text-base text-muted-foreground max-w-xl leading-relaxed">
+                <p className="text-sm md:text-base text-muted-foreground max-w-2xl leading-relaxed">
                   {t('header.description', headerConfig.description)}
                 </p>
 
-                <div className="flex flex-wrap gap-1.5 pt-0.5">
-                  {headerConfig.buttons.map((btn, i) => {
+                <div className="flex flex-wrap gap-2 pt-2">
+                  {[...headerConfig.buttons].sort((a, b) => {
+                    const order = ['Contact', 'GitHub', 'LinkedIn', 'GitLab', 'NRW GitLab'];
+                    return order.indexOf(a.text) - order.indexOf(b.text);
+                  }).map((btn) => {
                     const BtnIcon = iconMap[btn.icon] || ExternalLink;
                     const btnLabel = t(`header.buttons.${btn.text.toLowerCase()}`, btn.text);
                     return (
                       <Button 
-                        key={i}
-                        variant={btn.invertColor ? 'default' : 'outline'}
+                        key={btn.text}
+                        variant={btn.text === 'Contact' ? 'default' : 'outline'}
                         size="sm"
-                        className="h-8 gap-2 text-xs"
+                        className={`h-9 gap-2 text-xs ${['GitLab', 'NRW GitLab'].includes(btn.text) ? 'hidden sm:inline-flex' : ''}`}
                         asChild
                       >
                         <a href={btn.url} target="_blank" rel="noopener noreferrer">
@@ -389,59 +317,29 @@ function App() {
                   })}
                 </div>
               </div>
-
-              {/* Aggregate Stats */}
-              <div className="grid grid-cols-3 gap-4 md:gap-6">
-                <div className="text-center md:text-right">
-                  <div className="flex items-center md:justify-end gap-1.5 text-primary">
-                    <Star className="w-4 h-4" />
-                    <p className="text-2xl font-bold">{aggregateStats.totalStars}</p>
+              <div className="min-w-0">
+                <div className="grid grid-cols-3 gap-2 sm:gap-3" aria-label={t('stats.overview', 'Portfolio statistics')}>
+                  <div title={t('stats.maintained_stars_tooltip', 'Stars on projects I authored or maintain; other contributions are not included.')}>
+                    <p className="flex items-center gap-1 text-xl font-bold tabular-nums tracking-tight sm:text-2xl"><Star className="size-4 text-amber-500" />{aggregateStats.totalStars}</p>
+                    <p className="mt-0.5 text-[11px] text-muted-foreground">{t('stats.total_stars', 'Total Stars')}</p>
                   </div>
-                  <p className="text-xs text-muted-foreground">{t('stats.total_stars', 'Total Stars')}</p>
+                  <div title={t('stats.commits_tooltip', 'Commits authored by me on the default branch of all tracked projects.')}>
+                    <p className="flex items-center gap-1 text-xl font-bold tabular-nums tracking-tight sm:text-2xl"><GitCommit className="size-4 text-primary" />{aggregateStats.totalCommits.toLocaleString()}</p>
+                    <p className="mt-0.5 text-[11px] text-muted-foreground">{t('stats.total_commits', 'Total Commits')}</p>
+                  </div>
+                  <div title={t('stats.loc_tooltip', 'Lines of code authored by me that are currently in the default branch.')}>
+                    <p className="flex items-center gap-1 text-xl font-bold tabular-nums tracking-tight sm:text-2xl"><Code className="size-4 text-primary" />{(aggregateStats.totalLOC / 1000).toFixed(1)}k</p>
+                    <p className="mt-0.5 text-[11px] text-muted-foreground">{t('stats.total_loc', 'Total LOC')}</p>
+                  </div>
                 </div>
-                <div className="text-center md:text-right">
-                  <TooltipProvider>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <div className="cursor-help inline-block">
-                          <div className="flex items-center md:justify-end gap-1.5 text-primary">
-                            <GitCommit className="w-4 h-4" />
-                            <p className="text-2xl font-bold">{aggregateStats.totalCommits}</p>
-                          </div>
-                          <p className="text-xs text-muted-foreground">{t('stats.total_commits', 'Total Commits')}</p>
-                        </div>
-                      </TooltipTrigger>
-                      <TooltipContent side="bottom" align="end">
-                        <p className="text-xs max-w-xs">{t('stats.commits_tooltip', 'Commits authored by me on the default branch of all tracked projects.')}</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
-                </div>
-                <div className="text-center md:text-right">
-                  <TooltipProvider>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <div className="cursor-help inline-block">
-                          <div className="flex items-center md:justify-end gap-1.5 text-primary">
-                            <Code className="w-4 h-4" />
-                            <p className="text-2xl font-bold">{(totalLOC / 1000).toFixed(1)}k</p>
-                          </div>
-                          <p className="text-xs text-muted-foreground">{t('stats.total_loc', 'Total LOC')}</p>
-                        </div>
-                      </TooltipTrigger>
-                      <TooltipContent side="bottom" align="end">
-                        <p className="text-xs max-w-xs">{t('stats.loc_tooltip', 'Lines of code authored by me that are currently in the default branch.')}</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
-                </div>
+                <GitActivity />
               </div>
             </div>
           </div>
         </header>
 
         {/* Main Content */}
-        <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 md:py-5">
+        <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-8">
           {/* Search and Filters bar */}
           <div className="flex items-center gap-2 mb-2.5">
             {/* Search: flex-1 on mobile, neat max-width on desktop */}
@@ -886,13 +784,13 @@ function App() {
                       <h2 className="text-base font-semibold tracking-tight text-foreground/90 mt-2">
                         {t(`project_types.${type}`, projectTypeLabels[type])}
                       </h2>
-                      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
+                       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
                         {groupProjects.map((project) => (
                           <ProjectCard
                             key={project.id}
                             project={project}
                             onClick={() => handleProjectClick(project)}
-                            onMediaClick={() => handleProjectMediaClick(project)}
+                             onMediaClick={() => handleProjectMediaClick(project)}
                           />
                         ))}
                       </div>
@@ -920,10 +818,6 @@ function App() {
             </div>
           )}
 
-          {/* AI Usage Legend - at bottom of main content */}
-          <div className="mt-12">
-            <AILegend />
-          </div>
         </main>
 
         {/* Footer */}

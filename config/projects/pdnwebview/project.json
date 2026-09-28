@@ -10,7 +10,7 @@
   "sourceType": "open-source",
   "aiUsage": "none",
   "aiUtilization": "no-ai",
-  "description": "A custom web-based viewer for Paint.net (.pdn) project files. Built entirely without heavy frontend frameworks to ensure maximum rendering performance and a lightweight footprint.",
+  "description": "A web viewer for Paint.NET .pdn files. A Python conversion step prepares the files; the browser view uses plain JavaScript, HTML and CSS.",
   "purpose": "To make Paint.net project files accessible and shareable on the web, enabling artists to showcase their work and collaborate without requiring everyone to have Paint.net installed.",
   "technologies": [
     "JavaScript",

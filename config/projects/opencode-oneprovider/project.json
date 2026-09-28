@@ -1,0 +1,39 @@
+{
+  "id": "opencode-oneprovider",
+  "name": "opencode-oneprovider",
+  "tagline": "OneProvider model configuration and API-key handling for OpenCode",
+  "year": "2026",
+  "category": "utility",
+  "status": "active",
+  "projectType": "software-project",
+  "role": "main-author",
+  "sourceType": "open-source",
+  "aiUsage": "full",
+  "aiUtilization": "ai-powered",
+  "loc": { "total": 703, "byLanguage": { "TypeScript": 528, "Markdown": 107, "JSON": 68 } },
+  "description": "An OpenCode plugin that registers OneProvider models with their pricing and context limits. It reads an API key from OpenCode auth, the environment or provider settings. This is a separate project; opencode-antigravity-auth served as an integration reference, not as a codebase to fork.",
+  "purpose": "To use OneProvider models in OpenCode without maintaining model definitions and prices by hand.",
+  "technologies": ["TypeScript", "Node.js", "OpenCode Plugin API", "AI SDK"],
+  "dependencies": ["@opencode-ai/plugin", "@ai-sdk/openai"],
+  "expertise": ["OpenCode provider integration", "Model configuration", "API-key handling"],
+  "strengths": [
+    "Registers OneProvider models and their context limits",
+    "Configures input, output and cache token prices",
+    "Accepts API keys from OpenCode auth, the environment or provider settings"
+  ],
+  "limitations": [
+    "Requires a OneProvider account and API key",
+    "Model availability and prices must be kept in sync with OneProvider"
+  ],
+  "roadmap": [],
+  "installation": "Add \"opencode-oneprovider\" to the plugin array in your OpenCode configuration, then run `opencode auth login` and select OneProvider.",
+  "repos": [
+    { "name": "opencode-oneprovider", "url": "https://github.com/chrisb09/opencode-oneprovider", "type": "github" }
+  ],
+  "mirrors": [],
+  "screenshots": [],
+  "relatedProjects": [
+    { "name": "opencode-antigravity-auth", "relation": "Reference for the plugin integration (not a fork)", "projectId": "opencode-antigravity-auth" },
+    { "name": "opencode-kiconnect", "relation": "Another OpenCode provider plugin", "projectId": "opencode-kiconnect" }
+  ]
+}

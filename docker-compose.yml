@@ -25,6 +25,9 @@ services:
       # Mount config and repos to watch/read changes
       - /container/config/personal_projects/config:/app/config
       - /container/data/personal_projects/repos:/app/repos
+      # Mount unlisted / extra repos and backup directory for activity tracking
+      - /data/backups:/data/backups:ro
+      - ./extra-repos:/app/extra-repos:ro
       # Mount translations persistent cache
       - /container/data/personal_projects/translations:/app/data/translations
       # Mount public to write compiled images and stats.json back to host

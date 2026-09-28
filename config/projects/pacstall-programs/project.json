@@ -1,7 +1,7 @@
 {
   "id": "pacstall-programs",
   "name": "Pacstall Programs",
-  "tagline": "Package Manager for Ubuntu/Debian",
+  "tagline": "Contributions to Pacstall's package repository",
   "year": "2025 - Present",
   "category": "package-management",
   "status": "active",
@@ -10,8 +10,8 @@
   "sourceType": "open-source",
   "aiUsage": "minor",
   "aiUtilization": "no-ai",
-  "description": "Contributing to the Pacstall package repository, an AUR-inspired package manager for Ubuntu and Debian systems. Helps bridge the gap between bleeding-edge software and stable distributions.",
-  "purpose": "To make newer software versions accessible on stable Ubuntu/Debian systems without compromising system stability or waiting for official repository updates.",
+  "description": "I contribute to Pacstall's community package repository for Ubuntu and Debian. Pacstall is an AUR-inspired package manager; my contributions are to its package catalog, not the package manager itself.",
+  "purpose": "To help maintain installable packages for Ubuntu and Debian users outside the distribution repositories.",
   "technologies": [
     "Bash",
     "Linux",
@@ -30,13 +30,7 @@
     "Open Source Collaboration",
     "Quality Assurance"
   ],
-  "strengths": [
-    "Access to newer software versions",
-    "Community-driven package repository",
-    "AUR-like simplicity for Debian systems",
-    "Automatic dependency resolution",
-    "Clean uninstallation support"
-  ],
+  "strengths": [],
   "limitations": [
     "Community packages may vary in quality",
     "Not officially supported by Ubuntu/Debian",

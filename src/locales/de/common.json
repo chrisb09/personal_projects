@@ -7,7 +7,7 @@
   "header": {
     "title_prefix": "Persönliche",
     "title_highlight": "Projekte",
-    "description": "Eine Sammlung meiner Arbeiten, die Backend-Systeme, Webanwendungen, DevOps-Infrastruktur und Open-Source-Beiträge umfasst.",
+    "description": "Backend-Software, Entwicklerwerkzeuge und Forschungsprojekte. Manche habe ich selbst entwickelt, andere betreue ich oder habe im Team daran gearbeitet.",
     "search_placeholder": "Projekte durchsuchen...",
     "showing": "Angezeigt werden",
     "of": "von",
@@ -15,6 +15,11 @@
     "buttons": {
       "contact": "Kontakt"
     }
+  },
+  "card": {
+    "details": "Details",
+    "view_project": "Projekt ansehen",
+    "other": "Andere"
   },
   "filters": {
     "all": "Alle",
@@ -31,6 +36,7 @@
     "expand_all": "Alle aufklappen",
     "collapse_all": "Alle zuklappen",
     "filters_button": "Filter",
+    "done": "Fertig",
     "filter_projects": "Projekte filtern",
     "active_filters": "Aktive Filter",
     "group_primary": "Allgemein",
@@ -86,8 +92,8 @@
     "none": "Keine KI",
     "minor": "KI-unterstützt",
     "contributed": "KI-beigesteuert",
-    "major": "Überwiegend KI",
-    "full": "Vollständig KI"
+    "major": "Teils KI-generiert",
+    "full": "Überwiegend KI-generiert"
   },
   "ai_usage_descriptions": {
     "none": "Vollständig ohne KI-Unterstützung entwickelt",
@@ -114,6 +120,9 @@
     "ai_utilization_levels": "KI-Funktionsumfang"
   },
   "stats": {
+    "overview": "Portfolio-Statistiken",
+    "maintained_stars_tooltip": "Sterne auf Projekten, die ich entwickelt oder betreut habe; andere Beiträge zählen nicht mit.",
+    "repo_stars": "Sterne auf dem verlinkten Repository",
     "stars": "Sterne",
     "commits": "Commits",
     "branches": "Branches",
@@ -125,7 +134,14 @@
     "commits_tooltip": "Von mir verfasste Commits im Default-Branch aller erfassten Projekte.",
     "loc_tooltip": "Von mir geschriebene Codezeilen, die sich aktuell im Default-Branch befinden."
   },
+  "activity": {
+    "title": "Beitragsaktivität",
+    "description": "GitHub-Beiträge und GitLab-Commits des letzten Jahres",
+    "contributions_one": "{{count}} Beitrag am {{date}}",
+    "contributions_other": "{{count}} Beiträge am {{date}}"
+  },
   "modal": {
+    "source_code": "Quellcode",
     "overview": "Übersicht",
     "technical": "Technisch",
     "installation_usage": "Installation & Verwendung",

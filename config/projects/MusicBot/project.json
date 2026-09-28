@@ -1,7 +1,7 @@
 {
   "id": "MusicBot",
   "name": "JMusicBot Fork",
-  "tagline": "Feature-rich self-hosted Discord music bot fork with playback analytics and Docker deployment",
+  "tagline": "Maintained JMusicBot fork with JDA 6 support, playback logs and Docker deployment",
   "year": "2024-Present",
   "category": "backend",
   "status": "active",
@@ -10,7 +10,7 @@
   "sourceType": "open-source",
   "aiUsage": "contributed",
   "aiUtilization": "no-ai",
-  "description": "A maintained, feature-rich fork of the popular self-hosted JMusicBot Discord music bot. Built with JDA 6 and Java, it includes modern Discord voice encryption (DAVE) support, optional YouTube account login (OAuth2), custom per-channel playback status messages, and JDBC/SQLite playback analytics logging. The project includes a dedicated Docker container deployment path.",
+  "description": "I maintain a fork of JMusicBot, a self-hosted Discord music bot. It runs on JDA 6 and supports Discord voice encryption (DAVE). The fork also adds optional YouTube account login, per-channel playback status, SQLite playback logs and a Docker deployment.",
   "purpose": "To keep JMusicBot operational on modern Discord API standards while expanding it with database-backed statistics and native container support.",
   "technologies": [
     "Java",
@@ -31,10 +31,10 @@
     "Database Logging"
   ],
   "strengths": [
-    "Fully updated to support DAVE voice encryption and JDA 6.1.1",
-    "Bypasses YouTube rate limits via Google account OAuth2 login & visitor tokens",
-    "Built-in SQLite playback analytics and scheduling scheduler reports",
-    "Comes with containerized Docker deployment and compose configurations"
+    "JDA 6 and DAVE voice encryption support",
+    "Optional Google account login for YouTube playback",
+    "SQLite playback logs and scheduled reports",
+    "Docker image and Compose configuration"
   ],
   "limitations": [
     "Subject to ongoing changes in YouTube and Discord API structures",

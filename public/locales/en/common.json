@@ -7,7 +7,7 @@
   "header": {
     "title_prefix": "Personal",
     "title_highlight": "Projects",
-    "description": "A collection of my work spanning backend systems, web applications, DevOps infrastructure, and open source contributions.",
+    "description": "Backend software, developer tools and research projects. Some I built, some I maintain, and some were team efforts.",
     "search_placeholder": "Search projects...",
     "showing": "Showing",
     "of": "of",
@@ -15,6 +15,11 @@
     "buttons": {
       "contact": "Contact"
     }
+  },
+  "card": {
+    "details": "Details",
+    "view_project": "View project",
+    "other": "Other"
   },
   "filters": {
     "all": "All",
@@ -31,6 +36,7 @@
     "expand_all": "Expand all",
     "collapse_all": "Collapse all",
     "filters_button": "Filters",
+    "done": "Done",
     "filter_projects": "Filter Projects",
     "active_filters": "Active filters",
     "group_primary": "Primary",
@@ -114,6 +120,9 @@
     "ai_utilization_levels": "AI Utilization"
   },
   "stats": {
+    "overview": "Portfolio statistics",
+    "maintained_stars_tooltip": "Stars on projects I authored or maintain; other contributions are not included.",
+    "repo_stars": "Stars on the linked repository",
     "stars": "Stars",
     "commits": "Commits",
     "branches": "Branches",
@@ -125,7 +134,14 @@
     "commits_tooltip": "Commits authored by me on the default branch of all tracked projects.",
     "loc_tooltip": "Lines of code authored by me that are currently in the default branch."
   },
+  "activity": {
+    "title": "Contribution activity",
+    "description": "GitHub contributions and GitLab commits over the past year",
+    "contributions_one": "{{count}} contribution on {{date}}",
+    "contributions_other": "{{count}} contributions on {{date}}"
+  },
   "modal": {
+    "source_code": "Source code",
     "overview": "Overview",
     "technical": "Technical",
     "installation_usage": "Installation & Usage",

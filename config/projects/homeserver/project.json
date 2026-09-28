@@ -1,7 +1,7 @@
 {
   "id": "homeserver",
   "name": "Private Homeserver",
-  "tagline": "Self-Hosted Infrastructure for Personal Use",
+  "tagline": "Self-hosted storage, media and application services",
   "year": "2018 - Present",
   "category": "devops-infrastructure",
   "status": "active",
@@ -10,7 +10,7 @@
   "sourceType": "closed-source",
   "aiUsage": "minor",
   "aiUtilization": "no-ai",
-  "description": "A production-grade, self-hosted infrastructure environment operating continuously since 2018. Manages over 100+ TB of storage serving approximately 20 active users with zero major data loss incidents.",
+  "description": "I run a self-hosted server with openZFS storage, Docker services and WireGuard access. Built up since 2018, it now serves around 20 people and manages more than 100 TB of storage.",
   "purpose": "To create a privacy-focused, self-controlled alternative to commercial cloud services, providing reliable hosting for personal data and applications.",
   "technologies": [
     "Docker",

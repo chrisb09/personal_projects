@@ -261,8 +261,8 @@ export function ProjectFilters({
       isMobile ? '' : 'max-h-[min(440px,calc(var(--radix-popover-content-available-height,440px)-16px))]'
     }`}>
       {/* Header with Title, Expand/Collapse, Reset, and optional mobile Close */}
-      <div className="flex items-center justify-between px-3.5 py-2.5 border-b border-border/40 shrink-0">
-        <div className="flex items-center gap-2">
+       <div className="flex items-center justify-between px-4 py-3 border-b border-border shrink-0 bg-popover">
+         <div className="flex items-center gap-2">
           <SlidersHorizontal className="w-4 h-4 text-primary" />
           <h3 className="font-semibold text-sm">
             {t('filters.filter_projects', 'Filter Projects')}
@@ -715,14 +715,14 @@ export function ProjectFilters({
       </ScrollArea>
 
       {/* Footer count indicator */}
-      <div className="p-3 border-t border-border/40 bg-muted/20 flex items-center justify-between text-xs text-muted-foreground shrink-0 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
+       <div className="px-4 py-3 border-t border-border bg-popover flex items-center justify-between text-xs text-muted-foreground shrink-0 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
         <span>
           {t('header.showing', 'Showing')}{' '}
           <strong className="text-foreground font-semibold">{filteredCount}</strong>{' '}
           {t('header.of', 'of')} {projects.length}
         </span>
-        <Button size="sm" className="h-7 text-xs px-3" onClick={() => setIsOpen(false)}>
-          {t('common.done', 'Apply')}
+         <Button size="sm" className="h-9 text-xs px-4" onClick={() => setIsOpen(false)}>
+           {t('filters.done', 'Done')}
         </Button>
       </div>
     </div>
@@ -760,7 +760,7 @@ export function ProjectFilters({
         <SheetContent
           side="bottom"
           showCloseButton={false}
-          className="p-0 h-[80vh] max-h-[580px] rounded-t-xl overflow-hidden flex flex-col"
+           className="p-0 h-[80vh] max-h-[580px] rounded-t-xl overflow-hidden flex flex-col bg-popover"
         >
           <SheetHeader className="sr-only">
             <SheetTitle>{t('filters.filter_projects', 'Filter Projects')}</SheetTitle>
@@ -783,7 +783,7 @@ export function ProjectFilters({
         onPointerDownOutside={() => {
           lastCloseTimeRef.current = Date.now();
         }}
-        className="w-[420px] max-w-[95vw] p-0 shadow-xl border-border/60 max-h-[calc(var(--radix-popover-content-available-height,500px)-16px)]"
+         className="w-[420px] max-w-[95vw] p-0 shadow-xl border-border max-h-[calc(var(--radix-popover-content-available-height,500px)-16px)]"
       >
         {filterPanelContent}
       </PopoverContent>

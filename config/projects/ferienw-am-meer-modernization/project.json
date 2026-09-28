@@ -1,7 +1,7 @@
 {
   "id": "ferienw-am-meer-modernization",
   "name": "ferienw-am-meer.de",
-  "tagline": "Static Site Modernization & High-Performance Web Engineering",
+  "tagline": "Rebuild of a holiday rental website with Next.js and an image pipeline",
   "year": "2026",
   "category": "frontend",
   "status": "active",
@@ -10,8 +10,8 @@
   "sourceType": "open-source",
   "aiUsage": "full",
   "aiUtilization": "no-ai",
-  "description": "Migrated and completely re-architected a legacy static HTML website into a high-performance, modern web application. Focused on extreme frontend asset optimization, strict type safety, and automated CI/CD deployment pipelines.",
-  "purpose": "To transform an outdated web presence into a blazing-fast, mobile-first experience while establishing an automated infrastructure for media processing and zero-downtime hosting.",
+  "description": "I rebuilt an older static HTML holiday rental site in Next.js and TypeScript. The work includes image conversion and placeholders for the gallery, plus a GitHub Actions deployment workflow.",
+  "purpose": "To make the site's photos and information easier to browse on phones and simpler to update.",
   "technologies": ["Next.js", "Tailwind CSS v4", "TypeScript", "GitHub Actions", "Node.js"],
   "dependencies": ["postcss", "tsconfig", "sharp"],
   "expertise": [

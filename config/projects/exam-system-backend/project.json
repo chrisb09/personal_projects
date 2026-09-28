@@ -1,7 +1,7 @@
 {
   "id": "exam-system-backend",
   "name": "LLM-Integrated Exam System",
-  "tagline": "Scaled Backend for University Assessments",
+  "tagline": "Team-built exam platform with an LLM-assisted grading workflow",
   "year": "2025",
   "category": "backend",
   "status": "completed",
@@ -11,8 +11,8 @@
   "sourceType": "closed-source",
   "aiUsage": "minor",
   "aiUtilization": "ai-enhanced",
-  "description": "Extended an existing digital examination system for a Ukrainian university. Engineered the backend architecture, database schema, and microservice orchestration to handle concurrent student loads.",
-  "purpose": "To introduce knowledge-based testing to the examination infrastructure and introduce automated, AI-assisted preliminary grading for free-text answers to reduce examiner workload.",
+  "description": "As a backend co-lead on a team, I worked on the database schema, services and Kubernetes deployment for a university exam platform. The system uses an LLM for preliminary evaluation of free-text answers.",
+  "purpose": "To add free-text questions and preliminary grading to an existing examination system for a Ukrainian university.",
   "technologies": [
     "Kubernetes",
     "SQL",
@@ -27,10 +27,9 @@
     "Containerization"
   ],
   "strengths": [
-    "Successfully containerized and deployed the application stack using Kubernetes",
-    "Designed scalable SQL schemas to handle concurrent exam submissions securely",
-    "Integrated LLM endpoints for automated, preliminary evaluation of free-text responses",
-    "Delivered a robust backend under tight academic project deadlines"
+    "Deployed the application stack with Kubernetes",
+    "Designed SQL schemas for exam submissions",
+    "Connected LLM endpoints for preliminary feedback on free-text answers"
   ],
   "limitations": [],
   "roadmap": [],

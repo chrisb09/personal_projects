@@ -1,0 +1,3 @@
+# Ignore all repositories and symlinks placed inside this folder
+*
+!.gitignore

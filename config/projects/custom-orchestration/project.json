@@ -1,7 +1,7 @@
 {
   "id": "custom-orchestration",
   "name": "Distributed Linux Service Orchestrator",
-  "tagline": "Bespoke Control Plane and CI/CD Engine for Low-Latency Application Clusters",
+  "tagline": "Bash scripts for deployment and service lifecycle management",
   "year": "2023 - Present",
   "category": "devops-infrastructure",
   "status": "active",
@@ -10,8 +10,8 @@
   "sourceType": "closed-source",
   "aiUsage": "contributed",
   "aiUtilization": "no-ai",
-  "description": "A lightweight, low-overhead orchestration platform and automated CI/CD control plane written in Bash. Designed to manage a distributed multi-instance cluster with strict memory isolation, soft real-time execution constraints, and zero-downtime hot-reloads.",
-  "purpose": "To deliver deterministic daemon lifecycle management and deployment automation in high-concurrency environments where standard containerization runtimes introduce unacceptable process jitter and latency overhead.",
+  "description": "I use Bash scripts to start, stop and deploy services across several Linux machines. They coordinate Git updates, process shutdown, log checks and disk images for per-service storage.",
+  "purpose": "To automate deployments and process management on my Linux infrastructure.",
   "technologies": ["Bash", "Linux", "Redis", "Maven", "Git"],
   "dependencies": ["screen", "jq", "curl", "lsof", "procps"],
   "expertise": [

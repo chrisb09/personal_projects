@@ -49,7 +49,7 @@
   "pdnwebview": {
     "name": "pdnwebview",
     "tagline": "Web-Viewer für Paint.net-Projektdateien",
-    "description": "Ein maßgeschneiderter, webbasierter Viewer für Paint.net-Projektdateien (.pdn). Komplett ohne schwere Frontend-Frameworks entwickelt, um maximale Renderleistung und einen geringen Ressourcenverbrauch sicherzustellen.",
+    "description": "Ein Web-Viewer für Paint.NET-Dateien im .pdn-Format. Eine Python-Konvertierung bereitet die Dateien vor; die Browseransicht besteht aus JavaScript, HTML und CSS ohne Frontend-Framework.",
     "purpose": "Paint.net-Projektdateien im Web zugänglich und teilbar zu machen, damit Künstler ihre Arbeiten präsentieren und zusammenarbeiten können, ohne dass jeder Paint.net installiert haben muss.",
     "strengths": [
       "Hervorragend optimierte Vanilla-Implementierung ohne aufgeblähte JavaScript-Frameworks",
@@ -162,8 +162,8 @@
   },
   "homeserver": {
     "name": "Privater Homeserver",
-    "tagline": "Selbst gehostete Infrastruktur für den persönlichen Gebrauch",
-    "description": "Eine produktionsbereite, selbst gehostete Infrastrukturumgebung, die seit 2018 kontinuierlich betrieben wird. Verwaltet über 100+ TB Speicher für ca. 20 aktive Benutzer ohne nennenswerte Datenverlustvorfälle.",
+    "tagline": "Selbst gehostete Speicher-, Medien- und Anwendungsdienste",
+    "description": "Ich betreibe einen eigenen Server mit openZFS-Speicher, Docker-Diensten und WireGuard-Zugang. Seit 2018 ist er gewachsen und versorgt inzwischen rund 20 Personen mit mehr als 100 TB Speicher.",
     "purpose": "Eine datenschutzorientierte, selbstkontrollierte Alternative zu kommerziellen Cloud-Diensten zu schaffen, die zuverlässiges Hosting für persönliche Daten und Anwendungen bietet.",
     "strengths": [
       "8 Jahre kontinuierliche Betriebszeit und Infrastrukturwartung",
@@ -209,16 +209,10 @@
   },
   "pacstall-programs": {
     "name": "pacstall-programs",
-    "tagline": "Paketmanager für Ubuntu/Debian",
-    "description": "Mitwirkung am Pacstall-Paketarchiv, einem AUR-inspirierten Paketmanager für Ubuntu- und Debian-Systeme. Hilft dabei, die Lücke zwischen modernster Software und stabilen Distributionen zu schließen.",
-    "purpose": "Neuere Softwareversionen auf stabilen Ubuntu-/Debian-Systemen zugänglich zu machen, ohne die Systemstabilität zu beeinträchtigen oder auf offizielle Repositorien-Updates zu warten.",
-    "strengths": [
-      "Zugang zu neueren Softwareversionen",
-      "Community-getriebenes Paketarchiv",
-      "AUR-ähnliche Einfachheit für Debian-Systeme",
-      "Automatische Abhängigkeitsauflösung",
-      "Unterstützung für saubere Deinstallation"
-    ],
+    "tagline": "Beiträge zum Paketarchiv von Pacstall",
+    "description": "Ich trage zum Community-Paketarchiv von Pacstall für Ubuntu und Debian bei. Pacstall ist ein vom AUR inspirierter Paketmanager; meine Beiträge betreffen den Paketkatalog, nicht den Paketmanager selbst.",
+    "purpose": "Bei der Pflege installierbarer Pakete für Ubuntu- und Debian-Nutzer außerhalb der Distributions-Repositories mithelfen.",
+    "strengths": [],
     "limitations": [
       "Community-Pakete können in der Qualität variieren",
       "Nicht offizielle Unterstützung durch Ubuntu/Debian",
@@ -253,8 +247,8 @@
   "libretranslate-java": {
     "name": "libretranslate-java",
     "tagline": "Java-Client für LibreTranslate",
-    "description": "Eine Java-Client-Bibliothek für die LibreTranslate-API. Ermöglicht die einfache Integration von Übersetzungsfunktionen in Java-Anwendungen mit einer sauberen, idiomatischen API.",
-    "purpose": "Java-Entwicklern einen einfachen, gut dokumentierten Client für selbst gehostete oder öffentliche LibreTranslate-Instanzen zur Verfügung zu stellen, um Übersetzungsfunktionen ohne Abhängigkeiten von externen Diensten zu ermöglichen.",
+    "description": "Ein Java-Client für LibreTranslate-Instanzen mit synchronen und asynchronen Übersetzungsaufrufen. Ich arbeite an der Client-Bibliothek mit.",
+    "purpose": "LibreTranslate aus Java-Anwendungen heraus mit selbst gehosteten oder öffentlichen Instanzen verwenden.",
     "strengths": [
       "Sauberes, Java-idiomatisches API-Design",
       "Unterstützung für synchrone und asynchrone Operationen",
@@ -308,9 +302,9 @@
   },
   "cpp-ml-interface": {
     "name": "CPP-ML-Interface",
-    "tagline": "Modulare C++-Kopplungs-Middleware für Latenzarme CFD- und Machine-Learning-Inferenz",
-    "description": "Eine modulare, generische C++-Middleware zur Kopplung komplexer Computational Fluid Dynamics (CFD)-Solver mit Machine-Learning-Modellen. Entwickelt als Kernbestandteil einer Masterarbeit an der RWTH Aachen University (Lehrstuhl für High Performance Computing, i12), überarbeitet und verallgemeinert sie die bisherige solver-spezifische CPP-ML-Interface-MAIA und abstrahiert zugrundeliegende Kommunikationsbibliotheken in eine einheitliche, konfigurationsgesteuerte Kopplungsschnittstelle.\n\nDie Middleware ist für den Claix23-Cluster optimiert und gebenchmarkt. Zu den Hardware-Zielen gehören Dual-Socket-CPU-Knoten mit 2x Intel Xeon 8468 (Sapphire Rapids) Prozessoren sowie GPU-Knoten mit 4x NVIDIA H100 Beschleunigungskarten, die für parallele Low-Level-CPU-Ausführungskonfigurationen (wie Intra/Inter-Op-Threads, OpenMP-Tasking und Slurm-Core-Affinity-Bindungen) von entscheidender Bedeutung sind.\n\nDas Projekt wird innerhalb einer größeren Workspace-Struktur (smartsim_playground) entwickelt, die mehrere Benchmark- und Validierungshilfsprogramme koordiniert:\n\n```\nsmartsim/ (smartsim_playground workspace)\n├── CPP-ML-Interface (Redesigned generic interface)\n│   ├── extern/AIxeleratorService\n│   ├── extern/SmartRedis\n│   └── extern/phydll\n├── cpu_benchmark (CPU/GPU inference threading & core affinity benchmarks)\n├── lmod_dependencies (Z3-based HPC module resolver)\n├── mini_app (Toy CFD solver used for prototyping)\n└── module_test (Integration testing with ~600 combinations)\n```\n\nDie Schnittstelle wird in Kürze die Vorgängerbibliothek im MMCP-Projekt ersetzen, um den MMCP_transformer mit dem m-aia-Solver zu koppeln.",
-    "purpose": "Beseitigung leistungsschwacher datei- und socketbasierter Engpässe im High-Performance Computing (HPC) durch Bereitstellung eines latenzarmen, plattformunabhängigen In-Memory-Datenpfads zwischen physikalischen Simulationen und KI-Modellen.",
+    "tagline": "C++-Schnittstelle zwischen CFD-Solvern und Machine-Learning-Backends",
+    "description": "Für meine Masterarbeit an der RWTH Aachen habe ich eine solver-spezifische C++-Schnittstelle überarbeitet. CFD-Solver können damit über eine konfigurierbare API Daten mit Machine-Learning-Backends austauschen. Die Schnittstelle unterstützt SmartSim/SmartRedis, PhyDLL und AIxeleratorService.\n\nAuf dem Claix23-Cluster habe ich Einstellungen für CPU- und GPU-Inferenz untersucht, darunter Thread-Zahlen und Core-Affinity. Ein kleiner CFD-Solver und Integrationstests prüfen die Kopplungswege. Die Schnittstelle ist für den Einsatz mit dem MMCP-Transformer und dem m-aia-Solver vorgesehen.",
+    "purpose": "CFD-Solver mit Machine-Learning-Modellen verbinden, ohne jeden Solver an ein einzelnes Kommunikations-Backend zu binden.",
     "strengths": [
       "Von solver-spezifischem Code zu einer hochgradig generischen, modularen Header-Only-Schnittstelle umgestaltet",
       "Integriert heterogene Kopplungsbibliotheken (SmartSim, PhyDLL, AIxeleratorService) unter einer konfigurationsbasierten Schicht",
@@ -364,14 +358,14 @@
   },
   "MusicBot": {
     "name": "JMusicBot Fork",
-    "tagline": "Funktionsreicher, selbstgehosteter Discord-Musikbot-Fork mit Wiedergabe-Analytik und Docker-Deployment",
-    "description": "Ein gewarteter, funktionsreicher Fork des beliebten, selbstgehosteten JMusicBot Discord-Musikbots. Entwickelt mit JDA 6 und Java, bietet er Unterstützung für moderne Discord-Sprachverschlüsselung (DAVE), optionalen YouTube-Konto-Login (OAuth2), benutzerdefinierte Wiedergabestatus-Nachrichten pro Kanal sowie JDBC/SQLite-Wiedergabeanalytik-Logging. Das Projekt enthält einen dedizierten Docker-Container-Deployment-Pfad.",
+    "tagline": "Betreuter JMusicBot-Fork mit JDA 6, Wiedergabeprotokollen und Docker-Deployment",
+    "description": "Ich betreue einen Fork von JMusicBot, einem selbst gehosteten Discord-Musikbot. Er läuft mit JDA 6 und unterstützt die Discord-Sprachverschlüsselung DAVE. Der Fork bietet außerdem eine optionale YouTube-Kontoanmeldung, Wiedergabestatus pro Kanal, SQLite-Wiedergabeprotokolle und ein Docker-Deployment.",
     "purpose": "JMusicBot auf modernen Discord-API-Standards betriebsbereit zu halten und es gleichzeitig um datenbankgestützte Statistiken sowie native Container-Unterstützung zu erweitern.",
     "strengths": [
-      "Vollständig aktualisiert zur Unterstützung von DAVE-Sprachverschlüsselung und JDA 6.1.1",
-      "Umgeht YouTube-Ratenlimits mittels Google-Konto-OAuth2-Login & Besucher-Token",
-      "Integrierte SQLite-Wiedergabeanalytik und Berichte des Zeitplaners",
-      "Inklusive containerisiertem Docker-Deployment und Compose-Konfigurationen"
+      "Unterstützung für JDA 6 und DAVE-Sprachverschlüsselung",
+      "Optionale Google-Kontoanmeldung für die YouTube-Wiedergabe",
+      "SQLite-Wiedergabeprotokolle und geplante Berichte",
+      "Docker-Image und Compose-Konfiguration"
     ],
     "limitations": [
       "Unterliegt laufenden Änderungen in den YouTube- und Discord-API-Strukturen",
@@ -427,9 +421,9 @@
   },
   "custom-orchestration": {
     "name": "Distributed Linux Service Orchestrator",
-    "tagline": "Maßgeschneiderte Steuerungs-Ebene und CI/CD-Engine für Latenzarme Anwendungsuppets",
-    "description": "Eine schlanke, ressourcenschonende Orchestrierungsplattform und eine automatisierte CI/CD-Steuerungsebene, geschrieben in Bash. Entworfen, um einen verteilten Multi-Instanz-Cluster mit strenger Speicherisolierung, weichen Echtzeit-Ausführungseinschränkungen und Zero-Downtime-Hot-Reloads zu verwalten.",
-    "purpose": "Bereitstellung eines deterministischen Daemon-Lebenszyklusmanagements und der Bereitstellungsautomatisierung in Umgebungen mit hoher Nebenläufigkeit, in denen standardmäßige Containerisierungs-Runtimes inakzeptablen Prozess-Jitter und Latenz-Overhead verursachen.",
+    "tagline": "Bash-Skripte für Deployments und die Verwaltung von Diensten",
+    "description": "Mit Bash-Skripten starte, stoppe und aktualisiere ich Dienste auf mehreren Linux-Rechnern. Sie koordinieren Git-Updates, das Beenden von Prozessen, die Prüfung von Logs und Disk-Images zur getrennten Speicherung je Dienst.",
+    "purpose": "Deployments und Prozessverwaltung auf meiner Linux-Infrastruktur automatisieren.",
     "strengths": [
       "Implementierung einer kaskadierenden Prozessbeendigungs-Matrix (Sanfter Befehl -> Emulierte Tasteninjektion -> Fensterbeendigung -> OS-Ebene SIGKILL über Prozessbaum-Verfolgung)",
       "Entwicklung einer asynchronen, parallelen Task-Ausführung unter Verwendung von Hintergrund-Subshells und dynamischen PID-Tracking-Arrays für gleichzeitige Git-Operationen",
@@ -459,7 +453,7 @@
   "cycling-power-estimator": {
     "name": "Cycling Power Estimator & 3D Visualizer",
     "tagline": "Full-Stack-Webanwendung zur nachträglichen Berechnung und Visualisierung von Radsport-Leistungsdaten aus GPX-Dateien",
-    "description": "Eine Open-Source-Full-Stack-Webanwendung zur Analyse von GPS-Track-Daten (GPX-Dateien) und zur nachträglichen Berechnung der Leistung (Watt) eines Radfahrers mithilfe physikalischer Gleichungen. Die Plattform kombiniert ein FastAPI-Python-Backend für mathematische Berechnungen, Koordinatenglättung und Datenbankpersistenz mit einem React-Frontend, das Chart.js-Analysen und Mapbox-3D-Geländeanimationen bietet.",
+    "description": "Eine GPX-Strecke hochladen, die Radfahrleistung aus den Streckendaten schätzen und die Ergebnisse in Diagrammen und einer 3D-Karte ansehen. Ein FastAPI-Backend übernimmt die Berechnungen; das React-Frontend zeigt die Fahrt an.",
     "purpose": "Demokratisierung von Radsport-Analysen durch die Rekonstruktion von Leistungsdaten ohne teure physische Leistungsmesser sowie Bereitstellung einer hochgradig fesselnden 3D-Visualisierung von Fahrten.",
     "strengths": [
       "Physikalische Modellierung (Schwerkraft, Rollwiderstand, Luftwiderstand, kinetische Energie)",
@@ -491,14 +485,13 @@
   },
   "exam-system-backend": {
     "name": "LLM-Integrated Exam System",
-    "tagline": "Skaliertes Backend für universitäre Prüfungen",
-    "description": "Erweiterung eines bestehenden digitalen Prüfsystems für eine ukrainische Universität. Entwicklung der Backend-Architektur, des Webschemas und der Microservice-Orchestrierung zur Bewältigung gleichzeitiger Studierendenlasten.",
-    "purpose": "Einführung wissensbasierter Tests in die Prüfungs-Infrastruktur sowie Implementierung einer automatisierten, KI-gestützten Vorbewertung für Freitextantworten zur Entlastung der Prüfenden.",
+    "tagline": "Im Team entwickeltes Prüfungssystem mit LLM-gestützter Vorbewertung",
+    "description": "Als Co-Leiter der Backend-Entwicklung habe ich im Team an Datenbankschema, Diensten und Kubernetes-Deployment für ein universitäres Prüfungssystem gearbeitet. Das System nutzt ein LLM zur vorläufigen Auswertung von Freitextantworten.",
+    "purpose": "Ein bestehendes Prüfungssystem für eine ukrainische Universität um Freitextfragen und eine vorläufige Bewertung erweitern.",
     "strengths": [
-      "Erfolgreiche Containerisierung und Bereitstellung des Anwendungs-Stacks mit Kubernetes",
-      "Entwurf skalierbarer SQL-Schemata zur sicheren Verarbeitung gleichzeitiger Prüfungsabgaben",
-      "Integration von LLM-Endpunkten zur automatisierten, vorläufigen Auswertung von Freitextantworten",
-      "Bereitstellung eines robusten Backends unter engen akademischen Projektfristen"
+      "Anwendungsdienste mit Kubernetes bereitgestellt",
+      "SQL-Schemata für Prüfungsabgaben entworfen",
+      "LLM-Endpunkte für die vorläufige Auswertung von Freitextantworten angebunden"
     ],
     "limitations": [],
     "expertise": [
@@ -511,9 +504,9 @@
   },
   "ferienw-am-meer-modernization": {
     "name": "ferienw-am-meer.de",
-    "tagline": "Statische Seiten-Modernisierung & High-Performance Web-Engineering",
-    "description": "Migration und komplette Neugestaltung einer veralteten statischen HTML-Website hin zu einer performanten, modernen Webanwendung. Der Fokus lag auf extremem Frontend-Asset-Optimierung, strikter Typsicherheit und automatisierten CI/CD-Deployment-Pipelines.",
-    "purpose": "Umwandlung eines veralteten Webauftritts in ein blitzschnelles Mobile-First-Erlebnis bei gleichzeitiger Etablierung einer automatisierten Infrastruktur für Medienverarbeitung und Zero-Downtime-Hosting.",
+    "tagline": "Neubau einer Ferienwohnungs-Website mit Next.js und Bildverarbeitung",
+    "description": "Ich habe eine ältere statische HTML-Website für eine Ferienwohnung mit Next.js und TypeScript neu aufgebaut. Dazu gehören Bildkonvertierung und Platzhalter für die Galerie sowie ein Deployment-Workflow mit GitHub Actions.",
+    "purpose": "Fotos und Informationen auf dem Smartphone leichter zugänglich machen und Aktualisierungen der Website vereinfachen.",
     "strengths": [
       "Entwicklung einer vollständigen architektonischen Überarbeitung durch die Umstellung von Altsystem-HTML auf eine typsichere Next.js-Implementierung unter Verwendung von Tailwind CSS v4",
       "Optimierung kritischer Core Web Vitals (FCP/LCP) durch den Einsatz experimenteller nativer CSS-Inlining-Konfigurationen in der Next.js-Runtime",
@@ -647,8 +640,8 @@
   },
   "jda-chewtils": {
     "name": "JDA-Chewtils",
-    "tagline": "Moderne, modulare Tools- und Hilfsprogramm-Erweiterungsbibliothek für JDA-Discord-Bots",
-    "description": "Ein moderner, modularer Fork der klassischen JDA-Utilities-Bibliothek, der Tools zur Reduzierung von Boilerplate-Code für Java Discord API (JDA)-Bots bereitstellt. Sie enthält Hilfsstrukturen für Menü-Paginierung, Befehlsanalyse und OAuth2-Integration. Ich habe zu Kompatibilitätsupdates für JDA 6.1.1 beigetragen.",
+    "tagline": "Java-Hilfsfunktionen für Discord-Bot-Befehle und Menüs",
+    "description": "JDA-Chewtils bietet Java-Hilfsfunktionen für Discord-Bot-Befehle, Menüs und OAuth. Ich habe zur Kompatibilität mit JDA 6.1.1 beigetragen.",
     "purpose": "Die Java-basierte Discord-Bot-Entwicklung durch wiederverwendbare Strukturen für Befehlsregistrierung und UI-Menüs zu vereinfachen.",
     "strengths": [
       "Modulares Bibliotheksdesign, das Entwicklern erlaubt, nur benötigte Funktionen zu importieren",
@@ -902,7 +895,7 @@
   "personal-projects": {
     "name": "personal_projects",
     "tagline": "Interaktives Entwickler-Portfolio mit automatisierter Git-Statistikverfolgung und -visualisierung",
-    "description": "Eine moderne, responsive Portfolio-Website, entwickelt mit React, Vite und Tailwind CSS. Sie bietet eine interaktive Projektkategorisierung, dynamische Filterung, detaillierte Projektansichten und benutzerdefinierte Repository-Statistiken, die über eine Node.js-Git-Analysepipeline aggregiert werden.",
+    "description": "Diese Website zeigt meine Projekte mit Suche, Filtern und Detailansichten. Ein Node.js-Skript liest die Repository-Historie und aktualisiert die angezeigten Commit- und Code-Statistiken.",
     "purpose": "Präsentation persönlicher Softwareentwicklungsprojekte, Dienstprogramme und IT-Projekte mit tatsächlichen, nachweisbar erfassten Zeilen Code (LOC) und Commit-Statistiken, die direkt aus lokalen Repositories ermittelt wurden.",
     "strengths": [
       "Automatisierte Analyse lokaler Git-Repositories",
@@ -1058,6 +1051,69 @@
       {
         "index": 0,
         "description": ""
+      }
+    ]
+  },
+  "opencode-oneprovider": {
+    "name": "opencode-oneprovider",
+    "tagline": "OneProvider-Modelle und API-Schlüsselverwaltung für OpenCode",
+    "description": "Dieses OpenCode-Plugin bindet OneProvider-Modelle mit Preisen und Kontextfenstern ein. Es liest den API-Schlüssel aus der OpenCode-Authentifizierung, der Umgebung oder den Provider-Einstellungen. Es ist ein eigenständiges Projekt: opencode-antigravity-auth diente als Referenz für die Integration, nicht als Codebasis für einen Fork.",
+    "purpose": "OneProvider-Modelle in OpenCode verwenden, ohne Modelldefinitionen und Preise von Hand zu pflegen.",
+    "strengths": [
+      "Registriert OneProvider-Modelle mit ihren Kontextfenstern",
+      "Konfiguriert Preise für Eingabe-, Ausgabe- und Cache-Token",
+      "Liest API-Schlüssel aus OpenCode, der Umgebung oder den Provider-Einstellungen"
+    ],
+    "limitations": [
+      "Erfordert ein OneProvider-Konto und einen API-Schlüssel",
+      "Modellverfügbarkeit und Preise müssen mit OneProvider abgeglichen werden"
+    ],
+    "expertise": [
+      "OpenCode-Provider-Integration",
+      "Modellkonfiguration",
+      "API-Schlüsselverwaltung"
+    ],
+    "roadmap": [],
+    "relatedProjects": [
+      {
+        "index": 0,
+        "relation": "Referenz für die Plugin-Integration (kein Fork)"
+      },
+      {
+        "index": 1,
+        "relation": "Weiteres OpenCode-Provider-Plugin"
+      }
+    ]
+  },
+  "opencode-kiconnect": {
+    "name": "opencode-kiconnect",
+    "tagline": "KI:connect-Modelle in OpenCode verwenden",
+    "description": "Dieses OpenCode-Plugin bindet Modelle von KI:connect, dem RWTH-/NRW-Gateway, ein. Es konfiguriert lokal betriebene Open-Weight-Modelle und kommerzielle Modelle, die an externe Anbieter weitergeleitet werden. Für den Zugriff wird ein KI:connect-API-Schlüssel benötigt. Das Plugin entstand unabhängig von opencode-antigravity-auth; jenes Projekt diente nur als Integrationsbeispiel.",
+    "purpose": "KI:connect-Modelle aus OpenCode nutzen und Unterschiede bei Hosting und Kontingenten sichtbar halten.",
+    "strengths": [
+      "Bindet KI:connect-Modelle über die Chat-Completions-API in OpenCode ein",
+      "Unterstützt API-Schlüssel aus der OpenCode-Authentifizierung oder Umgebungsvariablen",
+      "Unterscheidet in der Dokumentation zwischen RWTH-Hosting und externen Anbietern"
+    ],
+    "limitations": [
+      "Erfordert KI:connect-Zugang und einen API-Schlüssel",
+      "Modell-IDs, Verfügbarkeit und Kontingente hängen vom Gateway ab",
+      "Kommerzielle Modelle können Anfragen an externe Anbieter weiterleiten"
+    ],
+    "expertise": [
+      "OpenCode-Provider-Integration",
+      "Modellkonfiguration",
+      "API-Schlüsselverwaltung"
+    ],
+    "roadmap": [],
+    "relatedProjects": [
+      {
+        "index": 0,
+        "relation": "Referenz für die Plugin-Integration (kein Fork)"
+      },
+      {
+        "index": 1,
+        "relation": "Weiteres OpenCode-Provider-Plugin"
       }
     ]
   }

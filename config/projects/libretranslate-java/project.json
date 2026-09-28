@@ -10,8 +10,8 @@
   "sourceType": "open-source",
   "aiUsage": "minor",
   "aiUtilization": "no-ai",
-  "description": "A Java client library for the LibreTranslate API. Provides easy integration of translation capabilities into Java applications with a clean, idiomatic API.",
-  "purpose": "To provide Java developers with a simple, well-documented client for self-hosted or public LibreTranslate instances, enabling translation features without external service dependencies.",
+  "description": "A Java client for LibreTranslate instances, with synchronous and asynchronous translation calls. I contribute to the client library.",
+  "purpose": "To use LibreTranslate from Java applications against self-hosted or public instances.",
   "technologies": [
     "Java",
     "HTTP Client",

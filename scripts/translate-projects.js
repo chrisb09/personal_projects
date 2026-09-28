@@ -10,6 +10,7 @@ const headerConfigPath = path.join(__dirname, '../config/portfolio-header.json')
 const srcLocalesDePath = path.join(__dirname, '../src/locales/de/projects.json');
 const publicLocalesDePath = path.join(__dirname, '../public/locales/de/projects.json');
 const configDeCatalogPath = path.join(__dirname, '../config/projects-de.json');
+const editorialOverridesPath = path.join(__dirname, '../config/translation-overrides-de.json');
 
 // Persistent cache paths (container volume first, then host fallback)
 const possibleCacheDirs = [
@@ -30,6 +31,7 @@ const possibleEnvPaths = [
 const args = process.argv.slice(2);
 const isForce = args.includes('--force');
 const isDryRun = args.includes('--dry-run');
+const isEditorialOnly = args.includes('--editorial-only');
 
 // =====================================================================
 // Helper: Resolve Persistent Cache File
@@ -479,8 +481,8 @@ function updateHeaderInCommonJson(translation) {
   const dePaths = [
     path.join(__dirname, '../src/locales/de/common.json'),
     path.join(__dirname, '../public/locales/de/common.json'),
-    '/container/data/personal_projects/public/locales/de/common.json',
   ];
+  if (!isEditorialOnly) dePaths.push('/container/data/personal_projects/public/locales/de/common.json');
 
   for (const p of dePaths) {
     if (fs.existsSync(p)) {
@@ -569,6 +571,12 @@ async function main() {
         headerNeedsTranslation = true;
       }
     } catch {}
+  }
+
+  if (isEditorialOnly) {
+    console.log('[Translate] Applying editorial German copy without automatic translation.');
+    saveCatalogs(finalCatalog, cache, cachePath);
+    return;
   }
 
   for (const projectId of projectFolders) {
@@ -676,6 +684,15 @@ async function main() {
 // Helper: Save Catalogs & Cache to Disk Atomically
 // =====================================================================
 function saveCatalogs(finalCatalog, cache, cachePath) {
+  // Curated copy takes precedence over cached or newly generated translations.
+  if (fs.existsSync(editorialOverridesPath)) {
+    const overrides = JSON.parse(fs.readFileSync(editorialOverridesPath, 'utf8'));
+    for (const [projectId, copy] of Object.entries(overrides.projects || {})) {
+      finalCatalog[projectId] = { ...finalCatalog[projectId], ...copy };
+    }
+    if (overrides.header) updateHeaderInCommonJson(overrides.header);
+  }
+
   try {
     // 1. Save translation cache
     fs.mkdirSync(path.dirname(cachePath), { recursive: true });
@@ -711,7 +728,7 @@ function saveCatalogs(finalCatalog, cache, cachePath) {
 
   const hostConfigDePath = '/container/config/personal_projects/config/projects-de.json';
   try {
-    if (fs.existsSync(path.dirname(hostConfigDePath))) {
+    if (!isEditorialOnly && fs.existsSync(path.dirname(hostConfigDePath))) {
       fs.writeFileSync(hostConfigDePath, JSON.stringify(finalCatalog, null, 2), 'utf8');
       console.log(`[Translate] Synced to ${hostConfigDePath}`);
     }

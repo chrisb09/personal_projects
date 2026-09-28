@@ -1,7 +1,7 @@
 {
   "id": "jda-chewtils",
   "name": "JDA-Chewtils",
-  "tagline": "Modern, modular tools and utilities extension library for JDA Discord bots",
+  "tagline": "Java helpers for Discord bot commands and menus",
   "year": "2025",
   "category": "library",
   "status": "active",
@@ -10,7 +10,7 @@
   "sourceType": "open-source",
   "aiUsage": "contributed",
   "aiUtilization": "no-ai",
-  "description": "A modern, modular fork of the classic JDA-Utilities library that provides boilerplate reduction tools for Java Discord API (JDA) bots. It includes helper structures for menu pagination, command parsing, and OAuth2 integration. I contributed to JDA 6.1.1 compatibility upgrades.",
+  "description": "JDA-Chewtils provides Java helpers for Discord bot commands, menus and OAuth. I contributed changes for JDA 6.1.1 compatibility.",
   "purpose": "To simplify Java-based Discord bot development by providing reusable structures for command registering and UI menus.",
   "technologies": [
     "Java",
