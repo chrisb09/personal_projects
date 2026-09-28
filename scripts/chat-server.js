@@ -2,6 +2,7 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 const url = require('url');
+const { execFileSync } = require('child_process');
 
 // =====================================================================
 // Configuration & Path Resolution
@@ -35,6 +36,18 @@ const possibleExtraRepoDirs = [
   '/data/backups',
 ];
 
+const possibleContextDirs = [
+  '/app/context',
+  '/container/data/personal_projects/context',
+  path.join(__dirname, '../context'),
+];
+
+const possibleSummaryDirs = [
+  '/app/data/repo-summaries',
+  '/container/compose/personal_projects/data/repo-summaries',
+  path.join(__dirname, '../data/repo-summaries'),
+];
+
 const possibleStateDirs = [
   '/app/data',
   path.join(__dirname, '../data'),
@@ -53,6 +66,8 @@ function resolveFirstExisting(candidates) {
 const configDir = resolveFirstExisting(possibleConfigDirs);
 const repoDir = resolveFirstExisting(possibleRepoDirs);
 const extraRepoDir = resolveFirstExisting(possibleExtraRepoDirs);
+const contextDir = resolveFirstExisting(possibleContextDirs);
+const repoSummariesDir = resolveFirstExisting(possibleSummaryDirs);
 const stateDir = resolveFirstExisting(possibleStateDirs);
 
 if (!fs.existsSync(stateDir)) {
@@ -68,6 +83,8 @@ console.log('[ChatServer] Resolved base paths:');
 console.log(`  Config:     ${configDir}`);
 console.log(`  Repos:      ${repoDir}`);
 console.log(`  ExtraRepos: ${extraRepoDir}`);
+console.log(`  Context:    ${contextDir}`);
+console.log(`  Summaries:  ${repoSummariesDir}`);
 console.log(`  StateDir:   ${stateDir}`);
 
 // =====================================================================
@@ -519,6 +536,28 @@ const TOOL_DECLARATIONS = [
       },
       required: ['repoName', 'searchTerm']
     }
+  },
+  {
+    name: 'read_personal_context',
+    description: 'Reads authoritative personal documents, biographical background, career principles, or private notes provided directly by Christian from the context folder. Call without documentName to view the catalog of available personal documents.',
+    parameters: {
+      type: 'object',
+      properties: {
+        documentName: { type: 'string', description: 'Optional filename of the document to read (e.g. "bio.md", "career.md", "notes/README.md")' }
+      }
+    }
+  },
+  {
+    name: 'get_codebase_summary',
+    description: 'Retrieves pre-computed architectural and file-by-file summaries for any repository. Use this to quickly see what files exist in a repository and what each file does without having to read raw source code.',
+    parameters: {
+      type: 'object',
+      properties: {
+        repoName: { type: 'string', description: 'Name of the repository (e.g. "CPP-ML-Interface", "MusicBot", "cycling_power_estimator", "firecord")' },
+        subPath: { type: 'string', description: 'Optional directory or specific file path to focus on' }
+      },
+      required: ['repoName']
+    }
   }
 ];
 
@@ -561,6 +600,32 @@ function findRepoPath(repoName) {
     }
   }
 
+  // Check if it's inside low_repos (Minecraft cluster repositories)
+  const lowReposDir = path.join(extraRepoDir, 'low_repos');
+  if (fs.existsSync(lowReposDir)) {
+    const sub = path.join(lowReposDir, cleanName);
+    if (fs.existsSync(sub)) return sub;
+    try {
+      const list = fs.readdirSync(lowReposDir);
+      const found = list.find(l => l.toLowerCase() === cleanName.toLowerCase());
+      if (found) return path.join(lowReposDir, found);
+    } catch {
+      // Ignore
+    }
+  }
+
+  // Direct host fallback for low_repos
+  const directLowDir = '/data/backups/low_repos';
+  if (fs.existsSync(directLowDir)) {
+    const sub = path.join(directLowDir, cleanName);
+    if (fs.existsSync(sub)) return sub;
+    try {
+      const list = fs.readdirSync(directLowDir);
+      const found = list.find(l => l.toLowerCase() === cleanName.toLowerCase());
+      if (found) return path.join(directLowDir, found);
+    } catch {}
+  }
+
   return null;
 }
 
@@ -594,17 +659,45 @@ function getRepoUrl(repoOrProjectId) {
   return `https://github.com/chrisb09/${repoOrProjectId}`;
 }
 
-function getFileUrl(repoName, filePath) {
+const commitHashCache = new Map();
+
+function getRepoCommitHash(repoPath) {
+  if (!repoPath || !fs.existsSync(path.join(repoPath, '.git'))) return 'master';
+  if (commitHashCache.has(repoPath)) return commitHashCache.get(repoPath);
+  try {
+    const hash = execFileSync('git', ['rev-parse', 'HEAD'], {
+      cwd: repoPath,
+      timeout: 2000,
+      stdio: ['ignore', 'pipe', 'ignore'],
+    }).toString().trim();
+    const finalHash = hash || 'master';
+    commitHashCache.set(repoPath, finalHash);
+    return finalHash;
+  } catch {
+    commitHashCache.set(repoPath, 'master');
+    return 'master';
+  }
+}
+
+function getFileUrl(repoName, filePath, startLine, endLine) {
   const repoUrl = getRepoUrl(repoName);
   if (!repoUrl) return null;
   const cleanFile = filePath.replace(/^\/+/, '');
+  const repoPath = findRepoPath(repoName);
+  const commitHash = repoPath ? getRepoCommitHash(repoPath) : 'master';
+
+  let anchor = '';
+  if (startLine) {
+    anchor = endLine && endLine !== startLine ? `#L${startLine}-L${endLine}` : `#L${startLine}`;
+  }
+
   if (repoUrl.includes('github.com')) {
-    return `${repoUrl.replace(/\.git$/, '')}/blob/HEAD/${cleanFile}`;
+    return `${repoUrl.replace(/\.git$/, '')}/blob/${commitHash}/${cleanFile}${anchor}`;
   }
   if (repoUrl.includes('gitlab')) {
-    return `${repoUrl.replace(/\.git$/, '')}/-/blob/HEAD/${cleanFile}`;
+    return `${repoUrl.replace(/\.git$/, '')}/-/blob/${commitHash}/${cleanFile}${anchor}`;
   }
-  return repoUrl;
+  return `${repoUrl}${anchor}`;
 }
 
 // Tool Execution Dispatcher
@@ -722,15 +815,97 @@ async function executeTool(name, args, onSourceFound) {
         const start = Math.max(1, parseInt(args.startLine || '1', 10));
         const limit = Math.min(150, Math.max(1, parseInt(args.lineCount || '50', 10)));
         const sliced = lines.slice(start - 1, start - 1 + limit);
+        const end = start + sliced.length - 1;
+
+        if (onSourceFound) {
+          const permalink = getFileUrl(args.repoName, args.filePath, start, end);
+          onSourceFound({
+            title: `${args.repoName}/${args.filePath}#L${start}-L${end}`,
+            url: permalink,
+            type: 'file',
+            lines: `${start}-${end}`
+          });
+        }
 
         return {
           repository: args.repoName,
           file: args.filePath,
           totalLines: lines.length,
           startLine: start,
+          endLine: end,
           linesReturned: sliced.length,
           content: sliced.join('\n'),
         };
+      }
+
+      case 'read_personal_context': {
+        if (!contextDir || !fs.existsSync(contextDir)) {
+          return { error: 'No personal context directory configured.' };
+        }
+        if (!args.documentName) {
+          const files = [];
+          function walkDocs(dir, prefix = '') {
+            try {
+              const entries = fs.readdirSync(dir, { withFileTypes: true });
+              for (const e of entries) {
+                if (e.name.startsWith('.')) continue;
+                const rel = prefix ? `${prefix}/${e.name}` : e.name;
+                const full = path.join(dir, e.name);
+                if (e.isDirectory()) {
+                  walkDocs(full, rel);
+                } else if (e.isFile() && /\.(md|txt)$/i.test(e.name)) {
+                  const stat = fs.statSync(full);
+                  files.push({ name: rel, sizeBytes: stat.size });
+                }
+              }
+            } catch {}
+          }
+          walkDocs(contextDir);
+          if (onSourceFound) {
+            onSourceFound({ title: 'Personal Context Documents', url: 'https://projects.christian-f-brinkmann.de/', type: 'context' });
+          }
+          return { availableDocuments: files, instructions: 'Call read_personal_context with documentName to read any of these documents.' };
+        }
+
+        const relDoc = String(args.documentName).trim().replace(/^\/+/, '');
+        if (relDoc.includes('..') || path.isAbsolute(relDoc)) {
+          return { error: 'Invalid document path.' };
+        }
+        const fullDocPath = path.join(contextDir, relDoc);
+        if (!fs.existsSync(fullDocPath) || !fs.statSync(fullDocPath).isFile()) {
+          return { error: `Document '${relDoc}' not found in context.` };
+        }
+        const text = fs.readFileSync(fullDocPath, 'utf8');
+        const lines = text.split('\n');
+        const content = lines.slice(0, 200).join('\n');
+        if (onSourceFound) {
+          onSourceFound({ title: `Context: ${relDoc}`, url: 'https://projects.christian-f-brinkmann.de/', type: 'context' });
+        }
+        return { document: relDoc, totalLines: lines.length, content };
+      }
+
+      case 'get_codebase_summary': {
+        const repoName = (args.repoName || '').trim();
+        const summaryFile = path.join(repoSummariesDir, `${repoName}.json`);
+        if (!fs.existsSync(summaryFile)) {
+          if (fs.existsSync(repoSummariesDir)) {
+            const list = fs.readdirSync(repoSummariesDir);
+            const found = list.find(f => f.toLowerCase() === `${repoName.toLowerCase()}.json`);
+            if (found) {
+              const data = JSON.parse(fs.readFileSync(path.join(repoSummariesDir, found), 'utf8'));
+              if (onSourceFound) {
+                onSourceFound({ title: `Architecture Map: ${repoName}`, url: getRepoUrl(repoName), type: 'summary' });
+              }
+              return data;
+            }
+          }
+          return { error: `No precomputed summary found for '${repoName}'. Use read_repo_file or list_repo_files.` };
+        }
+        const data = JSON.parse(fs.readFileSync(summaryFile, 'utf8'));
+        if (onSourceFound) {
+          onSourceFound({ title: `Architecture Map: ${repoName}`, url: getRepoUrl(repoName), type: 'summary' });
+        }
+        return data;
       }
 
       case 'search_code': {
@@ -825,11 +1000,29 @@ AUDIENCE ADAPTABILITY & DEPTH CALIBRATION:
 STRICT GROUNDING, SOURCING & FORMATTING:
 - Never claim, assume, or fabricate technologies, libraries, benchmarks, metrics, or implementations you cannot verify with your tools.
 - If you are asked about something and the information is NOT present in the project metadata or repository files, EXPLICITLY state that you do not know or that it is not documented in the repository, rather than guessing or generalizing.
-- Always cite the project name or repository file when stating facts (e.g., 'In CPP-ML-Interface...', 'As defined in MusicBot/project.json...').
+- Authoritative Personal Documents: Use 'read_personal_context' to read Christian's background notes, bio, career principles, and personal details directly from the context documents.
+- Fast Architecture Inspection: Use 'get_codebase_summary' to inspect pre-computed architectural maps and file-by-file summaries of any repository without reading raw files.
+- Code Inspection & Citing: Use 'read_repo_file' when you need exact lines of code. Always cite the project name or repository file when stating facts (e.g., 'In CPP-ML-Interface...', 'As defined in MusicBot/project.json...').
 
 EFFICIENT TOOL USAGE:
 - 'list_projects' returns the complete catalog of projects including their complete 'techStack' and 'technologies' (all programming languages and frameworks). When asked which projects use specific programming languages (such as Python, C++, TypeScript, Java, C#, PHP) or tools, 'list_projects' provides all the required information in one call. Synthesize and answer directly from 'list_projects' without making individual 'get_project_details' calls for every project.
 - Language matching: If the user writes in German, respond naturally in German. If the user writes in English, respond in English.`;
+
+// =====================================================================
+// Cost Calculation Helper
+// =====================================================================
+function calculateCost(modelId, inputTokens, outputTokens) {
+  const m = String(modelId).toLowerCase();
+  if (m.includes('luna')) {
+    const cost = (inputTokens * 0.50 + outputTokens * 1.50) / 1000000;
+    return cost < 0.0001 ? '<$0.0001' : `$${cost.toFixed(4)}`;
+  }
+  if (m.includes('cerebras') || m.includes('qwen')) {
+    const cost = (inputTokens * 0.20 + outputTokens * 0.60) / 1000000;
+    return cost < 0.0001 ? '<$0.0001' : `$${cost.toFixed(4)}`;
+  }
+  return '$0.00 (Free Tier)';
+}
 
 // =====================================================================
 // OpenRouter API Runner (Luna 6, High Effort)
@@ -952,8 +1145,10 @@ async function handleOpenRouterChatStream(req, res, userMessages, clientLang, ac
     // Got textual response! Stream in natural chunks
     const fullText = (message.content || '').trim();
     if (fullText) {
+      let firstTokenTime = null;
       const chunkSize = 20;
       for (let i = 0; i < fullText.length; i += chunkSize) {
+        if (!firstTokenTime) firstTokenTime = Date.now();
         const slice = fullText.slice(i, i + chunkSize);
         res.write(`data: ${JSON.stringify({ type: 'delta', text: slice })}\n\n`);
         await new Promise(r => setTimeout(r, 12));
@@ -967,16 +1162,26 @@ async function handleOpenRouterChatStream(req, res, userMessages, clientLang, ac
 
       // Calculate generation metrics
       const durationMs = Date.now() - requestStartTime;
+      const ttftMs = firstTokenTime ? firstTokenTime - requestStartTime : durationMs;
       const durationSec = Math.max(0.1, durationMs / 1000);
-      const totalTokens = data?.usage?.completion_tokens || Math.max(1, Math.round(fullText.length / 3.8));
+      const inputTokens = data?.usage?.prompt_tokens || Math.max(1, Math.round(JSON.stringify(messages).length / 3.8));
+      const thinkingTokens = data?.usage?.completion_tokens_details?.reasoning_tokens || (message.reasoning ? Math.max(1, Math.round(message.reasoning.length / 3.8)) : 0);
+      const outputTokens = data?.usage?.completion_tokens || Math.max(1, Math.round(fullText.length / 3.8));
+      const totalTokens = inputTokens + thinkingTokens + outputTokens;
       const tokensPerSec = Math.round(totalTokens / durationSec);
+      const costFormatted = calculateCost(openrouterModel, inputTokens, outputTokens + thinkingTokens);
 
       res.write(`data: ${JSON.stringify({
         type: 'meta',
         model: `openrouter/${openrouterModel}`,
         durationMs,
-        tokenCount: totalTokens,
+        ttftMs,
+        inputTokens,
+        thinkingTokens,
+        outputTokens,
+        totalTokens,
         tokensPerSec,
+        costFormatted,
       })}\n\n`);
 
       res.write(`data: ${JSON.stringify({ type: 'done' })}\n\n`);
@@ -1102,8 +1307,10 @@ async function handleCerebrasChatStream(req, res, userMessages, clientLang, acce
     // Got textual response! Stream in natural chunks
     const fullText = (message.content || '').trim();
     if (fullText) {
+      let firstTokenTime = null;
       const chunkSize = 20;
       for (let i = 0; i < fullText.length; i += chunkSize) {
+        if (!firstTokenTime) firstTokenTime = Date.now();
         const slice = fullText.slice(i, i + chunkSize);
         res.write(`data: ${JSON.stringify({ type: 'delta', text: slice })}\n\n`);
         await new Promise(r => setTimeout(r, 12));
@@ -1117,16 +1324,26 @@ async function handleCerebrasChatStream(req, res, userMessages, clientLang, acce
 
       // Calculate generation metrics
       const durationMs = Date.now() - requestStartTime;
+      const ttftMs = firstTokenTime ? firstTokenTime - requestStartTime : durationMs;
       const durationSec = Math.max(0.1, durationMs / 1000);
-      const totalTokens = data?.usage?.completion_tokens || Math.max(1, Math.round(fullText.length / 3.8));
+      const inputTokens = data?.usage?.prompt_tokens || Math.max(1, Math.round(JSON.stringify(messages).length / 3.8));
+      const thinkingTokens = data?.usage?.completion_tokens_details?.reasoning_tokens || 0;
+      const outputTokens = data?.usage?.completion_tokens || Math.max(1, Math.round(fullText.length / 3.8));
+      const totalTokens = inputTokens + thinkingTokens + outputTokens;
       const tokensPerSec = Math.round(totalTokens / durationSec);
+      const costFormatted = calculateCost(cerebrasModel, inputTokens, outputTokens + thinkingTokens);
 
       res.write(`data: ${JSON.stringify({
         type: 'meta',
         model: `cerebras/${cerebrasModel}`,
         durationMs,
-        tokenCount: totalTokens,
+        ttftMs,
+        inputTokens,
+        thinkingTokens,
+        outputTokens,
+        totalTokens,
         tokensPerSec,
+        costFormatted,
       })}\n\n`);
 
       res.write(`data: ${JSON.stringify({ type: 'done' })}\n\n`);
@@ -1321,8 +1538,10 @@ async function handleGeminiChatStream(req, res, userMessages, clientLang, access
     const textParts = parts.filter(p => p.text && !p.thought);
     const fullText = textParts.map(p => p.text).join('\n').trim();
     if (fullText) {
+      let firstTokenTime = null;
       const chunkSize = 20;
       for (let i = 0; i < fullText.length; i += chunkSize) {
+        if (!firstTokenTime) firstTokenTime = Date.now();
         const slice = fullText.slice(i, i + chunkSize);
         res.write(`data: ${JSON.stringify({ type: 'delta', text: slice })}\n\n`);
         await new Promise(r => setTimeout(r, 15)); // Smooth streaming cadence
@@ -1336,16 +1555,26 @@ async function handleGeminiChatStream(req, res, userMessages, clientLang, access
 
       // Calculate generation metrics
       const durationMs = Date.now() - requestStartTime;
+      const ttftMs = firstTokenTime ? firstTokenTime - requestStartTime : durationMs;
       const durationSec = Math.max(0.1, durationMs / 1000);
-      const totalTokens = responseData?.usageMetadata?.candidatesTokenCount || Math.max(1, Math.round(fullText.length / 3.8));
+      const inputTokens = responseData?.usageMetadata?.promptTokenCount || Math.max(1, Math.round(JSON.stringify(contents).length / 3.8));
+      const thinkingTokens = responseData?.usageMetadata?.candidatesTokensDetails?.reduce((sum, d) => sum + (d.modality === 'TEXT' ? 0 : d.tokenCount || 0), 0) || 0;
+      const outputTokens = responseData?.usageMetadata?.candidatesTokenCount || Math.max(1, Math.round(fullText.length / 3.8));
+      const totalTokens = inputTokens + thinkingTokens + outputTokens;
       const tokensPerSec = Math.round(totalTokens / durationSec);
+      const costFormatted = calculateCost(successfulModel ? successfulModel.id : 'gemini', inputTokens, outputTokens);
 
       res.write(`data: ${JSON.stringify({
         type: 'meta',
         model: successfulModel ? successfulModel.id : 'gemini',
         durationMs,
-        tokenCount: totalTokens,
+        ttftMs,
+        inputTokens,
+        thinkingTokens,
+        outputTokens,
+        totalTokens,
         tokensPerSec,
+        costFormatted,
       })}\n\n`);
 
       res.write(`data: ${JSON.stringify({ type: 'done' })}\n\n`);

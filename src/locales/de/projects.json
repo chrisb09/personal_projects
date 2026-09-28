@@ -1083,6 +1083,12 @@
         "index": 1,
         "relation": "Weiteres OpenCode-Provider-Plugin"
       }
+    ],
+    "repos": [
+      {
+        "index": 0,
+        "description": ""
+      }
     ]
   },
   "opencode-kiconnect": {

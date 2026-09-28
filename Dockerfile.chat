@@ -7,7 +7,7 @@ COPY package*.json ./
 COPY scripts/chat-server.js ./scripts/
 
 # Create runtime directories
-RUN mkdir -p /app/data /app/config /app/repos /app/extra-repos
+RUN mkdir -p /app/data /app/config /app/repos /app/extra-repos /app/context
 
 EXPOSE 3001
 

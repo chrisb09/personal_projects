@@ -25,6 +25,10 @@ services:
       - /container/data/personal_projects/repos:/app/repos:ro
       - /data/backups:/data/backups:ro
       - ./extra-repos:/app/extra-repos:ro
+      # Mount personal context documents (read-only)
+      - /container/data/personal_projects/context:/app/context:ro
+      # Mount pre-computed codebase summaries (read-only)
+      - ./data/repo-summaries:/app/data/repo-summaries:ro
       # Persistent cache/state volume for quota tracking
       - chat-data:/app/data
     environment:
@@ -56,6 +60,7 @@ services:
       - ./src:/app/src
       - ./scripts:/app/scripts
       - ./index.html:/app/index.html
+      - ./data/repo-summaries:/app/data/repo-summaries
       # Shared volume for built assets served by Nginx
       - portfolio-dist:/app/dist
       - /container/config/personal_projects/vite.config.ts:/app/vite.config.ts:ro

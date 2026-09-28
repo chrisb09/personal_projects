@@ -1,0 +1,71 @@
+{
+  "repository": "CPP-ML-Interface",
+  "updatedAt": "2026-09-28T20:41:01.250Z",
+  "filesCount": 12,
+  "directories": {
+    ".github/workflows": "Contains 1 module files (docs.yml)",
+    "dl_clients": "Contains 3 module files (dl_client.cpp, maia_runner.sh, CMakeLists.txt)"
+  },
+  "files": {
+    "CMakeLists.txt": {
+      "hash": "cfe2ab80bd2fd3183c316b425e30f70320feeacdde6dc76ac120ad44c9945d6d",
+      "summary": "This `CMakeLists.txt` file configures the `HPC_Registry_Project` build system, managing dependencies, feature flags, and project variables for the `cpp_ml_interface_library` and `cpp_ml_interface_executable`.",
+      "lines": 462
+    },
+    ".github/workflows/docs.yml": {
+      "hash": "4fc0773b912d8e7500e70ee88f8b110c3f43a4d7fe9205ba8f631447eac8867e",
+      "summary": "This GitHub Actions workflow automates documentation generation using `doxygen` and `graphviz`, deploying the resulting HTML output to GitHub Pages whenever changes are pushed to main branches.",
+      "lines": 50
+    },
+    "README.md": {
+      "hash": "a6c542586bd3f3d5a9a873bc9c44d8c05f23686fdbe81d1f86c4974e221a2419",
+      "summary": "This `README.md` documents build requirements, installation steps, and test usage for the project, specifically detailing how to interface with `libcpp_ml_interface_library.so` and the `cpp_ml_interface_executable` verification tool.",
+      "lines": 245
+    },
+    "build_papi.sh": {
+      "hash": "6c02ae5b5f0c850bff980c177961bd9581f917906d0fc31cdf4d7c950137da30",
+      "summary": "This script automates the PAPI library build process. It uses `ensure_submodule` and `is_valid_papi_install` to manage dependencies and verify installations for the project's performance monitoring infrastructure.",
+      "lines": 58
+    },
+    "build.sh": {
+      "hash": "aa84c563f21ee1681531db97e0fbdc65fda360b41b93267e288ca491bae0239f",
+      "summary": "`build.sh` configures the build environment and orchestrates project compilation. It supports optional testing modes and manages dependencies like Score-P, CUDA, and various framework integrations.",
+      "lines": 127
+    },
+    "build_aix.sh": {
+      "hash": "c8963369771c1222f8262302053ef83706e7273958f8f40d57a7f5d6986f30ba",
+      "summary": "`build_aix.sh` automates the compilation and validation of the AIxeleratorService. It uses `ensure_base_env`, `ensure_local_scorep`, and `validate_install` to manage build dependencies and verify library integrity for the project.",
+      "lines": 170
+    },
+    "build_scorep_deps.sh": {
+      "hash": "6f8967023d8e98e1e7e6c4a51596cc290d578aa613e9025881325fdff8fd52d8",
+      "summary": "`build_scorep_deps.sh` automates the downloading and installation of Score-P dependencies. It uses `download_file`, `archive_root_dir`, and `install_dependency` to prepare the build environment for performance analysis tools.",
+      "lines": 94
+    },
+    "build_scorep.sh": {
+      "hash": "69b938c2a50ba6a5ffe994e83d4fc5efbd8e8d6e5e1e2814931a329ae8318e71",
+      "summary": "`build_scorep.sh` automates the compilation and installation of Score-P and its dependencies. It uses `ensure_submodule` and `is_valid_scorep_install` to manage build requirements and verify existing installations.",
+      "lines": 100
+    },
+    "build_phydll.sh": {
+      "hash": "907fb3bf9dc9c97c205e0bb3e1cf82f88d1677ebf725c9f2f7184d1b84a91f98",
+      "summary": "`build_phydll.sh` activates a configured Python environment, installs build dependencies, selects an MPI-capable compiler, and builds PhyDLL and its test target. It exports no functions or classes; its role is to automate the project’s PhyDLL build.",
+      "lines": 51
+    },
+    "dl_clients/dl_client.cpp": {
+      "hash": "7fe54592ec95bcf0f1498353a6bf38e48a12d1a521445e21587b5a5b3877e218",
+      "summary": "`dl_client.cpp` implements the deep learning runtime client, managing model inference and data orchestration via MPI. It defines `BcastMeta` and `BcastMetaHeader` to handle cross-process model metadata synchronization.",
+      "lines": 622
+    },
+    "dl_clients/maia_runner.sh": {
+      "hash": "f2ad2f0675b1b586f3baedfe5633554d18d1a0db08246f4e1d22156d11637c7f",
+      "summary": "`maia_runner.sh` configures the environment and `LD_LIBRARY_PATH` for Maia execution. It detects GPU availability to select appropriate CUDA libraries before executing the provided command.",
+      "lines": 31
+    },
+    "dl_clients/CMakeLists.txt": {
+      "hash": "873af661d67889431b9fb0c4ff520dd2074ae45d1a55ab36605d5840a3834120",
+      "summary": "This `CMakeLists.txt` configures the build system for the `PhyDLLDlClient` project, defining the `phydll_dl_runtime` library and managing dependencies like LibTorch and Score-P instrumentation.",
+      "lines": 118
+    }
+  }
+}

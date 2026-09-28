@@ -9,6 +9,7 @@
     "watch-projects": "node scripts/watch-projects.js",
     "update-stats": "node scripts/update-stats.js",
     "update-activity": "node scripts/update-git-activity.js",
+    "summarize-repos": "node scripts/generate-repo-summaries.js",
     "build": "npm run translate-projects && npm run compile-projects && vite build",
     "preview": "vite preview",
     "lint": "eslint ."

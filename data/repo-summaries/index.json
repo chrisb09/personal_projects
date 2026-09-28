@@ -1,0 +1,10 @@
+{
+  "CPP-ML-Interface": {
+    "filesCount": 12,
+    "updatedAt": "2026-09-28T20:41:01.250Z",
+    "directories": [
+      ".github/workflows",
+      "dl_clients"
+    ]
+  }
+}

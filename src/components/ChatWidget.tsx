@@ -36,8 +36,13 @@ interface ChatSource {
 interface ChatMessageMeta {
   model: string;
   durationMs: number;
-  tokenCount: number;
+  ttftMs?: number;
+  inputTokens?: number;
+  thinkingTokens?: number;
+  outputTokens?: number;
+  totalTokens?: number;
   tokensPerSec: number;
+  costFormatted?: string;
 }
 
 interface ChatMessage {
@@ -394,8 +399,13 @@ export const ChatWidget: React.FC = () => {
                       meta: {
                         model: event.model,
                         durationMs: event.durationMs,
-                        tokenCount: event.tokenCount,
+                        ttftMs: event.ttftMs,
+                        inputTokens: event.inputTokens,
+                        thinkingTokens: event.thinkingTokens,
+                        outputTokens: event.outputTokens,
+                        totalTokens: event.totalTokens || event.tokenCount,
                         tokensPerSec: event.tokensPerSec,
+                        costFormatted: event.costFormatted,
                       }
                     };
                   }
@@ -648,9 +658,9 @@ export const ChatWidget: React.FC = () => {
                     </div>
                   )}
 
-                  {/* Generation Performance Metrics below assistant answer */}
+                  {/* Generation Performance Metrics below assistant answer with Rich Hover Breakdown */}
                   {msg.role === 'assistant' && msg.meta && (
-                    <div className="flex items-center gap-1.5 pl-8 text-[11px] text-muted-foreground/75 select-none font-mono">
+                    <div className="relative group/telemetry inline-flex items-center gap-1.5 pl-8 text-[11px] text-muted-foreground/75 select-none font-mono">
                       <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-muted/60 border border-border/40 text-[10px] font-sans text-foreground/80">
                         <Cpu className="w-2.5 h-2.5 text-primary" />
                         {msg.meta.model}
@@ -665,7 +675,46 @@ export const ChatWidget: React.FC = () => {
                         <Zap className="w-2.5 h-2.5 text-amber-500" />
                         {msg.meta.tokensPerSec} tok/s
                       </span>
-                      <span className="text-muted-foreground/50">({msg.meta.tokenCount} tokens)</span>
+                      <span className="text-muted-foreground/60">({(msg.meta.totalTokens || 0).toLocaleString()} tokens)</span>
+
+                      {/* Hover Tooltip Card showing TTFT, Input, Thinking, Output, Context & Cost */}
+                      <div className="absolute bottom-full left-8 mb-1.5 hidden group-hover/telemetry:block z-50 p-2.5 rounded-xl bg-card text-card-foreground border border-border shadow-2xl text-[11px] font-sans w-56 pointer-events-none animate-in fade-in-0 zoom-in-95 duration-150">
+                        <div className="font-semibold text-xs border-b border-border/60 pb-1.5 mb-1.5 flex items-center justify-between text-foreground">
+                          <span className="flex items-center gap-1">
+                            <Sparkles className="w-3 h-3 text-primary" />
+                            LLM Telemetry
+                          </span>
+                          <span className="text-[10px] text-emerald-500 font-mono font-medium">
+                            {msg.meta.costFormatted || '$0.00'}
+                          </span>
+                        </div>
+                        <div className="space-y-1 font-mono text-[10px]">
+                          <div className="flex justify-between items-center text-muted-foreground">
+                            <span>⏱️ TTFT:</span>
+                            <span className="text-foreground font-semibold">{msg.meta.ttftMs ? `${msg.meta.ttftMs} ms` : '—'}</span>
+                          </div>
+                          <div className="flex justify-between items-center text-muted-foreground">
+                            <span>📥 Input tokens:</span>
+                            <span className="text-foreground">{msg.meta.inputTokens?.toLocaleString() || '—'}</span>
+                          </div>
+                          <div className="flex justify-between items-center text-muted-foreground">
+                            <span>🧠 Thinking tokens:</span>
+                            <span className="text-foreground">{msg.meta.thinkingTokens?.toLocaleString() || '0'}</span>
+                          </div>
+                          <div className="flex justify-between items-center text-muted-foreground">
+                            <span>📤 Output tokens:</span>
+                            <span className="text-foreground">{msg.meta.outputTokens?.toLocaleString() || '—'}</span>
+                          </div>
+                          <div className="flex justify-between items-center pt-1 border-t border-border/40 font-semibold text-foreground">
+                            <span>📦 Context Size:</span>
+                            <span>{(msg.meta.totalTokens || 0).toLocaleString()} tok</span>
+                          </div>
+                          <div className="flex justify-between items-center text-muted-foreground">
+                            <span>⚡ Throughput:</span>
+                            <span className="text-amber-500 font-bold">{msg.meta.tokensPerSec} tok/s</span>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   )}
                 </div>
