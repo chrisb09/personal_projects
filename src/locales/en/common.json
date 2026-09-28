@@ -186,5 +186,31 @@
     "select": "Language",
     "en": "English",
     "de": "Deutsch"
+  },
+  "chat": {
+    "button_label": "Ask AI",
+    "button_aria": "Open AI portfolio assistant",
+    "title": "Christian's AI Assistant",
+    "subtitle": "Grounded in portfolio code & metadata",
+    "online_status": "Online",
+    "clear_chat": "Clear conversation",
+    "close": "Close chat",
+    "enlarge": "Enlarge chat",
+    "collapse": "Collapse chat",
+    "shuffle_starters": "More suggestions",
+    "analyzing": "Analyzing portfolio...",
+    "placeholder": "Ask about projects, architecture, code...",
+    "send": "Send message",
+    "stop": "Stop generating",
+    "disclaimer": "AI responses are grounded in repository code. Verify key details.",
+    "empty_greeting": "Hi, I'm Christian's AI Assistant!",
+    "empty_description": "I can answer questions about Christian's software engineering background, thesis work, and repository implementations.",
+    "starters_heading": "Suggested questions",
+    "starter_skills": "What are Christian's core engineering skills?",
+    "starter_cpp": "Explain the CPP-ML-Interface architecture",
+    "starter_projects": "Which projects use Python, C++, or TypeScript?",
+    "starter_background": "What is Christian's background and education?",
+    "rate_limited": "The AI assistant is temporarily rate-limited. Please wait a moment.",
+    "network_error": "Failed to connect to the assistant service. Please check your connection."
   }
 }

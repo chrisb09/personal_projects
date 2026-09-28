@@ -1,0 +1,14 @@
+FROM node:20-alpine
+
+WORKDIR /app
+
+# Copy scripts and package definitions
+COPY package*.json ./
+COPY scripts/chat-server.js ./scripts/
+
+# Create runtime directories
+RUN mkdir -p /app/data /app/config /app/repos /app/extra-repos
+
+EXPOSE 3001
+
+CMD ["node", "scripts/chat-server.js"]

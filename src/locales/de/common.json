@@ -186,5 +186,31 @@
     "select": "Sprache",
     "en": "English",
     "de": "Deutsch"
+  },
+  "chat": {
+    "button_label": "KI fragen",
+    "button_aria": "KI-Portfolio-Assistent öffnen",
+    "title": "Christians KI-Assistent",
+    "subtitle": "Basiert auf Projekt-Code & Metadaten",
+    "online_status": "Online",
+    "clear_chat": "Chatverlauf leeren",
+    "close": "Chat schließen",
+    "enlarge": "Chat vergrößern",
+    "collapse": "Chat verkleinern",
+    "shuffle_starters": "Weitere Vorschläge",
+    "analyzing": "Portfolio wird analysiert...",
+    "placeholder": "Fragen zu Projekten, Architektur, Code...",
+    "send": "Nachricht senden",
+    "stop": "Generierung anhalten",
+    "disclaimer": "Antworten basieren auf Repository-Code und Metadaten. Bitte wichtige Details prüfen.",
+    "empty_greeting": "Hallo, ich bin Christians KI-Assistent!",
+    "empty_description": "Ich beantworte Fragen zu Christians Projekten, Masterarbeit, Software-Architektur und Implementierungen.",
+    "starters_heading": "Vorschläge",
+    "starter_skills": "Was sind Christians stärkste Kernkompetenzen?",
+    "starter_cpp": "Erkläre die Architektur von CPP-ML-Interface",
+    "starter_projects": "Welche Projekte nutzen Python, C++ oder TypeScript?",
+    "starter_background": "Was ist Christians Ausbildung und Hintergrund?",
+    "rate_limited": "Der KI-Assistent ist vorübergehend ausgelastet. Bitte kurz warten.",
+    "network_error": "Verbindung zum Assistenten fehlgeschlagen. Bitte Verbindung prüfen."
   }
 }

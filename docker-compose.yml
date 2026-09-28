@@ -10,6 +10,26 @@ services:
     restart: unless-stopped
     depends_on:
       - portfolio-builder
+      - portfolio-chat
+
+  portfolio-chat:
+    build:
+      context: .
+      dockerfile: Dockerfile.chat
+    container_name: portfolio-chat
+    volumes:
+      # Mount AI env for Gemini credentials (read-only)
+      - /scripts/ai.env:/run/secrets/ai.env:ro
+      # Mount config and repos strictly read-only for security jail
+      - /container/config/personal_projects/config:/app/config:ro
+      - /container/data/personal_projects/repos:/app/repos:ro
+      - /data/backups:/data/backups:ro
+      - ./extra-repos:/app/extra-repos:ro
+      # Persistent cache/state volume for quota tracking
+      - chat-data:/app/data
+    environment:
+      - LLM_PROVIDER=${LLM_PROVIDER:-openrouter}
+    restart: unless-stopped
 
   portfolio-builder:
     build:
@@ -46,3 +66,4 @@ services:
 
 volumes:
   portfolio-dist:
+  chat-data:

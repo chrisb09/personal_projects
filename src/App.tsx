@@ -31,6 +31,7 @@ import {
 import { ProjectCard } from '@/components/ProjectCard';
 import { ProjectDetailModal } from '@/components/ProjectDetailModal';
 import { GitActivity } from '@/components/GitActivity';
+import { ChatWidget } from '@/components/ChatWidget';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { LanguageSelector } from '@/components/LanguageSelector';
 import { Button } from '@/components/ui/button';
@@ -858,6 +859,9 @@ function App() {
           allProjects={localizedProjects}
           initialTab={modalInitialTab}
         />
+
+        {/* AI Portfolio Assistant Floating Chatbot */}
+        <ChatWidget />
       </div>
     </TooltipProvider>
   );
