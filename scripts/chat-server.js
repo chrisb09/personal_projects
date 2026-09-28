@@ -558,6 +558,44 @@ const TOOL_DECLARATIONS = [
       },
       required: ['repoName']
     }
+  },
+  {
+    name: 'get_git_log',
+    description: 'Retrieves recent git commits for a repository, including commit hash, date, author name, and commit message. Can optionally filter by author or specific file path.',
+    parameters: {
+      type: 'object',
+      properties: {
+        repoName: { type: 'string', description: 'Name of the repository' },
+        maxCommits: { type: 'integer', description: 'Number of commits to return (default 10, max 25)' },
+        filePath: { type: 'string', description: 'Optional relative path to inspect commit history for a specific file' },
+        author: { type: 'string', description: 'Optional author name or email pattern to filter commits' }
+      },
+      required: ['repoName']
+    }
+  },
+  {
+    name: 'get_git_commit_diff',
+    description: 'Inspects a specific git commit in a repository, returning the commit message, changed files stat, and the diff/patch (capped at 150 lines).',
+    parameters: {
+      type: 'object',
+      properties: {
+        repoName: { type: 'string', description: 'Name of the repository' },
+        commitHash: { type: 'string', description: 'The commit hash or ref (e.g. "HEAD", "HEAD~1", or short/full SHA)' },
+        filePath: { type: 'string', description: 'Optional specific file to limit the diff to' }
+      },
+      required: ['repoName', 'commitHash']
+    }
+  },
+  {
+    name: 'get_git_contributors',
+    description: 'Lists all contributors to a repository with their commit counts, author names, and emails.',
+    parameters: {
+      type: 'object',
+      properties: {
+        repoName: { type: 'string', description: 'Name of the repository' }
+      },
+      required: ['repoName']
+    }
   }
 ];
 
@@ -698,6 +736,19 @@ function getFileUrl(repoName, filePath, startLine, endLine) {
     return `${repoUrl.replace(/\.git$/, '')}/-/blob/${commitHash}/${cleanFile}${anchor}`;
   }
   return `${repoUrl}${anchor}`;
+}
+
+function getCommitUrl(repoName, commitHash) {
+  const repoUrl = getRepoUrl(repoName);
+  if (!repoUrl) return null;
+  const cleanHash = String(commitHash || '').trim().replace(/[^a-zA-Z0-9_.-]/g, '');
+  if (repoUrl.includes('github.com')) {
+    return `${repoUrl.replace(/\.git$/, '')}/commit/${cleanHash}`;
+  }
+  if (repoUrl.includes('gitlab')) {
+    return `${repoUrl.replace(/\.git$/, '')}/-/commit/${cleanHash}`;
+  }
+  return repoUrl;
 }
 
 // Tool Execution Dispatcher
@@ -960,6 +1011,138 @@ async function executeTool(name, args, onSourceFound) {
         return { repository: args.repoName, searchTerm: args.searchTerm, matches };
       }
 
+      case 'get_git_log': {
+        const repoPath = findRepoPath(args.repoName);
+        if (!repoPath) return { error: `Repository '${args.repoName}' not found.` };
+        const max = Math.min(25, Math.max(1, parseInt(args.maxCommits || '10', 10)));
+        const gitArgs = ['log', `-n`, String(max), '--format=%h%x09%H%x09%cs%x09%an%x09%s'];
+
+        if (args.author) {
+          gitArgs.push(`--author=${args.author}`);
+        }
+        if (args.filePath) {
+          if (!isSafeFilePath(args.filePath)) return { error: 'Invalid file path.' };
+          gitArgs.push('--', args.filePath);
+        }
+
+        try {
+          const raw = execFileSync('git', gitArgs, {
+            cwd: repoPath,
+            timeout: 5000,
+            stdio: ['ignore', 'pipe', 'ignore'],
+          }).toString().trim();
+
+          const commits = raw ? raw.split('\n').map(line => {
+            const [shortHash, fullHash, date, author, subject] = line.split('\t');
+            return {
+              commit: shortHash,
+              date,
+              author,
+              title: subject,
+              url: getCommitUrl(args.repoName, fullHash || shortHash),
+            };
+          }) : [];
+
+          if (onSourceFound) {
+            onSourceFound({
+              title: `${args.repoName} Git Log (${commits.length} commits)`,
+              url: getRepoUrl(args.repoName) + (getRepoUrl(args.repoName).includes('gitlab') ? '/-/commits/HEAD' : '/commits'),
+              type: 'git'
+            });
+          }
+
+          return { repository: args.repoName, commitsCount: commits.length, commits };
+        } catch (err) {
+          return { error: `Failed to read git log: ${err.message}` };
+        }
+      }
+
+      case 'get_git_commit_diff': {
+        const repoPath = findRepoPath(args.repoName);
+        if (!repoPath) return { error: `Repository '${args.repoName}' not found.` };
+        const commitRef = String(args.commitHash || 'HEAD').trim();
+        if (!/^[a-zA-Z0-9_~^.-]+$/.test(commitRef)) {
+          return { error: 'Invalid commit reference.' };
+        }
+
+        try {
+          const statRaw = execFileSync('git', ['show', '--stat', '--oneline', commitRef], {
+            cwd: repoPath,
+            timeout: 5000,
+            stdio: ['ignore', 'pipe', 'ignore'],
+          }).toString().trim();
+
+          const diffArgs = ['show', '--format=', commitRef];
+          if (args.filePath) {
+            if (!isSafeFilePath(args.filePath)) return { error: 'Invalid file path.' };
+            diffArgs.push('--', args.filePath);
+          }
+
+          const patchRaw = execFileSync('git', diffArgs, {
+            cwd: repoPath,
+            timeout: 5000,
+            stdio: ['ignore', 'pipe', 'ignore'],
+          }).toString().trim();
+
+          const patchLines = patchRaw.split('\n');
+          const maxPatchLines = 150;
+          const clampedPatch = patchLines.slice(0, maxPatchLines).join('\n') +
+            (patchLines.length > maxPatchLines ? `\n... (truncated, total ${patchLines.length} lines)` : '');
+
+          const commitUrl = getCommitUrl(args.repoName, commitRef);
+          if (onSourceFound) {
+            onSourceFound({
+              title: `Commit ${commitRef.slice(0, 7)}: ${args.repoName}`,
+              url: commitUrl,
+              type: 'commit'
+            });
+          }
+
+          return {
+            repository: args.repoName,
+            commit: commitRef,
+            url: commitUrl,
+            stat: statRaw.split('\n').slice(0, 15).join('\n'),
+            diff: clampedPatch,
+          };
+        } catch (err) {
+          return { error: `Failed to inspect commit: ${err.message}` };
+        }
+      }
+
+      case 'get_git_contributors': {
+        const repoPath = findRepoPath(args.repoName);
+        if (!repoPath) return { error: `Repository '${args.repoName}' not found.` };
+
+        try {
+          const raw = execFileSync('git', ['shortlog', '-sne', 'HEAD'], {
+            cwd: repoPath,
+            timeout: 5000,
+            stdio: ['ignore', 'pipe', 'ignore'],
+          }).toString().trim();
+
+          const contributors = raw ? raw.split('\n').map(line => {
+            const match = line.trim().match(/^(\d+)\s+(.+?)\s+<([^>]+)>$/);
+            if (match) {
+              return { commits: parseInt(match[1], 10), name: match[2], email: match[3] };
+            }
+            return { raw: line.trim() };
+          }) : [];
+
+          if (onSourceFound) {
+            onSourceFound({
+              title: `Contributors: ${args.repoName}`,
+              url: getRepoUrl(args.repoName),
+              type: 'git'
+            });
+          }
+
+          return { repository: args.repoName, totalContributors: contributors.length, contributors };
+        } catch (err) {
+          return { error: `Failed to read contributors: ${err.message}` };
+        }
+      }
+
       default:
         return { error: `Unknown tool: ${name}` };
     }
@@ -1024,6 +1207,23 @@ function calculateCost(modelId, inputTokens, outputTokens) {
   return '$0.00 (Free Tier)';
 }
 
+function getFriendlyToolName(toolName, toolArgs) {
+  switch (toolName) {
+    case 'list_projects': return 'Checking projects catalog';
+    case 'get_project_details': return `Loading details for ${toolArgs?.projectId || 'project'}`;
+    case 'get_personal_bio': return 'Loading bio and background';
+    case 'read_repo_file': return `Inspecting ${toolArgs?.filePath || 'code'}`;
+    case 'search_code': return `Searching code for "${toolArgs?.searchTerm}"`;
+    case 'list_repo_files': return `Listing files in ${toolArgs?.repoName}`;
+    case 'read_personal_context': return `Reading context: ${toolArgs?.documentName || 'documents'}`;
+    case 'get_codebase_summary': return `Inspecting architecture map for ${toolArgs?.repoName}`;
+    case 'get_git_log': return `Inspecting git log for ${toolArgs?.repoName}`;
+    case 'get_git_commit_diff': return `Inspecting commit in ${toolArgs?.repoName}`;
+    case 'get_git_contributors': return `Checking contributors for ${toolArgs?.repoName}`;
+    default: return 'Retrieving information';
+  }
+}
+
 // =====================================================================
 // OpenRouter API Runner (Luna 6, High Effort)
 // =====================================================================
@@ -1073,6 +1273,7 @@ async function handleOpenRouterChatStream(req, res, userMessages, clientLang, ac
     }
 
     let resp = null;
+    const turnStartTime = Date.now();
     try {
       resp = await fetch('https://openrouter.ai/api/v1/chat/completions', {
         method: 'POST',
@@ -1121,13 +1322,7 @@ async function handleOpenRouterChatStream(req, res, userMessages, clientLang, ac
           toolArgs = JSON.parse(tc.function.arguments || '{}');
         } catch {}
 
-        const friendlyName = toolName === 'list_projects' ? 'Checking projects catalog' :
-                             toolName === 'get_project_details' ? `Loading details for ${toolArgs.projectId || 'project'}` :
-                             toolName === 'get_personal_bio' ? 'Loading bio and background' :
-                             toolName === 'read_repo_file' ? `Inspecting ${toolArgs.filePath || 'code'}` :
-                             toolName === 'search_code' ? `Searching code for "${toolArgs.searchTerm}"` :
-                             toolName === 'list_repo_files' ? `Listing files in ${toolArgs.repoName}` : 'Retrieving information';
-
+        const friendlyName = getFriendlyToolName(toolName, toolArgs);
         res.write(`data: ${JSON.stringify({ type: 'status', message: friendlyName })}\n\n`);
 
         const toolResult = await executeTool(toolName, toolArgs, addSource);
@@ -1162,13 +1357,13 @@ async function handleOpenRouterChatStream(req, res, userMessages, clientLang, ac
 
       // Calculate generation metrics
       const durationMs = Date.now() - requestStartTime;
-      const ttftMs = firstTokenTime ? firstTokenTime - requestStartTime : durationMs;
-      const durationSec = Math.max(0.1, durationMs / 1000);
+      const ttftMs = firstTokenTime ? Math.max(10, firstTokenTime - turnStartTime) : Math.max(10, Date.now() - turnStartTime);
+      const generationDurationSec = Math.max(0.05, (Date.now() - turnStartTime) / 1000);
       const inputTokens = data?.usage?.prompt_tokens || Math.max(1, Math.round(JSON.stringify(messages).length / 3.8));
       const thinkingTokens = data?.usage?.completion_tokens_details?.reasoning_tokens || (message.reasoning ? Math.max(1, Math.round(message.reasoning.length / 3.8)) : 0);
       const outputTokens = data?.usage?.completion_tokens || Math.max(1, Math.round(fullText.length / 3.8));
       const totalTokens = inputTokens + thinkingTokens + outputTokens;
-      const tokensPerSec = Math.round(totalTokens / durationSec);
+      const tokensPerSec = Math.round((thinkingTokens + outputTokens) / generationDurationSec);
       const costFormatted = calculateCost(openrouterModel, inputTokens, outputTokens + thinkingTokens);
 
       res.write(`data: ${JSON.stringify({
@@ -1244,6 +1439,7 @@ async function handleCerebrasChatStream(req, res, userMessages, clientLang, acce
     }
 
     let resp = null;
+    const turnStartTime = Date.now();
     try {
       resp = await fetch('https://api.cerebras.ai/v1/chat/completions', {
         method: 'POST',
@@ -1283,13 +1479,7 @@ async function handleCerebrasChatStream(req, res, userMessages, clientLang, acce
           toolArgs = JSON.parse(tc.function.arguments || '{}');
         } catch {}
 
-        const friendlyName = toolName === 'list_projects' ? 'Checking projects catalog' :
-                             toolName === 'get_project_details' ? `Loading details for ${toolArgs.projectId || 'project'}` :
-                             toolName === 'get_personal_bio' ? 'Loading bio and background' :
-                             toolName === 'read_repo_file' ? `Inspecting ${toolArgs.filePath || 'code'}` :
-                             toolName === 'search_code' ? `Searching code for "${toolArgs.searchTerm}"` :
-                             toolName === 'list_repo_files' ? `Listing files in ${toolArgs.repoName}` : 'Retrieving information';
-
+        const friendlyName = getFriendlyToolName(toolName, toolArgs);
         res.write(`data: ${JSON.stringify({ type: 'status', message: friendlyName })}\n\n`);
 
         const toolResult = await executeTool(toolName, toolArgs, addSource);
@@ -1324,13 +1514,13 @@ async function handleCerebrasChatStream(req, res, userMessages, clientLang, acce
 
       // Calculate generation metrics
       const durationMs = Date.now() - requestStartTime;
-      const ttftMs = firstTokenTime ? firstTokenTime - requestStartTime : durationMs;
-      const durationSec = Math.max(0.1, durationMs / 1000);
+      const ttftMs = firstTokenTime ? Math.max(10, firstTokenTime - turnStartTime) : Math.max(10, Date.now() - turnStartTime);
+      const generationDurationSec = Math.max(0.05, (Date.now() - turnStartTime) / 1000);
       const inputTokens = data?.usage?.prompt_tokens || Math.max(1, Math.round(JSON.stringify(messages).length / 3.8));
       const thinkingTokens = data?.usage?.completion_tokens_details?.reasoning_tokens || 0;
       const outputTokens = data?.usage?.completion_tokens || Math.max(1, Math.round(fullText.length / 3.8));
       const totalTokens = inputTokens + thinkingTokens + outputTokens;
-      const tokensPerSec = Math.round(totalTokens / durationSec);
+      const tokensPerSec = Math.round((thinkingTokens + outputTokens) / generationDurationSec);
       const costFormatted = calculateCost(cerebrasModel, inputTokens, outputTokens + thinkingTokens);
 
       res.write(`data: ${JSON.stringify({
@@ -1423,6 +1613,7 @@ async function handleGeminiChatStream(req, res, userMessages, clientLang, access
 
       const { model, key, release } = lease;
       const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model.id)}:generateContent?key=${encodeURIComponent(key)}`;
+      const turnStartTime = Date.now();
 
       try {
         const resp = await fetch(apiUrl, {
@@ -1555,13 +1746,13 @@ async function handleGeminiChatStream(req, res, userMessages, clientLang, access
 
       // Calculate generation metrics
       const durationMs = Date.now() - requestStartTime;
-      const ttftMs = firstTokenTime ? firstTokenTime - requestStartTime : durationMs;
-      const durationSec = Math.max(0.1, durationMs / 1000);
+      const ttftMs = firstTokenTime ? Math.max(10, firstTokenTime - turnStartTime) : Math.max(10, Date.now() - turnStartTime);
+      const generationDurationSec = Math.max(0.05, (Date.now() - turnStartTime) / 1000);
       const inputTokens = responseData?.usageMetadata?.promptTokenCount || Math.max(1, Math.round(JSON.stringify(contents).length / 3.8));
       const thinkingTokens = responseData?.usageMetadata?.candidatesTokensDetails?.reduce((sum, d) => sum + (d.modality === 'TEXT' ? 0 : d.tokenCount || 0), 0) || 0;
       const outputTokens = responseData?.usageMetadata?.candidatesTokenCount || Math.max(1, Math.round(fullText.length / 3.8));
       const totalTokens = inputTokens + thinkingTokens + outputTokens;
-      const tokensPerSec = Math.round(totalTokens / durationSec);
+      const tokensPerSec = Math.round((thinkingTokens + outputTokens) / generationDurationSec);
       const costFormatted = calculateCost(successfulModel ? successfulModel.id : 'gemini', inputTokens, outputTokens);
 
       res.write(`data: ${JSON.stringify({
