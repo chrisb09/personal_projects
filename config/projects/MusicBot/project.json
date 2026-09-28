@@ -10,7 +10,7 @@
   "sourceType": "open-source",
   "aiUsage": "contributed",
   "aiUtilization": "no-ai",
-  "description": "I maintain a fork of JMusicBot, a self-hosted Discord music bot. It runs on JDA 6 and supports Discord voice encryption (DAVE). The fork also adds optional YouTube account login, per-channel playback status, SQLite playback logs and a Docker deployment.",
+  "description": "Maintained fork of JMusicBot, a self-hosted Discord music bot. Upgraded to JDA 6 with Discord voice encryption (DAVE) support, optional YouTube account login, per-channel playback status, SQLite playback analytics, and containerized Docker deployment.",
   "purpose": "To keep JMusicBot operational on modern Discord API standards while expanding it with database-backed statistics and native container support.",
   "technologies": [
     "Java",

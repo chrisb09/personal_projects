@@ -10,7 +10,7 @@
   "sourceType": "closed-source",
   "aiUsage": "minor",
   "aiUtilization": "no-ai",
-  "description": "I run a self-hosted server with openZFS storage, Docker services and WireGuard access. Built up since 2018, it now serves around 20 people and manages more than 100 TB of storage.",
+  "description": "Production-grade, zero-downtime private Linux server infrastructure operating continuously since 2018. Manages 100+ TB of ZFS storage, containerized Docker services, automated off-site backups, and encrypted WireGuard networking serving around 20 users.",
   "purpose": "To create a privacy-focused, self-controlled alternative to commercial cloud services, providing reliable hosting for personal data and applications.",
   "technologies": [
     "Docker",

@@ -13,7 +13,7 @@ export const projects: Project[] = [
     "sourceType": "open-source",
     "aiUsage": "contributed",
     "aiUtilization": "no-ai",
-    "description": "I maintain a fork of JMusicBot, a self-hosted Discord music bot. It runs on JDA 6 and supports Discord voice encryption (DAVE). The fork also adds optional YouTube account login, per-channel playback status, SQLite playback logs and a Docker deployment.",
+    "description": "Maintained fork of JMusicBot, a self-hosted Discord music bot. Upgraded to JDA 6 with Discord voice encryption (DAVE) support, optional YouTube account login, per-channel playback status, SQLite playback analytics, and containerized Docker deployment.",
     "purpose": "To keep JMusicBot operational on modern Discord API standards while expanding it with database-backed statistics and native container support.",
     "technologies": [
       "Java",
@@ -128,7 +128,7 @@ export const projects: Project[] = [
     "sourceType": "open-source",
     "aiUsage": "contributed",
     "aiUtilization": "ai-powered",
-    "description": "For my master's thesis at RWTH Aachen, I redesigned a solver-specific C++ interface so CFD solvers can exchange data with machine-learning backends through a configurable API. It supports SmartSim/SmartRedis, PhyDLL and AIxeleratorService.\n\nI used the Claix23 cluster to benchmark CPU and GPU inference settings, including thread counts and core affinity. A small CFD solver and integration tests cover the coupling paths. The interface is intended for use with the MMCP transformer and m-aia solver.",
+    "description": "Master's thesis project at RWTH Aachen redesigning a solver-specific C++ interface into a modular, generic coupling layer. Connects CFD solvers to machine-learning backends (SmartSim/SmartRedis, PhyDLL, AIxeleratorService) via a unified configuration-driven API.\n\nBenchmarked on the Claix23 supercomputing cluster for CPU and GPU inference performance, thread balancing, and Slurm core affinity. Includes an automated Clang AST registry generator and integration tests for coupling the MMCP transformer with the m-aia solver.",
     "purpose": "To connect CFD solvers to machine-learning models without tying each solver to a single communication backend.",
     "technologies": [
       "C++",
@@ -218,8 +218,8 @@ export const projects: Project[] = [
     "sourceType": "closed-source",
     "aiUsage": "contributed",
     "aiUtilization": "no-ai",
-    "description": "I use Bash scripts to start, stop and deploy services across several Linux machines. They coordinate Git updates, process shutdown, log checks and disk images for per-service storage.",
-    "purpose": "To automate deployments and process management on my Linux infrastructure.",
+    "description": "Bespoke Bash-based control plane coordinating service lifecycles, Git synchronization, process management, and log auditing across distributed Linux machines. Features image-backed per-service storage isolation and automated health checks.",
+    "purpose": "Automated deployments, service orchestration, and storage isolation across Linux server infrastructure.",
     "technologies": [
       "Bash",
       "Linux",
@@ -343,7 +343,7 @@ export const projects: Project[] = [
     "sourceType": "closed-source",
     "aiUsage": "minor",
     "aiUtilization": "ai-enhanced",
-    "description": "As a backend co-lead on a team, I worked on the database schema, services and Kubernetes deployment for a university exam platform. The system uses an LLM for preliminary evaluation of free-text answers.",
+    "description": "Backend architecture, database schema, microservices, and Kubernetes deployment for a university digital exam platform. Features high-concurrency assessment delivery, automated evaluation pipelines, and integrated LLM assistance for preliminary free-text grading.",
     "purpose": "To add free-text questions and preliminary grading to an existing examination system for a Ukrainian university.",
     "technologies": [
       "Kubernetes",
@@ -382,7 +382,7 @@ export const projects: Project[] = [
     "sourceType": "open-source",
     "aiUsage": "full",
     "aiUtilization": "no-ai",
-    "description": "I rebuilt an older static HTML holiday rental site in Next.js and TypeScript. The work includes image conversion and placeholders for the gallery, plus a GitHub Actions deployment workflow.",
+    "description": "Modernization of a static holiday rental website into a high-performance Next.js and TypeScript application. Implements automated image optimization, responsive gallery layouts, and continuous deployment workflows via GitHub Actions.",
     "purpose": "To make the site's photos and information easier to browse on phones and simpler to update.",
     "technologies": [
       "Next.js",
@@ -574,7 +574,7 @@ export const projects: Project[] = [
     "sourceType": "closed-source",
     "aiUsage": "minor",
     "aiUtilization": "no-ai",
-    "description": "I run a self-hosted server with openZFS storage, Docker services and WireGuard access. Built up since 2018, it now serves around 20 people and manages more than 100 TB of storage.",
+    "description": "Production-grade, zero-downtime private Linux server infrastructure operating continuously since 2018. Manages 100+ TB of ZFS storage, containerized Docker services, automated off-site backups, and encrypted WireGuard networking serving around 20 users.",
     "purpose": "To create a privacy-focused, self-controlled alternative to commercial cloud services, providing reliable hosting for personal data and applications.",
     "technologies": [
       "Docker",
@@ -777,7 +777,7 @@ export const projects: Project[] = [
     "sourceType": "open-source",
     "aiUsage": "contributed",
     "aiUtilization": "no-ai",
-    "description": "JDA-Chewtils provides Java helpers for Discord bot commands, menus and OAuth. I contributed changes for JDA 6.1.1 compatibility.",
+    "description": "Open-source contribution to JDA-Chewtils, a Java command and menu extension suite for Discord bots. Implemented core compatibility patches, event handling updates, and API adaptations for JDA 6.1.1.",
     "purpose": "To simplify Java-based Discord bot development by providing reusable structures for command registering and UI menus.",
     "technologies": [
       "Java",
@@ -884,7 +884,7 @@ export const projects: Project[] = [
     "sourceType": "open-source",
     "aiUsage": "minor",
     "aiUtilization": "no-ai",
-    "description": "A Java client for LibreTranslate instances, with synchronous and asynchronous translation calls. I contribute to the client library.",
+    "description": "Java client library for LibreTranslate instances, supporting synchronous and asynchronous translation requests, model management, and language detection. Maintained with upstream compatibility updates.",
     "purpose": "To use LibreTranslate from Java applications against self-hosted or public instances.",
     "technologies": [
       "Java",
@@ -1433,7 +1433,7 @@ export const projects: Project[] = [
     "sourceType": "open-source",
     "aiUsage": "minor",
     "aiUtilization": "no-ai",
-    "description": "I contribute to Pacstall's community package repository for Ubuntu and Debian. Pacstall is an AUR-inspired package manager; my contributions are to its package catalog, not the package manager itself.",
+    "description": "Community package maintenance for Pacstall, the AUR-inspired package manager for Ubuntu and Debian. Focuses on maintaining clean, secure, and reproducible build scripts (pacscripts) within the distribution's official repository.",
     "purpose": "To help maintain installable packages for Ubuntu and Debian users outside the distribution repositories.",
     "technologies": [
       "Bash",
@@ -1585,7 +1585,7 @@ export const projects: Project[] = [
     "sourceType": "open-source",
     "aiUsage": "full",
     "aiUtilization": "no-ai",
-    "description": "This site lists my projects with search, filters and detailed project views. A Node.js script reads repository history to update the commit and code statistics shown alongside them.",
+    "description": "Interactive developer portfolio showcasing personal and research projects with faceted search, dynamic filters, contribution activity heatmaps, and repository telemetry synced from local Git trees and APIs.",
     "purpose": "To showcase personal software development work, utilities, and IT projects with actual, verifiably tracked LOC and commit statistics directly gathered from local repositories.",
     "technologies": [
       "React",

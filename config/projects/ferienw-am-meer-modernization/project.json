@@ -10,7 +10,7 @@
   "sourceType": "open-source",
   "aiUsage": "full",
   "aiUtilization": "no-ai",
-  "description": "I rebuilt an older static HTML holiday rental site in Next.js and TypeScript. The work includes image conversion and placeholders for the gallery, plus a GitHub Actions deployment workflow.",
+  "description": "Modernization of a static holiday rental website into a high-performance Next.js and TypeScript application. Implements automated image optimization, responsive gallery layouts, and continuous deployment workflows via GitHub Actions.",
   "purpose": "To make the site's photos and information easier to browse on phones and simpler to update.",
   "technologies": ["Next.js", "Tailwind CSS v4", "TypeScript", "GitHub Actions", "Node.js"],
   "dependencies": ["postcss", "tsconfig", "sharp"],

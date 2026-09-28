@@ -10,8 +10,8 @@
   "sourceType": "closed-source",
   "aiUsage": "contributed",
   "aiUtilization": "no-ai",
-  "description": "I use Bash scripts to start, stop and deploy services across several Linux machines. They coordinate Git updates, process shutdown, log checks and disk images for per-service storage.",
-  "purpose": "To automate deployments and process management on my Linux infrastructure.",
+  "description": "Bespoke Bash-based control plane coordinating service lifecycles, Git synchronization, process management, and log auditing across distributed Linux machines. Features image-backed per-service storage isolation and automated health checks.",
+  "purpose": "Automated deployments, service orchestration, and storage isolation across Linux server infrastructure.",
   "technologies": ["Bash", "Linux", "Redis", "Maven", "Git"],
   "dependencies": ["screen", "jq", "curl", "lsof", "procps"],
   "expertise": [

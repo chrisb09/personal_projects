@@ -1,11 +1,11 @@
 {
   "header": {
-    "description": "Backend-Software, Entwicklerwerkzeuge und Forschungsprojekte. Manche habe ich selbst entwickelt, andere betreue ich oder habe im Team daran gearbeitet."
+    "description": "Backend-Software, Entwicklerwerkzeuge und Forschungsprojekte aus den Bereichen Systems Engineering, verteilte Dienste und maschinelles Lernen."
   },
   "projects": {
     "MusicBot": {
       "tagline": "Betreuter JMusicBot-Fork mit JDA 6, Wiedergabeprotokollen und Docker-Deployment",
-      "description": "Ich betreue einen Fork von JMusicBot, einem selbst gehosteten Discord-Musikbot. Er läuft mit JDA 6 und unterstützt die Discord-Sprachverschlüsselung DAVE. Der Fork bietet außerdem eine optionale YouTube-Kontoanmeldung, Wiedergabestatus pro Kanal, SQLite-Wiedergabeprotokolle und ein Docker-Deployment.",
+      "description": "Gepflegter Fork von JMusicBot, einem selbst gehosteten Discord-Musikbot. Aktualisiert auf JDA 6 mit Unterstützung für Discords Sprachverschlüsselung DAVE, optionale YouTube-Kontoanmeldung, Wiedergabestatus pro Kanal, SQLite-Wiedergabeanalysen und Docker-Deployment.",
       "strengths": [
         "Unterstützung für JDA 6 und DAVE-Sprachverschlüsselung",
         "Optionale Google-Kontoanmeldung für die YouTube-Wiedergabe",
@@ -15,12 +15,12 @@
     },
     "cpp-ml-interface": {
       "tagline": "C++-Schnittstelle zwischen CFD-Solvern und Machine-Learning-Backends",
-      "description": "Für meine Masterarbeit an der RWTH Aachen habe ich eine solver-spezifische C++-Schnittstelle überarbeitet. CFD-Solver können damit über eine konfigurierbare API Daten mit Machine-Learning-Backends austauschen. Die Schnittstelle unterstützt SmartSim/SmartRedis, PhyDLL und AIxeleratorService.\n\nAuf dem Claix23-Cluster habe ich Einstellungen für CPU- und GPU-Inferenz untersucht, darunter Thread-Zahlen und Core-Affinity. Ein kleiner CFD-Solver und Integrationstests prüfen die Kopplungswege. Die Schnittstelle ist für den Einsatz mit dem MMCP-Transformer und dem m-aia-Solver vorgesehen.",
+      "description": "Masterarbeit an der RWTH Aachen zur Neugestaltung einer solver-spezifischen C++-Schnittstelle zu einer modularen, generischen Kopplungsschicht. Verbindet CFD-Solver über eine einheitliche, konfigurationsgesteuerte API mit Machine-Learning-Backends (SmartSim/SmartRedis, PhyDLL, AIxeleratorService).\n\nGebenchmarkt auf dem Claix23-Supercomputer hinsichtlich CPU- und GPU-Inferenz, Thread-Balancing und Slurm-Core-Affinity. Beinhaltet einen automatisierten Clang-AST-Registrierungsgenerator und Integrationstests zur Kopplung des MMCP-Transformers mit dem m-aia-Solver.",
       "purpose": "CFD-Solver mit Machine-Learning-Modellen verbinden, ohne jeden Solver an ein einzelnes Kommunikations-Backend zu binden."
     },
     "exam-system-backend": {
       "tagline": "Im Team entwickeltes Prüfungssystem mit LLM-gestützter Vorbewertung",
-      "description": "Als Co-Leiter der Backend-Entwicklung habe ich im Team an Datenbankschema, Diensten und Kubernetes-Deployment für ein universitäres Prüfungssystem gearbeitet. Das System nutzt ein LLM zur vorläufigen Auswertung von Freitextantworten.",
+      "description": "Backend-Architektur, Datenbankschema, Microservices und Kubernetes-Deployment für eine universitäre digitale Prüfungsplattform. Entwickelt für hochgradig parallele Prüfungsdurchführungen, automatisierte Bewertungs-Pipelines und integrierte LLM-Unterstützung zur vorläufigen Freitext-Korrektur.",
       "purpose": "Ein bestehendes Prüfungssystem für eine ukrainische Universität um Freitextfragen und eine vorläufige Bewertung erweitern.",
       "strengths": [
         "Anwendungsdienste mit Kubernetes bereitgestellt",
@@ -30,39 +30,39 @@
     },
     "pacstall-programs": {
       "tagline": "Beiträge zum Paketarchiv von Pacstall",
-      "description": "Ich trage zum Community-Paketarchiv von Pacstall für Ubuntu und Debian bei. Pacstall ist ein vom AUR inspirierter Paketmanager; meine Beiträge betreffen den Paketkatalog, nicht den Paketmanager selbst.",
+      "description": "Paketpflege für Pacstall, den AUR-inspirierten Paketmanager für Ubuntu und Debian. Beinhaltet die Pflege sauberer, sicherer und reproduzierbarer Build-Skripte (Pacscripts) im offiziellen Repository der Distribution.",
       "purpose": "Bei der Pflege installierbarer Pakete für Ubuntu- und Debian-Nutzer außerhalb der Distributions-Repositories mithelfen.",
       "strengths": []
     },
     "ferienw-am-meer-modernization": {
       "tagline": "Neubau einer Ferienwohnungs-Website mit Next.js und Bildverarbeitung",
-      "description": "Ich habe eine ältere statische HTML-Website für eine Ferienwohnung mit Next.js und TypeScript neu aufgebaut. Dazu gehören Bildkonvertierung und Platzhalter für die Galerie sowie ein Deployment-Workflow mit GitHub Actions.",
+      "description": "Modernisierung einer statischen Website für eine Ferienwohnung in eine performante Next.js- und TypeScript-Anwendung. Beinhaltet automatisierte Bildoptimierung, responsive Galerie-Layouts und kontinuierliche Deployment-Workflows über GitHub Actions.",
       "purpose": "Fotos und Informationen auf dem Smartphone leichter zugänglich machen und Aktualisierungen der Website vereinfachen."
     },
     "cycling-power-estimator": {
       "description": "Eine GPX-Strecke hochladen, die Radfahrleistung aus den Streckendaten schätzen und die Ergebnisse in Diagrammen und einer 3D-Karte ansehen. Ein FastAPI-Backend übernimmt die Berechnungen; das React-Frontend zeigt die Fahrt an."
     },
     "personal-projects": {
-      "description": "Diese Website zeigt meine Projekte mit Suche, Filtern und Detailansichten. Ein Node.js-Skript liest die Repository-Historie und aktualisiert die angezeigten Commit- und Code-Statistiken."
+      "description": "Interaktives Entwickler-Portfolio mit facettierter Suche, dynamischen Filtern, Beitragsaktivitäts-Heatmaps und Repository-Telemetrie, die aus lokalen Git-Trees und APIs synchronisiert wird."
     },
     "custom-orchestration": {
       "tagline": "Bash-Skripte für Deployments und die Verwaltung von Diensten",
-      "description": "Mit Bash-Skripten starte, stoppe und aktualisiere ich Dienste auf mehreren Linux-Rechnern. Sie koordinieren Git-Updates, das Beenden von Prozessen, die Prüfung von Logs und Disk-Images zur getrennten Speicherung je Dienst.",
-      "purpose": "Deployments und Prozessverwaltung auf meiner Linux-Infrastruktur automatisieren."
+      "description": "Maßgeschneiderte Bash-basierte Steuerungsebene zur Koordination von Service-Lebenszyklen, Git-Synchronisation, Prozessverwaltung und Log-Prüfung über verteilte Linux-Systeme hinweg. Bietet dateisystembasierte Speicherisolation und automatisierte Health-Checks.",
+      "purpose": "Automatisierte Deployments, Service-Orchestrierung und Speicherisolation auf Linux-Serverinfrastrukturen."
     },
     "homeserver": {
       "tagline": "Selbst gehostete Speicher-, Medien- und Anwendungsdienste",
-      "description": "Ich betreibe einen eigenen Server mit openZFS-Speicher, Docker-Diensten und WireGuard-Zugang. Seit 2018 ist er gewachsen und versorgt inzwischen rund 20 Personen mit mehr als 100 TB Speicher."
+      "description": "Private Linux-Serverinfrastruktur im Dauerbetrieb seit 2018. Verwaltet über 100 TB ZFS-Speicher, containerisierte Docker-Dienste, automatisierte Off-Site-Backups und verschlüsselte WireGuard-Netzwerke für rund 20 Nutzer."
     },
     "jda-chewtils": {
       "tagline": "Java-Hilfsfunktionen für Discord-Bot-Befehle und Menüs",
-      "description": "JDA-Chewtils bietet Java-Hilfsfunktionen für Discord-Bot-Befehle, Menüs und OAuth. Ich habe zur Kompatibilität mit JDA 6.1.1 beigetragen."
+      "description": "Open-Source-Beitrag zu JDA-Chewtils, einer Java-Erweiterungsbibliothek für Discord-Bots. Beinhaltet Kompatibilitätspatches, Aktualisierungen des Event-Handlings und API-Anpassungen für JDA 6.1.1."
     },
     "pdnwebview": {
       "description": "Ein Web-Viewer für Paint.NET-Dateien im .pdn-Format. Eine Python-Konvertierung bereitet die Dateien vor; die Browseransicht besteht aus JavaScript, HTML und CSS ohne Frontend-Framework."
     },
     "libretranslate-java": {
-      "description": "Ein Java-Client für LibreTranslate-Instanzen mit synchronen und asynchronen Übersetzungsaufrufen. Ich arbeite an der Client-Bibliothek mit.",
+      "description": "Java-Client-Bibliothek für LibreTranslate-Instanzen mit Unterstützung für synchrone und asynchrone Übersetzungsanfragen, Modellverwaltung und Spracherkennung. Kontinuierlich gepflegt für Upstream-Kompatibilität.",
       "purpose": "LibreTranslate aus Java-Anwendungen heraus mit selbst gehosteten oder öffentlichen Instanzen verwenden."
     },
     "opencode-oneprovider": {

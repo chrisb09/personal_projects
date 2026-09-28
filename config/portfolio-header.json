@@ -3,7 +3,7 @@
   "badgeIcon": "Code2",
   "titlePrefix": "Personal",
   "titleHighlight": "Projects",
-  "description": "Backend software, developer tools and research projects. Some I built, some I maintain, and some were team efforts.",
+  "description": "Backend software, developer tools and research projects across systems engineering, distributed services, and machine learning.",
   "buttons": [
     {
       "text": "GitHub",

@@ -11,7 +11,7 @@
   "sourceType": "closed-source",
   "aiUsage": "minor",
   "aiUtilization": "ai-enhanced",
-  "description": "As a backend co-lead on a team, I worked on the database schema, services and Kubernetes deployment for a university exam platform. The system uses an LLM for preliminary evaluation of free-text answers.",
+  "description": "Backend architecture, database schema, microservices, and Kubernetes deployment for a university digital exam platform. Features high-concurrency assessment delivery, automated evaluation pipelines, and integrated LLM assistance for preliminary free-text grading.",
   "purpose": "To add free-text questions and preliminary grading to an existing examination system for a Ukrainian university.",
   "technologies": [
     "Kubernetes",

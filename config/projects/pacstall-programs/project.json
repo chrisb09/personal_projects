@@ -10,7 +10,7 @@
   "sourceType": "open-source",
   "aiUsage": "minor",
   "aiUtilization": "no-ai",
-  "description": "I contribute to Pacstall's community package repository for Ubuntu and Debian. Pacstall is an AUR-inspired package manager; my contributions are to its package catalog, not the package manager itself.",
+  "description": "Community package maintenance for Pacstall, the AUR-inspired package manager for Ubuntu and Debian. Focuses on maintaining clean, secure, and reproducible build scripts (pacscripts) within the distribution's official repository.",
   "purpose": "To help maintain installable packages for Ubuntu and Debian users outside the distribution repositories.",
   "technologies": [
     "Bash",

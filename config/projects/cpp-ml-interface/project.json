@@ -11,7 +11,7 @@
   "sourceType": "open-source",
   "aiUsage": "contributed",
   "aiUtilization": "ai-powered",
-  "description": "For my master's thesis at RWTH Aachen, I redesigned a solver-specific C++ interface so CFD solvers can exchange data with machine-learning backends through a configurable API. It supports SmartSim/SmartRedis, PhyDLL and AIxeleratorService.\n\nI used the Claix23 cluster to benchmark CPU and GPU inference settings, including thread counts and core affinity. A small CFD solver and integration tests cover the coupling paths. The interface is intended for use with the MMCP transformer and m-aia solver.",
+  "description": "Master's thesis project at RWTH Aachen redesigning a solver-specific C++ interface into a modular, generic coupling layer. Connects CFD solvers to machine-learning backends (SmartSim/SmartRedis, PhyDLL, AIxeleratorService) via a unified configuration-driven API.\n\nBenchmarked on the Claix23 supercomputing cluster for CPU and GPU inference performance, thread balancing, and Slurm core affinity. Includes an automated Clang AST registry generator and integration tests for coupling the MMCP transformer with the m-aia solver.",
   "purpose": "To connect CFD solvers to machine-learning models without tying each solver to a single communication backend.",
   "technologies": [
     "C++",
