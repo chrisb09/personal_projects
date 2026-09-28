@@ -2,6 +2,7 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 const url = require('url');
+const crypto = require('crypto');
 const { execFileSync } = require('child_process');
 
 // =====================================================================
@@ -2418,6 +2419,17 @@ const server = http.createServer(async (req, res) => {
         const messages = Array.isArray(parsed.messages) ? parsed.messages : [];
         const lang = parsed.lang || 'en';
         const sessionId = parsed.sessionId || null;
+
+        // Check Consent: verify either parsed.consent === true OR cookie portfolio_chat_consent=accepted
+        const cookieHeader = req.headers['cookie'] || '';
+        const hasConsentCookie = cookieHeader.includes('portfolio_chat_consent=accepted');
+        const hasExplicitConsent = Boolean(parsed.consent) || hasConsentCookie;
+
+        if (!hasExplicitConsent) {
+          res.writeHead(400, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ error: 'Consent is required to use the interactive AI assistant.' }));
+          return;
+        }
 
         // Check Geo-blocking before committing headers
         const geo = await getOrLookupIpLocation(clientIp);

@@ -212,6 +212,17 @@
     "starter_background": "What is Christian's background and education?",
     "rate_limited": "The AI assistant is temporarily rate-limited. Please wait a moment.",
     "region_blocked": "The AI assistant is not available in your region.",
-    "network_error": "Failed to connect to the assistant service. Please check your connection."
+    "network_error": "Failed to connect to the assistant service. Please check your connection.",
+    "consent_title": "Data Privacy & Abuse Prevention",
+    "consent_badge": "Privacy & Security",
+    "consent_intro": "Before starting the conversation, please confirm that you agree to the processing of session data to protect this service against abuse:",
+    "consent_ip": "Your IP address and approximate location are temporarily logged to detect spam and malicious probing.",
+    "consent_messages": "Conversation turns are stored in server-side session logs for security audits.",
+    "consent_models": "Inquiries are processed via secure third-party AI APIs (OpenRouter, Google AI Studio, Cerebras).",
+    "consent_accept": "Accept & Start Chat",
+    "consent_decline": "Decline",
+    "consent_cookie_note": "A cookie will be saved for 180 days to remember your choice.",
+    "consent_revoke": "Reset consent",
+    "consent_required": "Consent is required to use the interactive AI assistant."
   }
 }

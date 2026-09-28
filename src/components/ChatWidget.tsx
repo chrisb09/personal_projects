@@ -17,9 +17,13 @@ import {
   Clock,
   Zap,
   Bookmark,
-  ExternalLink
+  ExternalLink,
+  ShieldCheck,
+  Globe,
+  MessageSquare
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { hasChatConsent, grantChatConsent, revokeChatConsent } from '@/lib/chatConsent';
 
 // Configure marked for GitHub-Flavored Markdown
 marked.setOptions({
@@ -209,6 +213,7 @@ export const ChatWidget: React.FC = () => {
   const { t, i18n } = useTranslation('common');
   const [isOpen, setIsOpen] = useState(false);
   const [isEnlarged, setIsEnlarged] = useState(false);
+  const [consentGiven, setConsentGiven] = useState<boolean>(() => hasChatConsent());
   const [input, setInput] = useState('');
   const [messages, setMessages] = useState<ChatMessage[]>(() => {
     try {
@@ -568,7 +573,64 @@ export const ChatWidget: React.FC = () => {
 
           {/* Messages Scroll Area */}
           <div className="flex-1 overflow-y-auto p-4 space-y-4 text-sm bg-card/50">
-            {messages.length === 0 ? (
+            {!consentGiven ? (
+              <div className="flex flex-col items-center justify-center py-6 px-3 text-center max-w-md mx-auto space-y-4 animate-in fade-in zoom-in-95 duration-200">
+                <div className="relative flex items-center justify-center w-12 h-12 rounded-2xl bg-primary/10 border border-primary/20 text-primary shadow-xs">
+                  <ShieldCheck className="w-6 h-6" />
+                </div>
+                <div className="space-y-1">
+                  <span className="text-[10px] font-semibold tracking-wider uppercase text-primary bg-primary/10 px-2.5 py-0.5 rounded-full border border-primary/20">
+                    {t('chat.consent_badge', 'Privacy & Security')}
+                  </span>
+                  <h4 className="text-sm sm:text-base font-bold text-foreground pt-1.5">
+                    {t('chat.consent_title', 'Data Privacy & Abuse Prevention')}
+                  </h4>
+                  <p className="text-xs text-muted-foreground leading-relaxed pt-1">
+                    {t('chat.consent_intro', 'Before starting the conversation, please confirm that you agree to the processing of session data to protect this service against abuse:')}
+                  </p>
+                </div>
+
+                <div className="w-full text-left space-y-2.5 bg-muted/60 rounded-xl p-3.5 border border-border/70 text-xs">
+                  <div className="flex items-start gap-2.5">
+                    <Globe className="w-3.5 h-3.5 text-primary shrink-0 mt-0.5" />
+                    <span className="text-card-foreground/90 leading-relaxed">{t('chat.consent_ip')}</span>
+                  </div>
+                  <div className="flex items-start gap-2.5">
+                    <MessageSquare className="w-3.5 h-3.5 text-primary shrink-0 mt-0.5" />
+                    <span className="text-card-foreground/90 leading-relaxed">{t('chat.consent_messages')}</span>
+                  </div>
+                  <div className="flex items-start gap-2.5">
+                    <Cpu className="w-3.5 h-3.5 text-primary shrink-0 mt-0.5" />
+                    <span className="text-card-foreground/90 leading-relaxed">{t('chat.consent_models')}</span>
+                  </div>
+                </div>
+
+                <div className="w-full flex flex-col sm:flex-row gap-2 pt-1">
+                  <Button
+                    onClick={() => {
+                      grantChatConsent();
+                      setConsentGiven(true);
+                    }}
+                    className="flex-1 bg-primary text-primary-foreground text-xs font-semibold py-2.5 rounded-xl cursor-pointer hover:opacity-90 shadow-sm"
+                  >
+                    {t('chat.consent_accept', 'Accept & Start Chat')}
+                  </Button>
+                  <Button
+                    variant="outline"
+                    onClick={() => {
+                      setIsOpen(false);
+                    }}
+                    className="text-xs rounded-xl border-border hover:bg-muted text-muted-foreground hover:text-foreground cursor-pointer"
+                  >
+                    {t('chat.consent_decline', 'Decline')}
+                  </Button>
+                </div>
+
+                <p className="text-[10px] text-muted-foreground select-none">
+                  {t('chat.consent_cookie_note', 'A cookie will be saved for 180 days to remember your choice.')}
+                </p>
+              </div>
+            ) : messages.length === 0 ? (
               <div className="flex flex-col items-center justify-center text-center py-6 px-2 space-y-4 max-w-xl mx-auto">
                 <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary border border-primary/20 shadow-xs">
                   <Sparkles className="w-6 h-6" />
@@ -759,6 +821,7 @@ export const ChatWidget: React.FC = () => {
               <form
                 onSubmit={e => {
                   e.preventDefault();
+                  if (!consentGiven) return;
                   sendMessage(input);
                 }}
                 className="relative flex items-end gap-2"
@@ -766,11 +829,16 @@ export const ChatWidget: React.FC = () => {
                 <textarea
                   ref={textareaRef}
                   value={input}
+                  disabled={!consentGiven}
                   onChange={handleInputChange}
                   onKeyDown={handleKeyDown}
                   rows={1}
-                  placeholder={t('chat.placeholder', 'Ask about projects, architecture, code...')}
-                  className="flex-1 max-h-36 min-h-[44px] px-4 py-2.5 text-xs sm:text-sm rounded-xl bg-background border border-input text-foreground placeholder:text-muted-foreground focus:outline-hidden focus:ring-1 focus:ring-primary resize-none leading-relaxed"
+                  placeholder={
+                    consentGiven
+                      ? t('chat.placeholder', 'Ask about projects, architecture, code...')
+                      : t('chat.consent_required', 'Consent is required to use the interactive AI assistant.')
+                  }
+                  className="flex-1 max-h-36 min-h-[44px] px-4 py-2.5 text-xs sm:text-sm rounded-xl bg-background border border-input text-foreground placeholder:text-muted-foreground focus:outline-hidden focus:ring-1 focus:ring-primary resize-none leading-relaxed disabled:opacity-50"
                 />
 
                 {isStreaming ? (
@@ -787,7 +855,7 @@ export const ChatWidget: React.FC = () => {
                   <Button
                     type="submit"
                     size="icon"
-                    disabled={!input.trim()}
+                    disabled={!consentGiven || !input.trim()}
                     title={t('chat.send', 'Send message')}
                     className="h-[44px] w-[44px] rounded-xl shrink-0 bg-primary text-primary-foreground hover:opacity-90 disabled:opacity-40 cursor-pointer"
                   >
@@ -798,6 +866,19 @@ export const ChatWidget: React.FC = () => {
 
               <p className="mt-1.5 text-[10px] text-center text-muted-foreground select-none">
                 {t('chat.disclaimer', 'AI responses are grounded in repository code. Verify key details.')}
+                {consentGiven && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      revokeChatConsent();
+                      setConsentGiven(false);
+                      setMessages([]);
+                    }}
+                    className="underline hover:text-foreground ml-1.5 transition-colors cursor-pointer"
+                  >
+                    {t('chat.consent_revoke', 'Reset consent')}
+                  </button>
+                )}
               </p>
             </div>
           </div>

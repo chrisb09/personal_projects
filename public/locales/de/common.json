@@ -212,6 +212,17 @@
     "starter_background": "Was ist Christians Ausbildung und Hintergrund?",
     "rate_limited": "Der KI-Assistent ist vorübergehend ausgelastet. Bitte kurz warten.",
     "region_blocked": "Der KI-Assistent ist in Ihrer Region leider nicht verfügbar.",
-    "network_error": "Verbindung zum Assistenten fehlgeschlagen. Bitte Verbindung prüfen."
+    "network_error": "Verbindung zum Assistenten fehlgeschlagen. Bitte Verbindung prüfen.",
+    "consent_title": "Datenschutz & Missbrauchsprävention",
+    "consent_badge": "Sicherheit & Datenschutz",
+    "consent_intro": "Bevor Sie den Chat starten, bitten wir um Ihre Zustimmung zur Verarbeitung von Session-Daten zum Schutz vor Missbrauch:",
+    "consent_ip": "Ihre IP-Adresse und Ihr ungefährer Standort werden temporär zur Abwehr von Spam und Angriffen protokolliert.",
+    "consent_messages": "Chatnachrichten und Antworten werden in Session-Logs für Sicherheitsprüfungen gespeichert.",
+    "consent_models": "Anfragen werden über sichere KI-Schnittstellen (OpenRouter, Google AI Studio, Cerebras) verarbeitet.",
+    "consent_accept": "Zustimmen & Chat starten",
+    "consent_decline": "Ablehnen",
+    "consent_cookie_note": "Ein Cookie wird für 180 Tage gespeichert, um Ihre Auswahl zu merken.",
+    "consent_revoke": "Zustimmung widerrufen",
+    "consent_required": "Die Zustimmung ist erforderlich, um den KI-Assistenten zu nutzen."
   }
 }
