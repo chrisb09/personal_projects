@@ -50,12 +50,15 @@ export interface Project {
     url: string;
     type?: 'github' | 'gitlab' | 'gitea' | 'other';
     excludeFirstCommit?: boolean;
+    /** Private repository: still cloned for stats, but not rendered as a public link. */
+    private?: boolean;
   }[];
   mirrors?: {
     name: string;
     url: string;
     type?: 'github' | 'gitlab' | 'gitea' | 'other';
     description?: string;
+    private?: boolean;
   }[];
   modelReleases?: {
     name: string;

@@ -142,6 +142,8 @@
   },
   "modal": {
     "source_code": "Quellcode",
+    "private_repository": "Privates Repository",
+    "private_label": "privat",
     "overview": "Übersicht",
     "technical": "Technisch",
     "installation_usage": "Installation & Verwendung",

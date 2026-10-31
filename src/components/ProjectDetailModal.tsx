@@ -45,6 +45,7 @@ import {
   Code2,
   ChevronLeft,
   ChevronRight,
+  Lock,
   X
 } from 'lucide-react';
 
@@ -473,12 +474,25 @@ export function ProjectDetailModal({ project: rawProject, isOpen, onClose, onPro
                 </Button>
               )}
               {project.repos?.[0] && (
-                <Button size="sm" className="h-8 text-xs gap-2" variant="outline" asChild>
-                  <a href={project.repos[0].url} target="_blank" rel="noopener noreferrer">
-                    <Github className="w-3.5 h-3.5" />
+                project.repos[0].private ? (
+                  <Button
+                    size="sm"
+                    className="h-8 text-xs gap-2"
+                    variant="outline"
+                    disabled
+                    title={t('modal.private_repository', 'Private repository')}
+                  >
+                    <Lock className="w-3.5 h-3.5" />
                     {t('modal.source_code', 'Source code')}
-                  </a>
-                </Button>
+                  </Button>
+                ) : (
+                  <Button size="sm" className="h-8 text-xs gap-2" variant="outline" asChild>
+                    <a href={project.repos[0].url} target="_blank" rel="noopener noreferrer">
+                      <Github className="w-3.5 h-3.5" />
+                      {t('modal.source_code', 'Source code')}
+                    </a>
+                  </Button>
+                )
               )}
               {project.docsUrl && (
                 <Button size="sm" className="h-8 text-xs gap-2" variant="outline" asChild>
@@ -790,19 +804,35 @@ export function ProjectDetailModal({ project: rawProject, isOpen, onClose, onPro
                         </h4>
                         <div className="space-y-2">
                           {project.repos?.map((repo, i) => (
-                            <a 
-                              key={i}
-                              href={repo.url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="flex items-center justify-between p-2.5 rounded-lg bg-muted/30 border border-border/30 hover:bg-muted/50 hover:border-primary/30 transition-colors group"
-                            >
-                              <div className="min-w-0">
-                                <p className="font-medium text-sm text-foreground/90 group-hover:text-foreground transition-colors">{repo.name}</p>
-                                <p className="text-[10px] text-muted-foreground">{repo.type || 'git'}</p>
+                            repo.private ? (
+                              <div
+                                key={i}
+                                className="flex items-center justify-between p-2.5 rounded-lg bg-muted/20 border border-border/20"
+                                title={t('modal.private_repository', 'Private repository')}
+                              >
+                                <div className="min-w-0">
+                                  <p className="font-medium text-sm text-foreground/70">{repo.name}</p>
+                                  <p className="text-[10px] text-muted-foreground">
+                                    {repo.type || 'git'} · {t('modal.private_label', 'private')}
+                                  </p>
+                                </div>
+                                <Lock className="w-3.5 h-3.5 text-muted-foreground flex-shrink-0 ml-2" />
                               </div>
-                              <ExternalLink className="w-3.5 h-3.5 text-primary flex-shrink-0 ml-2" />
-                            </a>
+                            ) : (
+                              <a 
+                                key={i}
+                                href={repo.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex items-center justify-between p-2.5 rounded-lg bg-muted/30 border border-border/30 hover:bg-muted/50 hover:border-primary/30 transition-colors group"
+                              >
+                                <div className="min-w-0">
+                                  <p className="font-medium text-sm text-foreground/90 group-hover:text-foreground transition-colors">{repo.name}</p>
+                                  <p className="text-[10px] text-muted-foreground">{repo.type || 'git'}</p>
+                                </div>
+                                <ExternalLink className="w-3.5 h-3.5 text-primary flex-shrink-0 ml-2" />
+                              </a>
+                            )
                           ))}
                         </div>
                       </section>

@@ -142,6 +142,8 @@
   },
   "modal": {
     "source_code": "Source code",
+    "private_repository": "Private repository",
+    "private_label": "private",
     "overview": "Overview",
     "technical": "Technical",
     "installation_usage": "Installation & Usage",

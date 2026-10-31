@@ -57,7 +57,7 @@ Each project JSON file (`config/projects/<id>/project.json`) supports the follow
 | `demoUrl` | `string` | *Optional.* URL to a live website or demo page. |
 | `docsUrl` | `string` | *Optional.* Link to a documentation page. |
 | `logo` | `string` | *Optional.* Path to custom icon/logo (e.g. `/images/projects/my-logo.png`). |
-| `repos` | `object[]` | List of primary repositories. Element schema: `{ "name": "slug", "url": "https://...", "type": "github" \| "gitlab" \| "gitea" }`. |
+| `repos` | `object[]` | List of primary repositories. Element schema: `{ "name": "slug", "url": "https://...", "type": "github" \| "gitlab" \| "gitea", "private": false, "excludeFirstCommit": false }`. Set `"private": true` for authenticated-only repos: they are still cloned for stats, but rendered as a locked, non-clickable entry. |
 | `mirrors` | `object[]` | List of Git source mirrors (same schema as `repos` with an optional `"description"` field). |
 | `modelReleases` | `object[]` | List of published model weights/adapters. Schema: `{ "name": "Model name", "url": "https://huggingface.co/...", "type": "huggingface", "description": "optional description" }`. |
 | `relatedProjects` | `object[]` | List of related work. Schema: `{ "name": "Name", "relation": "Description", "url": "https://...", "projectId": "other-project-id" }`. |
