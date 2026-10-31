@@ -86,6 +86,34 @@
         { "index": 1, "relation": "Weiteres OpenCode-Provider-Plugin" }
       ]
     },
+    "green-lms": {
+      "tagline": "Ereignisgesteuertes Microservice-Lernplattform für digitale Checkpoints und Bewertungen",
+      "description": "green LMS entstand im Rahmen des Praktikums „Advanced Web Technologies: Integration of AI approaches into an LMS" (SS25) der RWTH Aachen University, durchgeführt von der Lehr- und Forschungsgruppe Learning Technologies (Informatik 9) unter der Betreuung von Dr. Volodymyr Sokol. Ein achtköpfiges Studierendenteam wurde beauftragt, den Checkpoint- und Bewertungsworkflow des bestehenden Lernmanagementsystems der Universität als Menge unabhängig deployBarer Microservices neu zu entwickeln.\n\nDas System besteht aus einem schlanken Express-Gateway und sechs Domänendiensten. Das Gateway übernimmt HTTP-Terminierung, Session- und Berechtigungsverwaltung, Payload-Validierung mit Joi sowie das Routing zu den Diensten für Checkpoints, Challenges, Fortschritt, Bewertung, Dateiverwaltung und Statistik. Die Dienste kommunizieren asynchron über NATS für Ereignisse wie Checkpoint-Veröffentlichungen und Bewertungsaktualisierungen, cachen heißen Zustand in Redis und persistieren alles in einem gemeinsamen PostgreSQL-Schema, das um Fächer, Branches, Checkpoints, Fragenslots, Fragen und Bewertungen modelliert ist.\n\nDas Frontend ist eine React-18-Single-Page-Anwendung mit rollenbasiertem Routing für Studierende und Lehrende, einem Checkpoint-Editor, der Abschnitte aus Fragepools zusammenstellt, Drag-and-Drop- und Multiple-Choice-Fragetypen sowie einer Live-Fortschrittsansicht während der Bearbeitung eines Checkpoints. Jedes Repository enthält eine GitLab-CI-Pipeline, die das Service-Image erstellt und bei Merges auf main im Kubernetes-Cluster des Kurses deployt.",
+      "purpose": "Einen monolithischen, schwer erweiterbaren Prüfungsworkflow durch kleine Dienste ersetzen, die unabhängig entwickelt, getestet und deployt werden können, und dabei Lehrenden einen strukturierten Checkpoint-Editor sowie Studierenden eine robuste Bewertungserfahrung bieten, die bei Verbindungsabbrüchen keinen Fortschritt verliert.",
+      "strengths": [
+        "Das LMS in sieben unabhängig deploybare Node.js-Dienste hinter einem einzigen Express-Gateway aufgeteilt",
+        "Checkpoints, Fragenslots, Antworttypen und fraktionale Bewertungen in einem gemeinsam genutzten PostgreSQL-Schema modelliert",
+        "NATS Pub/Sub für asynchrone Service-Ereignisse und Redis für gecachten Zustand statt synchroner Anfrageketten verwendet",
+        "Eine React-18-Lehrer- und Studierendenoberfläche mit Vite-Proxy-Schicht, Redux-Zustand und rollenbasiertem Routing entwickelt",
+        "Jeden Merge auf main über ein gemeinsames GitLab-CI-Template in den Kubernetes-Cluster des Kurses deployt"
+      ],
+      "limitations": [
+        "Die Kursinfrastruktur (Kubernetes-Cluster, verwaltetes PostgreSQL, NATS-Deployment) wurde nach dem Praktikum abgeschaltet, sodass keine Live-Demo verfügbar ist",
+        "Die Quell-Repositories sind private Kursartefakte; die GitHub-Spiegel dienen der Archivierung, Statistik und Code-Exploration",
+        "Das gemeinsame Hilfspaket ist in einer universitätsinternen npm-Registry veröffentlicht, was die Reproduktion außerhalb des Kursnetzwerks erschwert"
+      ],
+      "expertise": [
+        "Ereignisgesteuerte Microservices",
+        "REST-API-Design",
+        "Relationales Schema-Design",
+        "Kubernetes-Deployment",
+        "Kontinuierliche Integration"
+      ],
+      "relatedProjects": [
+        { "index": 0, "relation": "Praktikumsbetreuer, RWTH Aachen University" },
+        { "index": 1, "relation": "Ausrichtender Lehrstuhl des Praktikums" }
+      ]
+    },
     "opencode-kiconnect": {
       "name": "opencode-kiconnect",
       "tagline": "KI:connect-Modelle in OpenCode verwenden",
