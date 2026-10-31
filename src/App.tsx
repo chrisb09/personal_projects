@@ -2,6 +2,15 @@ import { useState, useMemo, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { projects } from '@/config/projects';
 import { useLocalizedProjects } from '@/lib/localizeProject';
+import {
+  buildProjectUrl,
+  buildUrlWithoutProject,
+  findProjectByRouteId,
+  normalizeProjectTab,
+  parseProjectRoute,
+  replaceUrlIfChanged,
+  type ProjectTab,
+} from '@/lib/projectUrl';
 import { ProjectFilters } from '@/components/ProjectFilters';
 import {
   type FilterState,
@@ -81,9 +90,17 @@ const iconMap: Record<string, React.ComponentType<any>> = {
 
 function App() {
   const { t } = useTranslation();
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalInitialTab, setModalInitialTab] = useState('overview');
+  const [initialRoute] = useState(() => (
+    typeof window !== 'undefined'
+      ? parseProjectRoute(window.location.search)
+      : { projectId: null, tab: null }
+  ));
+  const initialProject = findProjectByRouteId(projects, initialRoute.projectId);
+  const [selectedProjectId, setSelectedProjectId] = useState<string | null>(initialProject?.id ?? null);
+  const [isModalOpen, setIsModalOpen] = useState(Boolean(initialProject));
+  const [modalInitialTab, setModalInitialTab] = useState<ProjectTab>(
+    initialProject ? normalizeProjectTab(initialProject, initialRoute.tab) : 'overview'
+  );
   const [filters, setFilters] = useState<FilterState>(() => {
     if (typeof window !== 'undefined') {
       return parseFiltersFromUrl(window.location.search).filters;
@@ -98,6 +115,10 @@ function App() {
   });
   const [projectsWithStats, setProjectsWithStats] = useState<Project[]>(projects);
   const localizedProjects = useLocalizedProjects(projectsWithStats);
+  const selectedProject = useMemo(
+    () => findProjectByRouteId(localizedProjects, selectedProjectId),
+    [localizedProjects, selectedProjectId]
+  );
   const closeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const lastCloseTimeRef = useRef(0);
 
@@ -123,16 +144,39 @@ function App() {
     loadStats();
   }, []);
 
-  // Sync with browser back/forward buttons
+  // Sync filters, search, and the project popup with browser back/forward buttons.
   useEffect(() => {
     const handlePopState = () => {
       const parsed = parseFiltersFromUrl(window.location.search);
       setFilters(parsed.filters);
       setSearchQuery(parsed.search);
+
+      const { projectId, tab } = parseProjectRoute(window.location.search);
+      const project = findProjectByRouteId(localizedProjects, projectId);
+
+      if (project) {
+        if (closeTimeoutRef.current) {
+          clearTimeout(closeTimeoutRef.current);
+          closeTimeoutRef.current = null;
+        }
+        setSelectedProjectId(project.id);
+        setModalInitialTab(normalizeProjectTab(project, tab));
+        setIsModalOpen(true);
+        return;
+      }
+
+      setIsModalOpen(false);
+      if (closeTimeoutRef.current) {
+        clearTimeout(closeTimeoutRef.current);
+      }
+      closeTimeoutRef.current = setTimeout(() => {
+        setSelectedProjectId(null);
+        closeTimeoutRef.current = null;
+      }, 250);
     };
     window.addEventListener('popstate', handlePopState);
     return () => window.removeEventListener('popstate', handlePopState);
-  }, []);
+  }, [localizedProjects]);
 
   const updateFiltersAndUrl = (newFilters: FilterState) => {
     setFilters(newFilters);
@@ -208,18 +252,27 @@ function App() {
     return groups;
   }, [filteredProjects]);
 
+  const openProject = (project: Project, tab: ProjectTab, mode: 'push' | 'replace' | 'none' = 'push') => {
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current);
+      closeTimeoutRef.current = null;
+    }
+
+    setSelectedProjectId(project.id);
+    setModalInitialTab(tab);
+    setIsModalOpen(true);
+
+    if (mode !== 'none') {
+      replaceUrlIfChanged(buildProjectUrl(project.id, tab), mode);
+    }
+  };
+
   const handleProjectClick = (project: Project) => {
     // Ignore click-through immediately after closing a modal
     if (Date.now() - lastCloseTimeRef.current < 400) {
       return;
     }
-    if (closeTimeoutRef.current) {
-      clearTimeout(closeTimeoutRef.current);
-      closeTimeoutRef.current = null;
-    }
-    setSelectedProject(project);
-    setModalInitialTab('overview');
-    setIsModalOpen(true);
+    openProject(project, 'overview');
   };
 
   const handleProjectMediaClick = (project: Project) => {
@@ -227,23 +280,20 @@ function App() {
     if (Date.now() - lastCloseTimeRef.current < 400) {
       return;
     }
-    if (closeTimeoutRef.current) {
-      clearTimeout(closeTimeoutRef.current);
-      closeTimeoutRef.current = null;
-    }
-    setSelectedProject(project);
-    setModalInitialTab('media');
-    setIsModalOpen(true);
+    openProject(project, 'media');
   };
 
   const handleProjectSelect = (projectId: string) => {
-    if (closeTimeoutRef.current) {
-      clearTimeout(closeTimeoutRef.current);
-      closeTimeoutRef.current = null;
-    }
-    const project = projectsWithStats.find(p => p.id === projectId);
+    const project = findProjectByRouteId(localizedProjects, projectId);
     if (project) {
-      setSelectedProject(project);
+      openProject(project, 'overview');
+    }
+  };
+
+  const handleModalTabChange = (tab: ProjectTab) => {
+    setModalInitialTab(tab);
+    if (selectedProject) {
+      replaceUrlIfChanged(buildProjectUrl(selectedProject.id, tab));
     }
   };
 
@@ -253,8 +303,9 @@ function App() {
       clearTimeout(closeTimeoutRef.current);
     }
     setIsModalOpen(false);
+    replaceUrlIfChanged(buildUrlWithoutProject());
     closeTimeoutRef.current = setTimeout(() => {
-      setSelectedProject(null);
+      setSelectedProjectId(null);
       closeTimeoutRef.current = null;
     }, 250);
   };
@@ -858,6 +909,7 @@ function App() {
           onProjectSelect={handleProjectSelect}
           allProjects={localizedProjects}
           initialTab={modalInitialTab}
+          onTabChange={handleModalTabChange}
         />
 
         {/* AI Portfolio Assistant Floating Chatbot */}

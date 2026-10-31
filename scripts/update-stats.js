@@ -442,6 +442,17 @@ async function updateStats() {
             }
           }
 
+          // If a specific branch is configured, check it out for LOC analysis
+          if (repo.branch) {
+            try {
+              console.log(`Checking out branch '${repo.branch}' for ${repo.url}...`);
+              runGit(`git checkout -B "${repo.branch}" "origin/${repo.branch}"`, repoPath);
+              runGit(`git reset --hard "origin/${repo.branch}"`, repoPath);
+            } catch (branchErr) {
+              console.warn(`Failed to check out branch '${repo.branch}' for ${repo.url}: ${branchErr.message}`);
+            }
+          }
+
           // Check current commit hash
           const currentCommitHash = runGit('git rev-parse HEAD', repoPath).toString().trim();
           

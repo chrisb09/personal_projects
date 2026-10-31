@@ -23,6 +23,7 @@ import {
   MessageSquare
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { ImageLightbox } from '@/components/ImageLightbox';
 import { hasChatConsent, grantChatConsent, revokeChatConsent } from '@/lib/chatConsent';
 
 // Configure marked for GitHub-Flavored Markdown
@@ -127,8 +128,141 @@ function sampleRandomQuestions(lang: string, count = 4, exclude: string[] = []):
   return shuffled.slice(0, count);
 }
 
+const HTML_ESCAPES: Record<string, string> = {
+  '&': '&amp;',
+  '<': '&lt;',
+  '>': '&gt;',
+  '"': '&quot;',
+  "'": '&#39;',
+};
+
+function escapeHtml(value: string): string {
+  return String(value).replace(/[&<>"']/g, character => HTML_ESCAPES[character] || character);
+}
+
+function sanitizeImageUrl(rawUrl: string | null | undefined): string | null {
+  if (!rawUrl) return null;
+  const candidate = String(rawUrl).trim();
+  if (!candidate) return null;
+
+  if (candidate.startsWith('/')) {
+    if (candidate.startsWith('//')) return null;
+    try {
+      const parsed = new URL(candidate, window.location.origin);
+      if (parsed.origin !== window.location.origin) return null;
+      if (/%(?:2e|2f|5c)/i.test(parsed.pathname)) return null;
+      if (parsed.pathname.startsWith('/images/') || parsed.pathname === '/api/chat/repo-image') {
+        return parsed.pathname + parsed.search + parsed.hash;
+      }
+    } catch {
+      // Ignore invalid URLs
+    }
+    return null;
+  }
+
+  try {
+    const parsed = new URL(candidate);
+    if (parsed.protocol === 'https:' || parsed.protocol === 'http:') {
+      return parsed.href;
+    }
+  } catch {
+    // Ignore invalid URLs
+  }
+  return null;
+}
+
+function normalizeHostedImageUrl(imageUrl: string): string {
+  try {
+    const parsed = new URL(imageUrl);
+
+    if (parsed.hostname === 'github.com') {
+      const match = parsed.pathname.match(/^\/([^/]+)\/([^/]+)\/blob\/([^/]+)\/(.+)$/);
+      if (match) {
+        return `https://raw.githubusercontent.com/${match[1]}/${match[2]}/${match[3]}/${match[4]}`;
+      }
+    }
+
+    if (parsed.hostname === 'gitlab.com') {
+      const match = parsed.pathname.match(/^\/(.+?)\/-\/blob\/([^/]+)\/(.+)$/);
+      if (match) {
+        return `https://gitlab.com/${match[1]}/-/raw/${match[2]}/${match[3]}`;
+      }
+    }
+  } catch {
+    // Ignore invalid hosted image URLs
+  }
+  return imageUrl;
+}
+
+function getBranchFallbackImageUrl(imageUrl: string): string | null {
+  try {
+    const parsed = new URL(imageUrl);
+
+    if (parsed.hostname === 'raw.githubusercontent.com') {
+      const parts = parsed.pathname.split('/').filter(Boolean);
+      if (parts.length < 4) return null;
+      const ref = parts[2];
+      if (ref === 'main') parts[2] = 'master';
+      else if (ref === 'master') parts[2] = 'main';
+      else return null;
+      parsed.pathname = `/${parts.join('/')}`;
+      return parsed.href;
+    }
+
+    if (parsed.hostname === 'gitlab.com') {
+      const match = parsed.pathname.match(/^(\/.+?\/-\/raw\/)([^/]+)\/(.+)$/);
+      if (!match) return null;
+      const ref = match[2] === 'main' ? 'master' : match[2] === 'master' ? 'main' : null;
+      if (!ref) return null;
+      return `https://gitlab.com${match[1]}${ref}/${match[3]}`;
+    }
+  } catch {
+    // Ignore invalid fallback URLs
+  }
+  return null;
+}
+
+function handleMarkdownImageError(image: HTMLImageElement) {
+  if (image.dataset.failed === 'true') return;
+
+  if (image.dataset.branchFallback !== 'true') {
+    const fallbackUrl = getBranchFallbackImageUrl(image.src);
+    if (fallbackUrl) {
+      image.dataset.branchFallback = 'true';
+      image.src = fallbackUrl;
+      return;
+    }
+  }
+
+  image.dataset.failed = 'true';
+  image.classList.add('opacity-40');
+  image.title = 'Image could not be loaded';
+}
+
+function sanitizeLinkUrl(rawUrl: string | null | undefined): string | null {
+  if (!rawUrl) return null;
+  const candidate = String(rawUrl).trim();
+  if (!candidate) return null;
+  if (candidate.startsWith('#') || candidate.startsWith('/')) return candidate;
+
+  try {
+    const parsed = new URL(candidate, window.location.origin);
+    if (parsed.protocol === 'https:' || parsed.protocol === 'http:' || parsed.protocol === 'mailto:') {
+      return parsed.href;
+    }
+  } catch {
+    // Ignore invalid URLs
+  }
+  return null;
+}
+
+interface MarkdownContentProps {
+  content: string;
+  onImageClick?: (image: { src: string; alt: string }) => void;
+}
+
 // Markdown & LaTeX Math Formatter using marked and katex
-function MarkdownContent({ content }: { content: string }) {
+function MarkdownContent({ content, onImageClick }: MarkdownContentProps) {
   const html = useMemo(() => {
     try {
       // 1. Pre-render block math: $$ ... $$
@@ -146,7 +280,7 @@ function MarkdownContent({ content }: { content: string }) {
 
       // 2. Pre-render inline math: $ ... $
       const mathInlines: string[] = [];
-      tokenized = tokenized.replace(/(?<!\$)\$([^\$\n]+?)\$(?!\$)/g, (match, math) => {
+      tokenized = tokenized.replace(/(?<!\$)\$([^$\n]+?)\$(?!\$)/g, (match, math) => {
         // Avoid replacing standalone currency like $50 or $100.00
         if (/^\d+(?:\.\d+)?$/.test(math.trim())) return match;
         try {
@@ -159,8 +293,32 @@ function MarkdownContent({ content }: { content: string }) {
         }
       });
 
-      // 3. Parse markdown via marked
-      let parsed = marked.parse(tokenized, { async: false, breaks: true, gfm: true }) as string;
+      // 3. Parse markdown via marked with a restricted renderer
+      const renderer = new marked.Renderer();
+
+      renderer.image = ({ href, title, text }) => {
+        const sanitizedSrc = sanitizeImageUrl(href);
+        if (!sanitizedSrc) return escapeHtml(text || 'Image');
+
+        const src = normalizeHostedImageUrl(sanitizedSrc);
+        const alt = escapeHtml(text || 'Image');
+        const titleAttribute = title ? ` title="${escapeHtml(title)}"` : '';
+        return `<img src="${escapeHtml(src)}" alt="${alt}"${titleAttribute} loading="lazy" decoding="async" referrerpolicy="no-referrer" />`;
+      };
+
+      renderer.html = ({ text }) => escapeHtml(text);
+
+      renderer.link = ({ href, title, text }) => {
+        const safeHref = sanitizeLinkUrl(href);
+        if (!safeHref) return text;
+
+        const titleAttribute = title ? ` title="${escapeHtml(title)}"` : '';
+        const isExternal = /^https?:\/\//i.test(safeHref);
+        const targetAttribute = isExternal ? ' target="_blank" rel="noopener noreferrer"' : '';
+        return `<a href="${escapeHtml(safeHref)}"${titleAttribute}${targetAttribute}>${text}</a>`;
+      };
+
+      let parsed = marked.parse(tokenized, { async: false, breaks: true, gfm: true, renderer }) as string;
 
       // 4. Re-inject rendered math
       mathBlocks.forEach((rendered, i) => {
@@ -176,12 +334,31 @@ function MarkdownContent({ content }: { content: string }) {
 
       return parsed;
     } catch {
-      return content;
+      return `<p class="whitespace-pre-wrap">${escapeHtml(content)}</p>`;
     }
   }, [content]);
 
+  const dangerousHtml = useMemo(() => ({ __html: html }), [html]);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const images = Array.from(container.querySelectorAll('img'));
+    const cleanups = images.map(image => {
+      const handleError = () => handleMarkdownImageError(image);
+      image.addEventListener('error', handleError);
+      if (image.complete && image.naturalWidth === 0) handleError();
+      return () => image.removeEventListener('error', handleError);
+    });
+
+    return () => cleanups.forEach(cleanup => cleanup());
+  }, [html]);
+
   return (
     <div
+      ref={containerRef}
       className="text-xs sm:text-sm leading-relaxed text-card-foreground break-words
         [&_h1]:text-base [&_h1]:font-bold [&_h1]:mt-3.5 [&_h1]:mb-1.5 [&_h1]:text-indigo-500 dark:[&_h1]:text-indigo-400 [&_h1]:tracking-tight
         [&_h2]:text-sm sm:[&_h2]:text-base [&_h2]:font-bold [&_h2]:mt-3 [&_h2]:mb-1 [&_h2]:text-indigo-500 dark:[&_h2]:text-indigo-400
@@ -199,12 +376,22 @@ function MarkdownContent({ content }: { content: string }) {
         [&_a]:text-cyan-600 dark:[&_a]:text-cyan-400 [&_a]:underline [&_a]:underline-offset-2 [&_a]:font-medium hover:[&_a]:text-cyan-500 dark:hover:[&_a]:text-cyan-300 transition-colors
         [&_hr]:my-3 [&_hr]:border-border/60
         [&_blockquote]:border-l-2 [&_blockquote]:border-primary/50 [&_blockquote]:pl-3 [&_blockquote]:italic [&_blockquote]:text-muted-foreground [&_blockquote]:my-2
-        [&_table]:w-full [&_table]:my-3 [&_table]:border-collapse [&_table]:rounded-xl [&_table]:overflow-hidden [&_table]:border [&_table]:border-border [&_table]:text-xs [&_table]:shadow-2xs
+        [&_table]:w-full [&_table]:table-fixed [&_table]:my-3 [&_table]:border-collapse [&_table]:rounded-xl [&_table]:overflow-hidden [&_table]:border [&_table]:border-border [&_table]:text-xs [&_table]:shadow-2xs
         [&_thead]:bg-muted/80 [&_thead]:border-b [&_thead]:border-border
-        [&_th]:px-3.5 [&_th]:py-2 [&_th]:font-semibold [&_th]:text-foreground [&_th]:text-left
+        [&_th]:px-3.5 [&_th]:py-2 [&_th]:font-semibold [&_th]:text-foreground [&_th]:text-left [&_th]:break-words
         [&_tbody_tr]:border-b [&_tbody_tr]:border-border/40 [&_tbody_tr]:transition-colors hover:[&_tbody_tr]:bg-muted/30
-        [&_td]:px-3.5 [&_td]:py-2 [&_td]:text-card-foreground"
-      dangerouslySetInnerHTML={{ __html: html }}
+        [&_td]:px-3.5 [&_td]:py-2 [&_td]:text-card-foreground [&_td]:align-middle [&_td]:break-words
+        [&_img]:mx-auto [&_img]:my-2.5 [&_img]:max-h-72 [&_img]:max-w-full [&_img]:cursor-zoom-in [&_img]:rounded-xl [&_img]:border [&_img]:border-border/60 [&_img]:bg-muted/30 [&_img]:object-contain [&_img]:shadow-sm [&_img]:transition-opacity
+        [&_td_img]:my-0 [&_td_img]:max-h-24 [&_td_img]:w-auto [&_td_img]:rounded-md"
+      onClick={(event) => {
+        const target = event.target;
+        if (!(target instanceof HTMLImageElement) || !onImageClick) return;
+        if (target.dataset.failed === 'true') return;
+        event.preventDefault();
+        event.stopPropagation();
+        onImageClick({ src: target.currentSrc || target.src, alt: target.alt });
+      }}
+      dangerouslySetInnerHTML={dangerousHtml}
     />
   );
 }
@@ -226,6 +413,7 @@ export const ChatWidget: React.FC = () => {
   const [isStreaming, setIsStreaming] = useState(false);
   const [toolStatus, setToolStatus] = useState<string | null>(null);
   const [errorBanner, setErrorBanner] = useState<string | null>(null);
+  const [lightboxImage, setLightboxImage] = useState<{ src: string; alt: string } | null>(null);
 
   // Dynamic starter questions selection
   const [activeStarters, setActiveStarters] = useState<string[]>(() => 
@@ -269,7 +457,8 @@ export const ChatWidget: React.FC = () => {
   // Escape key closes enlarge or closes chat
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && isOpen) {
+      if (e.key === 'Escape' && isOpen && !lightboxImage) {
+        setLightboxImage(null);
         if (isEnlarged) {
           setIsEnlarged(false);
         } else {
@@ -279,7 +468,7 @@ export const ChatWidget: React.FC = () => {
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isOpen, isEnlarged]);
+  }, [isOpen, isEnlarged, lightboxImage]);
 
   // Adjust textarea height dynamically
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -478,7 +667,10 @@ export const ChatWidget: React.FC = () => {
       {/* Floating Toggle Button */}
       {!isOpen && (
         <button
-          onClick={() => setIsOpen(true)}
+          onClick={() => {
+            setLightboxImage(null);
+            setIsOpen(true);
+          }}
           aria-label={t('chat.button_aria', 'Open AI portfolio assistant')}
           className="fixed bottom-6 right-6 z-40 flex items-center gap-2.5 px-4 py-3 rounded-full bg-card hover:bg-accent text-card-foreground border border-border shadow-xl hover:shadow-2xl transition-all duration-200 group active:scale-95 cursor-pointer"
         >
@@ -560,6 +752,7 @@ export const ChatWidget: React.FC = () => {
                 variant="ghost"
                 size="icon"
                 onClick={() => {
+                  setLightboxImage(null);
                   setIsEnlarged(false);
                   setIsOpen(false);
                 }}
@@ -572,7 +765,7 @@ export const ChatWidget: React.FC = () => {
           </div>
 
           {/* Messages Scroll Area */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-4 text-sm bg-card/50">
+          <div className="flex-1 overflow-y-auto p-4 space-y-4 text-sm bg-card/50 [scrollbar-gutter:stable]">
             {!consentGiven ? (
               <div className="flex flex-col items-center justify-center py-6 px-3 text-center max-w-md mx-auto space-y-4 animate-in fade-in zoom-in-95 duration-200">
                 <div className="relative flex items-center justify-center w-12 h-12 rounded-2xl bg-primary/10 border border-primary/20 text-primary shadow-xs">
@@ -618,6 +811,7 @@ export const ChatWidget: React.FC = () => {
                   <Button
                     variant="outline"
                     onClick={() => {
+                      setLightboxImage(null);
                       setIsOpen(false);
                     }}
                     className="text-xs rounded-xl border-border hover:bg-muted text-muted-foreground hover:text-foreground cursor-pointer"
@@ -698,7 +892,7 @@ export const ChatWidget: React.FC = () => {
                         <>
                           {msg.content ? (
                             <>
-                              <MarkdownContent content={msg.content} />
+                              <MarkdownContent content={msg.content} onImageClick={setLightboxImage} />
                               {isStreaming && msg.id === messages[messages.length - 1]?.id && (
                                 <span className="inline-block w-1.5 h-3.5 bg-primary/80 align-middle ml-1 animate-pulse" />
                               )}
@@ -884,6 +1078,12 @@ export const ChatWidget: React.FC = () => {
           </div>
         </div>
       )}
+
+      <ImageLightbox
+        src={isOpen ? lightboxImage?.src ?? null : null}
+        alt={lightboxImage?.alt}
+        onClose={() => setLightboxImage(null)}
+      />
     </>
   );
 };

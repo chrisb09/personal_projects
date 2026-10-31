@@ -52,6 +52,8 @@ export interface Project {
     excludeFirstCommit?: boolean;
     /** Private repository: still cloned for stats, but not rendered as a public link. */
     private?: boolean;
+    /** Override the branch to check out before running LOC analysis (defaults to origin/HEAD). */
+    branch?: string;
   }[];
   mirrors?: {
     name: string;

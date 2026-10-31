@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocalizedProject } from '@/lib/localizeProject';
+import { isProjectTab, type ProjectTab } from '@/lib/projectUrl';
 import type { Project } from '@/types/project';
 import { 
   categoryLabels, 
@@ -55,7 +56,8 @@ interface ProjectDetailModalProps {
   onClose: () => void;
   onProjectSelect?: (projectId: string) => void;
   allProjects?: Project[];
-  initialTab?: string;
+  initialTab?: ProjectTab;
+  onTabChange?: (tab: ProjectTab) => void;
 }
 
 // Simple donut chart component for LOC
@@ -351,17 +353,23 @@ function ScreenshotGallery({ screenshots, projectName }: { screenshots: string[]
   );
 }
 
-export function ProjectDetailModal({ project: rawProject, isOpen, onClose, onProjectSelect, allProjects = [], initialTab = 'overview' }: ProjectDetailModalProps) {
+export function ProjectDetailModal({ project: rawProject, isOpen, onClose, onProjectSelect, allProjects = [], initialTab = 'overview', onTabChange }: ProjectDetailModalProps) {
   const localized = useLocalizedProject(rawProject);
   const project = localized || rawProject;
   const { t } = useTranslation();
-  const [activeTab, setActiveTab] = useState(initialTab);
+  const [activeTab, setActiveTab] = useState<ProjectTab>(initialTab);
 
   useEffect(() => {
     if (isOpen) {
       setActiveTab(initialTab);
     }
   }, [project, isOpen, initialTab]);
+
+  const handleTabChange = (value: string) => {
+    if (!isProjectTab(value)) return;
+    setActiveTab(value);
+    onTabChange?.(value);
+  };
 
   if (!project) return null;
 
@@ -506,7 +514,7 @@ export function ProjectDetailModal({ project: rawProject, isOpen, onClose, onPro
           </div>
 
           {/* Content Tabs */}
-          <Tabs value={activeTab} onValueChange={setActiveTab} className="flex-1 flex flex-col min-h-0 gap-0">
+          <Tabs value={activeTab} onValueChange={handleTabChange} className="flex-1 flex flex-col min-h-0 gap-0">
             <div className="px-5 sm:px-8 border-b border-border shrink-0 overflow-x-auto">
               <TabsList className="w-max min-w-full justify-start h-auto bg-transparent p-0 gap-5 sm:gap-8 flex-nowrap">
                 <TabsTrigger 

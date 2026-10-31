@@ -10,6 +10,18 @@ const { execFileSync } = require('child_process');
 // =====================================================================
 const PORT = parseInt(process.env.CHAT_PORT || '3001', 10);
 const HOST = process.env.CHAT_HOST || '0.0.0.0';
+const PORTFOLIO_BASE_URL = 'https://projects.christian-f-brinkmann.de/';
+
+function getProjectPortfolioUrl(projectId, tab) {
+  try {
+    const url = new URL(PORTFOLIO_BASE_URL);
+    url.searchParams.set('project', String(projectId));
+    if (tab) url.searchParams.set('tab', tab);
+    return url.toString();
+  } catch {
+    return PORTFOLIO_BASE_URL;
+  }
+}
 
 const possibleEnvPaths = [
   process.env.AI_ENV_PATH,
@@ -816,6 +828,141 @@ function isSafeFilePath(relPath) {
   return true;
 }
 
+// =====================================================================
+// Image Helpers
+// =====================================================================
+const IMAGE_EXTENSIONS = ['.png', '.jpg', '.jpeg', '.gif', '.webp', '.avif', '.bmp', '.tif', '.tiff', '.svg'];
+const PROJECT_IMAGE_EXTENSIONS = ['.png', '.jpg', '.jpeg', '.gif', '.webp', '.svg'];
+const IMAGE_MIME_TYPES = {
+  '.png': 'image/png',
+  '.jpg': 'image/jpeg',
+  '.jpeg': 'image/jpeg',
+  '.gif': 'image/gif',
+  '.webp': 'image/webp',
+  '.avif': 'image/avif',
+  '.bmp': 'image/bmp',
+  '.tif': 'image/tiff',
+  '.tiff': 'image/tiff',
+  '.svg': 'image/svg+xml',
+};
+const MAX_IMAGE_BYTES = 10 * 1024 * 1024;
+
+function isImagePath(filePath) {
+  if (!filePath || typeof filePath !== 'string') return false;
+  return IMAGE_EXTENSIONS.includes(path.extname(filePath).toLowerCase());
+}
+
+function normalizeRelativePath(relPath) {
+  return String(relPath || '').replace(/\\/g, '/');
+}
+
+function isSafeImagePath(relPath) {
+  if (!relPath || typeof relPath !== 'string' || relPath.includes('\0')) return false;
+  const normalized = normalizeRelativePath(relPath);
+  if (!normalized || normalized.includes('..') || path.isAbsolute(normalized) || normalized.startsWith('/')) return false;
+  const segments = normalized.split('/');
+  if (segments.some(segment => !segment || segment.startsWith('.'))) return false;
+  return isImagePath(normalized);
+}
+
+function isSafeRelativePath(relPath) {
+  if (!relPath || typeof relPath !== 'string' || relPath.includes('\0')) return false;
+  const normalized = normalizeRelativePath(relPath);
+  if (!normalized || normalized.includes('..') || path.isAbsolute(normalized) || normalized.startsWith('/')) return false;
+  return normalized.split('/').every(segment => segment && !segment.startsWith('.'));
+}
+
+function imageAltFromPath(imagePath, fallback = 'Image') {
+  try {
+    const clean = String(imagePath || '').split('?')[0];
+    const base = clean.split('/').filter(Boolean).pop() || '';
+    const decoded = decodeURIComponent(base);
+    const withoutExtension = decoded.replace(/\.[^.]+$/, '');
+    const alt = withoutExtension.replace(/[_-]+/g, ' ').replace(/[\[\]\r\n]+/g, ' ').trim();
+    return alt || fallback;
+  } catch {
+    return fallback;
+  }
+}
+
+function isPathInside(parentPath, childPath) {
+  try {
+    const realParent = fs.realpathSync(parentPath);
+    const realChild = fs.realpathSync(childPath);
+    return realChild === realParent || realChild.startsWith(realParent + path.sep);
+  } catch {
+    return false;
+  }
+}
+
+function getRepoImageUrl(repoName, relPath) {
+  const cleanRepo = String(repoName || '').trim();
+  const cleanPath = normalizeRelativePath(relPath).replace(/^\/+/, '');
+  return `/api/chat/repo-image?repo=${encodeURIComponent(cleanRepo)}&path=${encodeURIComponent(cleanPath)}`;
+}
+
+function getProjectImageAssets(projectDir, folderName, projectData = {}) {
+  const screenshots = [];
+  const seen = new Set();
+
+  const addScreenshot = (imageUrl) => {
+    if (typeof imageUrl !== 'string') return;
+    const clean = imageUrl.trim();
+    if (!clean || seen.has(clean)) return;
+    seen.add(clean);
+    screenshots.push(clean);
+  };
+
+  const mediaDir = path.join(projectDir, 'media');
+  if (fs.existsSync(mediaDir)) {
+    try {
+      const mediaFiles = fs.readdirSync(mediaDir, { withFileTypes: true })
+        .filter(ent => ent.isFile() && PROJECT_IMAGE_EXTENSIONS.includes(path.extname(ent.name).toLowerCase()))
+        .map(ent => ent.name)
+        .sort();
+
+      for (const file of mediaFiles) {
+        addScreenshot(`/images/projects/${encodeURIComponent(folderName)}/${encodeURIComponent(file)}`);
+      }
+    } catch {
+      // Ignore unreadable media directories
+    }
+  }
+
+  if (Array.isArray(projectData.screenshots)) {
+    for (const screenshot of projectData.screenshots) addScreenshot(screenshot);
+  }
+
+  let logo = null;
+  for (const ext of PROJECT_IMAGE_EXTENSIONS) {
+    const logoFile = path.join(projectDir, `logo${ext}`);
+    if (fs.existsSync(logoFile) && fs.statSync(logoFile).isFile()) {
+      logo = `/images/projects/${encodeURIComponent(folderName)}/logo${ext}`;
+      break;
+    }
+  }
+  if (!logo && typeof projectData.logo === 'string') {
+    logo = projectData.logo.trim() || null;
+  }
+
+  const projectLabel = String(projectData.name || folderName).replace(/[\[\]\r\n]+/g, ' ').trim() || folderName;
+  const limitedScreenshots = screenshots.slice(0, 12);
+  const readyToUse = [];
+  if (logo) {
+    readyToUse.push(`![${projectLabel} logo](${logo})`);
+  }
+  for (const screenshot of limitedScreenshots.slice(0, 4)) {
+    readyToUse.push(`![${imageAltFromPath(screenshot, `${projectLabel} screenshot`)}](${screenshot})`);
+  }
+
+  return {
+    logo,
+    screenshots: limitedScreenshots,
+    readyToUse,
+    note: 'Use these exact URLs in Markdown image syntax; choose only the most relevant images.',
+  };
+}
+
 // Cached Projects Data
 let cachedProjectsSummary = null;
 function getProjectsSummary() {
@@ -842,6 +989,7 @@ function getProjectsSummary() {
               techStack: (data.techStack || []).slice(0, 15),
               status: data.status || '',
               aiUsage: data.aiUsage || '',
+              portfolioUrl: getProjectPortfolioUrl(data.id || ent.name),
             });
           } catch {
             // Ignore malformed files
@@ -868,7 +1016,7 @@ const TOOL_DECLARATIONS = [
   },
   {
     name: 'get_project_details',
-    description: 'Retrieves complete metadata for a specific project (purpose, strengths, limitations, expertise gained, roadmap, repo links).',
+    description: 'Retrieves complete metadata for a specific project (purpose, strengths, limitations, expertise gained, roadmap, repo links). Also returns the project logo and screenshot URLs for display in the chat.',
     parameters: {
       type: 'object',
       properties: {
@@ -887,7 +1035,7 @@ const TOOL_DECLARATIONS = [
   },
   {
     name: 'list_repo_files',
-    description: 'Lists files and folders inside a project git repository up to 2 levels deep.',
+    description: 'Lists files and folders inside a project git repository up to 2 levels deep. Image entries include a chat-renderable imageUrl and Markdown snippet.',
     parameters: {
       type: 'object',
       properties: {
@@ -898,8 +1046,22 @@ const TOOL_DECLARATIONS = [
     }
   },
   {
+    name: 'find_repo_images',
+    description: 'Finds image assets (screenshots, diagrams, schematics, logos) inside a project repository and returns chat-renderable URLs and Markdown snippets. Use this when the user asks to see visuals or when an image would materially help the answer.',
+    parameters: {
+      type: 'object',
+      properties: {
+        repoName: { type: 'string', description: 'Name of the repository (e.g. "CPP-ML-Interface", "cycling_power_estimator", "map-color-convert")' },
+        subDirectory: { type: 'string', description: 'Optional relative sub-directory to search within.' },
+        query: { type: 'string', description: 'Optional filename/path keyword such as "schematic", "diagram", or "screenshot".' },
+        maxResults: { type: 'integer', description: 'Maximum number of images to return (default 8, max 12).' }
+      },
+      required: ['repoName']
+    }
+  },
+  {
     name: 'read_repo_file',
-    description: 'Reads text content (e.g. README.md, CMakeLists.txt, source code, config files) from a project repository. Output is capped at 150 lines.',
+    description: 'Reads text content (e.g. README.md, CMakeLists.txt, source code, config files) from a project repository. Output is capped at 150 lines. Image files return a chat-renderable URL instead of binary content.',
     parameters: {
       type: 'object',
       properties: {
@@ -1155,33 +1317,52 @@ async function executeTool(name, args, onSourceFound) {
 
       case 'get_project_details': {
         const projectId = (args.projectId || '').trim();
-        const pFile = path.join(configDir, 'projects', projectId, 'project.json');
-        let data = null;
-        if (!fs.existsSync(pFile)) {
-          // Try case-insensitive lookup
-          const pDir = path.join(configDir, 'projects');
-          if (fs.existsSync(pDir)) {
-            const list = fs.readdirSync(pDir);
-            const found = list.find(d => d.toLowerCase() === projectId.toLowerCase());
-            if (found) {
-              const altFile = path.join(pDir, found, 'project.json');
-              data = JSON.parse(fs.readFileSync(altFile, 'utf8'));
-            }
-          }
-        } else {
-          data = JSON.parse(fs.readFileSync(pFile, 'utf8'));
-        }
-
-        if (!data) {
+        if (!projectId || projectId.includes('..') || /[\\/]/.test(projectId)) {
           return { error: `Project '${projectId}' not found.` };
         }
 
-        if (onSourceFound) {
-          const sourceUrl = data.repos?.[0]?.url || getRepoUrl(projectId);
-          onSourceFound({ title: data.name || projectId, url: sourceUrl, type: 'project' });
+        const pDir = path.join(configDir, 'projects');
+        let folderName = null;
+        let data = null;
+
+        const directFile = path.join(pDir, projectId, 'project.json');
+        if (fs.existsSync(directFile)) {
+          folderName = projectId;
+          data = JSON.parse(fs.readFileSync(directFile, 'utf8'));
+        } else if (fs.existsSync(pDir)) {
+          // Try case-insensitive lookup
+          const list = fs.readdirSync(pDir);
+          const found = list.find(d => d.toLowerCase() === projectId.toLowerCase());
+          if (found) {
+            folderName = found;
+            const altFile = path.join(pDir, found, 'project.json');
+            if (fs.existsSync(altFile)) {
+              data = JSON.parse(fs.readFileSync(altFile, 'utf8'));
+            }
+          }
         }
 
-        return data;
+        if (!data || !folderName) {
+          return { error: `Project '${projectId}' not found.` };
+        }
+
+        const canonicalProjectId = data.id || folderName;
+        if (onSourceFound) {
+          onSourceFound({
+            title: data.name || canonicalProjectId,
+            url: getProjectPortfolioUrl(canonicalProjectId),
+            type: 'project',
+          });
+        }
+
+        const projectImages = getProjectImageAssets(path.join(pDir, folderName), folderName, data);
+        return {
+          ...data,
+          portfolioUrl: getProjectPortfolioUrl(canonicalProjectId),
+          logo: projectImages.logo,
+          screenshots: projectImages.screenshots,
+          images: projectImages,
+        };
       }
 
       case 'get_personal_bio': {
@@ -1208,6 +1389,9 @@ async function executeTool(name, args, onSourceFound) {
         if (!fs.existsSync(targetDir) || !fs.statSync(targetDir).isDirectory()) {
           return { error: 'Target directory does not exist.' };
         }
+        if (!isPathInside(repoPath, targetDir)) {
+          return { error: 'Target directory is outside the repository.' };
+        }
 
         if (onSourceFound) {
           onSourceFound({ title: `Repo: ${args.repoName}`, url: getRepoUrl(args.repoName), type: 'repository' });
@@ -1220,22 +1404,168 @@ async function executeTool(name, args, onSourceFound) {
             continue;
           }
           if (results.length >= 50) break;
-          results.push({
+
+          const entry = {
             name: ent.name,
             type: ent.isDirectory() ? 'directory' : 'file',
-          });
+          };
+
+          if (ent.isFile() && isImagePath(ent.name)) {
+            const relPath = path.relative(repoPath, path.join(targetDir, ent.name)).split(path.sep).join('/');
+            if (isSafeImagePath(relPath)) {
+              entry.isImage = true;
+              entry.imageUrl = getRepoImageUrl(args.repoName, relPath);
+              entry.markdown = `![${imageAltFromPath(relPath, ent.name)}](${entry.imageUrl})`;
+            }
+          }
+
+          results.push(entry);
         }
         return { repository: args.repoName, directory: args.subDirectory || '/', entries: results };
+      }
+
+      case 'find_repo_images': {
+        const repoPath = findRepoPath(args.repoName);
+        if (!repoPath) return { error: `Repository '${args.repoName}' not found.` };
+
+        let searchRoot = repoPath;
+        const subDirectory = normalizeRelativePath(args.subDirectory || '').replace(/^\/+|\/+$/g, '');
+        if (subDirectory) {
+          if (!isSafeRelativePath(subDirectory)) return { error: 'Invalid or disallowed subDirectory path.' };
+          searchRoot = path.join(repoPath, subDirectory);
+          if (!fs.existsSync(searchRoot) || !fs.statSync(searchRoot).isDirectory()) {
+            return { error: 'Target directory does not exist.' };
+          }
+          if (fs.lstatSync(searchRoot).isSymbolicLink()) {
+            return { error: 'Symbolic link directories are not allowed.' };
+          }
+          if (!isPathInside(repoPath, searchRoot)) {
+            return { error: 'Target directory is outside the repository.' };
+          }
+        }
+
+        const query = String(args.query || '').trim().toLowerCase();
+        const maxResults = Math.min(12, Math.max(1, parseInt(args.maxResults || '8', 10) || 8));
+        const skipDirectories = new Set([
+          '.git', 'node_modules', '__pycache__', 'dist', 'build', 'target', 'vendor',
+          '.venv', 'venv', 'coverage', 'out', 'bin', 'obj'
+        ]);
+        const images = [];
+        let scannedFiles = 0;
+        const maxScannedFiles = 4000;
+
+        function findImagesInDirectory(currentDir, depth) {
+          if (depth > 6 || images.length >= maxResults || scannedFiles >= maxScannedFiles) return;
+
+          let entries = [];
+          try {
+            entries = fs.readdirSync(currentDir, { withFileTypes: true });
+          } catch {
+            return;
+          }
+
+          for (const ent of entries) {
+            if (images.length >= maxResults || scannedFiles >= maxScannedFiles) break;
+            if (ent.name.startsWith('.') || skipDirectories.has(ent.name)) continue;
+
+            const fullPath = path.join(currentDir, ent.name);
+            if (ent.isDirectory()) {
+              findImagesInDirectory(fullPath, depth + 1);
+              continue;
+            }
+            if (!ent.isFile()) continue;
+
+            scannedFiles++;
+            const relPath = path.relative(repoPath, fullPath).split(path.sep).join('/');
+            if (!isSafeImagePath(relPath)) continue;
+            if (query && !relPath.toLowerCase().includes(query)) continue;
+
+            let sizeBytes = 0;
+            try {
+              sizeBytes = fs.statSync(fullPath).size;
+            } catch {
+              continue;
+            }
+            if (sizeBytes <= 0 || sizeBytes > MAX_IMAGE_BYTES) continue;
+
+            const imageUrl = getRepoImageUrl(args.repoName, relPath);
+            images.push({
+              path: relPath,
+              name: ent.name,
+              sizeBytes,
+              url: imageUrl,
+              markdown: `![${imageAltFromPath(relPath, ent.name)}](${imageUrl})`,
+            });
+          }
+        }
+
+        findImagesInDirectory(searchRoot, 0);
+
+        if (onSourceFound) {
+          onSourceFound({ title: `Images: ${args.repoName}`, url: getRepoUrl(args.repoName), type: 'repository' });
+        }
+
+        return {
+          repository: args.repoName,
+          directory: subDirectory || '/',
+          query: args.query || null,
+          count: images.length,
+          images,
+          note: 'Embed the most relevant results using their exact Markdown snippets; never invent image URLs.',
+        };
       }
 
       case 'read_repo_file': {
         const repoPath = findRepoPath(args.repoName);
         if (!repoPath) return { error: `Repository '${args.repoName}' not found.` };
+
+        const requestedPath = normalizeRelativePath(args.filePath || '');
+        if (isImagePath(requestedPath)) {
+          if (!isSafeImagePath(requestedPath)) {
+            return { error: `Access to '${args.filePath}' is restricted or disallowed.` };
+          }
+
+          const imagePath = path.join(repoPath, requestedPath);
+          if (!fs.existsSync(imagePath) || !fs.statSync(imagePath).isFile()) {
+            return { error: `File '${args.filePath}' does not exist.` };
+          }
+          if (!isPathInside(repoPath, imagePath)) {
+            return { error: 'File is outside the repository.' };
+          }
+
+          const stat = fs.statSync(imagePath);
+          if (stat.size > MAX_IMAGE_BYTES) {
+            return { error: 'Image file is too large to display.' };
+          }
+
+          const imageUrl = getRepoImageUrl(args.repoName, requestedPath);
+          if (onSourceFound) {
+            onSourceFound({
+              title: `${args.repoName}/${requestedPath}`,
+              url: getFileUrl(args.repoName, requestedPath),
+              type: 'file',
+            });
+          }
+
+          return {
+            repository: args.repoName,
+            file: requestedPath,
+            isImage: true,
+            sizeBytes: stat.size,
+            url: imageUrl,
+            markdown: `![${imageAltFromPath(requestedPath, args.repoName)}](${imageUrl})`,
+            note: 'This is an image file. Embed it with the provided Markdown snippet if it is relevant.',
+          };
+        }
+
         if (!isSafeFilePath(args.filePath)) return { error: `Access to '${args.filePath}' is restricted or disallowed.` };
 
         const fullPath = path.join(repoPath, args.filePath);
         if (!fs.existsSync(fullPath) || !fs.statSync(fullPath).isFile()) {
           return { error: `File '${args.filePath}' does not exist.` };
+        }
+        if (!isPathInside(repoPath, fullPath)) {
+          return { error: 'File is outside the repository.' };
         }
 
         const stat = fs.statSync(fullPath);
@@ -1572,9 +1902,19 @@ STRICT GROUNDING, SOURCING & FORMATTING:
 - Authoritative Personal Documents: Use 'read_personal_context' to read Christian's background notes, bio, career principles, and personal details directly from the context documents.
 - Fast Architecture Inspection: Use 'get_codebase_summary' to inspect pre-computed architectural maps and file-by-file summaries of any repository without reading raw files.
 - Code Inspection & Citing: Use 'read_repo_file' when you need exact lines of code. Always cite the project name or repository file when stating facts (e.g., 'In CPP-ML-Interface...', 'As defined in MusicBot/project.json...').
+- Deep Links: Project tool results include a canonical 'portfolioUrl' of the form 'https://projects.christian-f-brinkmann.de/?project=<projectId>'. When naming a project in your answer, link it to that URL. For a specific popup sub-page, append '&tab=technical', '&tab=usage', '&tab=stats', '&tab=repositories', or '&tab=media'. Only use project IDs and URLs returned by tools; never invent deep links.
+
+VISUAL MEDIA:
+- When the user asks to see, show, visualize, or illustrate something, or when an image would materially improve the answer, embed 1-3 relevant images inline using Markdown image syntax: ![short alt text](url).
+- Use only exact image URLs returned by tools: 'get_project_details' returns project logos and screenshots under 'images'; 'find_repo_images' returns repository images with ready-to-use Markdown snippets; 'list_repo_files' and 'read_repo_file' expose image URLs for individual files.
+- Call 'find_repo_images' before showing images that live inside a repository. Do not guess repository image paths or fabricate URLs.
+- Never use GitHub/GitLab web "blob" URLs as image sources; they often return HTML or 404. Use the tool-provided '/api/chat/repo-image' URLs or direct raw image URLs instead.
+- Prefer a project logo for identity and screenshots, diagrams, or schematics for technical explanations. Do not dump every available image; select the most relevant ones.
+- Public HTTPS image URLs may be embedded only when directly relevant and known to be accessible. Never invent external image URLs.
 
 EFFICIENT TOOL USAGE:
 - 'list_projects' returns the complete catalog of projects including their complete 'techStack' and 'technologies' (all programming languages and frameworks). When asked which projects use specific programming languages (such as Python, C++, TypeScript, Java, C#, PHP) or tools, 'list_projects' provides all the required information in one call. Synthesize and answer directly from 'list_projects' without making individual 'get_project_details' calls for every project.
+- Use image tools only when visuals are requested or genuinely helpful; text answers should stay the default for purely factual questions.
 - Language matching: If the user writes in German, respond naturally in German. If the user writes in English, respond in English.`;
 
 // =====================================================================
@@ -1601,6 +1941,7 @@ function getFriendlyToolName(toolName, toolArgs) {
     case 'read_repo_file': return `Inspecting ${toolArgs?.filePath || 'code'}`;
     case 'search_code': return `Searching code for "${toolArgs?.searchTerm}"`;
     case 'list_repo_files': return `Listing files in ${toolArgs?.repoName}`;
+    case 'find_repo_images': return `Finding images in ${toolArgs?.repoName}`;
     case 'read_personal_context': return `Reading context: ${toolArgs?.documentName || 'documents'}`;
     case 'get_codebase_summary': return `Inspecting architecture map for ${toolArgs?.repoName}`;
     case 'get_git_log': return `Inspecting git log for ${toolArgs?.repoName}`;
@@ -2088,7 +2429,8 @@ async function handleGeminiChatStream(req, res, userMessages, clientLang, access
                              name === 'get_personal_bio' ? 'Loading bio and background' :
                              name === 'read_repo_file' ? `Inspecting ${args.filePath || 'code'}` :
                              name === 'search_code' ? `Searching code for "${args.searchTerm}"` :
-                             name === 'list_repo_files' ? `Listing files in ${args.repoName}` : 'Retrieving information';
+                             name === 'list_repo_files' ? `Listing files in ${args.repoName}` :
+                             name === 'find_repo_images' ? `Finding images in ${args.repoName}` : 'Retrieving information';
 
         res.write(`data: ${JSON.stringify({ type: 'status', message: friendlyName })}\n\n`);
 
@@ -2336,6 +2678,104 @@ async function handleChatStream(req, res, userMessages, clientLang = 'en', sessi
 }
 
 // =====================================================================
+// Repository Image Serving
+// =====================================================================
+function sendImageError(res, statusCode, message) {
+  res.writeHead(statusCode, {
+    'Content-Type': 'application/json; charset=utf-8',
+    'Cache-Control': 'no-store',
+  });
+  res.end(JSON.stringify({ error: message }));
+}
+
+function handleRepoImageRequest(req, res, parsedUrl) {
+  const repoName = (parsedUrl.searchParams.get('repo') || '').trim();
+  const relPath = parsedUrl.searchParams.get('path') || '';
+
+  if (!repoName || !relPath) {
+    sendImageError(res, 400, 'Missing repo or path parameter.');
+    return;
+  }
+  if (!isSafeImagePath(relPath)) {
+    sendImageError(res, 400, 'Invalid or unsupported image path.');
+    return;
+  }
+
+  const repoPath = findRepoPath(repoName);
+  if (!repoPath) {
+    sendImageError(res, 404, 'Repository not found.');
+    return;
+  }
+
+  const fullPath = path.join(repoPath, relPath);
+  let realRepoPath;
+  let realImagePath;
+  try {
+    realRepoPath = fs.realpathSync(repoPath);
+    realImagePath = fs.realpathSync(fullPath);
+  } catch {
+    sendImageError(res, 404, 'Image not found.');
+    return;
+  }
+
+  if (realImagePath !== realRepoPath && !realImagePath.startsWith(realRepoPath + path.sep)) {
+    sendImageError(res, 400, 'Invalid image path.');
+    return;
+  }
+
+  let stat;
+  let lstat;
+  try {
+    stat = fs.statSync(realImagePath);
+    lstat = fs.lstatSync(fullPath);
+  } catch {
+    sendImageError(res, 404, 'Image not found.');
+    return;
+  }
+
+  if (lstat.isSymbolicLink() || !stat.isFile()) {
+    sendImageError(res, 404, 'Image not found.');
+    return;
+  }
+
+  const extension = path.extname(realImagePath).toLowerCase();
+  const mimeType = IMAGE_MIME_TYPES[extension];
+  if (!mimeType) {
+    sendImageError(res, 415, 'Unsupported image type.');
+    return;
+  }
+  if (stat.size <= 0 || stat.size > MAX_IMAGE_BYTES) {
+    sendImageError(res, 413, 'Image is too large.');
+    return;
+  }
+
+  let imageData;
+  try {
+    imageData = fs.readFileSync(realImagePath);
+  } catch {
+    sendImageError(res, 404, 'Image not found.');
+    return;
+  }
+
+  const headers = {
+    'Content-Type': mimeType,
+    'Content-Length': String(stat.size),
+    'Cache-Control': 'public, max-age=3600',
+    'X-Content-Type-Options': 'nosniff',
+  };
+  if (extension === '.svg') {
+    headers['Content-Security-Policy'] = "default-src 'none'; style-src 'unsafe-inline'; sandbox";
+  }
+
+  res.writeHead(200, headers);
+  if (req.method === 'HEAD') {
+    res.end();
+  } else {
+    res.end(imageData);
+  }
+}
+
+// =====================================================================
 // HTTP Server & Routing
 // =====================================================================
 const server = http.createServer(async (req, res) => {
@@ -2392,6 +2832,12 @@ const server = http.createServer(async (req, res) => {
     };
     res.writeHead(200, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify(health, null, 2));
+    return;
+  }
+
+  // Repository Image Endpoint (read-only, sandboxed to configured repos)
+  if ((req.method === 'GET' || req.method === 'HEAD') && parsedUrl.pathname === '/api/chat/repo-image') {
+    handleRepoImageRequest(req, res, parsedUrl);
     return;
   }
 
