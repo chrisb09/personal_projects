@@ -1,0 +1,72 @@
+{
+  "repository": "green-lms-gateway",
+  "updatedAt": "2026-10-31T11:11:27.995Z",
+  "filesCount": 12,
+  "directories": {
+    "configs": "Contains 2 module files (values-prod.yaml, values-dev.yaml)",
+    "src/middlewares": "Contains 4 module files (errorHandler.js, validator.js, permission.js, stages.js)",
+    "src": "Contains 1 module files (index.js)"
+  },
+  "files": {
+    "README.md": {
+      "hash": "40018cb6f5333870bff93d66664f348ae588e1a9054f70aa1a96fc801fffbca9",
+      "summary": "This `README.md` file serves as the primary documentation entry point for the `Gateway` component, providing high-level project information and setup instructions within the repository.",
+      "lines": 3
+    },
+    "Dockerfile": {
+      "hash": "c6e85a26ecd9f3adf31a2b98132ddf9186867b9fb7ecdafdcf55283b181175d9",
+      "summary": "This multi-stage `Dockerfile` builds and containerizes the Node.js application for production. It packages the compiled distribution and production dependencies, exposing port 8888 to run the service.",
+      "lines": 27
+    },
+    "build.config.js": {
+      "hash": "dadc191794d4baa3d8f887db25f5a95bb9f3a34c685134bdb3601841a7ac1a2f",
+      "summary": "This file configures and executes the project's bundling process using `esbuild`. It compiles `src/index.js` into a minified IIFE output at `dist/index.min.js`.",
+      "lines": 12
+    },
+    "package.json": {
+      "hash": "1e115c5b8a6ec93338c9cb4d7530cfb56ecb2b0d14d1b5c961fc7e244bf09283",
+      "summary": "This `package.json` file defines the project metadata, dependencies, and build scripts for the `gateway` LMS service, orchestrating project execution and package management.",
+      "lines": 43
+    },
+    "configs/values-prod.yaml": {
+      "hash": "467197b2531caf5844ae89dd207b4a7299f72a1744ea16b6455ba08cc760c5c1",
+      "summary": "This file provides production deployment values for the `gateway` service, configuring its service port, ConfigMaps, lifecycle probes, and ingress routing for `green-lms.app`.",
+      "lines": 21
+    },
+    "configs/values-dev.yaml": {
+      "hash": "0f3d03a55dffadef126d33cb0765e2d8e4d2da56926e61cf9a5201296d9b3000",
+      "summary": "`configs/values-dev.yaml` is a Helm values configuration file for the development environment. It defines deployment parameters such as service ports, environment variables, and ingress routing for the gateway service.",
+      "lines": 28
+    },
+    "set-env-dev.sh": {
+      "hash": "7035e54a5190bd0cfb01691089d73e1ce5b6df6f643982824a3a2e6d01e91811",
+      "summary": "`set-env-dev.sh` is a shell script that exports development environment variables, including database, broker, and runtime configurations, to initialize the local development environment.",
+      "lines": 16
+    },
+    "src/middlewares/errorHandler.js": {
+      "hash": "5dff60c4cef678a05759dc5b587e92a012825c92fe2011a4aa12d674366cab02",
+      "summary": "This file provides global Express error-handling middleware via the `errorHandler` function. It standardizes error responses and status codes across the project.",
+      "lines": 29
+    },
+    "src/index.js": {
+      "hash": "8ddd338dbb78d493187d4f548d4eb3c2edb1d994ec345bae4359c232c844d4c5",
+      "summary": "This file initializes and starts the Express application server, configuring middleware like `cors`, `limiter`, and error handling. It serves as the main entry point and API gateway for the project.",
+      "lines": 63
+    },
+    "src/middlewares/validator.js": {
+      "hash": "457ed4c83925c39daba6776d37663f95111b88b845210657a98f4d63c6214429",
+      "summary": "`src/middlewares/validator.js` uses `validation` to validate incoming API requests against route schemas. It exports the `validator` middleware function, ensuring requests meet defined criteria before reaching controllers.",
+      "lines": 15
+    },
+    "src/middlewares/permission.js": {
+      "hash": "ddd3094af878ecb6a88f762187ceca0de78a145391494074db9d4fe096e3dc52",
+      "summary": "This file provides authorization middleware for API requests using pub/sub permission checks. It exports `fosPermission`, `globalPermission`, and `updateTokens` to validate access and manage user sessions.",
+      "lines": 67
+    },
+    "src/middlewares/stages.js": {
+      "hash": "278d364b2a25d963e74f3622c986acb0f301fb29a051760a884561362fb9a898",
+      "summary": "This file provides Express middleware to attach stage lists to requests. It exports `availableStages`, which injects configuration data into the request pipeline.",
+      "lines": 7
+    }
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "repository": "green-lms-checkpoints",
+  "updatedAt": "2026-10-31T11:11:42.408Z",
+  "filesCount": 12,
+  "directories": {
+    "configs": "Contains 2 module files (values-dev.yaml, values-prod.yaml)",
+    "src/handlers": "Contains 6 module files (answers.js, comments.js, checkpoints.js, marks.js)"
+  },
+  "files": {
+    "Dockerfile": {
+      "hash": "c6e85a26ecd9f3adf31a2b98132ddf9186867b9fb7ecdafdcf55283b181175d9",
+      "summary": "This multi-stage `Dockerfile` builds and containerizes the Node.js application for production. It packages the compiled distribution and production dependencies, exposing port 8888 to run the service.",
+      "lines": 27
+    },
+    "build.config.js": {
+      "hash": "dadc191794d4baa3d8f887db25f5a95bb9f3a34c685134bdb3601841a7ac1a2f",
+      "summary": "This file configures and executes the project's bundling process using `esbuild`. It compiles `src/index.js` into a minified IIFE output at `dist/index.min.js`.",
+      "lines": 12
+    },
+    "configs/values-dev.yaml": {
+      "hash": "d364f517f261b34a77d702c082d98ea53fa29527bc20903ee1dbe6f1f049c3bc",
+      "summary": "This Helm values file defines development-specific deployment parameters, including `autoscaling`, environment variables, and `configmaps`. It configures the project's development environment infrastructure settings.",
+      "lines": 16
+    },
+    "set-env-dev.sh": {
+      "hash": "c943daf606ee9a42ae3c2c68379f3df07801851c372a85f1d7466d9b9c8b8e73",
+      "summary": "This configuration script sets local development environment variables for the application, including database credentials and message broker settings. It prepares the local runtime environment.",
+      "lines": 14
+    },
+    "configs/values-prod.yaml": {
+      "hash": "9b73be26e9f0e54f000b9e3710e7dcaadb4fbf720d476816efae688f39eb6e6b",
+      "summary": "This file defines production configuration values for the `checkpoints` deployment, including autoscaling and environment variables. It serves as a Helm values override for the production environment.",
+      "lines": 16
+    },
+    "package.json": {
+      "hash": "9d903aa0845f637653fb7fa1d847a115db0d071e5e6f2170b14d6c675f8b22eb",
+      "summary": "This `package.json` file configures project metadata, dependencies, and build scripts for the `checkpoints` project, serving as the central Node.js package configuration file.",
+      "lines": 33
+    },
+    "src/handlers/answers.js": {
+      "hash": "3df08108908bf2f80f4e7ef1c935073ae2ada8d4cc69e380408144f4f825cb92",
+      "summary": "This file handles the generation of checkpoint answers. It exports `createCheckpointAnswers` to assign unique variants for user progress and manage database persistence.",
+      "lines": 436
+    },
+    "src/handlers/comments.js": {
+      "hash": "51704e34eba73754102bfd44fa7df35fbb3818b09769d05d607fb0a8191e0f2b",
+      "summary": "This file manages comment creation logic with role-based validation. It exports `saveComment` to handle comment persistence for students and mentors within the project.",
+      "lines": 55
+    },
+    "src/handlers/checkpoints.js": {
+      "hash": "b09b3942f1322bb55102d14f35723e08a1be7ebe261a32ef5410f97063ffeb33",
+      "summary": "`src/handlers/checkpoints.js` manages challenge checkpoint retrieval and logic. It exports `getCheckpointContentForTeacher`, serving as a core request handler for fetching versioned checkpoint content.",
+      "lines": 863
+    },
+    "src/handlers/marks.js": {
+      "hash": "9a10f4dc539693fff0ceda8a9d965ceac5e5b03c63d8487aae739b4f7f81d94b",
+      "summary": "This file handles mentor grading and submission workflows for student progress. It exports `saveQuestionMarks` and `setPublishedStatus` to manage checkpoint scores and publication states within the project.",
+      "lines": 221
+    },
+    "src/handlers/evaluation.js": {
+      "hash": "22e97dc19f0b8c6d1609e8cc06c649be2cbedbe30dd08ed1de39686f7583a887",
+      "summary": "This file handles the AI-powered evaluation of student checkpoint submissions and processes unanswered questions. It exports `handleUnansweredQuestions`, serving as the core evaluation handler in the project's backend routing/logic.",
+      "lines": 641
+    },
+    "src/handlers/templates.js": {
+      "hash": "9f5820c4f51818226481335e30ce82a30988ae44b9fb02e67b5974a39e9362a0",
+      "summary": "This file handles database operations for checkpoint templates using the `CheckpointTemplates` schema. It exports `getCheckpointTemplate` and `upsertCheckpointTemplate` to retrieve and manage challenge templates.",
+      "lines": 32
+    }
+  }
+}

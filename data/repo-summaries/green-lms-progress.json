@@ -1,0 +1,72 @@
+{
+  "repository": "green-lms-progress",
+  "updatedAt": "2026-10-31T11:12:05.592Z",
+  "filesCount": 12,
+  "directories": {
+    "configs": "Contains 2 module files (values-dev.yaml, values-prod.yaml)",
+    "src/handlers/cycle": "Contains 5 module files (finish.js, accept.js, giveUp.js, retry.js)",
+    "src/handlers": "Contains 1 module files (access.js)"
+  },
+  "files": {
+    "Dockerfile": {
+      "hash": "c6e85a26ecd9f3adf31a2b98132ddf9186867b9fb7ecdafdcf55283b181175d9",
+      "summary": "This multi-stage `Dockerfile` builds and containerizes the Node.js application for production. It packages the compiled distribution and production dependencies, exposing port 8888 to run the service.",
+      "lines": 27
+    },
+    "build.config.js": {
+      "hash": "dadc191794d4baa3d8f887db25f5a95bb9f3a34c685134bdb3601841a7ac1a2f",
+      "summary": "This file configures and executes the project's bundling process using `esbuild`. It compiles `src/index.js` into a minified IIFE output at `dist/index.min.js`.",
+      "lines": 12
+    },
+    "configs/values-dev.yaml": {
+      "hash": "70690730956d9c2a0d7d20de55fd525ffdee9f1a6f8c38620d250575c5320e28",
+      "summary": "This file provides development environment configuration values for the Helm chart. It defines application settings, ConfigMaps, environment variables, and enables autoscaling and startup lifecycles.",
+      "lines": 18
+    },
+    "configs/values-prod.yaml": {
+      "hash": "2e10752549f89d863f69bf49fd479841a380868a7a6c1895403762881828e255",
+      "summary": "This configuration file defines production deployment values for the `progress` service. It configures environment variables, configmaps, autoscaling, and lifecycle settings for the project's Helm charts.",
+      "lines": 18
+    },
+    "package.json": {
+      "hash": "354c7123f5bde02a8175cd576b0b20d1d9c770eebfdc40507d1a1e3669c2c664",
+      "summary": "This configuration file defines project metadata, dependencies, and npm scripts for the `progress` package. It manages project execution, building, and linting within the project ecosystem.",
+      "lines": 38
+    },
+    "set-env-dev.sh": {
+      "hash": "267e1f55e82ae26076cc4864420360976bd6cb422a9232c06fe1fb47768d0a8d",
+      "summary": "`set-env-dev.sh` configures local development environment variables, establishing database, message broker, and runtime settings. It prepares the local system for running project services.",
+      "lines": 17
+    },
+    "src/handlers/cycle/finish.js": {
+      "hash": "9859c70f8ae4b8e9b9f4d77340f5448a5854db6bb30b5eb06544fd2528592034",
+      "summary": "This file exports the `finish` function, which transitions a challenge from `IN_PROGRESS` to `REFLECTION` or `ASSESSMENT` status, managing the workflow completion process within the project.",
+      "lines": 97
+    },
+    "src/handlers/access.js": {
+      "hash": "ca4d2334f3da995ade8b87352fdb6ff1d8c366032e2cad9ef005fd73112daa01",
+      "summary": "This file validates user permissions for challenges and retries. It exports `isAcceptAvailable`, `isRetryAvailable`, and `hasAccess` to manage access control logic throughout the application.",
+      "lines": 55
+    },
+    "src/handlers/cycle/accept.js": {
+      "hash": "467d6c640011a1c2f549fa9f825e0d3a66e987012e797562203014b1d0c5f073",
+      "summary": "This file exports `acceptChallenge`, which validates user access and initializes progress environments for new challenges. It serves as the core handler for users accepting challenges within the system.",
+      "lines": 35
+    },
+    "src/handlers/cycle/giveUp.js": {
+      "hash": "28ec2dd1999e2262127281321befd526bdd0faa55892c0c58185728db98bc169",
+      "summary": "The `giveUp` function updates a user's challenge progress to a \"give up\" status and revokes Git repository permissions. It serves as the handler for terminating active challenge attempts.",
+      "lines": 48
+    },
+    "src/handlers/cycle/retry.js": {
+      "hash": "a71ccff114237e1aab4c98a4101758da8aa41bc7f363a35a5f4b9a9612059f04",
+      "summary": "This file manages challenge retry logic by validating eligibility and constraints. It exports the `retry` function, which orchestrates the reset process for student challenge progress.",
+      "lines": 83
+    },
+    "src/handlers/cycle/reflection.js": {
+      "hash": "a813a241a58b211df387d4b695f6e76f660d60e54db7de0ab5f4492c066e4eb0",
+      "summary": "`writeReflection",
+      "lines": 109
+    }
+  }
+}

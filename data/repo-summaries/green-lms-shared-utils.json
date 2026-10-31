@@ -1,0 +1,73 @@
+{
+  "repository": "green-lms-shared-utils",
+  "updatedAt": "2026-10-31T11:12:18.603Z",
+  "filesCount": 12,
+  "directories": {
+    "constants": "Contains 7 module files (assessments.js, challenges.js, index.js, observer.js)",
+    "cache": "Contains 1 module files (index.js)",
+    "db": "Contains 3 module files (helper.js, models.js, index.js)",
+    "db/schemas": "Contains 1 module files (ap_result.js)"
+  },
+  "files": {
+    "constants/assessments.js": {
+      "hash": "c186719c187ef63c5e1ea8a458fc632b34a8be1727572668642ede90f6f20506",
+      "summary": "This file defines the `ASSESSMENT_STATUSES` constant object, providing a centralized schema for tracking assessment lifecycle states throughout the project.",
+      "lines": 9
+    },
+    "cache/index.js": {
+      "hash": "bea0036bb823b9c5a2fd3c4cf475a8f637be9432d35ea1bab4f84eaf3a812571",
+      "summary": "`cache/index.js` exports the `CacheManager` singleton, which handles Redis connection initialization. It serves as the project's centralized interface for managing the Redis cache client via `connect`.",
+      "lines": 22
+    },
+    "constants/challenges.js": {
+      "hash": "64e5f9e89a3ab28aaa21687a3600bfd4780c60b4ea54970f0348b026857a74e7",
+      "summary": "This file defines configuration enums `CHALLENGE_DEPENDENCY`, `CHALLENGE_TYPE`, and `CHALLENGE_UPLOAD_TYPE`. It serves as the central source of truth for challenge-related constants used throughout the project.",
+      "lines": 19
+    },
+    "constants/index.js": {
+      "hash": "05c9f7fc87b9ebea2065e427f087ce35fa2e33cf5ae5323058ec57f9bbd786ec",
+      "summary": "This file acts as a central barrel export for all application constants. It aggregates and re-exports modules from the `constants/` directory to simplify imports across the project.",
+      "lines": 8
+    },
+    "constants/observer.js": {
+      "hash": "3853da34f6b96e7cf809e59f4f761dc17fc443aedcf268e1aefe526d400d3e95",
+      "summary": "This file defines the `OBSERVER_STATUSES` constant object, which provides standardized status codes for observer lifecycle states throughout the project.",
+      "lines": 10
+    },
+    "constants/files.js": {
+      "hash": "867a3602301ecbdd1faa808db6843ff16ddbac25a6d0174c8a6dde4b06d6a9c3",
+      "summary": "This file defines the `FILE_STATUSES` constant object, providing standardized status codes for file processing operations throughout the project.",
+      "lines": 9
+    },
+    "constants/progresses.js": {
+      "hash": "0e9e3f6c8c7c45294ce17b70b63e03fcddcc89fd9b89a1b9bcf1ec95c65c9a51",
+      "summary": "This file defines the `STATUSES` constant object, which maps progress states to numeric identifiers. It serves as the single source of truth for tracking workflow stages across the project.",
+      "lines": 11
+    },
+    "db/helper.js": {
+      "hash": "cd5039e003f6874cecb6da1152cd3e7b445501ce06c1ee2feb1ff175630b4ee9",
+      "summary": "`db/helper.js` provides `getBigIntAsNumber` to safely convert database BigInt fields into JavaScript numbers, ensuring values remain within safe integer limits for the project's data layer.",
+      "lines": 17
+    },
+    "constants/stages.js": {
+      "hash": "eebd22ad25583910973352e2c6a6259f371054315bf8f1d5594b1166458c9ec7",
+      "summary": "This file defines the `STAGES` constant object, which maps workflow phases to numeric identifiers. It serves as the central source of truth for stage-based logic throughout the project.",
+      "lines": 11
+    },
+    "db/schemas/ap_result.js": {
+      "hash": "51d7ecb20fbd06fd38ee36b6c75dc8094ebfc158cbb4aa0a7404fffec261bc9c",
+      "summary": "This file defines the `ApResults` Sequelize model, which maps to the `ap_result` database table. It provides the `init` function to initialize the schema within the project.",
+      "lines": 40
+    },
+    "db/models.js": {
+      "hash": "ad425d5da7e52309a4433a980a65e19f68ec8ed8fdb797a0c9ee296d8ed42d2e",
+      "summary": "This file initializes and exports Sequelize models by aggregating various schema definitions. It serves as the central entry point for database interactions across the project.",
+      "lines": 426
+    },
+    "db/index.js": {
+      "hash": "b8fd788438f4aa6cf251674faa13a38480017d9ada4f7ecd25a621d64365fd11",
+      "summary": "This file exports the `Database` singleton, which manages the PostgreSQL connection and initializes models via `connect()`. It serves as the central interface for database access across the project.",
+      "lines": 40
+    }
+  }
+}

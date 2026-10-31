@@ -1,0 +1,74 @@
+{
+  "repository": "green-lms-gateway-files",
+  "updatedAt": "2026-10-31T11:11:35.967Z",
+  "filesCount": 12,
+  "directories": {
+    "configs": "Contains 2 module files (values-dev.yaml, values-prod.yaml)",
+    "src/handlers": "Contains 1 module files (avatars.js)",
+    "src/helpers": "Contains 3 module files (files.js, logs.js, s3.js)",
+    "src/middlewares": "Contains 1 module files (errorHandler.js)",
+    "src": "Contains 1 module files (index.js)"
+  },
+  "files": {
+    "build.config.js": {
+      "hash": "dadc191794d4baa3d8f887db25f5a95bb9f3a34c685134bdb3601841a7ac1a2f",
+      "summary": "This file configures and executes the project's bundling process using `esbuild`. It compiles `src/index.js` into a minified IIFE output at `dist/index.min.js`.",
+      "lines": 12
+    },
+    "Dockerfile": {
+      "hash": "d92a67251e97ad1f6e154bd9f9ec03b79f7eb4ebd3c97a33c8d7e46987177e4d",
+      "summary": "This multi-stage `Dockerfile` builds and containerizes the Node.js application for production. It uses `npm` to build assets and execute the `prod` startup command.",
+      "lines": 29
+    },
+    "configs/values-dev.yaml": {
+      "hash": "9dd9737c273b14293a3bd54697161cb3c9cc9376f041ae443a08962bf3fac434",
+      "summary": "This file defines the development environment configuration values for Helm deployments. It specifies service properties, Ingress routing, and environment flags for the project.",
+      "lines": 24
+    },
+    "configs/values-prod.yaml": {
+      "hash": "e232a5c6e16c0b8451d75f226f3c7898f27f641559d7cebaf94dc73b547d04fd",
+      "summary": "This file provides production deployment configuration values for Helm, defining service ports, ingress routing, and resource limits for the `gateway-files` service.",
+      "lines": 32
+    },
+    "package.json": {
+      "hash": "814452612df0439c2376ec5bbe8a13627e2b87915fe097040bd49021f04fcafa",
+      "summary": "`package.json` defines project metadata, dependencies, and execution scripts for the `gateway-files` Node.js service, serving as the core configuration file for project setup and builds.",
+      "lines": 42
+    },
+    "set-env-dev.sh": {
+      "hash": "3a2b190abe67959ec12621e151c5db0e3a9885b5116067364caf3674415cdf0d",
+      "summary": "`set-env-dev.sh` is a shell script that configures local development environment variables. It defines runtime settings for the Node environment, message broker, and object storage buckets.",
+      "lines": 16
+    },
+    "src/handlers/avatars.js": {
+      "hash": "a443b0dcd51950ff60b6479126c97144ee7951ac2d0da93c1a83574e6f6caf76",
+      "summary": "This file handles user avatar updates by publishing a pub/sub request and removing the previous image from object storage. It exports `updateAvatar` to manage user profile image lifecycles in the project.",
+      "lines": 18
+    },
+    "src/helpers/files.js": {
+      "hash": "3eb8890c967597ff155f212a52b2607e133bee7c14bf405472204e371fdc5533",
+      "summary": "This file provides file handling utilities for parsing multipart uploads and processing streams. It exports `getFileKey`, `getFileStream`, `getBusboy`, and `isImage` to support file management across the project.",
+      "lines": 60
+    },
+    "src/helpers/logs.js": {
+      "hash": "c12ea4130df0b3713097ec3ac27d9a39c234c0f7d7b073afa7c86cc6767ac878",
+      "summary": "This file provides centralized logging for the gateway service. It exports the `log` function, which publishes log events to the shared pub-sub system.",
+      "lines": 16
+    },
+    "src/helpers/s3.js": {
+      "hash": "5608109512eabad898068b3dea03426ce3d768779defcf753cd1984aee83b8c7",
+      "summary": "This file provides S3-compatible cloud storage integration, exporting the `ObjectStorage` class with methods like `uploadFile` to manage files across project buckets.",
+      "lines": 85
+    },
+    "src/middlewares/errorHandler.js": {
+      "hash": "d138ba24be6b9fc2545009ce2f01b8203491ef26cb2ffa3219f9be0b24e86bab",
+      "summary": "`errorHandler` is an Express error-handling middleware that maps errors to HTTP status codes and JSON responses, then logs them. It is exported as the project’s centralized request error handler.",
+      "lines": 31
+    },
+    "src/index.js": {
+      "hash": "57feef2a9e4f3498eea70d4c5c16136e4c8b0d93df21068259074feffbc5a785",
+      "summary": "Source module implementing index.js logic.",
+      "lines": 49
+    }
+  }
+}

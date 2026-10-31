@@ -1,0 +1,73 @@
+{
+  "repository": "green-lms-ui-2.0",
+  "updatedAt": "2026-10-31T11:12:26.819Z",
+  "filesCount": 12,
+  "directories": {
+    "configs": "Contains 2 module files (values-dev.yaml, values-prod.yaml)",
+    "server": "Contains 3 module files (index.js, proxy.js, package.json)",
+    "src/components/Alerts": "Contains 2 module files (styled.js, index.jsx)",
+    "src": "Contains 1 module files (App.jsx)"
+  },
+  "files": {
+    "configs/values-dev.yaml": {
+      "hash": "1e146cdde68751deede38eb5720f6710372a7ad201d405e28a8d8f0de0eebddb",
+      "summary": "This file defines development-specific configuration values for the `ui` service. It manages deployment settings, including port assignments and ingress routing for the `cluster.green-lms.app` environment.",
+      "lines": 14
+    },
+    "README.md": {
+      "hash": "22ac249d3674c2fe6663bb77aafd74502a0103b7fac45ef395dfd09974da7561",
+      "summary": "This `README.md` serves as the project documentation, outlining the React and Vite configuration, including available plugins like `@vitejs/plugin-react` and `@vitejs/plugin-react-swc` for development.",
+      "lines": 9
+    },
+    "Dockerfile": {
+      "hash": "00b72bb1b70814a9016f0aadbb78d1aaae96668117ccccb7331a0d7a6fecbb39",
+      "summary": "This `Dockerfile` containerizes the application by installing dependencies, building the project for a specific environment, and defining the startup command to run the production server on port 3000.",
+      "lines": 18
+    },
+    "package.json": {
+      "hash": "e1a96bf61ad310e3a8c8e25db8e39b87323e4f53bd3f3fa559ee1cb62e3b3884",
+      "summary": "This `package.json` file manages dependencies, build scripts, and project configuration for the `lms-ui` frontend application, serving as the central manifest for development and production workflows.",
+      "lines": 61
+    },
+    "server/index.js": {
+      "hash": "e4e70b478621082155b784b10195ccbe498973c8f4992e3e351e708c9bb6fbe4",
+      "summary": "`server/index.js` initializes an Express server to serve static assets from the `dist` directory and applies `limiter` middleware to enforce request rate limits for the application.",
+      "lines": 25
+    },
+    "configs/values-prod.yaml": {
+      "hash": "2f47a4d53e5a37bed6b31490a2662f6e400f2f7c7d1512f9631edcbbbe0f8049",
+      "summary": "This file defines production-specific configuration values for the `ui` service. It manages deployment settings, including port assignments and ingress routing for the `green-lms.app` domain.",
+      "lines": 13
+    },
+    "set-env-dev.sh": {
+      "hash": "267e1f55e82ae26076cc4864420360976bd6cb422a9232c06fe1fb47768d0a8d",
+      "summary": "`set-env-dev.sh` configures local development environment variables, establishing database, message broker, and runtime settings. It prepares the local system for running project services.",
+      "lines": 17
+    },
+    "server/proxy.js": {
+      "hash": "fe4fe5aee56d68d4f82fc7d76eb23d2d517df253326a39d2efedcce0d9983676",
+      "summary": "`server/proxy.js` sets up an Express development server that proxies API requests to the Green-LMS cluster with CORS enabled. It runs the backend proxy middleware for the project.",
+      "lines": 24
+    },
+    "server/package.json": {
+      "hash": "32eb497f5092a727748a1b910aaba86b7e6f389d1bcc61a9782d8081fa96d2e0",
+      "summary": "This file manages the backend package configuration, dependencies, and execution scripts. It orchestrates server startup and proxy tasks for the project.",
+      "lines": 23
+    },
+    "src/components/Alerts/styled.js": {
+      "hash": "d2b7b41edc0c8916d92339ecf2e372f806614a4540825b673f486266ae64e02d",
+      "summary": "This file provides styling for alert notifications in the UI. It exports the `SAlert` styled component to render animated toast messages.",
+      "lines": 54
+    },
+    "src/App.jsx": {
+      "hash": "f66ad140cd77c988a1f8af2acd5d27730fa83c1f4b83bd0f26cbfe283d00860d",
+      "summary": "This file serves as the application's root component, wrapping the UI with Redux state management, persistence, and theme providers. It exports the `App` component to render the main application structure.",
+      "lines": 40
+    },
+    "src/components/Alerts/index.jsx": {
+      "hash": "2db3ee0160ede07973fcd01b54a1827e64a24113cc9a8b3a741badf6b2cbfe11",
+      "summary": "This file renders temporary notification alerts retrieved from the global store. It exports the `Alert` component as default and the internal `AlertCard` function.",
+      "lines": 36
+    }
+  }
+}

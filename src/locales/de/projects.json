@@ -485,22 +485,76 @@
   },
   "exam-system-backend": {
     "name": "LLM-integriertes Prüfungssystem",
-    "tagline": "Im Team entwickeltes Prüfungssystem mit LLM-gestützter Vorbewertung",
-    "description": "Backend-Architektur, Datenbankschema, Microservices und Kubernetes-Deployment für eine universitäre digitale Prüfungsplattform. Entwickelt für hochgradig parallele Prüfungsdurchführungen, automatisierte Bewertungs-Pipelines und integrierte LLM-Unterstützung zur vorläufigen Freitext-Korrektur.",
-    "purpose": "Ein bestehendes Prüfungssystem für eine ukrainische Universität um Freitextfragen und eine vorläufige Bewertung erweitern.",
+    "tagline": "Im Team entwickeltes Prüfungs- und Lernplattform mit LLM-gestützter Bewertung und ereignisgesteuerten Microservices",
+    "description": "Backend-Architektur, Datenbankschema, Microservices und Kubernetes-Deployment für eine im Team entwickelte digitale Prüfungsplattform einer ukrainischen Universität. Entwickelt für hochgradig parallele Prüfungsdurchführungen, automatisierte Bewertungs-Pipelines und integrierte LLM-Unterstützung zur vorläufigen Freitext-Korrektur.\n\nChristian war Co-Lead des Backends der Prüfungsplattform und trug als Teil des achtköpfigen Studierendenteams zu green LMS bei.\n\ngreen LMS entstand im Rahmen des Praktikums „Advanced Web Technologies: Integration of AI approaches into an LMS“ (SS25) der RWTH Aachen University, durchgeführt von der Lehr- und Forschungsgruppe Learning Technologies (Informatik 9) unter der Betreuung von Dr. Volodymyr Sokol. Ein achtköpfiges Studierendenteam wurde beauftragt, den Checkpoint- und Bewertungsworkflow des bestehenden Lernmanagementsystems der Universität als Menge unabhängig deployBarer Microservices neu zu entwickeln.\n\nDas System besteht aus einem schlanken Express-Gateway und sechs Domänendiensten. Das Gateway übernimmt HTTP-Terminierung, Session- und Berechtigungsverwaltung, Payload-Validierung mit Joi sowie das Routing zu den Diensten für Checkpoints, Challenges, Fortschritt, Bewertung, Dateiverwaltung und Statistik. Die Dienste kommunizieren asynchron über NATS für Ereignisse wie Checkpoint-Veröffentlichungen und Bewertungsaktualisierungen, cachen heißen Zustand in Redis und persistieren alles in einem gemeinsamen PostgreSQL-Schema, das um Fächer, Branches, Checkpoints, Fragenslots, Fragen und Bewertungen modelliert ist.\n\nDas Frontend ist eine React-18-Single-Page-Anwendung mit rollenbasiertem Routing für Studierende und Lehrende, einem Checkpoint-Editor, der Abschnitte aus Fragepools zusammenstellt, Drag-and-Drop- und Multiple-Choice-Fragetypen sowie einer Live-Fortschrittsansicht während der Bearbeitung eines Checkpoints. Jedes Repository enthält eine GitLab-CI-Pipeline, die das Service-Image erstellt und bei Merges auf main im Kubernetes-Cluster des Kurses deployt.",
+    "purpose": "Ein bestehendes Prüfungssystem für eine ukrainische Universität um Freitextfragen und eine vorläufige Bewertung erweitern und zugleich den Checkpoint- und Bewertungsworkflow des RWTH-Aachen-Lernmanagementsystems als unabhängig deploybare Microservices neu aufbauen.",
     "strengths": [
       "Anwendungsdienste mit Kubernetes bereitgestellt",
       "SQL-Schemata für Prüfungsabgaben entworfen",
-      "LLM-Endpunkte für die vorläufige Auswertung von Freitextantworten angebunden"
+      "LLM-Endpunkte für die vorläufige Auswertung von Freitextantworten angebunden",
+      "Das LMS in sieben unabhängig deploybare Node.js-Dienste hinter einem einzigen Express-Gateway aufgeteilt",
+      "Checkpoints, Fragenslots, Antworttypen und fraktionale Bewertungen in einem gemeinsam genutzten PostgreSQL-Schema modelliert",
+      "NATS Pub/Sub für asynchrone Service-Ereignisse und Redis für gecachten Zustand statt synchroner Anfrageketten verwendet",
+      "Eine React-18-Lehrer- und Studierendenoberfläche mit Vite-Proxy-Schicht, Redux-Zustand und rollenbasiertem Routing entwickelt",
+      "Jeden Merge auf main über ein gemeinsames GitLab-CI-Template in den Kubernetes-Cluster des Kurses deployt"
     ],
-    "limitations": [],
+    "limitations": [
+      "Die Kursinfrastruktur (Kubernetes-Cluster, verwaltetes PostgreSQL, NATS-Deployment) wurde nach dem Praktikum abgeschaltet, sodass keine Live-Demo verfügbar ist",
+      "Die Quell-Repositories sind private Kursartefakte; die GitHub-Spiegel dienen der Archivierung, Statistik und Code-Exploration",
+      "Das gemeinsame Hilfspaket ist in einer universitätsinternen npm-Registry veröffentlicht, was die Reproduktion außerhalb des Kursnetzwerks erschwert"
+    ],
     "expertise": [
       "Microservice-Orchestrierung",
       "Datenbankdesign",
       "API-Integration",
-      "Containerisierung"
+      "Containerisierung",
+      "Ereignisgesteuerte Microservices",
+      "REST-API-Design",
+      "Relationales Schema-Design",
+      "Kubernetes-Deployment",
+      "Kontinuierliche Integration"
     ],
-    "roadmap": []
+    "roadmap": [],
+    "relatedProjects": [
+      {
+        "index": 0,
+        "relation": "Praktikumsbetreuer, RWTH Aachen University"
+      },
+      {
+        "index": 1,
+        "relation": "Ausrichtender Lehrstuhl des Praktikums"
+      }
+    ],
+    "repos": [
+      {
+        "index": 0,
+        "description": ""
+      },
+      {
+        "index": 1,
+        "description": ""
+      },
+      {
+        "index": 2,
+        "description": ""
+      },
+      {
+        "index": 3,
+        "description": ""
+      },
+      {
+        "index": 4,
+        "description": ""
+      },
+      {
+        "index": 5,
+        "description": ""
+      },
+      {
+        "index": 6,
+        "description": ""
+      }
+    ]
   },
   "ferienw-am-meer-modernization": {
     "name": "ferienw-am-meer.de",

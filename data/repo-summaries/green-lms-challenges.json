@@ -1,0 +1,71 @@
+{
+  "repository": "green-lms-challenges",
+  "updatedAt": "2026-10-31T11:11:39.018Z",
+  "filesCount": 12,
+  "directories": {
+    "configs": "Contains 2 module files (values-dev.yaml, values-prod.yaml)",
+    "src/handlers": "Contains 6 module files (challenge.js, antiplagiarism.js, analysisFiles.js, challengeFiles.js)"
+  },
+  "files": {
+    "Dockerfile": {
+      "hash": "c6e85a26ecd9f3adf31a2b98132ddf9186867b9fb7ecdafdcf55283b181175d9",
+      "summary": "This multi-stage `Dockerfile` builds and containerizes the Node.js application for production. It packages the compiled distribution and production dependencies, exposing port 8888 to run the service.",
+      "lines": 27
+    },
+    "build.config.js": {
+      "hash": "dadc191794d4baa3d8f887db25f5a95bb9f3a34c685134bdb3601841a7ac1a2f",
+      "summary": "This file configures and executes the project's bundling process using `esbuild`. It compiles `src/index.js` into a minified IIFE output at `dist/index.min.js`.",
+      "lines": 12
+    },
+    "configs/values-dev.yaml": {
+      "hash": "01ebf9a81e4391e45501db3f6c557ddb9bb7bbf09ae1ddd3197694bc5aa407c7",
+      "summary": "This configuration file defines development-specific deployment values for the `challenges` service, including configmaps, environment variables, and autoscaling parameters. It customizes the Helm chart deployment for the development environment.",
+      "lines": 17
+    },
+    "configs/values-prod.yaml": {
+      "hash": "01ebf9a81e4391e45501db3f6c557ddb9bb7bbf09ae1ddd3197694bc5aa407c7",
+      "summary": "This configuration file defines development-specific deployment values for the `challenges` service, including configmaps, environment variables, and autoscaling parameters. It customizes the Helm chart deployment for the development environment.",
+      "lines": 17
+    },
+    "package.json": {
+      "hash": "f2f8b691587a1b34eeeae3fc3a845458d2159e225c1a30d3054bf283d9f65515",
+      "summary": "This `package.json` file defines project metadata, dependencies, and npm scripts for the `challenges` package. It orchestrates project execution, building, and linting tasks within the project architecture.",
+      "lines": 37
+    },
+    "set-env-dev.sh": {
+      "hash": "e914be20a655008fce1a3d6a74c441ba70fd6ea7f6ee1e9808343c4e943031c5",
+      "summary": "`set-env-dev.sh` is a shell script that exports development environment variables for database, broker, and application configurations. It initializes local development settings for the project.",
+      "lines": 18
+    },
+    "src/handlers/challenge.js": {
+      "hash": "f4800706760174b999ee105184fda9d5277838ae59be15203d688189aecd6d47",
+      "summary": "This file manages challenge-related operations, primarily exporting `createChallenge`. It serves as the business logic handler for creating new challenges within the project.",
+      "lines": 331
+    },
+    "src/handlers/antiplagiarism.js": {
+      "hash": "67d15de059e03ac6b5ac3fd3e7561148afeda01faf4eddf1592e324e7dec7a0a",
+      "summary": "This file handles anti-plagiarism checks for challenges and teams, exporting `runCheckForChallenge` and `runCheckForTeam`. It processes check logic and publishes results via pub/sub for the project.",
+      "lines": 50
+    },
+    "src/handlers/analysisFiles.js": {
+      "hash": "bb7535917ec06558e6c40a22beca7b986d5048fe43a308a5944e79d3a3ab844c",
+      "summary": "This file manages security permissions for analysis files. It exports `checkAnalysisAccess` to validate user authorization before granting access.",
+      "lines": 18
+    },
+    "src/handlers/challengeFiles.js": {
+      "hash": "ab96bed5f780ab7b0c6437c2cd21648192c734b05aa36d1d67a9e5774ff502c4",
+      "summary": "This file manages challenge file operations with permission checks. It exports `createChallengeFiles`, `getChallengeFiles`, and `deleteChallengeFiles` to handle backend file creation, retrieval, and deletion requests.",
+      "lines": 52
+    },
+    "src/handlers/checkpointQuestionFiles.js": {
+      "hash": "b28a5f99aca6e1b5963dbb9041a74451a669f76651ee7857eb14087514bd2a1b",
+      "summary": "This file manages checkpoint question files by handling permissions and database operations. It exports `createCheckpointQuestionFiles`, `getCheckpointQuestionFiles`, and `deleteCheckpointQuestionFiles` to process request handlers.",
+      "lines": 52
+    },
+    "src/handlers/list.js": {
+      "hash": "e1e6edf01002498d90c338324f25cedaf245aa83168a351fd6f796a5474ead23",
+      "summary": "This file handles role-based retrieval and formatting of challenges. It exports the `list` function and acts as the challenge listing controller for the project's API handlers.",
+      "lines": 132
+    }
+  }
+}

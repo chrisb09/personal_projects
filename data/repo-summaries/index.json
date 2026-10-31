@@ -1,10 +1,12 @@
 {
-  "CPP-ML-Interface": {
+  "green-lms-ui-2.0": {
     "filesCount": 12,
-    "updatedAt": "2026-09-28T20:41:01.250Z",
+    "updatedAt": "2026-10-31T11:12:26.819Z",
     "directories": [
-      ".github/workflows",
-      "dl_clients"
+      "configs",
+      "server",
+      "src/components/Alerts",
+      "src"
     ]
   }
 }
