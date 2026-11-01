@@ -202,7 +202,8 @@ export const projects: Project[] = [
     "screenshots": [
       "/images/projects/ai-usage/account-cards.webp",
       "/images/projects/ai-usage/usage-history.webp"
-    ]
+    ],
+    "logo": "/images/projects/ai-usage/logo.webp"
   },
   {
     "id": "cpp-ml-interface",
@@ -1369,7 +1370,8 @@ export const projects: Project[] = [
         "relation": "Minecraft network integrating the translation and in-game assistant services",
         "projectId": "the-legend-of-war"
       }
-    ]
+    ],
+    "logo": "/images/projects/minecraft-chat-translator/logo.webp"
   },
   {
     "id": "nudenetv2",
@@ -1657,7 +1659,8 @@ export const projects: Project[] = [
         "relation": "Complementary session telemetry and analytics",
         "projectId": "opencode-observatory"
       }
-    ]
+    ],
+    "logo": "/images/projects/opencode-model-router/logo.webp"
   },
   {
     "id": "opencode-observatory",
@@ -1897,7 +1900,8 @@ export const projects: Project[] = [
         "relation": "HPC workflow context for long-running Slurm jobs",
         "projectId": "cpp-ml-interface"
       }
-    ]
+    ],
+    "logo": "/images/projects/opencode-wait/logo.webp"
   },
   {
     "id": "pacstall-programs",
@@ -2110,7 +2114,8 @@ export const projects: Project[] = [
       }
     ],
     "mirrors": [],
-    "screenshots": []
+    "screenshots": [],
+    "logo": "/images/projects/personal-projects/logo.webp"
   },
   {
     "id": "php-autoindexed-file-viewer",
@@ -2537,7 +2542,8 @@ export const projects: Project[] = [
         "relation": "Historical trailers and current development logs",
         "url": "https://www.youtube.com/@LegendOfWarNet"
       }
-    ]
+    ],
+    "logo": "/images/projects/the-legend-of-war/logo.webp"
   },
   {
     "id": "userbenchmark-scraper",

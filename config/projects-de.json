@@ -1399,9 +1399,9 @@
     ],
     "expertise": [
       "Observability & Telemetrie",
-      "Multi-Tenant-Datenisolierung",
+      "Multi-Tenant-Datenisolation",
       "Event-Queues & Offline-Zustellung",
-      "PostgreSQL-Analytik",
+      "PostgreSQL-Analytics",
       "MCP-Server-Design"
     ],
     "roadmap": [
@@ -1500,7 +1500,7 @@
     ],
     "expertise": [
       "Event-Driven I/O",
-      "Kernel-Level-Warten",
+      "Warten auf Kernel-Ebene",
       "HPC- / Slurm-Integration",
       "OpenCode-Plugin-Design"
     ],
