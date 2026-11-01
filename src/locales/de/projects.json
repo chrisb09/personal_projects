@@ -1498,6 +1498,12 @@
       "Das Repository enthält Upstream-Historie und wird als Fork gepflegt, nicht als Neuimplementierung",
       "Es gibt keine separate Oberfläche außer der Metadatenleiste von OpenCode"
     ],
+    "expertise": [
+      "Event-Driven I/O",
+      "Kernel-Level-Warten",
+      "HPC- / Slurm-Integration",
+      "OpenCode-Plugin-Design"
+    ],
     "roadmap": [
       "Den Fork mit Upstream-Releases synchron halten",
       "Weitere Abschluss-Transporte für Batch-Systeme neben HTTP und Sentinel-Dateien ergänzen",
@@ -1511,6 +1517,12 @@
       {
         "index": 1,
         "relation": "HPC-Workflow-Kontext für lang laufende Slurm-Jobs"
+      }
+    ],
+    "repos": [
+      {
+        "index": 0,
+        "description": ""
       }
     ]
   }
