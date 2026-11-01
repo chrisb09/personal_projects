@@ -313,26 +313,26 @@
     "description": "Masterarbeit an der RWTH Aachen zur Neugestaltung einer solver-spezifischen C++-Schnittstelle zu einer modularen, generischen Kopplungsschicht. Verbindet CFD-Solver über eine einheitliche, konfigurationsgesteuerte API mit Machine-Learning-Backends (SmartSim/SmartRedis, PhyDLL, AIxeleratorService).\n\nGebenchmarkt auf dem Claix23-Supercomputer hinsichtlich CPU- und GPU-Inferenz, Thread-Balancing und Slurm-Core-Affinity. Beinhaltet einen automatisierten Clang-AST-Registrierungsgenerator und Integrationstests zur Kopplung des MMCP-Transformers mit dem m-aia-Solver.",
     "purpose": "CFD-Solver mit Machine-Learning-Modellen verbinden, ohne jeden Solver an ein einzelnes Kommunikations-Backend zu binden.",
     "strengths": [
-      "Neukonzeptionierung von solverspezifischem Code zu einem hochgradig generischen, modularen Header-only-Interface",
+      "Neugestaltung von solverspezifischem Code zu einer hochgradig generischen, modularen Header-only-Schnittstelle",
       "Integriert heterogene Kopplungsbibliotheken (SmartSim, PhyDLL, AIxeleratorService) unter einer konfigurationsbasierten Schicht",
-      "Unterstützt reflexionsfreie Subklassen-Registrierung über ein automatisches Registry-Skript auf Basis von python-clang",
-      "Kritische Evaluierung hardwarenaher paralleler CPU-Ausführung (Intra-/Inter-Op-Threads, OpenMP, Kernaffinität)"
+      "Unterstützt reflexionsfreie Subklassen-Registrierung über ein automatisches python-clang-Parsing-Registry-Skript",
+      "Kritische Evaluierung hardwarenaher paralleler CPU-Ausführung (Intra/Inter-Op-Threads, OpenMP, Core-Affinity)"
     ],
     "limitations": [
-      "Derzeit auf PyTorch- (TorchScript-) Backend-Implementierungen beschränkt",
-      "Leistung ist an die Interconnects der zugrunde liegenden Bibliotheken gebunden (z. B. Redis-Datenbank-Roundtrips in SmartSim)",
+      "Derzeit auf PyTorch-Backend-Implementierungen (TorchScript) beschränkt",
+      "Performance ist durch die Interconnects der zugrunde liegenden Bibliotheken limitiert (z. B. Redis-Datenbank-Roundtrips in SmartSim)",
       "Erfordert passende Compiler-/Clang-Versionen für das Registry-Generator-Skript"
     ],
     "expertise": [
       "HPC-Architektur & MPI",
       "Low-Latency-Middleware-Design",
       "Optimierung paralleler Inferenz",
-      "Multithreaded CPU-Binding & Kernaffinität"
+      "Multi-Threaded CPU-Binding & -Affinity"
     ],
     "roadmap": [
       "Integration des generischen Prototyps in das MMCP-Simulationsprojekt zur Kopplung von MMCP_transformer und m-aia",
-      "Evaluierung von Zero-Copy-Shared-Memory-Kopplungsimplementierungen zur Umgehung des TCP-Overheads",
-      "Unterstützung für ONNX Runtime und TensorFlow C++-Backends hinzufügen"
+      "Evaluierung von Zero-Copy-Shared-Memory-Kopplungsimplementierungen zur Umgehung von TCP-Overhead",
+      "Unterstützung für ONNX Runtime- und TensorFlow-C++-Backends hinzufügen"
     ],
     "relatedProjects": [
       {
@@ -341,27 +341,27 @@
       },
       {
         "index": 1,
-        "relation": "Nicht-generischer Legacy-Vorgänger"
+        "relation": "Nicht-generischer Vorgänger (Legacy)"
       },
       {
         "index": 2,
-        "relation": "Benchmarking-Tool für Inferenz und Kernaffinität"
+        "relation": "Benchmarking-Tool für Inferenz und Core-Affinity"
       },
       {
         "index": 3,
-        "relation": "Z3-basiertes Skript zur Auflösung von HPC-Modulen"
+        "relation": "Z3-basiertes HPC-Modul-Resolver-Skript"
       },
       {
         "index": 4,
-        "relation": "Workspace-Repository mit Integrationstest-Suites und Testumgebungen"
+        "relation": "Workspace-Repository mit Integrationstest-Suiten und Playgrounds"
       },
       {
         "index": 5,
-        "relation": "MPI-Terrain-Mini-App für Experimente zur Solver/ML-Kopplung"
+        "relation": "MPI-Terrain-Mini-App für Solver/ML-Kopplungsexperimente"
       },
       {
         "index": 6,
-        "relation": "Benchmark-Suite für CPU-/GPU-Affinität und Interconnects"
+        "relation": "Benchmark-Suite für CPU/GPU-Affinity und Interconnects"
       },
       {
         "index": 7,
@@ -369,11 +369,11 @@
       },
       {
         "index": 8,
-        "relation": "Key-basierte Load-Balancing-Experimente für gekoppelte Inferenz"
+        "relation": "Schlüsselbasierte Load-Balancing-Experimente für gekoppelte Inferenz"
       },
       {
         "index": 9,
-        "relation": "Testumgebung des Modul-Resolvers für den CPP-ML-Interface-Rewrite"
+        "relation": "Modul-Resolver-Test-Harness für das CPP-ML-Interface-Redesign"
       }
     ],
     "repos": [
@@ -1347,10 +1347,10 @@
     "expertise": [
       "Provider-API-Integration",
       "Adaptives Scheduling & Backoff",
-      "Time-Series-Speicherung",
+      "Zeitreihenspeicherung",
       "Dashboard-Design",
       "KDE Plasma-Widgets",
-      "Credential-Isolierung"
+      "Credential-Isolation"
     ],
     "roadmap": [
       "Provider-Collector aktuell halten, wenn sich Kontingent-Endpunkte ändern",
@@ -1397,6 +1397,13 @@
       "Preiskataloge müssen gepflegt werden, wenn Anbieter Modelle veröffentlichen oder umbenennen",
       "Die Mandantentrennung hängt von einem korrekt konfigurierten Reverse-Proxy und Deployment ab"
     ],
+    "expertise": [
+      "Observability & Telemetrie",
+      "Multi-Tenant-Datenisolierung",
+      "Event-Queues & Offline-Zustellung",
+      "PostgreSQL-Analytik",
+      "MCP-Server-Design"
+    ],
     "roadmap": [
       "Die Preisabdeckung der Anbieter erweitern und Modelle ohne Marktpreis prüfen",
       "Multi-Tenant-Deployment, Backups und Reverse-Proxy-Standards weiter härten",
@@ -1411,6 +1418,12 @@
       {
         "index": 1,
         "relation": "Anbieter-Dashboard für Kontingente und Guthaben; ergänzt die Sitzungstelemetrie"
+      }
+    ],
+    "repos": [
+      {
+        "index": 0,
+        "description": ""
       }
     ]
   },
@@ -1436,7 +1449,7 @@
       "Benötigt den AI-Usage-Dienst für frische Kontingentbeobachtungen"
     ],
     "expertise": [
-      "Quota-Aware Scheduling",
+      "Kontingentbewusstes Scheduling",
       "Nebenläufigkeitssteuerung",
       "Plugin-Architektur",
       "Lokale Persistenz",
