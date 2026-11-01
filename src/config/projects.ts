@@ -319,7 +319,8 @@ export const projects: Project[] = [
         "relation": "Module resolver test harness for the CPP-ML-Interface rewrite",
         "url": "https://github.com/chrisb09/module_test"
       }
-    ]
+    ],
+    "logo": "/images/projects/cpp-ml-interface/logo.webp"
   },
   {
     "id": "custom-orchestration",
