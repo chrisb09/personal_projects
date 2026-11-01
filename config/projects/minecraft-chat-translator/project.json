@@ -82,5 +82,12 @@
       "description": "LoRA adapter weights (34 MB) on Hugging Face"
     }
   ],
-  "screenshots": []
+  "screenshots": [],
+  "relatedProjects": [
+    {
+      "name": "The Legend of War",
+      "relation": "Minecraft network integrating the translation and in-game assistant services",
+      "projectId": "the-legend-of-war"
+    }
+  ]
 }

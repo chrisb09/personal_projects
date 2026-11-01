@@ -1,0 +1,76 @@
+{
+  "repository": "personal_projects",
+  "updatedAt": "2026-11-01T07:24:31.084Z",
+  "filesCount": 12,
+  "directories": {
+    "config": "Contains 1 module files (portfolio-header.json)",
+    "config/projects/MusicBot": "Contains 1 module files (project.json)",
+    "config/projects/cpp-ml-interface": "Contains 1 module files (project.json)",
+    "config/projects/advoexport": "Contains 1 module files (project.json)",
+    "config/projects/cycling-power-estimator": "Contains 1 module files (project.json)",
+    "config/projects/exam-system-backend": "Contains 1 module files (project.json)",
+    "config/projects/custom-orchestration": "Contains 1 module files (project.json)"
+  },
+  "files": {
+    "PROJECTS_GUIDE.md": {
+      "hash": "0ce3ffcdf7ed3261860f15f0385ce8db05c03a48f41cd89ec3cf95b9ec2a821a",
+      "summary": "`PROJECTS_GUIDE.md` is a documentation file detailing the directory structure, asset handling, and metadata schema for portfolio projects within the workspace configuration.",
+      "lines": 109
+    },
+    "DEVELOPEMENT.md": {
+      "hash": "031b493cbe3b62b6e5910ee0fdb421256c4f7a4e9b0b7749e54bcd2d03797eec",
+      "summary": "`DEVELOPMENT.md` documents the portfolio repository's architecture, configuration-driven project pipeline, and session implementation tasks. It serves as an internal development log and architectural reference for the project.",
+      "lines": 68
+    },
+    "Dockerfile": {
+      "hash": "22bd8d9a2c04a07fd11e8ff73257e797effbf52824e05b9a4b5a98b0f7db1053",
+      "summary": "This file defines a multi-stage container build using Node.js and Nginx to compile and serve the production static bundle. It plays a crucial role in containerizing the application for deployment.",
+      "lines": 30
+    },
+    "components.json": {
+      "hash": "22643b642f17cd817ec94d8439a272dac28119af0aebf8219a96ac1c2f4c61dd",
+      "summary": "`components.json` configures the shadcn/ui component library, defining styling, paths, and TypeScript aliases. It serves as the primary setup file for integrating UI components into the project.",
+      "lines": 23
+    },
+    "README.md": {
+      "hash": "761169bc0362f08d5d66ab00df110d9e8c2fce3b9d46e47198770d52aff5b53e",
+      "summary": "This `README.md` file documents the developer portfolio website, detailing setup instructions, build commands, and the project's JSON-driven configuration architecture.",
+      "lines": 77
+    },
+    "config/portfolio-header.json": {
+      "hash": "99b44c77b7288fc1eb235765d8c55b323c5d1b775899811369b3cf073606c444",
+      "summary": "`config/portfolio-header.json` defines JSON data for the portfolio header, supplying profile metadata, titles, descriptions, and action buttons to structure the main landing section.",
+      "lines": 40
+    },
+    "config/projects/MusicBot/project.json": {
+      "hash": "1a5a34fb72420b9889a71603343297640e94f834c97b45bf868f49fcf234b731",
+      "summary": "This JSON metadata file defines the project configuration, dependencies, and deployment details for the `MusicBot` project, serving as its core project manifest.",
+      "lines": 66
+    },
+    "config/projects/cpp-ml-interface/project.json": {
+      "hash": "9064e2d088ff43303ac03d0139f0c62c792e20194fc1303a26c58d1bbc0e644d",
+      "summary": "This file defines project metadata for the `cpp-ml-interface` module, detailing its C++ CFD-to-ML coupling layer configuration. It serves as the project manifest within the portfolio configuration.",
+      "lines": 92
+    },
+    "config/projects/advoexport/project.json": {
+      "hash": "95b982cbc00cbab0d2437b2fe709fe66ae96af7e12f52b550634a9cd9b5d5607",
+      "summary": "This JSON configuration file defines project metadata and architecture details for `advoexport`, a custom legacy legal data migration ETL pipeline. It serves as the project's primary configuration manifest.",
+      "lines": 49
+    },
+    "config/projects/cycling-power-estimator/project.json": {
+      "hash": "5d52add62dacc908510b8bce95554f4a8378d2c5955c6fe21974691945392ced",
+      "summary": "This JSON file defines the project metadata and configuration for the Cycling Power Estimator. It serves as the primary project manifest within the portfolio.",
+      "lines": 67
+    },
+    "config/projects/exam-system-backend/project.json": {
+      "hash": "e3f30c3da47247c5b32b57b30b9fc1c353dd0f187826c7535fc8527b6920dcc7",
+      "summary": "This metadata file defines project configuration and metadata for the `exam-system-backend` microservice. It serves as a portfolio project definition for the LLM-Integrated Exam System.",
+      "lines": 133
+    },
+    "config/projects/custom-orchestration/project.json": {
+      "hash": "f8eeeaa24c20adc069e021496eabf175192089bfb3972e2833526a4193b24881",
+      "summary": "This JSON configuration file defines metadata, dependencies, and architectural strengths for the `custom-orchestration` project. It serves as the project's portfolio definition file within the portfolio configuration system.",
+      "lines": 46
+    }
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "repository": "serverstatus",
+  "updatedAt": "2026-11-01T07:25:19.362Z",
+  "filesCount": 7,
+  "directories": {
+    "src/main/java/net/legendofwar/paper": "Contains 1 module files (Main.java)",
+    "src/main/resources": "Contains 2 module files (plugin.yml, velocity-plugin.json)",
+    "src/main/java/net/legendofwar/serverstatus": "Contains 1 module files (ServerStatus.java)",
+    "src/main/java/net/legendofwar/velocity": "Contains 1 module files (Main.java)"
+  },
+  "files": {
+    "deploy.sh": {
+      "hash": "4e57def870cddd03548da703706016b58b53bbedc4f1a1d9fd248b677409867f",
+      "summary": "`deploy.sh` automates building and deploying Maven-packaged Minecraft plugin JARs to remote or local server directories. It serves as the project's deployment script.",
+      "lines": 46
+    },
+    "src/main/java/net/legendofwar/paper/Main.java": {
+      "hash": "8134d86c23533c8a41433d8706655fc207cf12e7e6961914a4f6303dd84f44a7",
+      "summary": "`Main` is the core Paper plugin class that initializes and shuts down `ServerStatus`, while periodically broadcasting server TPS and player counts.",
+      "lines": 46
+    },
+    "README.md": {
+      "hash": "1f7165bb8c2d2756ca36ddbcf1745ba3ba9382534130e5eb3543df785585b983",
+      "summary": "This `README.md` file documents the ServerStatus Plugin project, outlining its architecture, usage, and build instructions. It references `net.legendofwar.paper.Main` and `net.legendofwar.velocity.Main` as the primary platform entry points.",
+      "lines": 70
+    },
+    "src/main/resources/plugin.yml": {
+      "hash": "9f073566b221badbd227930e17a24bb25e14bcfd4317b5b0d821b843234a7e0b",
+      "summary": "This configuration file defines the `ServerStatus` plugin metadata for Paper, specifying `net.legendofwar.paper.Main` as the entry point. It registers the plugin with the server during startup.",
+      "lines": 7
+    },
+    "src/main/java/net/legendofwar/serverstatus/ServerStatus.java": {
+      "hash": "ed3d9b5dfb1a470cd0727f11dd819f6db697b89e14526eae56b9826b8d82fa0e",
+      "summary": "The `ServerStatus` class manages server lifecycle states by writing status updates to a file. It exports `init`, `deinit`, `reload`, and `writeStatus` to track project status.",
+      "lines": 64
+    },
+    "src/main/java/net/legendofwar/velocity/Main.java": {
+      "hash": "68ab0e67f0f60155d7ddbad6a1b9389a747eb1687c354109d11ab904be7cd53b",
+      "summary": "`Main` is the core Velocity plugin class that initializes and manages the `ServerStatus` integration, serving as the project's primary entry and lifecycle management point.",
+      "lines": 76
+    },
+    "src/main/resources/velocity-plugin.json": {
+      "hash": "c25845732a51abc8ac92e73271f67ecd6032664a0eeca4fe961efed1471558d9",
+      "summary": "This file is a Velocity plugin configuration manifest that defines plugin metadata, authors, and the main entry point (`net.legendofwar.velocity.Main`), integrating the module into the Velocity proxy server.",
+      "lines": 9
+    }
+  }
+}

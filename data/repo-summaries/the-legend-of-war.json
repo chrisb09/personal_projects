@@ -1,0 +1,72 @@
+{
+  "repository": "the-legend-of-war",
+  "updatedAt": "2026-11-01T07:25:21.922Z",
+  "filesCount": 12,
+  "directories": {
+    "devstack": "Contains 3 module files (README.md, run-smoke.sh, docker-compose.yml)",
+    "notes": "Contains 2 module files (advancements LoW algorithm.txt, Mechanics & Systems for Combat.txt)",
+    "notes/archive": "Contains 3 module files (The Legend of War - New Heros.txt, The Legend of Phoenix.md, README.md)"
+  },
+  "files": {
+    "README.md": {
+      "hash": "7ca71dc7b90ea7df4a726fe9ed1726f2013fa646aa8e365717f6abfb2c3d87ea",
+      "summary": "This `README.md` file serves as the project overview and central documentation hub for \"The Legend of War,\" outlining its architecture, module dependencies, and development roadmap.",
+      "lines": 70
+    },
+    "definitions.py": {
+      "hash": "7c6ed45f926664e764740ef5184cdc68250f1784678f363f2e3956b55f3f0207",
+      "summary": "`definitions.py` stores configuration data, specifically defining the `plugins` list and `special_repos` dictionary. It serves as a central data constants file for tracking project repositories.",
+      "lines": 30
+    },
+    "devstack/README.md": {
+      "hash": "541fa2dda0a496c63b1b51687e9b0c37b7d3073fe542f093910519f01ac9bfe1",
+      "summary": "This README documents the local Docker-based development and testing stack for `firecord`, providing a Redis node and multiple client nodes for local integration testing.",
+      "lines": 85
+    },
+    "devstack/run-smoke.sh": {
+      "hash": "4cb801196d9218cc53477d52db90e10df418a1d16ea49b241084ba3e16235342",
+      "summary": "This script executes a minimal end-to-end devstack smoke test, verifying cross-node consistency via Docker Compose and Redis. It defines `redis_get` and `cleanup` to support the test pipeline.",
+      "lines": 87
+    },
+    "install_server.sh": {
+      "hash": "ae1426d10c2c8ee657f08d403f1edb5adbd467b2d0d97077eeed5e35e845994e",
+      "summary": "`install_server.sh` is a deployment script that provisions the server environment by installing system packages, runtimes, databases, and development tools via `nala`, `pacstall`, and `apt`. It acts as the primary infrastructure setup script for the project.",
+      "lines": 82
+    },
+    "devstack/docker-compose.yml": {
+      "hash": "8264f028f4035fb5b48e6ba3f2267f98046af4ebe1851f28c4da78a99a6e9779",
+      "summary": "This file defines a Docker Compose configuration for the local development stack, orchestrating a shared `redis` service and standalone Java nodes (`node-a`, `node-b`) for testing.",
+      "lines": 43
+    },
+    "notes/advancements LoW algorithm.txt": {
+      "hash": "ed57a73486a971479c4e56f6f88461718a7af59e77edc4ed1605dcf7b92c56e2",
+      "summary": "This documentation file outlines the design and graph-to-tree conversion algorithm for map advancements using DFS/BFS traversal and helper nodes. It serves as a conceptual blueprint for structuring map progression data.",
+      "lines": 17
+    },
+    "notes/Mechanics & Systems for Combat.txt": {
+      "hash": "0c09dcb976d193b14fafb2e3010962ac9fb2e3142c98738cecdba93adc95f97f",
+      "summary": "This design document specifies core combat mechanics, including directional damage modifiers and vision-based spotting rules. It serves as a design reference for the project's combat system implementation.",
+      "lines": 17
+    },
+    "manage.py": {
+      "hash": "09657b2eb8d9f1e875de3e6a12bbc053564fd1da670c4df931c367b0067236fa",
+      "summary": "`manage.py` acts as a command-line interface script for managing, pulling, building, and developing plugins for Legend of Phoenix. It utilizes Python's `argparse` module to execute these administrative development tasks.",
+      "lines": 137
+    },
+    "notes/archive/The Legend of War - New Heros.txt": {
+      "hash": "14a553193ed6ef72e78c7478e1113e04230a7836e2438c213b9c5c3469125dac",
+      "summary": "This file documents the \"new Heros\" update plan for \"The Legend of War,\" outlining gameplay changes, new features, and bug fixes. It serves as a historical project roadmap and design document.",
+      "lines": 162
+    },
+    "notes/archive/The Legend of Phoenix.md": {
+      "hash": "ca2eb9e5a655ff789753b5334f4eeb34acd7210b0d8fe9d06fbc83380a9515bc",
+      "summary": "This documentation file outlines the project roadmap and content planning for \"The Legend of Phoenix.\" It serves as an archived planning document for development milestones and video production.",
+      "lines": 45
+    },
+    "notes/archive/README.md": {
+      "hash": "ad35906c486cfedc129df115c5d52f5d25225c1be62b5b3ccc99d44b5a2682e0",
+      "summary": "This documentation file indexes outdated and historical project notes, serving as a reference directory pointing to current wiki equivalents.",
+      "lines": 15
+    }
+  }
+}

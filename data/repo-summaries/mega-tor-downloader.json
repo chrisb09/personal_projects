@@ -1,0 +1,45 @@
+{
+  "repository": "mega-tor-downloader",
+  "updatedAt": "2026-11-01T07:22:28.065Z",
+  "filesCount": 7,
+  "directories": {
+    "web": "Contains 1 module files (index.php)"
+  },
+  "files": {
+    "add_to_queue.sh": {
+      "hash": "9da4e60443209f1ff07cbe29d2f9827cf9b95a0af040d78bdc2e8034f9c96003",
+      "summary": "This script adds Mega links to a download queue by passing target paths and megalinks to `queue_cmd.sh`. It serves as a command-line wrapper for queue management within the project.",
+      "lines": 27
+    },
+    "alias.txt": {
+      "hash": "f233a53faa5ec08d37b34fd34c8abef596e3feb63a78faac24891e7765772203",
+      "summary": "Defines the `mdl` Bash alias to run `/mega_script/add_to_queue.sh`; add it to your shell configuration and source the file to reload it, providing a shortcut for adding items to the queue.",
+      "lines": 3
+    },
+    "README.md": {
+      "hash": "dd7e990690be74bdcebd6e54c2e4ce1e9511d440e5a93eb232191a200af7a3b8",
+      "summary": "This README documents project setup: install Python dependencies with `pip install -r requirements.txt` and install `megatools`; it exports no functions or classes.",
+      "lines": 13
+    },
+    "requirements.txt": {
+      "hash": "f4943429baf5dbe662dca7a9608377b63ce50144b37f08a8fcf7c0c3d0281c64",
+      "summary": "This file manages Python package dependencies for the project, specifically listing `pysocks` and `requests[sock]` to enable SOCKS proxy support for HTTP requests.",
+      "lines": 3
+    },
+    "queue_cmd.sh": {
+      "hash": "09bcf0f2e4fb3301f8c5dc93712f75140b086a26be604f5490000f34eca47144",
+      "summary": "`queue_cmd.sh` joins its arguments into a command string, prints it, and appends it to the `exec` file in the script’s directory; it exports no functions or classes.",
+      "lines": 18
+    },
+    "test.py": {
+      "hash": "6527af197b40685c8a97b9b1cd8dc1e583237c0243ec687d17066d18f7f00982",
+      "summary": "`test.py` provides command-file processing, timestamped logging, and persistent IP tracking via `_load_exec`, `_log`, `lock_ip`, and related",
+      "lines": 528
+    },
+    "web/index.php": {
+      "hash": "bbab9e7d134f238b1c6fac2f276e327c453c9b958445f8dada665b1714f0f3a5",
+      "summary": "This file renders the \"Mega-DL Status Page\" web interface, displaying download queues, current status, and a `ChartJS` performance graph.",
+      "lines": 90
+    }
+  }
+}

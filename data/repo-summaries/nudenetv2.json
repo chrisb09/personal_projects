@@ -1,0 +1,72 @@
+{
+  "repository": "nudenetv2",
+  "updatedAt": "2026-11-01T07:23:27.583Z",
+  "filesCount": 12,
+  "directories": {
+    "NudeNetv2": "Contains 7 module files (classifier.py, __init__.py, detector_utils.py, detector.py)",
+    "fastDeploy_recipes": "Contains 1 module files (build_images.sh)",
+    "fastDeploy_recipes/classifier": "Contains 2 module files (requirements.txt, predictor.py)"
+  },
+  "files": {
+    "LICENSE.md": {
+      "hash": "3ff7240cc706f4aadab69ebc55b15cffff3aac9a5bb96f500df05b01c47b0920",
+      "summary": "`LICENSE.md` defines the MIT License terms for the project, granting public usage, modification, and distribution rights without exports.",
+      "lines": 22
+    },
+    "NudeNetv2/classifier.py": {
+      "hash": "396977495ecffd1b77ff20e49ff728b34106b7104325d8774cd3e3f53180a91e",
+      "summary": "`classifier.py` provides the `Classifier` class to download and run ONNX-based NSFW classification models on images and videos, serving as the core inference engine.",
+      "lines": 167
+    },
+    "NudeNetv2/__init__.py": {
+      "hash": "74fb942cef478fb27688aaf6747574c7399794a6c0b81f91c29fbd658568377a",
+      "summary": "This source file initializes the package by exposing `NudeClassifier`, `NudeClassifierLite`, and `NudeDetector`. It serves as the primary entry point for nudity detection and classification modules.",
+      "lines": 4
+    },
+    "NudeNetv2/detector_utils.py": {
+      "hash": "da8cbd5f5e36d01cedd22ffd34dfdccf43c0913968d8dffce7419b6a4befc6bb",
+      "summary": "This file provides image preprocessing utilities for the detector. It exports `read_image_bgr`, `compute_resize_scale`, `resize_image`, and `preprocess_image` to prepare images for model inference.",
+      "lines": 62
+    },
+    "NudeNetv2/detector.py": {
+      "hash": "ac20136861c2eaa9310f5644a45aa284afba1d793febcf69c02577cc0efd64b6",
+      "summary": "This file manages ONNX-based object detection for nudity using the `Detector` class. It downloads weights, processes images, and serves as the core detection module in the project.",
+      "lines": 185
+    },
+    "NudeNetv2/image_utils.py": {
+      "hash": "0fd2b94558ce7fbeb05ee0023a9315114af47f625077be07e99e8d97db5bc314",
+      "summary": "`image_utils.py` provides utility functions for image processing, primarily exporting `load_img` to load and resize images into PIL format for the project.",
+      "lines": 143
+    },
+    "NudeNetv2/video_utils.py": {
+      "hash": "f927696163688885a311751f9503b48feb4203d190bab906f85f3ca6f8e677d0",
+      "summary": "`video_utils.py` processes video files to extract key frames using structural similarity. It exports `is_similar_frame` and `get_interest_frames_from_video`, serving as the video processing module for frame analysis.",
+      "lines": 133
+    },
+    "README.md": {
+      "hash": "7cf447b193b687aa86c42db42ccb33c5eb1c649ba306af43c84a8bc13cabb3d2",
+      "summary": "This file serves as the project documentation for the `NudeNetv2` repository. It exports and documents `NudeClassifier` to provide image and video nudity classification.",
+      "lines": 105
+    },
+    "NudeNetv2/lite_classifier.py": {
+      "hash": "080d5e779231586d8555a87804919645fb5f241f2b6688e6377bbbbf601665b2",
+      "summary": "`LiteClassifier` performs lightweight image classification using an ONNX model to detect safe and unsafe content. It serves as a core inference component in the project.",
+      "lines": 43
+    },
+    "fastDeploy_recipes/build_images.sh": {
+      "hash": "9a101207d1823a42d7f80ae4b5d7d0e1b6c01dd8aa72e110f75599870a1a5768",
+      "summary": "This shell script automates the creation, containerization, and publishing of `nudenet` classifier and detector Docker images using the `fastDeploy.py` CLI. It serves as a deployment recipe for building project artifacts.",
+      "lines": 14
+    },
+    "fastDeploy_recipes/classifier/requirements.txt": {
+      "hash": "1989dc6f66a262920765530aa914166591a925428257bf761a7e222b5482d729",
+      "summary": "This configuration file specifies the exact `nudenet==2.0.11` dependency required for the classifier module. It ensures consistent environment setup for nudity detection tasks across the project.",
+      "lines": 2
+    },
+    "fastDeploy_recipes/classifier/predictor.py": {
+      "hash": "d4434005df0bac0ee7c53f175ae906dbd7387f993a3d52d3e494ad84e1a63577",
+      "summary": "This file implements image classification for the classifier recipe using NudeNet. Its primary function, `predictor`, processes batched images to return classification predictions.",
+      "lines": 42
+    }
+  }
+}

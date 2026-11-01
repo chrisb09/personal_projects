@@ -1,0 +1,73 @@
+{
+  "repository": "farmingio",
+  "updatedAt": "2026-11-01T07:21:21.741Z",
+  "filesCount": 12,
+  "directories": {
+    "src/main/java/net/legendofwar/farmingio": "Contains 2 module files (FarmingIO.java, ProtectionRegion.java)",
+    "src/main/java/net/legendofwar/farmingio/commands": "Contains 3 module files (CommandHandler.java, FarmingIOCommand.java, SpawnCommand.java)",
+    "src/main/java/net/legendofwar/farmingio/events": "Contains 2 module files (PlayerJoinEventHandler.java, PhoenixPlayerDiedEventHandler.java)",
+    "src/main/java/net/legendofwar/farmingio/generation": "Contains 3 module files (FastBlockSet.java, FarmweltRegenerationHandler.java, ChunkQueueReader.java)"
+  },
+  "files": {
+    "src/main/java/net/legendofwar/farmingio/FarmingIO.java": {
+      "hash": "b92c3d9e2f3257bca89d97991b2a038a60da415660394e8867328f529e9b8648",
+      "summary": "`FarmingIO` is the main plugin class that initializes core systems, event handlers, and commands on startup. It exports `getInstance()` as its primary method, serving as the project's central entry point.",
+      "lines": 80
+    },
+    "ReflectionTest.java": {
+      "hash": "88f1e1e50d591573bb0d3a44af2d4ebd07d7012658b16d91c8342450097b3225",
+      "summary": "`ReflectionTest` inspects and prints the methods and parameters of Minecraft's `LevelChunk` class. It serves as a standalone diagnostic utility for analyzing obfuscated or internal engine code.",
+      "lines": 13
+    },
+    "README.md": {
+      "hash": "f19ef2d8d9d9b2cdf9543de272a1ee60038c6b4d01150e742a0149e764c18f2b",
+      "summary": "`README.md` provides project documentation and metadata for FarmingIO. It serves as the primary overview file for the repository.",
+      "lines": 3
+    },
+    "src/main/java/net/legendofwar/farmingio/commands/CommandHandler.java": {
+      "hash": "c45a5b23731dc7f71964af2abe8e4c9d6ed8a30d5810cabac9584505a380a3c6",
+      "summary": "`CommandHandler` registers the plugin's core commands via Paper's lifecycle events. Its primary function is `init()`, serving as the central command registration hub for the project.",
+      "lines": 23
+    },
+    "src/main/java/net/legendofwar/farmingio/commands/FarmingIOCommand.java": {
+      "hash": "3eccc98eb3b0694c423e0b0b44e3dc1c2d51529d2eec05d83d89af59af32831d",
+      "summary": "This file implements the `FarmingIOCommand` class, providing the `register` method to handle administrative plugin commands and administrative tasks in the project.",
+      "lines": 213
+    },
+    "src/main/java/net/legendofwar/farmingio/ProtectionRegion.java": {
+      "hash": "82f1addfdafd4c451df4ecb12d269a943e784948236a5997c2d784a8c25549d0",
+      "summary": "`ProtectionRegion` enforces world protection boundaries by listening to block and player events. It exports `byteYToReal`, `realYToByte`, `getProtectionInfo`, and `isBlockProtected` to manage restricted building areas within the project.",
+      "lines": 206
+    },
+    "src/main/java/net/legendofwar/farmingio/commands/SpawnCommand.java": {
+      "hash": "a098a67d47b547076a4e906514247638af15e83e67931fe743cfb1185636cb80",
+      "summary": "`SpawnCommand` implements the `/spawn` command using Paper's Brigadier API. Its primary method, `register()`, handles command registration and teleports players to the world spawn.",
+      "lines": 37
+    },
+    "src/main/java/net/legendofwar/farmingio/events/PlayerJoinEventHandler.java": {
+      "hash": "3e02c62d6231fba0121b66c969c8a5ae468c54750f124663bf3b74de91fd1a26",
+      "summary": "`PlayerJoinEventHandler` is a Bukkit event listener that teleports players to the main world's spawn location with a custom vector direction upon joining.",
+      "lines": 17
+    },
+    "src/main/java/net/legendofwar/farmingio/events/PhoenixPlayerDiedEventHandler.java": {
+      "hash": "dd441dcec14b45e2cbd8c434c286b9cafe44b8c40f1c66c852b347272d11a300",
+      "summary": "`PhoenixPlayerDiedEventHandler` listens for `PhoenixPlayerDiedEvent` and schedules the player’s teleport to the world spawn facing east. It serves as a death-event listener in the FarmingIO plugin.",
+      "lines": 20
+    },
+    "src/main/java/net/legendofwar/farmingio/generation/FastBlockSet.java": {
+      "hash": "c4f5348c0b5a7f6433940a982291b6ed580f9a24a7dab55aa92e509d8a00eb30",
+      "summary": "`FastBlockSet` bypasses Bukkit and FAWE overhead to directly update blocks via NMS. It exports `setBlockFast` to optimize world generation performance.",
+      "lines": 22
+    },
+    "src/main/java/net/legendofwar/farmingio/generation/FarmweltRegenerationHandler.java": {
+      "hash": "2faa28cd6f7e9f64318b3e0214c1d53ff9a51e056feade4d20d1abd85051b989",
+      "summary": "`FarmweltRegenerationHandler` manages the periodic resetting and generation of the farm world. It exports `init()` to coordinate world regeneration tasks within the project.",
+      "lines": 247
+    },
+    "src/main/java/net/legendofwar/farmingio/generation/ChunkQueueReader.java": {
+      "hash": "f47927cd81f2affa172adc32846b0943c519a90f0af8648c5f7f7139fa16bede",
+      "summary": "`ChunkQueueReader` uses reflection to query pending chunk save tasks from Moonrise RegionFileIO. Its primary function, `getPendingChunkSaves`, monitors world generation queues for the project.",
+      "lines": 45
+    }
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "repository": "MusicBot",
+  "updatedAt": "2026-11-01T07:20:28.328Z",
+  "filesCount": 12,
+  "directories": {
+    ".github": "Contains 3 module files (FUNDING.yml, CODE_OF_CONDUCT.md, PULL_REQUEST_TEMPLATE.md)",
+    ".github/ISSUE_TEMPLATE": "Contains 3 module files (bug-report.yml, feature-request.yml, config.yml)",
+    ".github/workflows": "Contains 2 module files (build-and-test.yml, make-release.yml)",
+    "docs": "Contains 3 module files (fork-changelog.md, setup.md, docker.md)"
+  },
+  "files": {
+    ".github/FUNDING.yml": {
+      "hash": "17cee1c0dcb9ec171d6fd427707d6b115ab2550815a299ffa0d00d8815643c64",
+      "summary": "This configuration file defines financial support platforms for project sponsorship. It has no exported functions or classes and facilitates community funding on GitHub.",
+      "lines": 13
+    },
+    ".github/CODE_OF_CONDUCT.md": {
+      "hash": "4543e0583196d29994040b0ab6e3ddd67dd876433db72b0975d95cc0200aa723",
+      "summary": "This file defines the project's community standards and behavioral guidelines based on the Contributor Covenant. It establishes rules for inclusive participation and outlines enforcement responsibilities for maintainers.",
+      "lines": 77
+    },
+    ".github/ISSUE_TEMPLATE/bug-report.yml": {
+      "hash": "a46448d8d25ac76be554c0d4c47abdb8abbab27b98c80d9643d745d892f61709",
+      "summary": "This YAML file defines the GitHub issue template for reporting bugs (`Bug Report`). It standardizes user bug submissions by collecting descriptions, reproduction steps, and diagnostic checklists for the project.",
+      "lines": 65
+    },
+    ".github/ISSUE_TEMPLATE/feature-request.yml": {
+      "hash": "62bb11a67d38fc52925c0b0a145351e78433b2032c5163ac6d12eb6dd6f3df15",
+      "summary": "This GitHub issue template file standardizes user feature requests. It acts as a project configuration form for new enhancements.",
+      "lines": 53
+    },
+    ".github/ISSUE_TEMPLATE/config.yml": {
+      "hash": "7ae6846edfb7a715a77d0b17e4c163d8e4ace9002cf29b22f1cf97f5d3848675",
+      "summary": "This file configures GitHub issue templates for the project by disabling blank issues and providing direct links to discussion categories for questions and troubleshooting.",
+      "lines": 9
+    },
+    ".github/PULL_REQUEST_TEMPLATE.md": {
+      "hash": "e7995dceb0a0bbe23e0cd966a6dae21eaf3f0a657a324247d74ef61cac8fd0ee",
+      "summary": "This source file provides a standardized Markdown template for GitHub pull requests. It guides contributors to document changes, purposes, and related issues, ensuring consistent code review metadata across the project.",
+      "lines": 15
+    },
+    ".github/workflows/build-and-test.yml": {
+      "hash": "357c749b9350c6d055ba3d0737863aa777fbf1e993d1b080e6258cbd815600e1",
+      "summary": "This GitHub Actions workflow automates the CI pipeline by building and testing the project with Maven on JDK 11 whenever code is pushed to or PR'd against `master`.",
+      "lines": 23
+    },
+    ".github/workflows/make-release.yml": {
+      "hash": "f4a6bc903fdaf1bf9d6b7f85487715e4ed16e31f78d644e32c0aa91c5d8a59a0",
+      "summary": "This GitHub Actions workflow automates the project release process by building the application JAR via Maven and publishing it as a draft release.",
+      "lines": 71
+    },
+    "README.md": {
+      "hash": "49a9a3856530c64c3016159233dd53e96e1bc3e258d690fb3704efa87414f4cd",
+      "summary": "This `README.md` file documents the JMusicBot fork, detailing setup instructions, updated dependencies, and added features. It serves as the primary project guide and overview for self-hosting.",
+      "lines": 125
+    },
+    "docs/fork-changelog.md": {
+      "hash": "732e53acedc74a54fc6b9bcfa01754ef61a237aac101ff0f177eee7dc907323d",
+      "summary": "`docs/fork-changelog.md` documents fork-specific features, bug fixes, and configuration updates across releases. It serves as a high-level changelog for operators and contributors.",
+      "lines": 58
+    },
+    "docs/setup.md": {
+      "hash": "a352310d2e5e9b957e988ebed4e6a072c14871e6244de53972c2b210f29d65e5",
+      "summary": "This Markdown documentation file provides non-Docker installation, configuration, and execution instructions for the project. It outlines prerequisites, Discord bot setup, and essential configuration properties.",
+      "lines": 179
+    },
+    "docs/docker.md": {
+      "hash": "033d14f37b316bba07bbd0f130ead48ec0019e9f38d4d52f6d03620166534597",
+      "summary": "This file is a Markdown documentation guide (`docs/docker.md`) that explains how to deploy and configure the bot using Docker and Docker Compose. It serves as the primary reference for containerized deployment, volume mounting, and persistent configuration.",
+      "lines": 96
+    }
+  }
+}

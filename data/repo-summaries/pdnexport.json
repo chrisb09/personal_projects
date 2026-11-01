@@ -1,0 +1,33 @@
+{
+  "repository": "pdnexport",
+  "updatedAt": "2026-11-01T07:24:24.744Z",
+  "filesCount": 5,
+  "directories": {},
+  "files": {
+    "README.md": {
+      "hash": "5424be48eefaeb088fa1df855df6b6556dde19de56851318a33249ae6b7734a6",
+      "summary": "This README describes `Exportpdn`, a script that exports `.pdn` files into a",
+      "lines": 7
+    },
+    "requirements.txt": {
+      "hash": "7f5711b3f97b776eb6ec2fdd4cfa3f9c554da26c75a5a738b912a18482f97532",
+      "summary": "`requirements.txt` lists project dependencies, including `pypdn`, `PIL`, and several Python standard-library modules. It defines no functions or",
+      "lines": 9
+    },
+    "pdnexport.py": {
+      "hash": "5501cbc70c7de0bbafa900f76d10a7965c5d6c639209e985e151c8c87c99a88a",
+      "summary": "`pdn",
+      "lines": 189
+    },
+    "setup.py": {
+      "hash": "9de8e641f54cf6b19d764cdeec80b93466166b76eba9a4dd81db0cd0d0497144",
+      "summary": "This file configures the package installation and dependencies for the `pdnexport` project using `setuptools.setup()`. It registers the `pdnexport=pdnexport:main` console script entry point.",
+      "lines": 38
+    },
+    "requirements2.txt": {
+      "hash": "4df73c99293728cda78c6b635d068512b9988d4d993834ec4dbc342ceff0d95a",
+      "summary": "This file lists the Python package dependencies (`Pillow`, `argparse`, and `pypdn>=1.0.6`) required for the project, serving as a secondary configuration for environment setup.",
+      "lines": 4
+    }
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "repository": "redis-dump-load",
+  "updatedAt": "2026-11-01T07:25:16.919Z",
+  "filesCount": 12,
+  "directories": {
+    "tests": "Contains 5 module files (big_data.py, alternate_encoding_test.py, bloat_redis.py, program_test.py)",
+    "tests/fixtures": "Contains 3 module files (dump.json, dump-unicode.json, ttl_and_expireat.json)"
+  },
+  "files": {
+    "Makefile": {
+      "hash": "1fd76a485c175005ff808ae92cb5b17b52404c96990bed4e0f01b5551ad4df90",
+      "summary": "Defines `all`, `test`, `test-quick`, and `test-slow` targets to run the project’s fast and slow test suites with `nosetests`.",
+      "lines": 14
+    },
+    "redisdl.py": {
+      "hash": "25b58a63c2a251070b0b017ca399563b48c830e145ccb55bb898f3ef5818ffd4",
+      "summary": "`redisdl.py` provides Redis compatibility utilities, including",
+      "lines": 640
+    },
+    "requirements-dev.txt": {
+      "hash": "53eb5dbef06b1e294abf7996ae0101cdbbebbe3b1e2fd77a97ccea594e52d1da",
+      "summary": "`requirements-dev.txt` includes `requirements.txt` and adds `nose` and `unittest2`, providing the project’s development and testing dependencies; it exports no functions or classes.",
+      "lines": 4
+    },
+    "tests/big_data.py": {
+      "hash": "b4397a570152350b5a96883375d5c98dbd5ee8c29dc7d6305f5b650297ba95b4",
+      "summary": "`BigData` benchmarks bulk Redis operations by inserting strings, lists, sets, sorted sets, or hashes, estimating a key count, and deleting keys. It supports project tests of Redis performance and data cleanup.",
+      "lines": 63
+    },
+    "tests/alternate_encoding_test.py": {
+      "hash": "c8d79d26ba3cc21abeb4e312df7f49c0305aa894f108d9c7022a679fed7f93b1",
+      "summary": "`RedisdlTest` verifies that `redisdl.dumps` and `redisdl.loads` correctly handle Latin-1 and UTF-16 data, including mixed encodings. This test module protects the project’s Redis serialization behavior across alternate character encodings.",
+      "lines": 59
+    },
+    "setup.py": {
+      "hash": "526beb38d0c2c041acbbeae48f81ac188633079518606d5abb35ed0c447be9ca",
+      "summary": "`setup.py` defines packaging metadata and dependencies for `redis-dump-load`, and installs documentation. It registers `redis",
+      "lines": 44
+    },
+    "tests/fixtures/dump.json": {
+      "hash": "51e7765f330b1196dd37fcb107102166c38ee7e03a869808cedb0532a488f491",
+      "summary": "`dump.json` provides fixture data representing string, hash, list, set, and sorted-set values. Tests use it as sample dump content; it exports no functions or classes.",
+      "lines": 39
+    },
+    "tests/bloat_redis.py": {
+      "hash": "759f791ac475575b2a2478cc0904b61fcd22b7ea078112c8dd31ee4083d191c6",
+      "summary": "This test utility creates a `redis.Redis` client and writes 100,000 test key-value pairs to Redis. It has no exported functions or classes and serves to generate Redis data for bloat testing.",
+      "lines": 7
+    },
+    "tests/fixtures/dump-unicode.json": {
+      "hash": "9a8b7eaa4e5699fee4e0ff7fe789cfe53b723bbf650abc3cccb1e5ae54ac05f4",
+      "summary": "This JSON fixture provides Unicode (Cyrillic) values for string, hash, list, set, and sorted-set data types. It supports tests of dump serialization and Unicode handling; it exports no functions or classes.",
+      "lines": 34
+    },
+    "tests/program_test.py": {
+      "hash": "9f22642b2b8fda03fddc89f9ed7dfa762adaa9ac3919796b64f3f7eea0d827de",
+      "summary": "`ProgramTest` verifies the `redisdl.py` command-line program can dump and load Redis data, including Unicode, against fixture and expected JSON. It serves as integration-test coverage for the project’s CLI.",
+      "lines": 127
+    },
+    "tests/module_test.py": {
+      "hash": "1b010d245689d1087ba5aa145c13f84e0298e5ec5c0af682f2f6411faf5cdcbc",
+      "summary": "`ModuleTest` verifies Redis dump/load behavior, including round trips, pretty JSON output, and string/Unicode values. It serves as integration coverage for the project’s exported `redisdl.dumps()` and `redisdl.loads()` functions.",
+      "lines": 300
+    },
+    "tests/fixtures/ttl_and_expireat.json": {
+      "hash": "559d30b3d20d7adaac0cef0de91839709bf17e2fda9be38ede32247d7548be66",
+      "summary": "This JSON fixture provides test data for a string key with a TTL and absolute expiration timestamp, supporting expiration-related tests; it exports no functions or classes.",
+      "lines": 9
+    }
+  }
+}

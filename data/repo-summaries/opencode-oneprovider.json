@@ -1,0 +1,72 @@
+{
+  "repository": "opencode-oneprovider",
+  "updatedAt": "2026-11-01T07:23:49.910Z",
+  "filesCount": 12,
+  "directories": {
+    "scripts": "Contains 3 module files (models.yaml, requirements.txt, plot.py)",
+    "src": "Contains 4 module files (constants.ts, models.ts, plugin.ts, types.ts)",
+    "tui": "Contains 1 module files (index.ts)"
+  },
+  "files": {
+    "package.json": {
+      "hash": "c9c344d84427ffa6575eac9188b5f83948c88728df0e5b055f986a2a08c15fe2",
+      "summary": "This file defines the project metadata, dependencies, and build scripts for the `opencode-oneprovider` package. It configures the entry points for the project's compiled modules and plugins.",
+      "lines": 49
+    },
+    "index.ts": {
+      "hash": "4d5ed977a2a440a37fc4f99ffeea0e8e17f97973905ac6a6d3dab8ec6bf7d362",
+      "summary": "This file serves as the primary entry point for the project, re-exporting the `plugin` function as the default export.",
+      "lines": 3
+    },
+    "README.md": {
+      "hash": "e52923abb887a7a465ebd35faa36110cbfa240be344ce9c29c1926fe4bef9fa1",
+      "summary": "The `README.md` file documents the `opencode-oneprovider` plugin, which provides unified multi-model access and authentication for OpenCode. It serves as the primary project guide detailing installation, features, and routing configurations.",
+      "lines": 183
+    },
+    "scripts/models.yaml": {
+      "hash": "cbb76a87bca41a185a579ff609686f42eab0b76960d50f6434e5cb04be34b184",
+      "summary": "`models.yaml` maps OneProvider model IDs to exact Artificial Analysis dataset names, with labels, colors, and effort levels. It configures model variants for the project’s benchmark plotting and README table; it exports no functions or classes.",
+      "lines": 148
+    },
+    "scripts/requirements.txt": {
+      "hash": "9fc4489ddb6b32cf018076ae888ffbc6c7370e7351976b3f058532e9976d4b6a",
+      "summary": "Declares Python dependencies used by the project’s scripts, including HTTP requests, YAML, plotting, label adjustment, and environment-variable support. It exports no functions or classes.",
+      "lines": 6
+    },
+    "scripts/plot.py": {
+      "hash": "fea2875dbfc88070d858070ad30a05f721fc25f6a05f7f280e5862b9ec8b9103",
+      "summary": "Source module implementing plot.py logic.",
+      "lines": 619
+    },
+    "src/constants.ts": {
+      "hash": "f438b286e1de6e326fd4c6cc30140f7e02e3ae6eff0e189f909b27da375c66c4",
+      "summary": "Defines and exports OneProvider identifiers, default configuration values, and npm package names via constants such as `ONEPROVIDER_PROVIDER_ID` and `ONEPROVIDER_DEFAULT_BASE_URL`. These shared defaults support provider setup elsewhere in the project.",
+      "lines": 7
+    },
+    "src/models.ts": {
+      "hash": "d5fbdd9026bcd4494c5495c71d2645d553033a306fc93e19751a0b2d5ee59af4",
+      "summary": "`src/models.ts` exports `ONEPROVIDER_DEFAULT_MODELS`, a curated registry of OneProvider model definitions and their capabilities, limits, and pricing for use throughout the project.",
+      "lines": 576
+    },
+    "src/plugin.ts": {
+      "hash": "b88099118920fa1d4cbd01a1b359fe5415fc13e1583a1c5a1994cb5bb0538afb",
+      "summary": "`plugin` registers the OneProvider integration for",
+      "lines": 198
+    },
+    "src/types.ts": {
+      "hash": "2be6ed5c539eafb0febfe0f33c1c3bfd109d31909dc5bf6e70d84eac932176c2",
+      "summary": "Defines the `ModelCost`, `ModelLimit`, and `OneProviderModelDefinition` interfaces for model pricing, capabilities, limits, and provider metadata. These shared types support model configuration across the project.",
+      "lines": 33
+    },
+    "tui/index.ts": {
+      "hash": "297b2dc636710d6fba52e98ca247ba6cad2a513f9d9beb15a648bb0c75eedbdf",
+      "summary": "Defines the default `oneprovider.tui` plugin, whose `setup` listens for credential update and switch events, shows a success toast, and unregisters listeners on cleanup. It provides OneProvider’s TUI feedback.",
+      "lines": 25
+    },
+    "tsconfig.build.json": {
+      "hash": "72c90365bb8c9e402da38e1bc9aaa856b15535f61de59a6183f86169b7920964",
+      "summary": "`tsconfig.build.json` configures TypeScript compilation for project source files, emitting JavaScript, declarations, and source maps into `dist`. It exports no functions or classes and serves as the project’s build configuration.",
+      "lines": 14
+    }
+  }
+}

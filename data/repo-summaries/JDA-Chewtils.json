@@ -1,0 +1,74 @@
+{
+  "repository": "JDA-Chewtils",
+  "updatedAt": "2026-11-01T07:20:25.659Z",
+  "filesCount": 12,
+  "directories": {
+    ".github/ISSUE_TEMPLATE": "Contains 3 module files (config.yml, bug_report.yml, feature_request.yml)",
+    ".github": "Contains 1 module files (PULL_REQUEST_TEMPLATE.md)",
+    ".github/workflows": "Contains 1 module files (build.yml)",
+    "command": "Contains 1 module files (README.md)",
+    "command/src/main/java/com/jagrosh/jdautilities/command": "Contains 4 module files (AnnotatedModuleCompiler.java, CommandBuilder.java, Command.java, CommandClient.java)"
+  },
+  "files": {
+    ".github/ISSUE_TEMPLATE/config.yml": {
+      "hash": "31a6c9a96bafea0257b93d8bd1a5c5a7cd6113c72ddce13027b7f018b4eefc18",
+      "summary": "This configuration file disables blank issues and provides custom contact links (such as Discord and Wiki) to guide users when creating repository issues.",
+      "lines": 18
+    },
+    ".github/ISSUE_TEMPLATE/bug_report.yml": {
+      "hash": "20f5785cac32727075d1af65b014d908a33e4cb0ed4ba95b5c5d6efc2f14a090",
+      "summary": "This file defines the GitHub issue template for reporting bugs in the project. It standardizes bug submissions by requiring a checklist and module selection.",
+      "lines": 50
+    },
+    ".github/ISSUE_TEMPLATE/feature_request.yml": {
+      "hash": "78a28b25ae987d2ba6169cb57320f60994bd554d51103eabe8dcdfc2e4f2749f",
+      "summary": "This file provides a GitHub issue template for submitting feature requests. It structures user submissions for new features to standardize reporting across the project.",
+      "lines": 50
+    },
+    "LICENSE.md": {
+      "hash": "b231f944cd688a3fae8264a056daa5787e212e6378aacd93d9bd352e27b57572",
+      "summary": "`LICENSE.md` contains the Apache License 2.0 terms governing use, modification, and distribution of the project. It defines no functions or classes and serves as the project’s legal licensing documentation.",
+      "lines": 202
+    },
+    ".github/PULL_REQUEST_TEMPLATE.md": {
+      "hash": "6ff521bdbc3612a7530b754ba232f69b9e53a1095977d9e8d609dd79d0b82195",
+      "summary": "This pull request template guides contributors through pre-submission checks and documenting PR details, including the affected or newly created JDA-Utilities module. It defines no exported functions or classes.",
+      "lines": 25
+    },
+    ".github/workflows/build.yml": {
+      "hash": "d50e144a6c877e5d03235ad33dad1e7ed206417f439518ae31826343aeda44a1",
+      "summary": "This GitHub Actions workflow builds the project on pushes and pull requests using Java 8, 11, and 17; it is the project’s Gradle CI validation pipeline.",
+      "lines": 25
+    },
+    "command/README.md": {
+      "hash": "68bf08913e7ffe34f23298534f02318cefdefcdb984fabee450bf9fa95014b22",
+      "summary": "Documents the JDA command framework, showing how to configure `CommandClientBuilder` and build a `CommandClient`. It introduces the package’s role in adding commands to bot projects.",
+      "lines": 35
+    },
+    "README.md": {
+      "hash": "889d325624e1f2e30622aebfbb93eb02e43507a14bda05437e62b114823f17c3",
+      "summary": "`README.md` documents JDA-Chewtils, a modular collection of utilities for building JDA bots, including command, commons, documentation, examples, and menu packages. It provides support, setup, and JDA compatibility guidance; it exports no functions or classes.",
+      "lines": 122
+    },
+    "command/src/main/java/com/jagrosh/jdautilities/command/AnnotatedModuleCompiler.java": {
+      "hash": "e69af9d8b253e5166dbc00d08c536d927cf75e19d0ed66e2b669c4748bddb9b2",
+      "summary": "`AnnotatedModuleCompiler` defines runtime conversion of objects annotated with `JDACommand.Module` into `Command` instances, enabling annotation-based command creation in the JDA command framework.",
+      "lines": 55
+    },
+    "command/src/main/java/com/jagrosh/jdautilities/command/CommandBuilder.java": {
+      "hash": "02e156d661ff041fbb7ac795219c41b8e2078ca56eff222fd5ff32ff21763940",
+      "summary": "`CommandBuilder` provides a chain-setter utility to dynamically construct `Command` instances at runtime. It serves as a flexible alternative to extending the base `Command` class.",
+      "lines": 533
+    },
+    "command/src/main/java/com/jagrosh/jdautilities/command/Command.java": {
+      "hash": "2bde409455fb64509c99c767343e0e8b4aa5b7e8c022611129d96da902a9e3ad",
+      "summary": "`Command` defines the blueprint for executable bot commands, providing configuration fields and the abstract `execute(CommandEvent)` method as the core component of the command framework.",
+      "lines": 665
+    },
+    "command/src/main/java/com/jagrosh/jdautilities/command/CommandClient.java": {
+      "hash": "d15dd33eb7cdb59e2b0e9bcd0aa644ff7abbc5e91e372caf5cdbc6af8da0cb6b",
+      "summary": "`CommandClient` defines the core bot configuration and data interface. It serves as the primary contract for managing commands, owners, and execution contexts.",
+      "lines": 626
+    }
+  }
+}

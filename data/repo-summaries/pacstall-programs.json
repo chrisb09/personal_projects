@@ -1,0 +1,73 @@
+{
+  "repository": "pacstall-programs",
+  "updatedAt": "2026-11-01T07:24:12.316Z",
+  "filesCount": 12,
+  "directories": {
+    ".github/ISSUE_TEMPLATE": "Contains 2 module files (PACKAGE-BREAKAGE.yml, PACKAGE-REQUEST.yml)",
+    ".github/PULL_REQUEST_TEMPLATE": "Contains 2 module files (add-package.yaml, update-package.yaml)",
+    ".github": "Contains 2 module files (dependabot.yml, labeler.yml)",
+    ".github/workflows": "Contains 4 module files (pr.yml, distrolist.yml, main.yml, tests.yml)"
+  },
+  "files": {
+    ".github/ISSUE_TEMPLATE/PACKAGE-BREAKAGE.yml": {
+      "hash": "e7fdbc412b03fe5305aabb1259c4cce368e213292abdb7bff80ec049ee25d4e1",
+      "summary": "This GitHub issue template collects required package, version, Pacstall, distro, and log details, with an optional patch. It standardizes broken-package reports for project maintainers; it exports no functions or classes.",
+      "lines": 57
+    },
+    ".github/ISSUE_TEMPLATE/PACKAGE-REQUEST.yml": {
+      "hash": "421433908f1496083dee086f8119ef1fae01bf6c97174809dce3561392bd3b96",
+      "summary": "This GitHub issue template collects package requests for the Pacstall repository, including package types, a required URL, and optional build guidance and context. It defines no exported functions or classes; its role is to standardize package-request submissions.",
+      "lines": 39
+    },
+    ".github/PULL_REQUEST_TEMPLATE/add-package.yaml": {
+      "hash": "af7e3e727fd7550ba5ba374824ee344d58987915c89a0ac9f1c004638e6e54ff",
+      "summary": "Defines the GitHub pull request template “Add",
+      "lines": 7
+    },
+    ".github/dependabot.yml": {
+      "hash": "426dd7cd6279110032a860824241a79284f3e964c7550c5580579be0c4aded4f",
+      "summary": "`.github/dependabot.yml` configures Dependabot to check GitHub Actions dependencies in the repository root daily and use scoped `ci` commit messages; it automates dependency updates.",
+      "lines": 16
+    },
+    ".github/labeler.yml": {
+      "hash": "489ef5fe8c32d5515a9eba34753d7b99957f9c9d5957600b51aeea7014794065",
+      "summary": "`.github/labeler.yml` configures GitHub pull request labeling by matching title patterns to package and repository action labels, automating PR categorization.",
+      "lines": 24
+    },
+    ".github/PULL_REQUEST_TEMPLATE/update-package.yaml": {
+      "hash": "d8395ff46138107975c9cac8b3e45acaa53efb4fa4b4ac5aa91f2b3ada9b8293",
+      "summary": "Defines the “Update package” pull request template for pacstall-programs, prepopulating the title format, label, and assignee; it exports no functions or classes.",
+      "lines": 7
+    },
+    ".github/workflows/pr.yml": {
+      "hash": "f339c79da99352cb06f454dc54d9fcf1d60b702fc438844ac32f8cbc040ce273",
+      "summary": "This GitHub Actions workflow runs on opened or reopened pull requests and assigns each pull request’s author as its assignee.",
+      "lines": 15
+    },
+    ".github/workflows/distrolist.yml": {
+      "hash": "99957ba150f7698ba779da150b7e9afb8fc31b8092421eb7fbc0a74c229f80a3",
+      "summary": "This GitHub Actions workflow runs on a schedule, manual dispatch, or pushes to `master` to generate `distrolist` from Ubuntu",
+      "lines": 103
+    },
+    ".github/workflows/main.yml": {
+      "hash": "a3085285eaa0c3e1b83bb23656c27d2dff3b2ed0fff7c0cc34d28e3baf63b92c",
+      "summary": "This GitHub Actions workflow runs `srvaroa/labeler@master` on opened,",
+      "lines": 19
+    },
+    "README.md": {
+      "hash": "865f8709ae587fb1c0ea2c0194d9ff586de6894ab8d803b999acfc748ba3e516",
+      "summary": "`README.md` documents the Pacstall Programs repository structure, package-repository setup, and development requirements; it exports no functions or classes. It guides users contributing pacscripts and developers preparing the project environment.",
+      "lines": 70
+    },
+    "CONTRIBUTING.md": {
+      "hash": "85738c9bb06fc5ad126b07f2a83fdb1af127db391bafde5f3578dec42ebab90f",
+      "summary": "`CONTRIBUTING.md` documents contribution guidelines, including how to create pull requests, test packages, and follow PR etiquette. It helps contributors meet the repository’s review and quality expectations.",
+      "lines": 26
+    },
+    ".github/workflows/tests.yml": {
+      "hash": "bab41cdaba12f2ecf9fdae6eaf3df8a300ac6ac4566a6607f990f5f2c6d11da3",
+      "summary": "This GitHub Actions workflow runs pull-request tests across Ubuntu/Debian releases and Pacstall versions, conditionally installing system utilities when package scripts change. It exports no functions or",
+      "lines": 238
+    }
+  }
+}

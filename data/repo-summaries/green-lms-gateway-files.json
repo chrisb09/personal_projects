@@ -1,6 +1,6 @@
 {
   "repository": "green-lms-gateway-files",
-  "updatedAt": "2026-10-31T11:11:35.967Z",
+  "updatedAt": "2026-11-01T07:21:32.105Z",
   "filesCount": 12,
   "directories": {
     "configs": "Contains 2 module files (values-dev.yaml, values-prod.yaml)",

@@ -75,7 +75,8 @@
     "main-author": "Main Author",
     "contributor": "Contributor",
     "fork-maintainer": "Fork Maintainer",
-    "backend-co-lead": "Backend Co-Lead"
+    "backend-co-lead": "Backend Co-Lead",
+    "project-lead": "Project Lead"
   },
   "statuses": {
     "active": "Active",

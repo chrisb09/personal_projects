@@ -1,0 +1,181 @@
+{
+  "id": "the-legend-of-war",
+  "name": "The Legend of War",
+  "tagline": "Long-running Minecraft total-conversion network with distributed server architecture and custom gameplay systems",
+  "year": "2012 - Present",
+  "category": "fullstack",
+  "status": "active",
+  "projectType": "software-project",
+  "role": "project-lead",
+  "sourceType": "closed-source",
+  "aiUsage": "major",
+  "aiUtilization": "ai-enhanced",
+  "description": "The Legend of War is a four-faction Minecraft PvP network founded with friends in 2012. After the original server era, development continued sporadically from 2016 onward, with a Redis-based architecture phase in 2018 and a coordinated GitLab reboot in 2023. The current Phoenix relaunch reimagines the server as a total conversion rather than a conventional Minecraft setup.\n\nChristian founded the project and leads its game and systems design, architecture and infrastructure. Tim is the lead gameplay developer, while Moritz contributes building, gameplay testing and balancing feedback.\n\nThe modern Java 21 network combines Paper game servers with a Velocity proxy and Redis-backed state. Firecord, published as a separate open-source project, provides distributed object synchronization. Cinder, mklib and npclib supply shared services, item and combat statistics, and packet-level NPCs; Phoenix builds the faction, quest and combat gameplay on top. Additional plugins provide graph-based roads, regenerating farm worlds, lobby and PvP test environments, world management and server telemetry.\n\nThe surrounding platform includes a public BlueMap with faction territories and routes, a bilingual Flask task tracker whose REST API connects Discord and in-game /todo commands, and LLM-backed chat translation and help features. Development remains intermittent: the public website and map are online, but the full Phoenix relaunch is still being built and balanced.",
+  "purpose": "To turn a long-running community Minecraft server into a modular multiplayer game with distinct factions, custom combat and progression, persistent network-wide state, automated world systems, and integrated web and community tooling.",
+  "technologies": [
+    "Java 21",
+    "Paper",
+    "Velocity",
+    "Redis",
+    "AspectJ",
+    "Maven",
+    "Python",
+    "Flask",
+    "SQLite",
+    "JavaScript",
+    "BlueMap",
+    "NMS / Packets",
+    "REST",
+    "Discord API",
+    "Nginx"
+  ],
+  "dependencies": [
+    "Minecraft 1.21.x",
+    "Paper and Velocity server runtimes",
+    "Redis and Jedis",
+    "AspectJ compile-time weaving for Firecord",
+    "Java 21 and Maven",
+    "Python 3 with Flask, Flask-SQLAlchemy and Flask-Login",
+    "BlueMap for the public web map",
+    "External Minecraft authentication, Discord and LLM services"
+  ],
+  "expertise": [
+    "Multi-server game architecture",
+    "Distributed state synchronization",
+    "Minecraft plugin and NMS development",
+    "Multiplayer game systems design",
+    "Spatial data structures and pathfinding",
+    "Infrastructure and service integration",
+    "REST API design",
+    "Long-running project modernization",
+    "Community and live-service operations"
+  ],
+  "strengths": [
+    "Evolved a four-faction community server founded in 2012 into a modular total-conversion architecture",
+    "Separated communication, shared libraries, gameplay and server-specific plugins across focused Java repositories",
+    "Built network-wide state and integrations around Redis, Firecord, Paper and Velocity",
+    "Implemented custom combat foundations, faction abilities, quests, packet-based NPCs and automated farm-world regeneration as a team",
+    "Connected graph-based in-game roads and faction territories to a public interactive BlueMap",
+    "Integrated a bilingual task tracker with a REST API, Discord notifications and in-game commands",
+    "Preserved historical screenshots, maps, design documents and development history alongside the modern codebase"
+  ],
+  "limitations": [
+    "Development has been intermittent since 2016, and the complete Phoenix seasonal relaunch has not shipped",
+    "The September 2026 project snapshot still listed the internal PvP balancing test as the next major gate",
+    "Most implementation repositories are private; Firecord and the public web properties are the main externally inspectable artifacts",
+    "No pre-2023 source-control history is available, so repository statistics cover only the modern reboot",
+    "Several advanced city, economy, spotting and seasonal progression systems remain designs rather than shipped features"
+  ],
+  "roadmap": [
+    "Complete the internal PvP test and tune combat, abilities and keystones from its results",
+    "Finish the city, land-claim and economic gameplay loops",
+    "Prepare the seasonal Phoenix relaunch and its onboarding experience",
+    "Publish a new development log with current gameplay and world progress"
+  ],
+  "liveUrl": "https://legendofwar.net",
+  "demoUrl": "https://map.legendofwar.net",
+  "repos": [
+    {
+      "name": "the-legend-of-war",
+      "url": "https://gitlab.com/legend-of-phoenix/the-legend-of-war",
+      "type": "gitlab",
+      "private": true,
+      "branch": "master",
+      "ignoreDirectories": ["notes", "summaries", "wiki", "videoscripts"]
+    },
+    {
+      "name": "phoenix",
+      "url": "https://gitlab.com/legend-of-phoenix/phoenix",
+      "type": "gitlab",
+      "private": true
+    },
+    {
+      "name": "minilib",
+      "url": "https://gitlab.com/legend-of-phoenix/minilib",
+      "type": "gitlab",
+      "private": true,
+      "excludeFromStats": true
+    },
+    {
+      "name": "cinder",
+      "url": "https://gitlab.com/legend-of-phoenix/cinder",
+      "type": "gitlab",
+      "private": true
+    },
+    {
+      "name": "mklib",
+      "url": "https://gitlab.com/legend-of-phoenix/mklib",
+      "type": "gitlab",
+      "private": true
+    },
+    {
+      "name": "npclib",
+      "url": "https://gitlab.com/legend-of-phoenix/npclib",
+      "type": "gitlab",
+      "private": true
+    },
+    {
+      "name": "aurim",
+      "url": "https://gitlab.com/legend-of-phoenix/aurim",
+      "type": "gitlab",
+      "private": true
+    },
+    {
+      "name": "farmingio",
+      "url": "https://gitlab.com/legend-of-phoenix/farmingio",
+      "type": "gitlab",
+      "private": true
+    },
+    {
+      "name": "lobbyhd",
+      "url": "https://gitlab.com/legend-of-phoenix/lobbyhd",
+      "type": "gitlab",
+      "private": true
+    },
+    {
+      "name": "pvpgameplaytest",
+      "url": "https://gitlab.com/legend-of-phoenix/pvpgameplaytest",
+      "type": "gitlab",
+      "private": true
+    },
+    {
+      "name": "autarky",
+      "url": "https://gitlab.com/legend-of-phoenix/autarky",
+      "type": "gitlab",
+      "private": true
+    },
+    {
+      "name": "serverstatus",
+      "url": "https://gitlab.com/legend-of-phoenix/serverstatus",
+      "type": "gitlab",
+      "private": true
+    },
+    {
+      "name": "todo",
+      "url": "https://gitlab.com/legend-of-phoenix/todo",
+      "type": "gitlab",
+      "private": true,
+      "branch": "redesign",
+      "ignoreDirectories": ["instance", ".zcode", "__pycache__"]
+    }
+  ],
+  "mirrors": [],
+  "screenshots": [],
+  "relatedProjects": [
+    {
+      "name": "Firecord",
+      "relation": "Distributed object-memory layer used by the network",
+      "projectId": "firecord"
+    },
+    {
+      "name": "Minecraft Chat Translator",
+      "relation": "Fine-tuned translation service integrated with in-game chat",
+      "projectId": "minecraft-chat-translator"
+    },
+    {
+      "name": "Legend of War on YouTube",
+      "relation": "Historical trailers and current development logs",
+      "url": "https://www.youtube.com/@LegendOfWarNet"
+    }
+  ]
+}

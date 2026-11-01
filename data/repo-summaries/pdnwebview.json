@@ -1,0 +1,66 @@
+{
+  "repository": "pdnwebview",
+  "updatedAt": "2026-11-01T07:24:27.639Z",
+  "filesCount": 11,
+  "directories": {
+    "data/testimage": "Contains 7 module files (0.json, 2.json, 3.json, 1.json)",
+    "lib/font-awesome-4.7.0": "Contains 1 module files (HELP-US-OUT.txt)"
+  },
+  "files": {
+    "LICENSE.md": {
+      "hash": "4bb0bc09c8257a2a599a732173648b35ebe43dd8222c2e9b7dcb918348434408",
+      "summary": "`LICENSE.md` defines the MIT License terms for the project, granting users permission to use, modify, and distribute the software. It exports no code.",
+      "lines": 22
+    },
+    "README.md": {
+      "hash": "1ac1262306bce241ec2e9b5052d7a9336b6936143e53e2a737728143df6862b0",
+      "summary": "This `README.md` file documents project setup, installation, and usage instructions for rendering exported `pdnexport` paint.net projects in a web browser.",
+      "lines": 52
+    },
+    "data/testimage/0.json": {
+      "hash": "b3ba41288cd6ee81832bb3b0565eb80c3797930993875854bc59d914ce245011",
+      "summary": "This JSON data file stores metadata for a test image layer named `Background`. It serves as a test fixture for image processing and bounding box calculations within the project.",
+      "lines": 1
+    },
+    "data/testimage/2.json": {
+      "hash": "82d891fcf4f61fc9e65c7df52a5c789558aa374a720b525330f2b9d15191539b",
+      "summary": "This JSON file stores metadata for the `Lightning` test image, defining its visibility, opacity, and spatial coordinates. It serves as ground-truth test data for image processing and object detection pipelines.",
+      "lines": 1
+    },
+    "data/testimage/3.json": {
+      "hash": "64e00f7d6fa950e89d7af08496806fca5123a5b5a79c6cc988af55a50ab00542",
+      "summary": "This JSON test data file defines object properties such as `name`, `center_of_mass`, and `bounding_box` for a square. It provides ground-truth annotation data for testing spatial image processing algorithms in the project.",
+      "lines": 1
+    },
+    "data/testimage/1.json": {
+      "hash": "47acc03e584a36e6427914f09cc239fd0e8c9bf34c320250b1f470c356cd40c4",
+      "summary": "This JSON data file defines a single `Circle` object with spatial and visual properties. It serves as a test asset for image processing validation.",
+      "lines": 1
+    },
+    "data/testimage/4.json": {
+      "hash": "31e57f735de89fa3d7a62cdc9dcfe1d2b9baa7fab4049460bc42edeb562e0698",
+      "summary": "This JSON file stores test metadata for an annotated \"Arrow\" image element. It serves as a fixture for validating object detection and bounding box parsing in tests.",
+      "lines": 1
+    },
+    "data/testimage/hash.txt": {
+      "hash": "21ece4b1af8cc990c8e894b0063b1f634de7666e381aafd566cd7b0a4d3bde34",
+      "summary": "This file stores a cryptographic hash value used to verify test image integrity in the project's test suite.",
+      "lines": 1
+    },
+    "data/testimage/info.json": {
+      "hash": "8ac90aa0cc709d7889ee2f62f2a8f087554c703da0c30ae516f6c697d0853407",
+      "summary": "This JSON file stores metadata for a test image, including dimensions and timestamps. It serves as static test fixture data within the project.",
+      "lines": 1
+    },
+    "lib/font-awesome-4.7.0/HELP-US-OUT.txt": {
+      "hash": "3034ebb0f7c42896648f5303e3499cd7dfe4db010f9578ff45fb42af2884ed6b",
+      "summary": "This file is a promotional text document by Dave Gandy that encourages users to check out his related project, Fort Awesome. It contains no executable code or exported functions, serving solely as project advertisement.",
+      "lines": 8
+    },
+    "drawCanvas.js": {
+      "hash": "12377b39d48fb3ca849678e27d2d0c1a39bb0740e5bd88e3944614f2a416e78b",
+      "summary": "`drawCanvas.js` manages canvas rendering state, camera zoom/pan offsets, and utility functions like `detectMob`, `is_mobile`, and `formatTime`. It acts as the core rendering and utility module for the project.",
+      "lines": 1469
+    }
+  }
+}

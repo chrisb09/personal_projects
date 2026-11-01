@@ -1,0 +1,73 @@
+{
+  "repository": "torpy",
+  "updatedAt": "2026-11-01T07:25:30.696Z",
+  "filesCount": 12,
+  "directories": {
+    ".github": "Contains 1 module files (FUNDING.yml)",
+    "tests/unittest/data/network_status": "Contains 2 module files (consensus.json, consensus_extra.json)",
+    "tests/integration": "Contains 1 module files (test_integration.py)",
+    "tests/unittest": "Contains 2 module files (test_consensus.py, test_crypto.py)"
+  },
+  "files": {
+    ".github/FUNDING.yml": {
+      "hash": "602056c305e3e8e8d2b9d4556cc9e0dbfa5363948770000cde8e659240cf1423",
+      "summary": "This configuration file specifies supported crowdfunding platforms. It exports no classes or functions and manages project financial sponsorship links.",
+      "lines": 4
+    },
+    "appveyor.yml": {
+      "hash": "0b9bae6826f0b66014f9e6179f02a2bbcea6591965b9d07ab150080fbef7231c",
+      "summary": "This file configures AppVeyor CI to automatically test the project across multiple Python environments using `tox`. It serves as the project's continuous integration build pipeline configuration.",
+      "lines": 16
+    },
+    "README.md": {
+      "hash": "8387cf422665e31f1f80b3a294850273531b6409a830e9ae8e1a1b6615c854a1",
+      "summary": "This file serves as the project README, documenting the pure Python Tor client implementation, its features, and usage examples to route traffic through the Tor network.",
+      "lines": 184
+    },
+    "requirements-test.txt": {
+      "hash": "9d28c8b184d31e2adaf093aeb27cf87924f29749dd527d2385f880614395664b",
+      "summary": "This file specifies the project's testing and code coverage dependencies, including `pytest` and `coverage`. It plays a crucial role in configuring the development and CI/CD environments for running test suites.",
+      "lines": 3
+    },
+    "requirements.txt": {
+      "hash": "29537b26f396e39c93a879abdcb6e392363c05ce26d3c0d519fb4a057005f91a",
+      "summary": "This file specifies the exact Python package dependencies and pinned versions required for the project. It ensures reproducible builds and is automatically managed by `pip-compile`.",
+      "lines": 10
+    },
+    "requirements-flake8.txt": {
+      "hash": "e6e06f298cc82d89253fc2f22ec64be3f993371dd56869f75b83af1de5842ce9",
+      "summary": "This file specifies the development dependencies for `flake8` linting and code style enforcement. It ensures consistent code formatting across the project.",
+      "lines": 9
+    },
+    "setup.py": {
+      "hash": "31739f000fda7034637105e1adc42252f013b16cf461b18a6a7469f56c1b6a22",
+      "summary": "This file configures packaging and installation for the `torpy` project using `setup()`. It manages dependencies, package discovery via `find_packages()`, and defines entry points for command-line interfaces.",
+      "lines": 57
+    },
+    "tests/unittest/data/network_status/consensus.json": {
+      "hash": "e5c8c3031c7356aa00a8f57f8c75bfffa5259bb76ba57b91607141a9a59a3f78",
+      "summary": "This file provides mock JSON data representing a Tor network consensus. It serves as test fixtures for unit tests parsing network status documents.",
+      "lines": 184
+    },
+    "tests/integration/test_integration.py": {
+      "hash": "0d2c46f5cea26ec373b17b828d40a45046bc9f70f70a0a7feb0eb569f14aab62",
+      "summary": "This file performs end-to-end integration tests for Tor connectivity. It exports `test_clearnet_raw` and serves to validate network requests through `TorClient` in the test suite.",
+      "lines": 263
+    },
+    "tests/unittest/data/network_status/consensus_extra.json": {
+      "hash": "156bed852c5dcc882dac29515f2f5ec146e8e55832dcedeaed87a68a9e4a2326",
+      "summary": "This JSON file provides mock network status consensus data with extended fields for unit testing. It serves as test fixture data for validating consensus parsing logic.",
+      "lines": 184
+    },
+    "tests/unittest/test_consensus.py": {
+      "hash": "a2b75161e476f442c0d554367af12dafa96d43ccb19c278139bbc18838c74e82",
+      "summary": "This test file verifies the parsing functionality of Tor consensus data. It contains unit tests ensuring `DirectoryServer`, `DirectoryFlags`, and `RouterFlags` process consensus lines correctly.",
+      "lines": 57
+    },
+    "tests/unittest/test_crypto.py": {
+      "hash": "bf63555e42c517a94014a6e6d5bc6ec905ad0449d3a9046f384db5e45eee76fb",
+      "summary": "This file tests cryptographic utilities like Diffie-Hellman operations within the project's test suite. It exports `to_bytes`, `simple_urandom`, and `test_dh`.",
+      "lines": 84
+    }
+  }
+}

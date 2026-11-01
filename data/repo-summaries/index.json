@@ -1,12 +1,436 @@
 {
+  "CPP-ML-Interface": {
+    "filesCount": 12,
+    "updatedAt": "2026-11-01T07:20:17.983Z",
+    "directories": [
+      ".github/workflows",
+      "dl_clients"
+    ]
+  },
+  "JDA-Chewtils": {
+    "filesCount": 12,
+    "updatedAt": "2026-11-01T07:20:25.659Z",
+    "directories": [
+      ".github/ISSUE_TEMPLATE",
+      ".github",
+      ".github/workflows",
+      "command",
+      "command/src/main/java/com/jagrosh/jdautilities/command"
+    ]
+  },
+  "MusicBot": {
+    "filesCount": 12,
+    "updatedAt": "2026-11-01T07:20:28.328Z",
+    "directories": [
+      ".github",
+      ".github/ISSUE_TEMPLATE",
+      ".github/workflows",
+      "docs"
+    ]
+  },
+  "advoexport": {
+    "filesCount": 11,
+    "updatedAt": "2026-11-01T07:20:43.766Z",
+    "directories": []
+  },
+  "aurim": {
+    "filesCount": 12,
+    "updatedAt": "2026-11-01T07:20:54.743Z",
+    "directories": [
+      "src/main/java/net/legendofwar/aurim",
+      "src/main/java/net/legendofwar/aurim/commands",
+      "src/main/java/net/legendofwar/aurim/handler",
+      "src/main/java/net/legendofwar/aurim/holders",
+      "src/main/java/net/legendofwar/aurim/region"
+    ]
+  },
+  "autarky": {
+    "filesCount": 8,
+    "updatedAt": "2026-11-01T07:20:58.477Z",
+    "directories": [
+      "src/main/java/net/legendofwar/autarky",
+      "src/main/java/net/legendofwar/autarky/commands",
+      "src/main/resources"
+    ]
+  },
+  "cinder": {
+    "filesCount": 12,
+    "updatedAt": "2026-11-01T07:21:05.063Z",
+    "directories": [
+      "src/main/java/net/legendofwar/cinder/data",
+      "src/main/java/net/legendofwar/cinder/config"
+    ]
+  },
+  "cycling_power_estimator": {
+    "filesCount": 12,
+    "updatedAt": "2026-11-01T07:21:16.575Z",
+    "directories": [
+      "backend",
+      "backend/app/api",
+      "backend/app",
+      "backend/app/db"
+    ]
+  },
+  "farmingio": {
+    "filesCount": 12,
+    "updatedAt": "2026-11-01T07:21:21.741Z",
+    "directories": [
+      "src/main/java/net/legendofwar/farmingio",
+      "src/main/java/net/legendofwar/farmingio/commands",
+      "src/main/java/net/legendofwar/farmingio/events",
+      "src/main/java/net/legendofwar/farmingio/generation"
+    ]
+  },
+  "find-duplicates": {
+    "filesCount": 6,
+    "updatedAt": "2026-11-01T07:21:23.328Z",
+    "directories": []
+  },
+  "firecord": {
+    "filesCount": 12,
+    "updatedAt": "2026-11-01T07:21:27.785Z",
+    "directories": [
+      "src/main/java/net/legendofwar/firecord",
+      "src/main/java/net/legendofwar/firecord/command",
+      "src/main/java/net/legendofwar/firecord/bungee",
+      "src/main/java/net/legendofwar/firecord/communication"
+    ]
+  },
+  "github-page.ferienw-am-meer.de": {
+    "filesCount": 12,
+    "updatedAt": "2026-11-01T07:21:32.072Z",
+    "directories": [
+      "Scripts/Widgets/SharedResources",
+      "Scripts/Widgets/Navbar",
+      ".github/workflows",
+      "app/anreise",
+      "Scripts",
+      "app/datenschutz",
+      "app/fewo-105/badezimmer",
+      "app/fewo-105/balkon",
+      "app/fewo-105/wohnzimmer",
+      "app/fewo-105",
+      "app/fewo-105/schlafzimmer"
+    ]
+  },
+  "green-lms-challenges": {
+    "filesCount": 12,
+    "updatedAt": "2026-11-01T07:21:32.081Z",
+    "directories": [
+      "configs",
+      "src/handlers"
+    ]
+  },
+  "green-lms-checkpoints": {
+    "filesCount": 12,
+    "updatedAt": "2026-11-01T07:21:32.089Z",
+    "directories": [
+      "configs",
+      "src/handlers"
+    ]
+  },
+  "green-lms-gateway": {
+    "filesCount": 12,
+    "updatedAt": "2026-11-01T07:21:32.096Z",
+    "directories": [
+      "configs",
+      "src/middlewares",
+      "src"
+    ]
+  },
+  "green-lms-gateway-files": {
+    "filesCount": 12,
+    "updatedAt": "2026-11-01T07:21:32.105Z",
+    "directories": [
+      "configs",
+      "src/handlers",
+      "src/helpers",
+      "src/middlewares",
+      "src"
+    ]
+  },
+  "green-lms-progress": {
+    "filesCount": 12,
+    "updatedAt": "2026-11-01T07:21:32.112Z",
+    "directories": [
+      "configs",
+      "src/handlers/cycle",
+      "src/handlers"
+    ]
+  },
+  "green-lms-shared-utils": {
+    "filesCount": 12,
+    "updatedAt": "2026-11-01T07:21:32.121Z",
+    "directories": [
+      "constants",
+      "cache",
+      "db",
+      "db/schemas"
+    ]
+  },
   "green-lms-ui-2.0": {
     "filesCount": 12,
-    "updatedAt": "2026-10-31T11:12:26.819Z",
+    "updatedAt": "2026-11-01T07:21:32.129Z",
     "directories": [
       "configs",
       "server",
       "src/components/Alerts",
       "src"
+    ]
+  },
+  "ibus": {
+    "filesCount": 12,
+    "updatedAt": "2026-11-01T07:21:52.423Z",
+    "directories": [
+      "download",
+      "src/de/christian/f/brinkmann/ibus"
+    ]
+  },
+  "image-rename-manual-gui": {
+    "filesCount": 2,
+    "updatedAt": "2026-11-01T07:21:58.326Z",
+    "directories": []
+  },
+  "jmb-container": {
+    "filesCount": 6,
+    "updatedAt": "2026-11-01T07:22:08.296Z",
+    "directories": [
+      ".github/workflows"
+    ]
+  },
+  "keepassxc_cleanup": {
+    "filesCount": 3,
+    "updatedAt": "2026-11-01T07:22:10.942Z",
+    "directories": []
+  },
+  "libretranslate-java": {
+    "filesCount": 7,
+    "updatedAt": "2026-11-01T07:22:15.562Z",
+    "directories": [
+      "src/main/java/space/dynomake/libretranslate",
+      "src/main/java/space/dynomake/libretranslate/type",
+      "src/main/java/space/dynomake/libretranslate/util",
+      "src/main/java/space/dynomake/libretranslate/exception",
+      "src/test/java/space/dynomake/libretranslate"
+    ]
+  },
+  "lobbyhd": {
+    "filesCount": 12,
+    "updatedAt": "2026-11-01T07:22:19.001Z",
+    "directories": [
+      "src/main/java/net/legendofwar/lobbyhd",
+      "src/main/java/net/legendofwar/lobbyhd/commands",
+      "src/main/java/net/legendofwar/lobbyhd/npc"
+    ]
+  },
+  "map-color-convert": {
+    "filesCount": 6,
+    "updatedAt": "2026-11-01T07:22:20.265Z",
+    "directories": []
+  },
+  "mega-tor-downloader": {
+    "filesCount": 7,
+    "updatedAt": "2026-11-01T07:22:28.065Z",
+    "directories": [
+      "web"
+    ]
+  },
+  "minecraft-chat-translator": {
+    "filesCount": 12,
+    "updatedAt": "2026-11-01T07:22:31.776Z",
+    "directories": [
+      "data",
+      "engine",
+      "rawdata"
+    ]
+  },
+  "minilib": {
+    "filesCount": 12,
+    "updatedAt": "2026-11-01T07:22:52.969Z",
+    "directories": [
+      "script",
+      "src/main/java/net/legendofwar/minilib/lib"
+    ]
+  },
+  "mklib": {
+    "filesCount": 12,
+    "updatedAt": "2026-11-01T07:23:05.566Z",
+    "directories": [
+      "script",
+      "src/main/java/net/legendofwar/mklib"
+    ]
+  },
+  "npclib": {
+    "filesCount": 12,
+    "updatedAt": "2026-11-01T07:23:24.798Z",
+    "directories": [
+      "script",
+      "src/main/java/net/legendofwar/npclib",
+      "src/main/java/net/legendofwar/npclib/api",
+      "src/main/java/net/legendofwar/npclib/entity",
+      "src/main/java/net/legendofwar/npclib/command"
+    ]
+  },
+  "nudenetv2": {
+    "filesCount": 12,
+    "updatedAt": "2026-11-01T07:23:27.583Z",
+    "directories": [
+      "NudeNetv2",
+      "fastDeploy_recipes",
+      "fastDeploy_recipes/classifier"
+    ]
+  },
+  "opencode-antigravity-auth": {
+    "filesCount": 12,
+    "updatedAt": "2026-11-01T07:23:36.288Z",
+    "directories": [
+      ".github/ISSUE_TEMPLATE",
+      ".github",
+      ".github/workflows"
+    ]
+  },
+  "opencode-kiconnect": {
+    "filesCount": 9,
+    "updatedAt": "2026-11-01T07:23:38.363Z",
+    "directories": [
+      "src",
+      "scripts"
+    ]
+  },
+  "opencode-oneprovider": {
+    "filesCount": 12,
+    "updatedAt": "2026-11-01T07:23:49.910Z",
+    "directories": [
+      "scripts",
+      "src",
+      "tui"
+    ]
+  },
+  "pacstall-programs": {
+    "filesCount": 12,
+    "updatedAt": "2026-11-01T07:24:12.316Z",
+    "directories": [
+      ".github/ISSUE_TEMPLATE",
+      ".github/PULL_REQUEST_TEMPLATE",
+      ".github",
+      ".github/workflows"
+    ]
+  },
+  "pdnexport": {
+    "filesCount": 5,
+    "updatedAt": "2026-11-01T07:24:24.744Z",
+    "directories": []
+  },
+  "pdnwebview": {
+    "filesCount": 11,
+    "updatedAt": "2026-11-01T07:24:27.639Z",
+    "directories": [
+      "data/testimage",
+      "lib/font-awesome-4.7.0"
+    ]
+  },
+  "personal_projects": {
+    "filesCount": 12,
+    "updatedAt": "2026-11-01T07:24:31.084Z",
+    "directories": [
+      "config",
+      "config/projects/MusicBot",
+      "config/projects/cpp-ml-interface",
+      "config/projects/advoexport",
+      "config/projects/cycling-power-estimator",
+      "config/projects/exam-system-backend",
+      "config/projects/custom-orchestration"
+    ]
+  },
+  "phoenix": {
+    "filesCount": 12,
+    "updatedAt": "2026-11-01T07:24:34.120Z",
+    "directories": [
+      "src/main/java/net/legendofwar/phoenix",
+      "src/main/java/net/legendofwar/phoenix/auctions",
+      "src/main/java/net/legendofwar/phoenix/auctions/itemgroups"
+    ]
+  },
+  "php-autoindexed-file-viewer": {
+    "filesCount": 9,
+    "updatedAt": "2026-11-01T07:24:38.772Z",
+    "directories": [
+      "docker"
+    ]
+  },
+  "pvpgameplaytest": {
+    "filesCount": 12,
+    "updatedAt": "2026-11-01T07:24:56.426Z",
+    "directories": [
+      "src/main/java/net/legendofwar/pvpgameplaytest",
+      "src/main/java/net/legendofwar/pvpgameplaytest/eventhandler",
+      "src/main/java/net/legendofwar/pvpgameplaytest/commands"
+    ]
+  },
+  "qbmanage": {
+    "filesCount": 4,
+    "updatedAt": "2026-11-01T07:25:03.468Z",
+    "directories": []
+  },
+  "redis-dump-load": {
+    "filesCount": 12,
+    "updatedAt": "2026-11-01T07:25:16.919Z",
+    "directories": [
+      "tests",
+      "tests/fixtures"
+    ]
+  },
+  "redis_load_store": {
+    "filesCount": 2,
+    "updatedAt": "2026-11-01T07:25:17.549Z",
+    "directories": []
+  },
+  "serverstatus": {
+    "filesCount": 7,
+    "updatedAt": "2026-11-01T07:25:19.362Z",
+    "directories": [
+      "src/main/java/net/legendofwar/paper",
+      "src/main/resources",
+      "src/main/java/net/legendofwar/serverstatus",
+      "src/main/java/net/legendofwar/velocity"
+    ]
+  },
+  "the-legend-of-war": {
+    "filesCount": 12,
+    "updatedAt": "2026-11-01T07:25:21.922Z",
+    "directories": [
+      "devstack",
+      "notes",
+      "notes/archive"
+    ]
+  },
+  "todo": {
+    "filesCount": 8,
+    "updatedAt": "2026-11-01T07:25:27.777Z",
+    "directories": []
+  },
+  "torpy": {
+    "filesCount": 12,
+    "updatedAt": "2026-11-01T07:25:30.696Z",
+    "directories": [
+      ".github",
+      "tests/unittest/data/network_status",
+      "tests/integration",
+      "tests/unittest"
+    ]
+  },
+  "torpyjob": {
+    "filesCount": 7,
+    "updatedAt": "2026-11-01T07:25:40.813Z",
+    "directories": [
+      "torpyjob"
+    ]
+  },
+  "userbenchmark-web-scraper": {
+    "filesCount": 12,
+    "updatedAt": "2026-11-01T07:25:49.720Z",
+    "directories": [
+      "docker/docker_client"
     ]
   }
 }

@@ -1,0 +1,18 @@
+{
+  "repository": "image-rename-manual-gui",
+  "updatedAt": "2026-11-01T07:21:58.326Z",
+  "filesCount": 2,
+  "directories": {},
+  "files": {
+    "README.md": {
+      "hash": "358f1ced57b080cf8a3c2a33d0ee4f4a2755391d0b19ae0c13773bba1b1ed1e4",
+      "summary": "This `README.md` documents the manual media renaming tool, which uses `main.py` to provide a GUI for batch-renaming images and videos. It serves as the project's primary setup guide.",
+      "lines": 87
+    },
+    "main.py": {
+      "hash": "aabd9e035e63be60a1302a56aa73e40493878d731e3ee4604f153f779c82b284",
+      "summary": "`main.py` implements a Tkinter media-viewing application with GStreamer support; its visible functions `read_words`,",
+      "lines": 632
+    }
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "repository": "npclib",
+  "updatedAt": "2026-11-01T07:23:24.798Z",
+  "filesCount": 12,
+  "directories": {
+    "script": "Contains 1 module files (createLinesplot.py)",
+    "src/main/java/net/legendofwar/npclib": "Contains 1 module files (NPCLib.java)",
+    "src/main/java/net/legendofwar/npclib/api": "Contains 6 module files (AttackMode.java, EntityNPC.java, CraftNPC.java, NpcEntityDeathEvent.java)",
+    "src/main/java/net/legendofwar/npclib/entity": "Contains 1 module files (MannequinInteractionHandler.java)",
+    "src/main/java/net/legendofwar/npclib/command": "Contains 2 module files (CommandHandler.java, NPCTestCommand.java)"
+  },
+  "files": {
+    "deploy.sh": {
+      "hash": "d933a759b1bcd51e4197f2b490f39927186e54c7370c24703fe5bf4976576660",
+      "summary": "`deploy.sh` automates the Maven build, packaging, and deployment of Minecraft plugin JARs to local and remote server directories. It serves as the project's primary deployment and distribution script.",
+      "lines": 40
+    },
+    "script/createLinesplot.py": {
+      "hash": "f90c21f9cbb35021f4a8651682d4cb8333b102feab4097ad3de468b34aac7669",
+      "summary": "`script/createLinesplot.py` processes user-inputted performance data and generates a matplotlib line plot. It exports `get_user_input` and `plot_data` to visualize gametick and scheduled metrics.",
+      "lines": 41
+    },
+    "src/main/java/net/legendofwar/npclib/NPCLib.java": {
+      "hash": "fa015b6cedd4fe3cf69e64a45d61a85725ddd7273af816a4656fa4b850cf8f41",
+      "summary": "`NPCLib` is the main `JavaPlugin` class that initializes NPC systems, entity registries, and command handlers. It provides `getInstance()` to manage the plugin lifecycle and core library components.",
+      "lines": 127
+    },
+    "src/main/java/net/legendofwar/npclib/api/AttackMode.java": {
+      "hash": "b32df17a840645cf92f45378544a04c0b9ca4c6f7995f4e29e37096f18100290",
+      "summary": "`AttackMode` defines the `MELEE` and `RANGED` attack modes. It provides a shared API enum for specifying an NPC’s attack style.",
+      "lines": 6
+    },
+    "src/main/java/net/legendofwar/npclib/api/EntityNPC.java": {
+      "hash": "bc181443a17e85fd1b0f337d9396234010a22f2595b19f242275ca63977d9cf0",
+      "summary": "`EntityNPC` extends `NPC` and Bukkit’s `Mob`, exposing controls for Volk data, health regeneration, item use, attack modes, skins, HP display, and tick listeners. It defines the project’s API for NPCs with mob behavior.",
+      "lines": 51
+    },
+    "src/main/java/net/legendofwar/npclib/api/CraftNPC.java": {
+      "hash": "3e2e981c1f7bca367c35c68d1a6864f2427d1eb5d448b6e5ddd5237caeae228a",
+      "summary": "`CraftNPC",
+      "lines": 159
+    },
+    "src/main/java/net/legendofwar/npclib/api/NpcEntityDeathEvent.java": {
+      "hash": "70aa5c1cf4af8f77986390982cd2e67a1b56a9cf10e8e3d103e829ba5626cfcd",
+      "summary": "`NpcEntityDeathEvent` represents an NPC death event, exposing the NPC, killer, and damage cause through `getEntity()`, `getNPC()`, `getKiller()`, and `getDamageCause()`. Its handler-list methods integrate the event with Bukkit’s event system for NPC death handling.",
+      "lines": 55
+    },
+    "src/main/java/net/legendofwar/npclib/api/NPC.java": {
+      "hash": "ad1afe91f5ace07c44a48339f6885e7d55547a0a186930b2278cbd20f67023d4",
+      "summary": "`NPC` defines the project’s NPC API with the exported method `getName()`, which returns the NPC’s name. It serves as the interface for NPC implementations.",
+      "lines": 8
+    },
+    "src/main/java/net/legendofwar/npclib/api/NpcInteractionEvent.java": {
+      "hash": "c8bfedf8e5bd139c7a9bb64bb71bce9214f63ca51604011baa02b5678c184514",
+      "summary": "`NpcInteractionEvent` is a cancellable Bukkit event describing a player’s NPC attack or interaction and hand; its constructors and getters expose event details for plugin listeners.",
+      "lines": 92
+    },
+    "src/main/java/net/legendofwar/npclib/entity/MannequinInteractionHandler.java": {
+      "hash": "94fa84d1acef8ff0398c1b9eeb13312a03f1c502bc85ac8a4c9406f673c70265",
+      "summary": "This file defines the `MannequinInteractionHandler` interface and `MannequinPlayerInteractor` class to process player interactions with NPCs within the project.",
+      "lines": 57
+    },
+    "src/main/java/net/legendofwar/npclib/command/CommandHandler.java": {
+      "hash": "0ce52c0bc485f3241fe44b7261c6bf82e98d265a99bf31f40473480ab4042523",
+      "summary": "`CommandHandler` initializes and registers plugin commands via Paper's lifecycle events. Its primary function is `init()`, serving as the central command registration entry point for the project.",
+      "lines": 22
+    },
+    "src/main/java/net/legendofwar/npclib/command/NPCTestCommand.java": {
+      "hash": "e34c90c0c0ee819af7c3043e8cee504ad85512ef8e2d829eb587abb16e3ce0f5",
+      "summary": "`NPCTestCommand` registers and handles the `npctest` debug command using Paper's Brigadier API. Its primary method is `register(Commands)`, serving as the testing interface for spawning and managing NPCs.",
+      "lines": 274
+    }
+  }
+}

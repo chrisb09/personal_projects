@@ -453,10 +453,20 @@ async function updateStats() {
             }
           }
 
+          if (repo.excludeFromStats) {
+            console.log(`Skipping aggregate stats for legacy/support repository: ${repoDirName}`);
+            continue;
+          }
+
           // Check current commit hash
           const currentCommitHash = runGit('git rev-parse HEAD', repoPath).toString().trim();
           
           const excludeFirstCommit = !!repo.excludeFirstCommit;
+          const repoIgnoreDirectories = repo.ignoreDirectories || [];
+          const repoStatsConfig = {
+            ...config,
+            ignoreDirectories: [...config.ignoreDirectories, ...repoIgnoreDirectories],
+          };
           const firstCommitHashes = new Set();
           if (excludeFirstCommit) {
             try {
@@ -477,8 +487,10 @@ async function updateStats() {
           const cachedBranches = existingStats.projects[projectId]?.repoBranches?.[repoDirName];
           const cachedLastCommit = existingStats.projects[projectId]?.repoLastCommit?.[repoDirName];
           const cachedExcludeFirstCommit = !!cachedLoc?.excludeFirstCommit;
+          const cachedIgnoreDirectories = cachedLoc?.ignoreDirectories || [];
+          const ignoreDirectoriesMatch = JSON.stringify(cachedIgnoreDirectories) === JSON.stringify(repoIgnoreDirectories);
 
-          if (cachedHash && cachedHash === currentCommitHash && cachedLoc && cachedAuthors && cachedExcludeFirstCommit === excludeFirstCommit) {
+          if (cachedHash && cachedHash === currentCommitHash && cachedLoc && cachedAuthors && cachedExcludeFirstCommit === excludeFirstCommit && ignoreDirectoriesMatch) {
             console.log(`Using cached stats for repo: ${repoDirName} at commit ${currentCommitHash}`);
             
             projectLocTotal += cachedLoc.total || 0;
@@ -576,7 +588,7 @@ async function updateStats() {
           const allFiles = filesOutput.split('\n').filter(f => f.trim() !== '');
           const files = allFiles.filter(f => modifiedFilesByMe.has(f));
 
-          const analysis = await processFilesParallel(files, repoPath, config, matchesAuthor, excludeFirstCommit, firstCommitHashes, 15);
+          const analysis = await processFilesParallel(files, repoPath, repoStatsConfig, matchesAuthor, excludeFirstCommit, firstCommitHashes, 15);
           
           projectLocTotal += analysis.projectLocTotal;
           for (const [lang, count] of Object.entries(analysis.projectLocByLanguage)) {
@@ -595,7 +607,8 @@ async function updateStats() {
           repoLocs[repoDirName] = { 
             total: analysis.projectLocTotal, 
             byLanguage: analysis.projectLocByLanguage,
-            excludeFirstCommit: excludeFirstCommit
+            excludeFirstCommit: excludeFirstCommit,
+            ignoreDirectories: repoIgnoreDirectories
           };
           repoAuthors[repoDirName] = localAuthorsCount;
           repoCommits[repoDirName] = matchedCommits;

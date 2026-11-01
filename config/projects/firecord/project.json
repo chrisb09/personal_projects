@@ -38,20 +38,23 @@
     "Highly efficient field-level incremental updates instead of full-object serialization",
     "Native Spigot, Paper, and Velocity integration for high-performance Minecraft multi-server networks",
     "Redis Pub/Sub invalidation protocol maintaining cache coherence across multiple nodes",
+    "Reliable ordered delivery with acknowledgements, retransmission and heartbeat-based node membership",
+    "Reference-counted garbage collection and score-ordered RSortedSet collections backed by Redis ZSETs",
     "Standalone console mode using JLine for interactive distributed testing"
   ],
   "limitations": [
     "Requires AspectJ compile-time weaving plugins configured in the project's build pipeline",
     "Increased memory usage due to object caching across all nodes",
-    "Prototype status lacking mature distributed features like garbage collection, sorted set support, or parent references"
+    "Experimental prototype without the production maturity, sharding or operational tooling of established alternatives such as Redisson",
+    "Parent-child relationship tracking and some failure-recovery scenarios still require further work"
   ],
   "installation": "<!-- Add Firecord repository and dependency in pom.xml -->\n<dependency>\n    <groupId>net.legendofwar.firecord</groupId>\n    <artifactId>Firecord</artifactId>\n    <version>${firecord.version}</version>\n</dependency>\n\n<!-- Requires aspectj-maven-plugin configured for compile-time weaving -->\n<plugin>\n    <groupId>org.codehaus.mojo</groupId>\n    <artifactId>aspectj-maven-plugin</artifactId>\n    <version>${aspectj.plugin.version}</version>\n    <configuration>\n        <aspectLibraries>\n            <aspectLibrary>\n                <groupId>org.aspectj</groupId>\n                <artifactId>aspectjrt</artifactId>\n            </aspectLibrary>\n        </aspectLibraries>\n    </configuration>\n</plugin>",
   "usage": "// 1. Initialize Firecord for Spigot or Standalone mode\nFirecord.init(NodeType.SPIGOT);\n\n// 2. Define a shared object extending AbstractObject\npublic final class PlayerData extends AbstractObject {\n    // Synchronized fields using R-types (or primitives woven by AspectJ)\n    private RInteger level = new RInteger(new Bytes(\"level\"));\n    private RString rank = new RString(new Bytes(\"rank\"));\n    \n    public PlayerData(Bytes key) {\n        super(key);\n    }\n}\n\n// 3. Load or create the object from the distributed memory\nPlayerData data = (PlayerData) AbstractData.create(new Bytes(\"player-123\"));\n\n// 4. Modify fields - changes are automatically woven and broadcasted to other nodes\ndata.getLevel().set(100);",
   "roadmap": [
-    "Implement distributed garbage collection for expired memory keys",
-    "Support sorted sets (ZSET) synchronization",
+    "Harden reliable delivery and failure recovery under node and network failures",
     "Optimize AspectJ aspects to reduce runtime memory overhead",
-    "Add support for parent-child relationship tracking in nested objects"
+    "Add support for parent-child relationship tracking in nested objects",
+    "Expand integration testing and operational documentation"
   ],
   "repos": [
     {
@@ -63,6 +66,11 @@
   "mirrors": [],
   "screenshots": [],
   "relatedProjects": [
+    {
+      "name": "The Legend of War",
+      "relation": "Primary application and motivating Minecraft server network",
+      "projectId": "the-legend-of-war"
+    },
     {
       "name": "Redisson",
       "relation": "Inspiration and alternative to",

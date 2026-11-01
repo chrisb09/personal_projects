@@ -1,0 +1,72 @@
+{
+  "repository": "opencode-antigravity-auth",
+  "updatedAt": "2026-11-01T07:23:36.288Z",
+  "filesCount": 12,
+  "directories": {
+    ".github/ISSUE_TEMPLATE": "Contains 3 module files (config.yml, bug_report.yml, feature_request.yml)",
+    ".github": "Contains 1 module files (FUNDING.yml)",
+    ".github/workflows": "Contains 6 module files (ci.yml, issue-triage.yml, republish-version.yml, release.yml)"
+  },
+  "files": {
+    ".github/ISSUE_TEMPLATE/config.yml": {
+      "hash": "2a9b2308253088558a81df747bd3a847819740d285747667b162bbd8645c087c",
+      "summary": "This file configures GitHub issue templates for the project by disabling blank issues and providing external contact links to guides, discussions, and support.",
+      "lines": 15
+    },
+    ".github/ISSUE_TEMPLATE/bug_report.yml": {
+      "hash": "103aac228cab2d478bf495cfbe08d7c70b966a201291ff1aa634c97903c0c3be",
+      "summary": "This file defines the GitHub issue template for reporting bugs, guiding users to check prerequisites and provide debug logs. It standardizes bug submissions for the project.",
+      "lines": 244
+    },
+    ".github/FUNDING.yml": {
+      "hash": "26a39a7907bd0698837d59d6b93020d5e1e1a6e1b8f8fe55853f44fbd65e36da",
+      "summary": "This file configures financial sponsorship platforms for the project. It integrates funding options like GitHub and Ko-fi to support the repository's maintenance.",
+      "lines": 16
+    },
+    ".github/workflows/ci.yml": {
+      "hash": "e6710814ae76c907e374cf15f177739ff9307c2b2a2d85bd40ee3e0004f6a95b",
+      "summary": "This GitHub Actions workflow automates the continuous integration pipeline by running type checks, tests, and builds on Node.js 20. It ensures code quality for pushes and pull requests targeting the `main` branch.",
+      "lines": 35
+    },
+    ".github/ISSUE_TEMPLATE/feature_request.yml": {
+      "hash": "f15fb03d8d823ac3aee0b10ebfbe124a1707d4250d332c477cf01d96f62277fe",
+      "summary": "This YAML configuration file defines the GitHub issue template for feature requests, guiding users to provide structured proposals. It standardizes enhancement submissions across the project repository.",
+      "lines": 85
+    },
+    ".github/workflows/issue-triage.yml": {
+      "hash": "c79ac060f5eff8db2d6110d3397b82b27bb0d0c66c15b5133911b46b273adb17",
+      "summary": "This GitHub Actions workflow automates issue categorization and labeling upon creation, reopening, or via `/triage` commands, serving as the automated issue management pipeline for the project.",
+      "lines": 281
+    },
+    ".github/workflows/republish-version.yml": {
+      "hash": "2c551ee6b4dcb3800509452e6570dcf6118c7e60937937b191bafac39b28cf63",
+      "summary": "This manually triggered GitHub Actions workflow validates the requested version against `package.json` and optionally unpublishes the existing npm release before republishing. It automates version republishing; it exports no functions or classes.",
+      "lines": 210
+    },
+    ".github/workflows/release.yml": {
+      "hash": "623faddf5ab9268e40c144963af48ddfbb7a1872925effb2c9aa0c98c8d3866e",
+      "summary": "This GitHub Actions workflow automates releases on pushes to `main` or manual dispatch, checking that the package version is stable and changed before publishing. It has no exported functions or classes.",
+      "lines": 193
+    },
+    ".github/workflows/release-beta.yml": {
+      "hash": "683e9a9e5eb15324587ee7e1fb4f5d76afbe3955eb24164b6fe68c3d1739e0c2",
+      "summary": "This GitHub Actions workflow manually prepares a beta release, verifies it is not running on `main`, and determines the next beta version. It automates the project’s beta publishing process; it exports no functions or classes.",
+      "lines": 254
+    },
+    "AGENTS.MD": {
+      "hash": "551de51f18a3d53467b6ef13a65e089aac4cf47976becbe82971c7dcd11d5569",
+      "summary": "`AGENTS.md` provides AI agent developer guidelines, outlining repository architecture, build/test commands, and TypeScript coding standards.",
+      "lines": 145
+    },
+    "CHANGELOG.md": {
+      "hash": "d4e5840016d097f3398fe6e5df1657fc682fb1bfe75cb3ec92a1e324751a8b87",
+      "summary": "`CHANGELOG.md` records project version history, feature additions, and model updates. It documents project evolution and changes without exporting any code symbols.",
+      "lines": 293
+    },
+    ".github/workflows/update-dist-tag.yml": {
+      "hash": "1a342686b36ba14fd38e5565c0611dc0a06ff879ad379367f61e02bd96a92865",
+      "summary": "This GitHub Actions workflow validates and updates NPM distribution tags for the package via manual dispatch. It automates release tagging as part of the project's deployment pipeline.",
+      "lines": 82
+    }
+  }
+}

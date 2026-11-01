@@ -1,0 +1,73 @@
+{
+  "repository": "firecord",
+  "updatedAt": "2026-11-01T07:21:27.785Z",
+  "filesCount": 12,
+  "directories": {
+    "src/main/java/net/legendofwar/firecord": "Contains 1 module files (Firecord.java)",
+    "src/main/java/net/legendofwar/firecord/command": "Contains 6 module files (BungeeSender.java, CliSender.java, SpigotSender.java, FirecordCommand.java)",
+    "src/main/java/net/legendofwar/firecord/bungee": "Contains 1 module files (FirecordBungee.java)",
+    "src/main/java/net/legendofwar/firecord/communication": "Contains 2 module files (ByteMessage.java, CommunicationTests.java)"
+  },
+  "files": {
+    "src/main/java/net/legendofwar/firecord/Firecord.java": {
+      "hash": "48f324277dc4fc2cd0f5436c7f7a026570a45a9bf4e9c59c01581a9d6a75d5ce",
+      "summary": "`Firecord` serves as the core entry point for the application, providing overloaded `init` methods to initialize node identity, types, and resources.",
+      "lines": 248
+    },
+    "deploy.sh": {
+      "hash": "8e45c85a4d5ffe47901a4609b46c559c737738be1070f96347b1a7ad6a22df30",
+      "summary": "`deploy.sh` automates the Maven build process and deploys compiled Minecraft plugin JARs to local or remote server directories. It serves as the project's deployment script.",
+      "lines": 46
+    },
+    "README.md": {
+      "hash": "3187ea24fb5ed2b8c1edfbfdb47e00b41a172a94180ba3d797d8e2379ad88d09",
+      "summary": "`README.md` documents Firecord, a virtual distributed object memory system using Redis and AspectJ. It serves as the project's primary overview and comparison guide.",
+      "lines": 365
+    },
+    "src/main/java/net/legendofwar/firecord/command/BungeeSender.java": {
+      "hash": "3a7b2885bda9e4f98c5d10729a0483fb9d6b9b121e532a79f1a18706e14b5f48",
+      "summary": "`BungeeSender` implements the `Sender` interface to wrap BungeeCord's `CommandSender`. It bridges platform-agnostic commands to the BungeeCord proxy environment.",
+      "lines": 20
+    },
+    "src/main/java/net/legendofwar/firecord/command/CliSender.java": {
+      "hash": "b1378781ef3795733d7a176be43265fb43aba295b8afee13d45791e6cee30386",
+      "summary": "`CliSender` implements the `Sender` interface to output messages to the command line, translating Minecraft color codes into ANSI escape sequences. It serves as a CLI-based message handler for the command system.",
+      "lines": 51
+    },
+    "src/main/java/net/legendofwar/firecord/bungee/FirecordBungee.java": {
+      "hash": "fa01149401ccc94bc409d4c5002106a25065c336a7eed2c2c398ec7e0246497f",
+      "summary": "`FirecordBungee` initializes Firecord as a BungeeCord node in `onEnable`, registers the `/firecord` command, and shuts Firecord down in `onDisable`. It serves as the BungeeCord plugin entry point.",
+      "lines": 43
+    },
+    "src/main/java/net/legendofwar/firecord/command/SpigotSender.java": {
+      "hash": "d89e9467b2d8b4d74438df91a71721b1c85b96c63674cc0f47d1508c85a2ba5d",
+      "summary": "`SpigotSender` implements the `Sender` interface to wrap Bukkit's `CommandSender`. It bridges command execution for Spigot platforms within the project.",
+      "lines": 19
+    },
+    "src/main/java/net/legendofwar/firecord/command/FirecordCommand.java": {
+      "hash": "b6fd4c54936dd3a77d03b176751a8a100767f165362e74d1416e513832505269",
+      "summary": "This file provides test data generators and lookup tables for development tasks. It exports `FirecordCommand` to configure and execute Redis integration tests within the project.",
+      "lines": 657
+    },
+    "src/main/java/net/legendofwar/firecord/command/Sender.java": {
+      "hash": "f975b89be75637f070fc8e45b9f4ecb920ce57ef8806af1f96226c2f7f23d75c",
+      "summary": "`Sender` is an interface that defines the `sendMessage(String)` method for dispatching text responses. It acts as an abstraction layer for command executors across the project.",
+      "lines": 8
+    },
+    "src/main/java/net/legendofwar/firecord/communication/ByteMessage.java": {
+      "hash": "eed2a7c980a6663f9c4fddc204cc2a3a06de6c836f01839d6da89823a76253cc",
+      "summary": "`ByteMessage` defines message types for serializing and deserializing data types from a `ByteBuffer`. Its primary method, `read()`, parses bytes into corresponding Java objects, facilitating network communication.",
+      "lines": 225
+    },
+    "src/main/java/net/legendofwar/firecord/communication/CommunicationTests.java": {
+      "hash": "5ec7099d268f082873ceb099a15c9e72043bf810beede9c16b69af832ecbf62e",
+      "summary": "`CommunicationTests` provides test utilities for verifying Jedis-based messaging. It exports `init()` and `sendMessage()` to validate pub-sub communication within the project.",
+      "lines": 47
+    },
+    "src/main/java/net/legendofwar/firecord/command/VelocitySender.java": {
+      "hash": "0baa2dee624489b3b0cdda60807ed84ed321343c4afab61eeded8eef7d1405c2",
+      "summary": "`VelocitySender` wraps Velocity's `CommandSource` to implement the project's `Sender` interface. It bridges command execution by enabling string-based message delivery to Velocity players or consoles.",
+      "lines": 21
+    }
+  }
+}

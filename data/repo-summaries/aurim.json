@@ -1,0 +1,74 @@
+{
+  "repository": "aurim",
+  "updatedAt": "2026-11-01T07:20:54.743Z",
+  "filesCount": 12,
+  "directories": {
+    "src/main/java/net/legendofwar/aurim": "Contains 1 module files (Aurim.java)",
+    "src/main/java/net/legendofwar/aurim/commands": "Contains 4 module files (CommandHandler.java, PathCommand.java, RegionMapCommand.java, HeightMapCommand.java)",
+    "src/main/java/net/legendofwar/aurim/handler": "Contains 1 module files (WegHandler.java)",
+    "src/main/java/net/legendofwar/aurim/holders": "Contains 2 module files (Path.java, PathCross.java)",
+    "src/main/java/net/legendofwar/aurim/region": "Contains 3 module files (RegionData.java, HeightMap.java, PlayerRegionIdLookup.java)"
+  },
+  "files": {
+    "src/main/java/net/legendofwar/aurim/Aurim.java": {
+      "hash": "cb86fe985ba949147a3ba453593bf2bf81929baa2837981814b2f31526b643a6",
+      "summary": "`Aurim` is the main entry point for the plugin, initializing `HeightMap`, `RegionMap`, and command handlers. It manages the plugin lifecycle and provides global access via `getInstance()`.",
+      "lines": 61
+    },
+    "src/main/java/net/legendofwar/aurim/commands/CommandHandler.java": {
+      "hash": "a21b5aa168e89ed60c10653b4fff793853317c34c47e7a49c2759b4f295c57f7",
+      "summary": "`CommandHandler` initializes and registers Brigadier commands for the plugin via the `init()` method. It acts as the central hub for integrating command functionality into the project's lifecycle.",
+      "lines": 25
+    },
+    "deploy.sh": {
+      "hash": "6e4eb7cd8d6ef63744e6e4872e09845f58ebccb1a461cb20f54603cac5751ad9",
+      "summary": "`deploy.sh` automates the Maven build process and deploys compiled JAR files to the Minecraft server environment, serving as the project's primary deployment and distribution script.",
+      "lines": 36
+    },
+    "src/main/java/net/legendofwar/aurim/commands/PathCommand.java": {
+      "hash": "2b3f7636d459cc5fbaed54b362ed27a359a9906696cdf71533e2aefd69fad186",
+      "summary": "`PathCommand` manages path-related administrative commands using Brigadier. Its primary exported function is `register(Commands)`, which registers the `/path` command tree for the project.",
+      "lines": 468
+    },
+    "src/main/java/net/legendofwar/aurim/commands/RegionMapCommand.java": {
+      "hash": "a81e76b6767f63fb879e4fac25ac37b552fe48662c90e9e99d97d81abb89c23e",
+      "summary": "`RegionMapCommand` handles administrative region mapping commands via Brigadier. It facilitates region data management and visualization within the project's spatial framework.",
+      "lines": 571
+    },
+    "src/main/java/net/legendofwar/aurim/commands/HeightMapCommand.java": {
+      "hash": "91c9bedb4d19f9e082ab9ed6640261c5c613a78f3cb78fdc47d2ba0f30678f2c",
+      "summary": "`HeightMapCommand` registers administrative commands for managing and visualizing height maps. It provides the `register` method to integrate these tools into the project's command framework.",
+      "lines": 130
+    },
+    "src/main/java/net/legendofwar/aurim/handler/WegHandler.java": {
+      "hash": "f151d88c50a846d1e35243af7bd87e4258bc504edbf2a79cdd958d12aa167d6a",
+      "summary": "`WegHandler` manages player movement mechanics and out-of-combat speed bonuses. It extends `AbstractObject` and acts as the core event handler for path and region-based player interactions.",
+      "lines": 449
+    },
+    "src/main/java/net/legendofwar/aurim/holders/Path.java": {
+      "hash": "929101c15645461f9137518003259812c8e237c3c28555e1f495578ecea76394",
+      "summary": "`Path` manages Redis-backed navigation paths between two points. It uses the nested `PathLocation` class to store coordinate data and calculate distances for the project's pathfinding system.",
+      "lines": 63
+    },
+    "src/main/java/net/legendofwar/aurim/holders/PathCross.java": {
+      "hash": "821f4c70a1c872de2eecece22b8edbdf66e6b94f4faae98ee645e97b96dad513",
+      "summary": "`PathCross` is a data model extending `AbstractObject` that manages spatial path coordinates and ranges in Redis. It provides methods to store, retrieve, and convert path data into `Location`.",
+      "lines": 84
+    },
+    "src/main/java/net/legendofwar/aurim/region/RegionData.java": {
+      "hash": "1c43f35534dc3f0c6e415fa5e486bb82b334052e5d8f0657f07994e5298736c9",
+      "summary": "`RegionData` manages game region metadata, exporting `Path` and `Player` subclasses. It models region-specific attributes like paths and player ownership within the project.",
+      "lines": 55
+    },
+    "src/main/java/net/legendofwar/aurim/region/HeightMap.java": {
+      "hash": "2e69e79d0884b01b164b40432ef4585b715c8fe756f839db3da6ac715cd5ccd4",
+      "summary": "`HeightMap` manages world elevation data using `Chunkwise` storage. It provides methods to track and smooth terrain height values across the project's defined coordinate boundaries.",
+      "lines": 277
+    },
+    "src/main/java/net/legendofwar/aurim/region/PlayerRegionIdLookup.java": {
+      "hash": "b6935099e059ce22c02b3b37fad8107bec491b451ac8934528bd8cc4aa59e814",
+      "summary": "`PlayerRegionIdLookup` manages bidirectional mapping between `UUID`s and region `Bytes` using a `KeyLookupTable`. It provides `getUUID` and `getId` to facilitate region data retrieval within the project.",
+      "lines": 22
+    }
+  }
+}

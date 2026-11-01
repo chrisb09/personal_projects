@@ -1,0 +1,72 @@
+{
+  "repository": "minecraft-chat-translator",
+  "updatedAt": "2026-11-01T07:22:31.776Z",
+  "filesCount": 12,
+  "directories": {
+    "data": "Contains 5 module files (extract_raw.py, build_glossary.py, minecraft_bilingual_glossary.json, synthesize_training_data.py)",
+    "engine": "Contains 3 module files (config.py, session_kv_manager.py, server.py)",
+    "rawdata": "Contains 1 module files (minecraft_glossary.txt)"
+  },
+  "files": {
+    "chat.sh": {
+      "hash": "466bba6bbf4751ae5bc998a152bc7ca3f6cd1c5c798bd3cac2652f1511b61c13",
+      "summary": "`chat.sh` is a shell script launcher that activates the `vega_torch` Conda environment and executes the interactive CLI tool `chat_cli.py`, serving as the primary entry point for user translation sessions.",
+      "lines": 10
+    },
+    "README.md": {
+      "hash": "4ef8ffacc33aa16baaa688db3700516eb1f4ead8f54ce2bea5f61d780d3b402a",
+      "summary": "This `README.md` documents the `minecraft-chat-translator` project, which fine-tunes `Qwen2.5-0.5B-Instruct` for real-time EN↔DE gaming chat translation. It serves as the primary project documentation and usage guide.",
+      "lines": 204
+    },
+    "PLAN.md": {
+      "hash": "0e253a1bf8f8d517ad9ae04d49394172c2d58729d5370348afc44d87fdb89314",
+      "summary": "`PLAN.md` serves as the architectural specification and deployment blueprint for a real-time chat translation engine powered by Qwen2.5-0.5B-Instruct on AMD ROCm hardware. It defines the system requirements, VRAM budget, and translation protocol for the project.",
+      "lines": 231
+    },
+    "data/extract_raw.py": {
+      "hash": "53f80624f0231d2d0d9cd5007c6131d5ef4bcc61bf1e84016b793ab004e61664",
+      "summary": "`extract_raw.py` parses and filters raw chat logs from text and JSON sources, grouping them into multi-turn conversation threads. It acts as the initial data ingestion pipeline in the project.",
+      "lines": 262
+    },
+    "data/build_glossary.py": {
+      "hash": "36f3f6d2135a7b7ef85ad173acd8f7190b13bbb0f861c31e0e1d2bc76b87a59b",
+      "summary": "`build_glossary.py` parses raw Minecraft terminology lists to generate a bilingual English-German domain nomenclature JSON file, serving as a data preparation utility for translation tasks.",
+      "lines": 157
+    },
+    "data/minecraft_bilingual_glossary.json": {
+      "hash": "ad8805061359ba37a059104f5410a0dbda989dce0dcdb7efcf0022e3139323a4",
+      "summary": "The `data/minecraft_bilingual_glossary.json` file stores a JSON mapping of English Minecraft terms to German translations. It serves as a localization dictionary for the project.",
+      "lines": 1236
+    },
+    "data/synthesize_training_data.py": {
+      "hash": "59c6d8fbbd1263f32b4cfeedbaf0f933fdf481bb1aaeedb13b6c55730a47e7ea",
+      "summary": "`data/synthesize_training_data.py` converts a parallel conversation corpus into Qwen2.5 ChatML training and validation datasets, featuring normalization, username permutations, and temporal shifting. It defines `UsernamePool` and acts as the data generation pipeline for model fine-tuning.",
+      "lines": 335
+    },
+    "data/translate_corpus.py": {
+      "hash": "ef9971711ca330050c73cfe9810816f4fb19019ff4f5780d7ce9275d23b0f250",
+      "summary": "This script provides a resilient parallel translation worker with rate-limiting, key rotation, and live progress tracking. It exports helper functions like `resolve_model_name` and `parse_unit_number` to process raw conversation corpora.",
+      "lines": 621
+    },
+    "engine/config.py": {
+      "hash": "c0a191ecb16cc7fe200a63b3b4956350a0d516d6fb6571fe4a05e471d88d9a46",
+      "summary": "`engine/config.py` defines global configuration settings, model paths, and session parameters for the KV Cache Translation Engine, serving as the central configuration source for the project.",
+      "lines": 28
+    },
+    "rawdata/minecraft_glossary.txt": {
+      "hash": "48a37490103fead8d27ca642502d8efa5edc55c4f2f470dc77b9f51fdb240cb3",
+      "summary": "This raw data file provides a JSON-formatted dictionary mapping word lengths to lists of Minecraft-related terms, serving as a glossary or word list for the project.",
+      "lines": 31
+    },
+    "engine/session_kv_manager.py": {
+      "hash": "babf73ce832ff8c0e29049b46560a43ff703dcb2a41e290f68a476f476d9cf08",
+      "summary": "`session_kv_manager.py` manages persistent GPU KV caches for multi-turn dialogue state using PyTorch's `DynamicCache`. It exports `SessionState` and `SessionKVManager` to maintain cross-request conversation context in VRAM.",
+      "lines": 335
+    },
+    "engine/server.py": {
+      "hash": "64c21339a019a8bd7b7cd9111248b3935dce35c6fb76b45241363de63452c40e",
+      "summary": "`engine/server.py` implements a FastAPI REST and WebSocket server exposing the `app` instance. It handles real-time chat translation using `SessionKVManager` as the project's core API gateway.",
+      "lines": 194
+    }
+  }
+}

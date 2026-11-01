@@ -1,0 +1,56 @@
+{
+  "repository": "opencode-kiconnect",
+  "updatedAt": "2026-11-01T07:23:38.363Z",
+  "filesCount": 9,
+  "directories": {
+    "src": "Contains 4 module files (constants.ts, models.ts, plugin.ts, types.ts)",
+    "scripts": "Contains 1 module files (generate_benchmarks_graph.py)"
+  },
+  "files": {
+    "README.md": {
+      "hash": "58e437cbaf25b2c070d36d511d9bdecc8aac9785ad96457d90cdb946cf4f6fe8",
+      "summary": "This README file documents the `opencode-kiconnect` plugin, detailing its architecture and integration with the KI:connect gateway for accessing sovereign and commercial LLMs. It serves as the primary project documentation and usage guide.",
+      "lines": 238
+    },
+    "index.ts": {
+      "hash": "060b85112aaa86599643a828273a5bf4259f5f84ecd272513b6b75543249149d",
+      "summary": "This file serves as the project's main entry point, re-exporting `plugin` as the default export to expose the core functionality for consumers.",
+      "lines": 2
+    },
+    "package.json": {
+      "hash": "4e2e7b31e8375fc21139d30916703901891a52438a2c26ada0540bc0d61b7397",
+      "summary": "This file defines the project metadata, dependencies, and build scripts for the `opencode-kiconnect` plugin. It serves as the npm configuration and entry point definition for the OpenCode AI integration project.",
+      "lines": 33
+    },
+    "src/constants.ts": {
+      "hash": "eb8ca0a1e8fac2f3e6fff60aa525ea03e84fb3103eb1649013271255912c1991",
+      "summary": "`src/constants.ts` defines configuration constants, environment variables, and `MODEL_ALIASES` for the KI:connect provider integration. It supplies default metadata and mapping values across the project.",
+      "lines": 45
+    },
+    "scripts/generate_benchmarks_graph.py": {
+      "hash": "44b682bad7407c8e882f5037b9bcc19e4f09c20f76a921cd5b5a52e3b66ce4b1",
+      "summary": "`scripts/generate_benchmarks_graph.py` generates benchmark visualization charts using `matplotlib`. It serves as a reporting script to visually compare performance scores across various AI models.",
+      "lines": 163
+    },
+    "src/models.ts": {
+      "hash": "699ed70168015acb278f077bd4316516116d67bb233777319294fa5d0e2de51e",
+      "summary": "`src/models.ts` defines the curated model catalog via `KICONNECT_DEFAULT_MODELS`. It configures active AI models for the OpenCode model picker and maps them to upstream gateway identifiers.",
+      "lines": 125
+    },
+    "src/plugin.ts": {
+      "hash": "961b53b342858b8162f7b0785cee9eb33412438bd35b6ce9d6d2384998221e12",
+      "summary": "`src/plugin.ts` manages API key persistence and configuration file operations for the plugin. It exports `readApiKeyFromConfigFile`, `saveApiKeyToConfigFile`, and `readApiKeyFromDotenv` to handle credential storage.",
+      "lines": 374
+    },
+    "tsconfig.build.json": {
+      "hash": "ab5a4e55f4278e06e80e9cd9aaf43eddb4333cdc07686454c01abe24bda81aba",
+      "summary": "This TypeScript configuration file defines the production build settings, overriding base rules to output compiled JavaScript and declarations to the `dist` directory for project distribution.",
+      "lines": 14
+    },
+    "src/types.ts": {
+      "hash": "d4a568966ba21c2ccf667589f6d46ba12c25d86d9f9718d4930d25b36b6bc8a2",
+      "summary": "This file defines TypeScript interfaces (`ModelLimit`, `ModelModalities`, `KIConnectModelDefinition`, and `KIConnectConfigFile`) that establish the configuration and data structures for model limits, modalities, and connections across the project.",
+      "lines": 28
+    }
+  }
+}

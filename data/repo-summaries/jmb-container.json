@@ -1,0 +1,40 @@
+{
+  "repository": "jmb-container",
+  "updatedAt": "2026-11-01T07:22:08.296Z",
+  "filesCount": 6,
+  "directories": {
+    ".github/workflows": "Contains 1 module files (build.yml)"
+  },
+  "files": {
+    "README.md": {
+      "hash": "88452c00a1cdeb28f95eca9d545ddbbc3542d92e82ba3b05bc401d1b220cf9a1",
+      "summary": "This file provides documentation for the `JMusicBot-Container` project, which packages `JMusicBot` into a Docker image to simplify deployment and execution within containerized environments.",
+      "lines": 9
+    },
+    ".github/workflows/build.yml": {
+      "hash": "545d37651d3c3ba93aad423d36609a1caf6301d695f725d4e31898f91e922b88",
+      "summary": "This GitHub Actions workflow automates building and pushing multi-platform Docker images for `jmusicbot` to DockerHub. It is triggered via `workflow_dispatch` to release specific project versions.",
+      "lines": 43
+    },
+    "Dockerfile": {
+      "hash": "2696734e111d151eb491c3f07aaea9d6708920be3df427f4ad681857f3f13f7f",
+      "summary": "This `Dockerfile` defines a multi-stage build process to compile and containerize the JMusicBot application, ensuring a minimal runtime environment for deployment.",
+      "lines": 78
+    },
+    "docker-entrypoint.sh": {
+      "hash": "0976d3ea58ed1f7d4c65f330e2c67c190e04a4a515b72b4a728ed533647ef819",
+      "summary": "`docker-entrypoint.sh` initializes the container environment by verifying DNS connectivity and populating default configurations. It ultimately executes `JMusicBot.jar` as the `appuser` to start the application.",
+      "lines": 43
+    },
+    "docker-compose.yaml": {
+      "hash": "44c71a3d2bf30eeed5f5c31c122addc37ad205e148d4cdce1bd895f9d3299052",
+      "summary": "This `docker-compose.yaml` file orchestrates the `jmusicbot` container, mounting local configuration volumes to deploy the music bot service within the project infrastructure.",
+      "lines": 10
+    },
+    "build_docker_image.sh": {
+      "hash": "04667e12bcfd82c36cd243f1a72d115df9f882a38b843e1297462809a97afd66",
+      "summary": "`build_docker_image.sh` automates the creation of the JMusicBot Docker image by preparing the build context and executing the Docker build process.",
+      "lines": 107
+    }
+  }
+}

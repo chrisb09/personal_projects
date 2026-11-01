@@ -1,0 +1,71 @@
+{
+  "repository": "ibus",
+  "updatedAt": "2026-11-01T07:21:52.423Z",
+  "filesCount": 12,
+  "directories": {
+    "download": "Contains 2 module files (start.sh, README.txt.txt)",
+    "src/de/christian/f/brinkmann/ibus": "Contains 9 module files (Crypto.java, Decoder.java, Encoder.java, FileIO.java)"
+  },
+  "files": {
+    "download/start.sh": {
+      "hash": "a5e952b3c87c3448859f28f19cde02feedfc7e04320625f7784c25a6a25a7617",
+      "summary": "This shell script executes the core data download process by running the `Ibus2.1.jar` Java application with test credentials. It serves as the primary entry point for initiating data retrieval tasks.",
+      "lines": 1
+    },
+    "README.md": {
+      "hash": "7c960c44a2d2824c3081a9935e27077836ac20a0b15ede5d2fe54e44061a4a0d",
+      "summary": "This `README.md` file documents the **Ibus 2.1** project, a Java application that encodes files into images and decodes images back into files. It serves as the primary user guide, detailing installation, command-line usage, and configuration options.",
+      "lines": 58
+    },
+    "download/README.txt.txt": {
+      "hash": "b55402a4672a727e2ffeac6258c546a036b0904301ba502f5fcd59650d7a6cd0",
+      "summary": "This file provides instructions for executing the program via `start.bat` or `start.sh`, detailing the `encode` and `decode` commands used to process and recover data folders.",
+      "lines": 15
+    },
+    "src/de/christian/f/brinkmann/ibus/Crypto.java": {
+      "hash": "892d25f8ca13780c3cf366875c0f535d49a7dadbb40fb2015883d29a34fc2c34",
+      "summary": "`Crypto` provides AES encryption and decryption utilities for data and strings. It serves as the project's central security module for handling sensitive information via `encrypt`, `decrypt`, and `setKey`.",
+      "lines": 67
+    },
+    "src/de/christian/f/brinkmann/ibus/Decoder.java": {
+      "hash": "1e699ddb2996533fd2082646fd7c83d15deeff107f448af05f892c77c4076a81",
+      "summary": "`Decoder` provides the `decodeEntry` method to reconstruct and decrypt files from image-based storage. It serves as the core engine for extracting data from the project's custom storage format.",
+      "lines": 101
+    },
+    "src/de/christian/f/brinkmann/ibus/Encoder.java": {
+      "hash": "1be4bb334734264132c76695025dbfb01fd4734d31742b9774a0cbb5e564ca24",
+      "summary": "`Encoder` encodes files into size-limited data chunks, accounting for encryption and indexing; its primary entry point, `encodeFile`, returns an `IndexingFile` for the project’s file-",
+      "lines": 189
+    },
+    "src/de/christian/f/brinkmann/ibus/FileIO.java": {
+      "hash": "fa95e3550e7cd4f127307539623427cb9aa045f0af1b0e130c1c04b261658905",
+      "summary": "The `FileIO` class handles file read and write operations with integrated metrics tracking. It provides `readFileAsBytes`, `writeFileAsBytes`, `appendFileAsBytes`, and `writeImageToPNG` to manage project I/O tasks.",
+      "lines": 84
+    },
+    "src/de/christian/f/brinkmann/ibus/FileSystemFunctions.java": {
+      "hash": "1a1623f04609d4548817864bdd3ae191fe6f9318b64ae3e4933318c07fba8996",
+      "summary": "`FileSystemFunctions` provides utility methods like `saveIndexing` to serialize and persist directory structures. It serves as the core file system interface for indexing and managing project data.",
+      "lines": 478
+    },
+    "src/de/christian/f/brinkmann/ibus/ImageCreator.java": {
+      "hash": "2dc286e4030ba5a1402f1a371d82c26e6e0a286ffa052ac47a39796731839436",
+      "summary": "`ImageCreator` provides the `createImage` method to convert raw byte arrays into `BufferedImage` objects, serving as a utility for rendering image data within the project.",
+      "lines": 21
+    },
+    "src/de/christian/f/brinkmann/ibus/ImageReader.java": {
+      "hash": "45a21342c2d854da408d14edbc8699c16cacb8787ef5fdb8171e81c150f7035c",
+      "summary": "`ImageReader` provides the static method `readImage` to convert a `BufferedImage` into a raw byte array, facilitating image data processing within the project.",
+      "lines": 26
+    },
+    "src/de/christian/f/brinkmann/ibus/Metric.java": {
+      "hash": "f47a8c391891fc8f187c63d1a9c96a16879798cc0cf41f0fac5d9dd1d7b46527",
+      "summary": "`Metric` records total elapsed time, data size, and loading, copying, AES, and writing durations. Its `startMetric()` and `stopMetric()` methods provide",
+      "lines": 119
+    },
+    "src/de/christian/f/brinkmann/ibus/Main.java": {
+      "hash": "8da235145eabfcc2fc2b09daec4dc0c77bda8e0120aba77e4d8c4b919c21cc65",
+      "summary": "Source module implementing Main.java logic.",
+      "lines": 555
+    }
+  }
+}

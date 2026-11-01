@@ -1,0 +1,52 @@
+{
+  "repository": "autarky",
+  "updatedAt": "2026-11-01T07:20:58.477Z",
+  "filesCount": 8,
+  "directories": {
+    "src/main/java/net/legendofwar/autarky": "Contains 2 module files (Autarky.java, EmptyWorldChunkGenerator.java)",
+    "src/main/java/net/legendofwar/autarky/commands": "Contains 4 module files (AutarkyFixChunksCommand.java, MultiverseCommand.java, AutarkyReloadCommand.java, StructureToRPCommand.java)",
+    "src/main/resources": "Contains 1 module files (plugin.yml)"
+  },
+  "files": {
+    "src/main/java/net/legendofwar/autarky/Autarky.java": {
+      "hash": "3e5734033a06e4551dd8efe12e9d5aa3d22eccf7e37d58c0145b9a2817f5f2a7",
+      "summary": "`Autarky` is the main `JavaPlugin` class that initializes the plugin, registers event listeners, and sets up command executors for administrative world management and utility tasks.",
+      "lines": 216
+    },
+    "README.md": {
+      "hash": "4669f4a98d077697a97ecbdd48e416c6f952ce7e138a8af9ea14411179400f20",
+      "summary": "`Autarky` is a Spigot plugin that optimizes server performance by disabling natural entity spawning, liquid flow, and block generation. It serves as a lightweight utility for testing features.",
+      "lines": 14
+    },
+    "src/main/java/net/legendofwar/autarky/EmptyWorldChunkGenerator.java": {
+      "hash": "f62d55932c6377ca427d36329471fc5049e654fb253cd3bd6f9ddcfc46e15d2f",
+      "summary": "`EmptyWorldChunkGenerator` extends `ChunkGenerator` to provide a void world environment. It serves as the project's custom generator for creating empty, featureless chunks.",
+      "lines": 146
+    },
+    "src/main/java/net/legendofwar/autarky/commands/AutarkyFixChunksCommand.java": {
+      "hash": "9d911b6a904ab90459f9fdacbc6efd6338962411bf61086f1424214cc9c01193",
+      "summary": "`AutarkyFixChunksCommand` implements `CommandExecutor` to provide an administrative command for scanning and repairing specific block types within defined world boundaries in the Autarky project.",
+      "lines": 357
+    },
+    "src/main/java/net/legendofwar/autarky/commands/MultiverseCommand.java": {
+      "hash": "0f041737c8f8a3d8623fe3bf100e561ccdab9bf2665b5ae8d427a5bfdc674452",
+      "summary": "`MultiverseCommand` manages custom world loading and configuration. It implements `CommandExecutor` and `TabCompleter` to handle world-related commands and initializes worlds defined in the plugin configuration on startup.",
+      "lines": 178
+    },
+    "src/main/java/net/legendofwar/autarky/commands/AutarkyReloadCommand.java": {
+      "hash": "a5c6ffe1694b472697d6ad1ffe1d2be07e69ad41f4c80631320e8351d527b654",
+      "summary": "`AutarkyReloadCommand` implements `CommandExecutor` to handle the plugin's reload command. It triggers `autarky.createConfig()` to refresh configuration settings during runtime.",
+      "lines": 23
+    },
+    "src/main/java/net/legendofwar/autarky/commands/StructureToRPCommand.java": {
+      "hash": "0dc4881dc8b1bd5883c32888e4d76fa96ae47939c0ea090aefcd1b8a67b17ac4",
+      "summary": "`StructureToRPCommand` implements `CommandExecutor` to export Minecraft structures into JSON format. It serves as a utility for developers to convert in-game builds into resource pack data.",
+      "lines": 315
+    },
+    "src/main/resources/plugin.yml": {
+      "hash": "4585e44bb106abf187ff69703e0d02975f3c0ec7fd02b7fd26c03141ebd1a1b8",
+      "summary": "This file defines the `Autarky` plugin metadata, entry point, and command registrations. It serves as the primary configuration manifest for the Bukkit/Spigot plugin environment.",
+      "lines": 29
+    }
+  }
+}

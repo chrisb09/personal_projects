@@ -1,0 +1,55 @@
+{
+  "repository": "php-autoindexed-file-viewer",
+  "updatedAt": "2026-11-01T07:24:38.772Z",
+  "filesCount": 9,
+  "directories": {
+    "docker": "Contains 6 module files (Dockerfile, DOCKER.md, docker-compose.yml, build-image.sh)"
+  },
+  "files": {
+    "docker/Dockerfile": {
+      "hash": "b4f8c4b0a94ec39c25db75907907cb2ab810797eb8e55f36927ed8392f947fdd",
+      "summary": "This Dockerfile defines a multi-stage PHP 8.2-FPM environment for the PHP File Browser project, installing necessary system dependencies and PHP extensions to run `index.php`.",
+      "lines": 49
+    },
+    "docker/DOCKER.md": {
+      "hash": "4492d4fe67db03d34c2aecd73ca1cc704d0e3fad1f0dc85bec2c75e2c9847a09",
+      "summary": "This file provides documentation and instructions for deploying the application using Docker and `docker-compose.yml`. It guides users through building, configuring, and managing the containerized environment.",
+      "lines": 106
+    },
+    "README.md": {
+      "hash": "82c56c7870ebcac0e47f7d310d7ad01f6c9bba246f83b3d56324489bdae68068",
+      "summary": "This `README.md` file documents the PHP Autoindexed File-Viewer project, providing an overview of its features, screenshots, and live demo link. It serves as the primary user-facing documentation for the self-hosted directory listing application.",
+      "lines": 143
+    },
+    "docker/docker-compose.yml": {
+      "hash": "f03807351b71f14b0c14bf31f4a8b39552231201b508bf9947d06aca7a389298",
+      "summary": "This file defines a Docker Compose configuration to orchestrate the `app` (PHP-FPM) and `web` (Nginx) services. It serves as the project's deployment setup for containerized execution.",
+      "lines": 51
+    },
+    "docker/build-image.sh": {
+      "hash": "9449e46e082a779292125793a82c86a95f7fb85ea80a435b8b346f7e576925f5",
+      "summary": "This build script compiles the Docker image for the PHP Autoindexed File Viewer using the project's root context. It automates `docker build` to prepare the application for deployment via Docker Compose.",
+      "lines": 19
+    },
+    "docker/push.sh": {
+      "hash": "1c96b3d344f0b9ebc50f07ca88832c7b606d4e2d965cb8ea0ca2e12002b39245",
+      "summary": "This build script automates tagging and pushing Docker images to Docker Hub using the version extracted from `../index.php`. It serves as the project's deployment utility for container releases.",
+      "lines": 30
+    },
+    "docker/update.sh": {
+      "hash": "4fcaca9cbc08764765eb7b74baebc2838a436d33378e9331278617e4f7c50876",
+      "summary": "`docker/update.sh` is a Bash maintenance script that automates rebuilding and pushing project Docker images. It serves as a convenience wrapper executing `build-image.sh` and `push.sh` with root privileges.",
+      "lines": 23
+    },
+    "install.sh": {
+      "hash": "6b248f37c79ad15b7a1c0cc23efbf39e6f8f5f1a24a986ea8d4a7f3d7aeb11e9",
+      "summary": "`install.sh` is a deployment script that provisions required system packages, PHP extensions, and directories for the PHP File Browser project.",
+      "lines": 48
+    },
+    "translate_i18n.py": {
+      "hash": "1ee81a468fe79a28153ee7252c9e8161f0c5937fa65a42472972f9f465f7b5be",
+      "summary": "`translate_i18n.py` defines `EN_STRINGS` and an OpenAI client to translate the viewer’s English",
+      "lines": 373
+    }
+  }
+}

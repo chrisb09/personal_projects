@@ -1,0 +1,38 @@
+{
+  "repository": "map-color-convert",
+  "updatedAt": "2026-11-01T07:22:20.265Z",
+  "filesCount": 6,
+  "directories": {},
+  "files": {
+    "README.md": {
+      "hash": "74592f980ea0abbb34f46626c2cc457434803fe237b7e47aa6eac50d993b2df8",
+      "summary": "This `README.md` file documents the Paint.NET plugin project, providing installation instructions and usage examples. It serves as the primary user guide for converting images into Minecraft map color palettes.",
+      "lines": 24
+    },
+    "MinecraftMapColorPalette.cs": {
+      "hash": "789e38a5ec07d114f92a0b28f6f3d9890ee96650376b5beb025e4724d1f3e4c8",
+      "summary": "`MinecraftMapColorPalette.cs` defines a standard Minecraft color palette array and `AlphaThreshold` UI control for color conversion scripts, serving as the palette data source for the project.",
+      "lines": 347
+    },
+    "Colors.java": {
+      "hash": "6e89bf4d6d5658137bbb7a4228d765856cc0584b659fce8fffcb51366582194e",
+      "summary": "`Colors.java` defines the `Colors` enum, providing standard RGBA color constants used for rendering blocks and materials throughout the project.",
+      "lines": 95
+    },
+    "extract_colors.py": {
+      "hash": "eba013d02ba2d2c90040869b561b19a5c2e8f4bdb2866a4c9d8c8106c7cb99b3",
+      "summary": "`extract_colors.py` parses raw color text data to generate RGB/RGBA CSVs, a C# Paint.NET array, and a Java `Colors` enum. It serves as a build-time data conversion utility.",
+      "lines": 96
+    },
+    "raw_color_page.txt": {
+      "hash": "291317cf733f0b7bdae55dbbbb1eba93ceff4051ad6e270b0332a8deae7c9fdd",
+      "summary": "This data file defines raw color mappings, RGB values, and associated block categories for map rendering. It serves as a reference for color-to-block mapping in the project.",
+      "lines": 64
+    },
+    "test.py": {
+      "hash": "100d98786daf4e63973d2f19dccb28d914336d48515e1255b6f9c192b8176953",
+      "summary": "File `test.py` defines a raw RGB color palette list (`l`) used for testing or configuration. It serves as a static dataset module within the project.",
+      "lines": 78
+    }
+  }
+}

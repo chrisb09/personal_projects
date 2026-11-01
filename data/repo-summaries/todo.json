@@ -1,0 +1,48 @@
+{
+  "repository": "todo",
+  "updatedAt": "2026-11-01T07:25:27.777Z",
+  "filesCount": 8,
+  "directories": {},
+  "files": {
+    "i18n.py": {
+      "hash": "2f42b746e609f3967f6f7a4ed64fb0b5183138c9c6f643d7c4686113896dae6c",
+      "summary": "`i18n.py` manages application localization via the `TRANSLATIONS` dictionary, providing multi-language support based on user sessions and requests.",
+      "lines": 432
+    },
+    "app.py": {
+      "hash": "11753d9f9ad0460d21a10de07f7337e89960ccef88d5377d68f62a5d7029b9b2",
+      "summary": "This file initializes the core Flask application, database (`db`), and login manager (`login_manager`). It serves as the main entry point, configuring extensions and environment variables for the project.",
+      "lines": 2082
+    },
+    "API_README.md": {
+      "hash": "77c335ff7c050110827eef494bc496ee98f435f3e1b3cfadb5b0a5d44168b2ce",
+      "summary": "`API_README.md` documents the v1 REST API’s authentication and task-query endpoint for external clients; it serves as an integration guide for plugins, bots, pipelines, and CLI tools.",
+      "lines": 378
+    },
+    "install_debian.sh": {
+      "hash": "f0b9eaa9d480c4b6dcdb2c7f9055d427d6338a2abe017e9c57f939c974d35c6b",
+      "summary": "`install_debian.sh` automates the system setup by installing required Python Flask and WTForms dependencies via `apt`, serving as the project's Debian-based environment provisioning script.",
+      "lines": 2
+    },
+    "notify_done.py": {
+      "hash": "ac92035acfcf59951f27d798cf2b881df9f043d8e5ef629d44d0643a273f5cb9",
+      "summary": "`notify_done.py` triggers Discord task completion notifications via the internal API. It exports `get_token()` and `notify_task()` to send task updates and serves as a CLI helper script.",
+      "lines": 92
+    },
+    "requirements.txt": {
+      "hash": "77ab4e129da566e4ab5232ebbe1379e18340a4049ecab6658c05d75f595711ca",
+      "summary": "This file lists the project's Python package dependencies, including `flask` and its extensions. It ensures consistent environment setup across deployments.",
+      "lines": 6
+    },
+    "setup_service.sh": {
+      "hash": "70c2687acdef43639f9b9f8619f4c843b2520b96c6f009babbdff92f9ba6aef6",
+      "summary": "`setup_service.sh` is a deployment script that links, enables, and starts the `todo.service` systemd unit. It acts as the system initialization tool for the project's background service.",
+      "lines": 38
+    },
+    "views.py": {
+      "hash": "91ae6972b3a1cb17ce5b5139d1d02817197782331f6abe72165c74075cad474e",
+      "summary": "This file generates user avatar metadata, initials, and deterministic color palettes for the UI. It exports `get_user_initials`, `get_user_color_meta`, `get_user_color`, `get_user_color_by_id`, and `get_user_avatar`.",
+      "lines": 99
+    }
+  }
+}

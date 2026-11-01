@@ -1,0 +1,23 @@
+{
+  "repository": "keepassxc_cleanup",
+  "updatedAt": "2026-11-01T07:22:10.942Z",
+  "filesCount": 3,
+  "directories": {},
+  "files": {
+    "install_requirements.py": {
+      "hash": "f4bddce9311e5d1c486599d71cc39ec239bcffa57ad288cae0f279f2ff781b40",
+      "summary": "`install_requirements.py` automates the installation of project dependencies by executing `pip install -r requirements.txt`. It serves as a utility script to ensure the local environment is correctly configured.",
+      "lines": 9
+    },
+    "main.py": {
+      "hash": "33c7459daecbf0fc9edb92b77f72476ac55666e99e490f4d51a94dc08de265be",
+      "summary": "`main.py` identifies and manages redundant entries in KeePass databases. It provides `find_duplicates`, `print_duplicates`, and `deduplicate` to help users audit and clean up their password storage.",
+      "lines": 148
+    },
+    "README.md": {
+      "hash": "ad9f4a0ee067f8f10738e26a6d3eee22468efa3ef7f8f15cdb525fed4fc114f3",
+      "summary": "This file documents the `KeePassXC Cleanup` tool, which uses `main.py` to perform `list_duplicates`, `dedup`, and `list_custom_properties` operations to manage and optimize KeePassXC database entries.",
+      "lines": 48
+    }
+  }
+}

@@ -10,7 +10,7 @@ export interface Project {
   excludeFromStats?: boolean;
   
   // Role - your involvement with the project
-  role: 'main-author' | 'contributor' | 'fork-maintainer' | 'backend-co-lead';
+  role: 'main-author' | 'contributor' | 'fork-maintainer' | 'backend-co-lead' | 'project-lead';
   
   // Source type - open or closed source (displayed as label)
   sourceType: 'open-source' | 'closed-source';
@@ -54,6 +54,10 @@ export interface Project {
     private?: boolean;
     /** Override the branch to check out before running LOC analysis (defaults to origin/HEAD). */
     branch?: string;
+    /** Keep the repository visible and cloned without counting its commits or LOC. */
+    excludeFromStats?: boolean;
+    /** Repository-specific directories excluded from LOC analysis. */
+    ignoreDirectories?: string[];
   }[];
   mirrors?: {
     name: string;
@@ -136,6 +140,7 @@ export const roleLabels: Record<ProjectRole, string> = {
   contributor: 'Contributor',
   'fork-maintainer': 'Fork Maintainer',
   'backend-co-lead': 'Backend Co-Lead',
+  'project-lead': 'Project Lead',
 };
 
 export const sourceTypeLabels: Record<ProjectSourceType, string> = {
@@ -189,6 +194,7 @@ export const roleColors: Record<ProjectRole, string> = {
   contributor: 'bg-amber-500/10 text-amber-600 border-amber-500/20 dark:text-amber-400',
   'fork-maintainer': 'bg-sky-500/10 text-sky-600 border-sky-500/20 dark:text-sky-400',
   'backend-co-lead': 'bg-cyan-500/10 text-cyan-600 border-cyan-500/20 dark:text-cyan-400',
+  'project-lead': 'bg-violet-500/10 text-violet-600 border-violet-500/20 dark:text-violet-400',
 };
 
 export const sourceTypeColors: Record<ProjectSourceType, string> = {

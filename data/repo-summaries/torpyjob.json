@@ -1,0 +1,45 @@
+{
+  "repository": "torpyjob",
+  "updatedAt": "2026-11-01T07:25:40.813Z",
+  "filesCount": 7,
+  "directories": {
+    "torpyjob": "Contains 3 module files (__init__.py, __main__.py, api.py)"
+  },
+  "files": {
+    "LICENSE.md": {
+      "hash": "4bb0bc09c8257a2a599a732173648b35ebe43dd8222c2e9b7dcb918348434408",
+      "summary": "`LICENSE.md` defines the MIT License terms for the project, granting users permission to use, modify, and distribute the software. It exports no code.",
+      "lines": 22
+    },
+    "README.md": {
+      "hash": "bd3d5700f887b3d8d3fefbdcab0e912ff4672b9841fd0c6fd9f2faa48e496626",
+      "summary": "This documentation file provides an overview, installation guide, and usage instructions for the library. It primarily introduces the `TorJobLib` class, which manages scheduled tasks executed over unique Tor IPv4 circuits.",
+      "lines": 203
+    },
+    "install_torpy.sh": {
+      "hash": "b70dc2cc9774384afe62d856bd81f65ffa0598f1c478e81a3ff6ec26367f8926",
+      "summary": "This shell script automates the installation of a modified `torpy` library from GitHub for the project by cloning, installing, and cleaning up the repository.",
+      "lines": 11
+    },
+    "torpyjob/__init__.py": {
+      "hash": "0386ec83928808ee158b4d2f6dce621fca5e690b1a0d887538ad279bdb293a46",
+      "summary": "This file serves as the package's main entry point, exposing the primary `TorJobLib` class to simplify user imports and facilitate core job management functionality within the project.",
+      "lines": 1
+    },
+    "setup.py": {
+      "hash": "2e175cf10ce8fca455342a8d4632bcd4ea69270875f1dafcc99900fa5037edca",
+      "summary": "`setup.py` configures packaging and installation for the `torpyjob` library, including metadata, dependencies’ package discovery, and a `torpyjob` console command mapped to `torpyjob.api:main`. It exports no functions or classes.",
+      "lines": 40
+    },
+    "torpyjob/__main__.py": {
+      "hash": "0e420294e45ce2838c9ca939fd81be997ea0fe1aabb6cdcc1142d6c9d5ce11b9",
+      "summary": "This file serves as the project's entry point, executing `main()` from `torpyjob.api` to initiate the application when run as a script.",
+      "lines": 5
+    },
+    "torpyjob/api.py": {
+      "hash": "22e8b831cf284bdcd501c364400419ea2cc0d09f88a3bf32dd938845c42fbc2d",
+      "summary": "`torpyjob/api.py` provides the `TorJobLib` class to manage parallel task execution over Tor circuits. It handles job scheduling, circuit management, and status reporting via `Message_Code`.",
+      "lines": 512
+    }
+  }
+}

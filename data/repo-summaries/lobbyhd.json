@@ -1,0 +1,72 @@
+{
+  "repository": "lobbyhd",
+  "updatedAt": "2026-11-01T07:22:19.001Z",
+  "filesCount": 12,
+  "directories": {
+    "src/main/java/net/legendofwar/lobbyhd": "Contains 4 module files (PlayerPortals.java, LobbyHD.java, QuestBarDisplay.java, WorldProtection.java)",
+    "src/main/java/net/legendofwar/lobbyhd/commands": "Contains 2 module files (CommandHandler.java, SpawnCommand.java)",
+    "src/main/java/net/legendofwar/lobbyhd/npc": "Contains 6 module files (HumanNPC.java, ElbNPC.java, LisaNPC.java, SabrinaNPC.java)"
+  },
+  "files": {
+    "src/main/java/net/legendofwar/lobbyhd/PlayerPortals.java": {
+      "hash": "739e6e589cc25620a40d4503513e8ee593ea8fb9c78d33c4d546344e38c3647b",
+      "summary": "`PlayerPortals.java` manages in-game portal interactions via `init()`, handling faction (`Volk`) changes and player teleportation within the lobby project.",
+      "lines": 136
+    },
+    "src/main/java/net/legendofwar/lobbyhd/LobbyHD.java": {
+      "hash": "8e80408f9add4d88e96bf7d200f01e3b396a2d853f32efb1a018c984392c9bdb",
+      "summary": "`LobbyHD` is the main plugin class that initializes the project, managing startup routines, event listeners, and global plugin access via `getInstance()`.",
+      "lines": 106
+    },
+    "src/main/java/net/legendofwar/lobbyhd/QuestBarDisplay.java": {
+      "hash": "7edefd0498dae497915ec5b97f233dcde759139086cef03dc883150d3776e245",
+      "summary": "`QuestBarDisplay` manages player boss bars to visually track active quests and progress. It exports the `QuestBarDisplay` class, serving as the lobby quest HUD controller.",
+      "lines": 110
+    },
+    "src/main/java/net/legendofwar/lobbyhd/commands/CommandHandler.java": {
+      "hash": "72a03520475752e0f7bdf825058160778a32e7d4a0d65f5924d5327b8159c828",
+      "summary": "`CommandHandler` registers plugin commands during the lifecycle events phase using its primary `init()` method, serving as the central command registration hub for the project.",
+      "lines": 22
+    },
+    "src/main/java/net/legendofwar/lobbyhd/commands/SpawnCommand.java": {
+      "hash": "2c89d70de3c7deb86277cfc7563fe38994e8c0d079015b8451544727d0a9ddf4",
+      "summary": "`SpawnCommand` implements and registers the `/spawn` command using Paper's Brigadier API. Its primary method, `register`, handles teleporting players to the world spawn.",
+      "lines": 37
+    },
+    "src/main/java/net/legendofwar/lobbyhd/WorldProtection.java": {
+      "hash": "8a96547b86dda18f7e731c73fb914997b1f55c75707989cb9586e7d7e2888e31",
+      "summary": "`WorldProtection` is a Bukkit event listener that prevents non-creative players from modifying the environment (breaking/placing blocks and using buckets). It secures the lobby world against griefing.",
+      "lines": 117
+    },
+    "src/main/java/net/legendofwar/lobbyhd/npc/HumanNPC.java": {
+      "hash": "64f1686867f86f5d09c2513e0dd4a95488ceee05aaaaa737b20d0be196875646",
+      "summary": "`HumanNPC` extends `MannequinNPC` to spawn a custom skinned NPC in the lobby world, serving as an interactive human entity within the plugin.",
+      "lines": 95
+    },
+    "src/main/java/net/legendofwar/lobbyhd/npc/ElbNPC.java": {
+      "hash": "cd6b403a7825d0385b12f354d97c8950b1f128ac8cc45cc8b449f787989487bb",
+      "summary": "`ElbNPC` manages the \"König der Elben\" mannequin NPC, configuring its custom skin and spawn location. It serves as an interactive lobby entity within the NPC module.",
+      "lines": 97
+    },
+    "src/main/java/net/legendofwar/lobbyhd/npc/LisaNPC.java": {
+      "hash": "ac2913b8be383b3b47d5cded527af391a474e34a5aa32697f7521f3184fa8bfb",
+      "summary": "This file defines the `LisaNPC` class, which extends `MannequinNPC` to spawn and configure the \"Lisa\" interactive lobby NPC. It serves as a specialized non-player character within the project's NPC module.",
+      "lines": 95
+    },
+    "src/main/java/net/legendofwar/lobbyhd/npc/SabrinaNPC.java": {
+      "hash": "6e27be36aa78ff5e879eda3abe84481203e8910c0573e47363e26e9f9f1dd46d",
+      "summary": "This file defines the `SabrinaNPC` class, which extends `MannequinNPC` to spawn and manage the Sabrina lobby NPC. It serves as a specialized interactive character entity within the project's NPC system.",
+      "lines": 96
+    },
+    "src/main/java/net/legendofwar/lobbyhd/npc/OrkNPC.java": {
+      "hash": "3b291f519cfa1b3232579c9b31255374acead3e671ae48a32fd358ef0c68eee8",
+      "summary": "This file defines the `OrkNPC` class, extending `MannequinNPC` to spawn and configure an Ork King NPC within the lobby world.",
+      "lines": 96
+    },
+    "src/main/java/net/legendofwar/lobbyhd/npc/ZwergNPC.java": {
+      "hash": "4c10ea5bb12d8aefc28b11b376ca41e5c10cf04206f4da52b963c4a161290087",
+      "summary": "This file defines the `ZwergNPC` class, which spawns and configures the \"König der Zwerge\" custom mannequin NPC within the lobby.",
+      "lines": 96
+    }
+  }
+}

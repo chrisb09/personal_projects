@@ -1,6 +1,6 @@
 {
   "repository": "green-lms-checkpoints",
-  "updatedAt": "2026-10-31T11:11:42.408Z",
+  "updatedAt": "2026-11-01T07:21:32.089Z",
   "filesCount": 12,
   "directories": {
     "configs": "Contains 2 module files (values-dev.yaml, values-prod.yaml)",

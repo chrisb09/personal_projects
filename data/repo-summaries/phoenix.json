@@ -1,0 +1,72 @@
+{
+  "repository": "phoenix",
+  "updatedAt": "2026-11-01T07:24:34.120Z",
+  "filesCount": 12,
+  "directories": {
+    "src/main/java/net/legendofwar/phoenix": "Contains 3 module files (EntityHPDisplayHandler.java, PlayerHeaderNameHandler.java, Phoenix.java)",
+    "src/main/java/net/legendofwar/phoenix/auctions": "Contains 6 module files (AuctionSearchFilter.java, ClaimMenuBuilder.java, PlayerAuctions.java, PagedClaimMenu.java)",
+    "src/main/java/net/legendofwar/phoenix/auctions/itemgroups": "Contains 1 module files (ItemGroup.java)"
+  },
+  "files": {
+    "deploy.sh": {
+      "hash": "0160439436ecdca932db6b15287ca4ef3944e3ae5a349feea331262dbbbb6179",
+      "summary": "This script automates the Maven build, packaging, and deployment of Minecraft plugin JAR files to local or remote server environments depending on the user.",
+      "lines": 43
+    },
+    "README.md": {
+      "hash": "d750be1c3cfdde91d016c6657e7f3e9b808c0b0abe55044c6145b9043c016f35",
+      "summary": "`README.md` documents the core game design for the Phoenix project, detailing mechanics for races, maps, buildings, quests, and player stats.",
+      "lines": 128
+    },
+    "src/main/java/net/legendofwar/phoenix/EntityHPDisplayHandler.java": {
+      "hash": "51fd9c32626cccdd05a30221de1d7b41b3aa9f597cbab6200ffdeaa76dbf316d",
+      "summary": "`EntityHPDisplayHandler` manages custom health bar overlays for entities viewed by players. As a core UI display utility, it tracks and updates entity HP packets within the project.",
+      "lines": 378
+    },
+    "src/main/java/net/legendofwar/phoenix/auctions/AuctionSearchFilter.java": {
+      "hash": "44c780e337c772712d94eb74e520cf3639d489175bbb1e9654c6edb27dd4fd13",
+      "summary": "`AuctionSearchFilter` models persistent Redis-backed search and sorting criteria for auction items, exporting `DATA_GENERATOR` and `test(Item)`. It powers the project's auction house filtering system.",
+      "lines": 166
+    },
+    "src/main/java/net/legendofwar/phoenix/PlayerHeaderNameHandler.java": {
+      "hash": "e64a1159e6d226b08d539acabba5a0a2b199ba663237f9a0a54d0660d2f00f8f",
+      "summary": "`PlayerHeaderNameHandler` manages dynamic player tab list prefixes and colors using scoreboards. It exports `init(Plugin)` to register event listeners for player joins, volk, and skill changes.",
+      "lines": 87
+    },
+    "src/main/java/net/legendofwar/phoenix/Phoenix.java": {
+      "hash": "0c936e13773c66a41dbffdd410d1708f4becdd43c994720b11c35bb7e6db8f28",
+      "summary": "`Phoenix.java` is the core plugin entry point for the project, managing server initialization and event registrations. It primarily exports the `Phoenix` class.",
+      "lines": 437
+    },
+    "src/main/java/net/legendofwar/phoenix/auctions/ClaimMenuBuilder.java": {
+      "hash": "e972e1fe17f3025e92f8d918170543d4a83b2ffd3fcf2fbecd29a9b0b836c814",
+      "summary": "`ClaimMenuBuilder` constructs interactive inventory menus for players to manage auction claims. Its primary exported class is `ClaimMenuBuilder`, featuring `buildClaimMenu`, to handle claim UI generation within the auction system.",
+      "lines": 148
+    },
+    "src/main/java/net/legendofwar/phoenix/auctions/PlayerAuctions.java": {
+      "hash": "0ef140c719b520f2824aebda5ca0e79f162856d6dba986bb0a0f7b406c584285",
+      "summary": "`PlayerAuctions` manages player auction listings and GUIs within the auctions system. It acts as the core listener and manager class for handling player auction interactions.",
+      "lines": 795
+    },
+    "src/main/java/net/legendofwar/phoenix/auctions/PagedClaimMenu.java": {
+      "hash": "e4750c9dd25a76ac29781513b5c320a74e2b71daa7b1d744a860661a6c6874b7",
+      "summary": "`PagedClaimMenu` manages and displays a paginated inventory menu for player auction claims. It exports the `PagedClaimMenu` class, serving as the UI component for claiming auction items in the project.",
+      "lines": 79
+    },
+    "src/main/java/net/legendofwar/phoenix/auctions/PlayerShop.java": {
+      "hash": "a38a7dd0f3da82c45f2a75ad669c849b16a145f44e3b29a57659a4f51ce0f2a5",
+      "summary": "`PlayerShop` manages the player marketplace UI and asynchronous data loading. It primarily exports `openPlayerShopAsync(Player)` to asynchronously open the shop inventory menu in the auction system.",
+      "lines": 78
+    },
+    "src/main/java/net/legendofwar/phoenix/auctions/itemgroups/ItemGroup.java": {
+      "hash": "3505b66220008aafbcd70cc75a1357018dc14f8e0616ceb5a42eb57b8dad71ec",
+      "summary": "`ItemGroup` is an abstract base class that manages auction shop entries and Redis data loading. It defines `getDisplayItem()`, `getInventoryMenu()`, and `getItemStorageKeys()` to categorize items in the auction system.",
+      "lines": 86
+    },
+    "src/main/java/net/legendofwar/phoenix/auctions/ServerAuction.java": {
+      "hash": "532bb18bd7825510c984f2545803c3db935aaab4575798250b8f959bfa364802",
+      "summary": "`ServerAuction` manages server-wide auction listings and synchronized data using Redis locks. It exports `getNewAuctionItem()` and handles core auction mechanics within the project's economy system.",
+      "lines": 339
+    }
+  }
+}

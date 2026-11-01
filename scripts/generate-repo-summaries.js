@@ -97,6 +97,15 @@ const openrouterModel = (aiEnv?.OPENROUTER_MODEL_IDS || 'gpt-6-luna').split(',')
 // =====================================================================
 let geminiKeyIdx = 0;
 
+function redactSensitiveContent(content) {
+  const sensitiveLine = /api[_-]?key|secret|token|password|webhook|private[_-]?key|access[_-]?key/i;
+  const stringLiteral = /"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'/g;
+  return content.split('\n').map(line => {
+    if (!sensitiveLine.test(line)) return line;
+    return line.replace(stringLiteral, literal => `${literal[0]}<redacted>${literal[literal.length - 1]}`);
+  }).join('\n');
+}
+
 async function summarizeTextWithAi(filePath, codeSnippet) {
   if (isDryRun) {
     return `[DryRun] Mock summary for ${path.basename(filePath)}`;
@@ -109,7 +118,7 @@ Preserve exact class and function names with backticks.
 File: ${filePath}
 Code snippet:
 \`\`\`
-${codeSnippet.slice(0, 2000)}
+${redactSensitiveContent(codeSnippet).slice(0, 2000)}
 \`\`\``;
 
   // 1. Primary: Free-tier Google AI Studio Gemini 3.5 Flash-Lite (rotating across 3 keys)
@@ -215,7 +224,7 @@ const IGNORED_NAMES = new Set([
 
 const IGNORED_DIRS = new Set([
   '.git', 'node_modules', 'dist', 'build', 'out',
-  '.venv', 'venv', '__pycache__', 'temp', 'tmp',
+  '.venv', 'venv', '__pycache__', 'temp', 'tmp', 'target', 'instance',
   'assets', 'images', 'public', '.idea', '.vscode'
 ]);
 

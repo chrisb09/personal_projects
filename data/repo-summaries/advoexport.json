@@ -1,0 +1,63 @@
+{
+  "repository": "advoexport",
+  "updatedAt": "2026-11-01T07:20:43.766Z",
+  "filesCount": 11,
+  "directories": {},
+  "files": {
+    "difference.py": {
+      "hash": "199610cf396412a9ea4b2b55fd6ca3d1836cf9ed7bd49767b6519a050de24740",
+      "summary": "`difference.py` defines `compare`, which copies files present in the first source tree but missing from the second into the target, preserving directory structure; it serves as a command-line directory-difference utility.",
+      "lines": 21
+    },
+    "prepare_old.py": {
+      "hash": "71419f92cfacd7986defd955c8145f4cd72955453c6eb07b0c2765b5194672a8",
+      "summary": "`prepare_old.py` is a command-line preparation script that recursively copies files from a source directory to a target, renaming filenames that match its pattern; it exports no functions or classes.",
+      "lines": 20
+    },
+    "main.py": {
+      "hash": "2f4ce22a9234ecba2e298812c8bd365691ada213e50b92fa1a1e034e41305359",
+      "summary": "`main.py` is the command-line entry point: it calls `read_register.read_spreadsheet`, `read_schriftsatz.get",
+      "lines": 81
+    },
+    "read_register.py": {
+      "hash": "30bb07e0d9f910d4554a9fd5b0f67a0a37ac122999b03a13f5e5ac82adebf751",
+      "summary": "`read_spreadsheet(path)` reads the first worksheet of an Excel register and returns a dictionary mapping parsed case numbers to selected row values. It serves as the project’s spreadsheet-to-register data loader.",
+      "lines": 30
+    },
+    "run.sh": {
+      "hash": "df9bfc9aafa03ddfd1b75dc00e828828ece9880b0563c0ce8db6fd9b09c784ba",
+      "summary": "`run.sh` changes to the project directory and runs `main.py` with input and output paths; it serves as a project launcher and defines no functions or classes.",
+      "lines": 3
+    },
+    "read_schriftsatz.py": {
+      "hash": "eca95a1f9ef69bdf2b56a0c7e159148ea7b0f4aa4fa042d30296d252b35ee025",
+      "summary": "`read_schriftsatz.py` extracts case numbers from text or DOCX files via `read_file` and provides `check_akten_status",
+      "lines": 319
+    },
+    "test.py": {
+      "hash": "4d5adaa51fda8a62e9eacfa1eba054f43ffcbc0ab182c7cb872996455934b95f",
+      "summary": "`test.py` serves as a test script that invokes `read_schriftsatz.read_file` to process and print the contents of a specific `.doc` file for verification purposes.",
+      "lines": 8
+    },
+    "test2.py": {
+      "hash": "96839bc3e6c364f47c88ad6a3e9eb4e4f9174dfb9891912446cc04080363bec5",
+      "summary": "This script validates file statuses by calling `read_schriftsatz.check_akten_status` on \"abgelegt\" and \"laufend\" directories. It serves as a utility for verifying document processing states within the project.",
+      "lines": 15
+    },
+    "test3.py": {
+      "hash": "a70feb678c01f9d6e6854b0515a58dd05f023dd271d817afd5f001acd7a16419",
+      "summary": "`test3.py` extracts and compares file identifiers using `rf1` and `rf2` to audit changes in document metadata across a directory, identifying added, removed, or modified identifiers.",
+      "lines": 89
+    },
+    "test4.py": {
+      "hash": "5905c4bcf1d576d5e513b75f6a507375f99d9b7ec6473da279f1daeda6dc6d36",
+      "summary": "`test4.py` is a utility script that uses `re.search` to extract specific reference patterns from command-line arguments, serving as a standalone tool for regex validation and pattern matching.",
+      "lines": 18
+    },
+    "test5.py": {
+      "hash": "d4582915493130adcd6e45afa79667f6ee5e6810f204bdbc2e41a7479865bcba",
+      "summary": "`test5.py` extracts and prints text from a `.docx` file provided via command-line arguments. It serves as a utility script for basic document content verification within the project.",
+      "lines": 13
+    }
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "repository": "github-page.ferienw-am-meer.de",
+  "updatedAt": "2026-11-01T07:21:32.072Z",
+  "filesCount": 12,
+  "directories": {
+    "Scripts/Widgets/SharedResources": "Contains 1 module files (WidgetCommon.js)",
+    "Scripts/Widgets/Navbar": "Contains 1 module files (navbar.js)",
+    ".github/workflows": "Contains 1 module files (nextjs.yml)",
+    "app/anreise": "Contains 1 module files (page.tsx)",
+    "Scripts": "Contains 2 module files (iWebSite.js, iWebImage.js)",
+    "app/datenschutz": "Contains 1 module files (page.tsx)",
+    "app/fewo-105/badezimmer": "Contains 1 module files (page.tsx)",
+    "app/fewo-105/balkon": "Contains 1 module files (page.tsx)",
+    "app/fewo-105/wohnzimmer": "Contains 1 module files (page.tsx)",
+    "app/fewo-105": "Contains 1 module files (page.tsx)",
+    "app/fewo-105/schlafzimmer": "Contains 1 module files (page.tsx)"
+  },
+  "files": {
+    "Scripts/Widgets/SharedResources/WidgetCommon.js": {
+      "hash": "d433c9e499c28238cd211abc467dbe4a2133a9b78486e4f2ab88c197b95cbd8e",
+      "summary": "This file provides the base `Widget` class for managing widget instances, preferences, and lifecycle events in the project.",
+      "lines": 89
+    },
+    "Scripts/Widgets/Navbar/navbar.js": {
+      "hash": "1618d3e4b08ec1f4cea62ed5734e151ae8be366ee442bfeffa73d8a39b1d9e60",
+      "summary": "This file implements the `NavBar` widget class, which manages navigation bar data feeds, styling, and DOM regeneration. It serves as the frontend component for site navigation within the iWeb project.",
+      "lines": 78
+    },
+    ".github/workflows/nextjs.yml": {
+      "hash": "e409e56f89c913ffeec0479d97567fb6c558729de2e689c9711d4877b867bb00",
+      "summary": "This GitHub Actions workflow file automates building and deploying the Next.js site to GitHub Pages upon pushes to designated branches. It serves as the CI/CD pipeline for production web deployments.",
+      "lines": 80
+    },
+    "app/anreise/page.tsx": {
+      "hash": "ec77a79edd681328fa6d2ec52ae140dfabdc91fd5902ca316c205ee0293db1a3",
+      "summary": "`app/anreise/page.tsx` renders the \"Anreise\" (Directions) view featuring a privacy-compliant interactive map loader. It exports the default `AnreisePage` component as a Next.js route page.",
+      "lines": 102
+    },
+    "Scripts/iWebSite.js": {
+      "hash": "ede90e889941fdeae4c3fa67578e01f4bc2f05751b09fd91f83a0beb5b9a66e4",
+      "summary": "This file embeds the Prototype JavaScript framework (v1.6.0) to provide core utility functions and object-oriented class structures. It exports `Prototype` and `Class` to support client-side scripting across the iWeb project.",
+      "lines": 1210
+    },
+    "Scripts/iWebImage.js": {
+      "hash": "5abac352bfb137d6b3bbccf8839405cbf798f50b314fe7f2c9daec453fe01dd5",
+      "summary": "`Scripts/iWebImage.js` manages asynchronous image loading, caching, and lifecycle events for the iWeb project. It exports `IWImage`, `IWCreateImage`, `IWImageNamed`, and `IWRegisterNamedImage`.",
+      "lines": 389
+    },
+    "app/datenschutz/page.tsx": {
+      "hash": "3a129b54181ddf865822d2c0d8d3a9ee6acd259cd514350ef9e553b1e6178e3b",
+      "summary": "`app/datenschutz/page.tsx` renders the privacy policy page for the application. It exports the default component `DatenschutzPage` and a `metadata` object to fulfill legal data protection requirements.",
+      "lines": 96
+    },
+    "app/fewo-105/badezimmer/page.tsx": {
+      "hash": "375258f5284eac268ed4fa25608eea8f614addb6243100e0cbc277d7558e0eb3",
+      "summary": "This Next.js page renders the bathroom details for Apartment 105 using `Badezimmer105Page` and `RoomPage`, serving as a specific room view within the vacation rental application.",
+      "lines": 31
+    },
+    "app/fewo-105/balkon/page.tsx": {
+      "hash": "080df013b2217adbb4b147e14550cfa88dfd0039dbad114c87edbacbd4edb713",
+      "summary": "This file renders the balcony room page for Apartment 105 using `Balkon105Page`. It exports metadata and serves as a Next.js page component within the project.",
+      "lines": 37
+    },
+    "app/fewo-105/wohnzimmer/page.tsx": {
+      "hash": "94e44cc7a25bf50818110f32e1bc99123d1be7e5d10b3a08827439150307a297",
+      "summary": "This file renders the living room detail page for Apartment 105 using `Wohnzimmer105Page` and `RoomPage`, serving as a specific room view within the application.",
+      "lines": 43
+    },
+    "app/fewo-105/page.tsx": {
+      "hash": "75221670caf3386b4c9878777483962d7242933c4e640c09e2bd2b65fcc77d2c",
+      "summary": "This Next.js page renders the detailed view and metadata for apartment 105 using `ApartmentPageClient` and `Fewo105Page`. It serves as the main route for Ferienwohnung 105.",
+      "lines": 57
+    },
+    "app/fewo-105/schlafzimmer/page.tsx": {
+      "hash": "c4ad54b03b9c1326f75e3289e1a433c0ee54a6b09e4456df263b7f7eae7824da",
+      "summary": "This file renders the bedroom page for Apartment 105 using the `RoomPage` component. It exports the `Schlafzimmer105Page` component and page `metadata`.",
+      "lines": 37
+    }
+  }
+}

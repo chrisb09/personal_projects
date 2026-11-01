@@ -1,0 +1,49 @@
+{
+  "repository": "libretranslate-java",
+  "updatedAt": "2026-11-01T07:22:15.562Z",
+  "filesCount": 7,
+  "directories": {
+    "src/main/java/space/dynomake/libretranslate": "Contains 2 module files (Translator.java, Language.java)",
+    "src/main/java/space/dynomake/libretranslate/type": "Contains 1 module files (TranslateResponse.java)",
+    "src/main/java/space/dynomake/libretranslate/util": "Contains 1 module files (JsonUtil.java)",
+    "src/main/java/space/dynomake/libretranslate/exception": "Contains 1 module files (BadTranslatorResponseException.java)",
+    "src/test/java/space/dynomake/libretranslate": "Contains 1 module files (Test.java)"
+  },
+  "files": {
+    "src/main/java/space/dynomake/libretranslate/Translator.java": {
+      "hash": "10fc0c1d15d216edd3eec7aef0eb3d925802dd9d199b7035251a3ddebcd9001f",
+      "summary": "`Translator` is a utility class that facilitates text translation by sending requests to the LibreTranslate API. It exports `translate` and `translateDetect` to handle translation operations.",
+      "lines": 80
+    },
+    "README.md": {
+      "hash": "d192f2f0bbeb633f87c7307751aa0c1badda7bd858ee79d1b637ea2a14a08a37",
+      "summary": "This file documents the `libretranslate-java` client, which provides the `Translator` class for text translation. It serves as the primary integration guide for configuring and using the library.",
+      "lines": 53
+    },
+    "src/main/java/space/dynomake/libretranslate/Language.java": {
+      "hash": "2b4c47ddf9025c468ab4ff8d60f2d270d593f9f043834a1e74176a1b47b8c16a",
+      "summary": "The `Language` enum defines supported translation codes and provides the `fromCode(String)` method to map language strings, serving as the standard language identifier throughout the project.",
+      "lines": 57
+    },
+    "src/main/java/space/dynomake/libretranslate/type/TranslateResponse.java": {
+      "hash": "f285f7db2d196b6d5c608cf37d3e426a2728d602bf2d16c0102c3ed389ebcdfe",
+      "summary": "`TranslateResponse` is a data model representing the API's translation output. It includes the `DetectedLanguage` static class to encapsulate language identification results within the project's translation service.",
+      "lines": 24
+    },
+    "src/main/java/space/dynomake/libretranslate/util/JsonUtil.java": {
+      "hash": "72a48e19074b3f5325e322bcac011042bb6690602e0eb2eb2799e6468a73d8a1",
+      "summary": "`JsonUtil` is a utility class providing `to` and `from` methods for JSON serialization and deserialization, serving as the project's centralized interface for handling GSON operations.",
+      "lines": 21
+    },
+    "src/main/java/space/dynomake/libretranslate/exception/BadTranslatorResponseException.java": {
+      "hash": "a3bb4d3d7148b873fd009e2c6bf905ffe7eaaf76a8c608d8cdcd75e62edb8dab",
+      "summary": "`BadTranslatorResponseException` is a custom `RuntimeException` used to handle API errors. It stores the HTTP `code` and `host` to facilitate error reporting within the translation service.",
+      "lines": 15
+    },
+    "src/test/java/space/dynomake/libretranslate/Test.java": {
+      "hash": "ae36616ae2b8a4c310483e8cc9f36f35d28e6f55f665c344bc6568f490e750bc",
+      "summary": "This file serves as a manual integration test and usage example for the project. It uses the `main` method to invoke `Translator.translate` and verify basic translation functionality.",
+      "lines": 10
+    }
+  }
+}

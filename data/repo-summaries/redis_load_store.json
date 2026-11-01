@@ -1,0 +1,18 @@
+{
+  "repository": "redis_load_store",
+  "updatedAt": "2026-11-01T07:25:17.549Z",
+  "filesCount": 2,
+  "directories": {},
+  "files": {
+    "redis_load_store.py": {
+      "hash": "5db2675921f88d443365d5343760b0835bb292cbc27ace27f6646d34a33afa70",
+      "summary": "`redis_load_store.py` builds string tries using `StringTrie` and `create_trie` to structure and manage data. It serves as a utility module for organizing strings before Redis storage operations.",
+      "lines": 256
+    },
+    "README.md": {
+      "hash": "2d3d64883b43366780f8ef1433bf98ad681fc299b4fce8839df9b16d0ad95dcd",
+      "summary": "The `README.md` file documents the Redis Load/Store Text Python Utility, a script for backing up and restoring Redis databases using URL-safe base64-encoded text files. It serves as the primary user guide and installation reference for the project.",
+      "lines": 118
+    }
+  }
+}

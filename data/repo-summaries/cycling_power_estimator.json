@@ -1,0 +1,73 @@
+{
+  "repository": "cycling_power_estimator",
+  "updatedAt": "2026-11-01T07:21:16.575Z",
+  "filesCount": 12,
+  "directories": {
+    "backend": "Contains 1 module files (Dockerfile)",
+    "backend/app/api": "Contains 6 module files (admin.py, __init__.py, analyze.py, bikes.py)",
+    "backend/app": "Contains 2 module files (cli.py, auth.py)",
+    "backend/app/db": "Contains 1 module files (database.py)"
+  },
+  "files": {
+    "PLAN.md": {
+      "hash": "2104634eb7b020aa3969d155cd70ce288eb52ce093ee3394b2a46d7761e9870c",
+      "summary": "`PLAN.md` outlines the project architecture and development progress. It documents the core physics engine modules, including `pipeline.py` and `metrics.py`, serving as the central roadmap for the application.",
+      "lines": 143
+    },
+    "PROJECT_OUTLINE.md": {
+      "hash": "c23dd38035aa4bdd946e6dfdb3ab1cc0e9e296bb74de91210891570a660f6ebd",
+      "summary": "`PROJECT_OUTLINE.md` serves as the architectural blueprint for the cycling power estimator platform, defining the project goals, technical specifications, and recommended technology stack for the application.",
+      "lines": 133
+    },
+    "backend/Dockerfile": {
+      "hash": "3dc6412b60f2d9ac5950b38e9a9f3024070bb617e1c065da08956ec9e71917c1",
+      "summary": "This Dockerfile builds the backend container, installs its Python package, and runs the FastAPI app via Uvicorn on port 8000; it defines no exported functions or classes.",
+      "lines": 15
+    },
+    "backend/app/api/admin.py": {
+      "hash": "3c03e309a7732d8bef3e578bc6090976ba8d230d65a688a38d05111b1e596937",
+      "summary": "This module defines FastAPI admin endpoints for listing users, self-promotion, and updating user roles and status, backed by SQLAlchemy and request/response models. Its primary functions include `get_all_users`, `self_promote`, `update_user_role`, and the partially shown `update...`; it provides user administration in the API.",
+      "lines": 137
+    },
+    "backend/app/api/__init__.py": {
+      "hash": "ff159057ecd06fecc5e96147eb95091c8176c3fc546117799e4c5580b132e987",
+      "summary": "This empty `__init__.py` marks `backend.app.api` as a Python package; it defines no exported functions or classes and provides no additional API behavior.",
+      "lines": 2
+    },
+    "backend/app/api/analyze.py": {
+      "hash": "fb78a9c09c28d4273ec2bd4b81835623131e2413f01ddb2e9c6c2c864800a98e",
+      "summary": "Source module implementing analyze.py logic.",
+      "lines": 323
+    },
+    "backend/app/api/bikes.py": {
+      "hash": "0a6cc823be63a3830696aad95be360d07b201d63555128566479f73b96dada37",
+      "summary": "Defines `BikeCreate` and `BikeResponse` schemas and the `get_bikes` and `create_bike` endpoints. This FastAPI router lists and creates bikes belonging to the authenticated user.",
+      "lines": 41
+    },
+    "backend/app/api/rides.py": {
+      "hash": "1d2628ebd164127060c1f631e7417156f0ffe702fb5ce29b13aaaa65f1721ec4",
+      "summary": "`backend/app/api/rides.py` defines FastAPI ride endpoints and response/update models. `get_rides`, `delete_ride`, and `update_ride` support listing and managing rides for the project’s ride API.",
+      "lines": 505
+    },
+    "backend/app/api/auth.py": {
+      "hash": "d4d0df433c21fec17f70feeae7bfd1c90af7d78cf2cb15564e17d9d15d457a9a",
+      "summary": "Defines authentication schemas and FastAPI dependencies for optional, authenticated, and admin users, plus the `register` endpoint; it supports user registration and access control across the API.",
+      "lines": 240
+    },
+    "backend/app/cli.py": {
+      "hash": "9fd9cb1a63ac34f77defef9811af2ac4c15143920f4ab122cb0fa3f69ecca4e3",
+      "summary": "This file serves as the command-line interface entry point for estimating cycling power from GPX files. It exports `build_parser()` and `main()`, handling argument parsing and CLI execution.",
+      "lines": 103
+    },
+    "backend/app/db/database.py": {
+      "hash": "e4805f0f52bc2e3bc04dfa9ac36f1e68457ee5a3842076b6f1186d08650156d0",
+      "summary": "This file configures the SQLite database connection, establishing the persistence layer. It exports `engine`, `SessionLocal`, `Base`, and `get_db()` to manage database sessions across the application.",
+      "lines": 23
+    },
+    "backend/app/auth.py": {
+      "hash": "a4a8269b7e6e5a8f60e8f33c79b696c6a60a10d20a06a02a6777b52bc3da221c",
+      "summary": "This file handles user authentication by managing password hashing and JWT creation. It exports `verify_password`, `get_password_hash`, and `create_access_token` to provide security services for the backend.",
+      "lines": 32
+    }
+  }
+}

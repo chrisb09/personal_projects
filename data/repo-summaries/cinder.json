@@ -1,0 +1,71 @@
+{
+  "repository": "cinder",
+  "updatedAt": "2026-11-01T07:21:05.063Z",
+  "filesCount": 12,
+  "directories": {
+    "src/main/java/net/legendofwar/cinder/data": "Contains 10 module files (BanManager.java, LevelData.java, HumanData.java, FinancialAccount.java)",
+    "src/main/java/net/legendofwar/cinder/config": "Contains 1 module files (GlobalParams.java)"
+  },
+  "files": {
+    "src/main/java/net/legendofwar/cinder/data/BanManager.java": {
+      "hash": "7af563d992cbebb5d7851bdf3141bad3bb92736500931a753621628e28b71655",
+      "summary": "`BanManager` manages player ban data using Redis-backed storage. It provides utility methods `formatTimestamp` and `formatDif` to handle time-based ban duration formatting within the project's data layer.",
+      "lines": 241
+    },
+    "deploy.sh": {
+      "hash": "65cfaa9a7b251e31401b99446d8efa57865d7582c3241264d30f0d6ac823dee7",
+      "summary": "`deploy.sh` automates the build, packaging, and distribution of JAR files to various Minecraft server directories. It executes `mvn clean install` and handles remote or local file synchronization.",
+      "lines": 42
+    },
+    "src/main/java/net/legendofwar/cinder/config/GlobalParams.java": {
+      "hash": "0bd0c3749b7fba6ddfd8087187445b988a4e07d76153c0a3454c85c1a660b302",
+      "summary": "`GlobalParams` defines static configuration flags for PvP mechanics. It serves as the central source for `PVP_SEPERATED_BY_VOLK` and `PVP_ENABLED` settings across the project.",
+      "lines": 14
+    },
+    "src/main/java/net/legendofwar/cinder/data/LevelData.java": {
+      "hash": "bc82308340dad851329f8f7c74d515c4ac7986f003a42a01284d56f93db4ef0a",
+      "summary": "`LevelData` extends `AbstractObject` to manage player progression, providing `canLevelUp`, `setLevelAndXp`, and `setLevel` to track experience and level state within the project's data layer.",
+      "lines": 118
+    },
+    "src/main/java/net/legendofwar/cinder/data/HumanData.java": {
+      "hash": "6f23b1c9a9a863c1a519f3172634b88a565058d94ed1899d19d3358ecb5f5d99",
+      "summary": "`HumanData` extends `AbstractObject` to manage persistent player or NPC state, including stats, finances, and skin data. It serves as the base data model for entities within the project.",
+      "lines": 178
+    },
+    "src/main/java/net/legendofwar/cinder/data/FinancialAccount.java": {
+      "hash": "d6983c71130910535013ef85994f5c7c73942cf80c93684f857a6c6d756423ff",
+      "summary": "`FinancialAccount` manages persistent user currency data using Redis. It provides methods like `setGulden`, `getCents`, and `tryWithdrawCents` to handle financial transactions within the project's data layer.",
+      "lines": 162
+    },
+    "src/main/java/net/legendofwar/cinder/data/PermissionsGroup.java": {
+      "hash": "b915cb8bc3fe8a480e57ae8bb98c95be31a8b675edabd32e93962a3892a55b79",
+      "summary": "`PermissionsGroup` defines the project's hierarchical permission structure and inheritance. It manages group-based access control by mapping roles to Redis-backed data entries for synchronized permission management.",
+      "lines": 219
+    },
+    "src/main/java/net/legendofwar/cinder/data/PlayerData.java": {
+      "hash": "78e097c22da392eb96b134464d7c19a335c262211ca7ca549722fe48bb1de207",
+      "summary": "`PlayerData` manages persistent player state using Redis-backed data structures. It provides global access to player records and synchronization utilities via `playerData`, `allPlayers`, and `lockPlayerDataMap`.",
+      "lines": 369
+    },
+    "src/main/java/net/legendofwar/cinder/data/PermissionsHandler.java": {
+      "hash": "eb5d5d47e3e964f4bdfde3f7ebf57584e733be961eef2ce8153e33e91f882315",
+      "summary": "`PermissionsHandler` extends `AbstractObject` to manage user permissions and groups. It provides methods like `addExtraPermission`, `removeExtraPermission`, and `getEffectiveSystemPermissions` to handle persistent permission data within the project.",
+      "lines": 104
+    },
+    "src/main/java/net/legendofwar/cinder/data/Server.java": {
+      "hash": "48abe2a5249632a6566643beaba2b466869746641a4ebc31d392048474ff8904",
+      "summary": "`Server` extends `AbstractObject` to manage server instance data via Redis. It provides `retrieveThisServer()` to identify the current node and synchronize server state across the project.",
+      "lines": 247
+    },
+    "src/main/java/net/legendofwar/cinder/data/Volk.java": {
+      "hash": "2634b7fb7adf778c1f0356120eb5168c9b2a606d404b3d19f70ff6faa1a8de9c",
+      "summary": "The `Volk` enum defines player factions and their associated `Team` data. It serves as the central registry for faction-specific metadata and persistent team state within the project.",
+      "lines": 253
+    },
+    "src/main/java/net/legendofwar/cinder/data/Team.java": {
+      "hash": "32802083547cba6b1d47f98574d51ddb99bfb847627fceeee9b5de3fcd54d473",
+      "summary": "`Team` extends `AbstractObject` to manage team-specific data and financial accounts. It provides `getVolk()` and `getByName()` to facilitate team retrieval within the project's data persistence layer.",
+      "lines": 39
+    }
+  }
+}

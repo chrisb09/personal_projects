@@ -828,6 +828,15 @@ function isSafeFilePath(relPath) {
   return true;
 }
 
+function redactSensitiveContent(content) {
+  const sensitiveLine = /api[_-]?key|secret|token|password|webhook|private[_-]?key|access[_-]?key/i;
+  const stringLiteral = /"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'/g;
+  return content.split('\n').map(line => {
+    if (!sensitiveLine.test(line)) return line;
+    return line.replace(stringLiteral, literal => `${literal[0]}<redacted>${literal[literal.length - 1]}`);
+  }).join('\n');
+}
+
 // =====================================================================
 // Image Helpers
 // =====================================================================
@@ -1601,7 +1610,7 @@ async function executeTool(name, args, onSourceFound) {
           startLine: start,
           endLine: end,
           linesReturned: sliced.length,
-          content: sliced.join('\n'),
+          content: redactSensitiveContent(sliced.join('\n')),
         };
       }
 

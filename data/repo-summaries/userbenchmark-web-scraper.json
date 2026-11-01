@@ -1,0 +1,70 @@
+{
+  "repository": "userbenchmark-web-scraper",
+  "updatedAt": "2026-11-01T07:25:49.720Z",
+  "filesCount": 12,
+  "directories": {
+    "docker/docker_client": "Contains 9 module files (client.sh, build_image.sh, Dockerfile, create_container.sh)"
+  },
+  "files": {
+    "README.md": {
+      "hash": "787bc4f58d6f817b2593e1777861438cc4c666d0d3be32905f7c2ebf6588697b",
+      "summary": "This `README.md` serves as the project's development roadmap, tracking completed tasks and pending features for the benchmark parsing, database management, and Docker-based client orchestration system.",
+      "lines": 68
+    },
+    "client_main.py": {
+      "hash": "6a752967c47f483f0273c5fb472c38f2d8501d9956a7da59241684b95601875c",
+      "summary": "`client_main.py` serves as the application entry point, initializing configurations and proxy settings before invoking `_start_client()` to manage the primary client execution loop.",
+      "lines": 65
+    },
+    "config.py": {
+      "hash": "5ecc3def27b15e42c92754c441aea196ae2b0ea05703edc796fb5437d2bcf39a",
+      "summary": "`config.py` centralizes global constants for server and client network settings, database paths, and operational thresholds. It serves as the primary configuration module for the entire project.",
+      "lines": 18
+    },
+    "docker/docker_client/client.sh": {
+      "hash": "79d6c5fe6c1ae3d62b909a6403ebd5984c816c3e231d1336662e5d79f31df2d8",
+      "summary": "This script manages the lifecycle of `userbenchmark-scraper` Docker containers across multiple countries. It provides commands to `build`, `create`, `start`, `stop`, `remove`, and `list` these containers.",
+      "lines": 60
+    },
+    "docker/docker_client/build_image.sh": {
+      "hash": "0d75145873761d7a0740f9d5be5de6db267108c6dd546a954c4f4b348c188c8c",
+      "summary": "This script builds the `userbenchmark-scraper` Docker image using `docker build`. It serves as the primary utility for containerizing the application environment within the project.",
+      "lines": 2
+    },
+    "docker/docker_client/Dockerfile": {
+      "hash": "f8eaf766211b20489c201a8c98b908c73b73e0ffdf38d10f1166f1f5c1369da9",
+      "summary": "This `Dockerfile` builds an Alpine-based image that configures a Tor proxy and installs the `userbenchmark-web-scraper` project to perform anonymous web scraping tasks within the system.",
+      "lines": 33
+    },
+    "docker/docker_client/create_container.sh": {
+      "hash": "84eed72af438a049d24644e678034fbcfc334bbb1dde1ca324df8437d289522e",
+      "summary": "This script creates a Docker container named `userbenchmark-scraper` with specific volume mounts and network settings. It serves as the deployment utility for initializing the project's scraping environment.",
+      "lines": 2
+    },
+    "docker/docker_client/listing.sh": {
+      "hash": "e2d5cb07db8c1cd738c2cf791991b5f36647b994f3604e2e88376a53f1dae1f6",
+      "summary": "This script rotates the Tor identity for `userbenchmark-scraper1` and appends the current exit IP to `/test/userbenchmark/list.txt`, facilitating proxy-based scraping within the project's infrastructure.",
+      "lines": 4
+    },
+    "docker/docker_client/countries_tor.txt": {
+      "hash": "a70124851dd74c04cc793c0a28b14b58cde84918b6379c37a580970c4e406634",
+      "summary": "This file provides a list of country codes used by the `docker_client` to configure Tor exit node routing, supporting geographical filtering for network requests.",
+      "lines": 245
+    },
+    "docker/docker_client/start_container.sh": {
+      "hash": "e1ca5255e0a85fd4d1530f6b299630f1a3e71520513b86eb2f0f61e7b18a3bd5",
+      "summary": "This script restarts the `userbenchmark-scraper` container. It serves as a utility to resume the scraping process within the project's Docker-based infrastructure.",
+      "lines": 3
+    },
+    "docker/docker_client/remove.sh": {
+      "hash": "14d26ed7f97c00956ee3e99c061e77ca912f2bd53f15ba4f0f46a9794798b83a",
+      "summary": "This script removes the `userbenchmark-scraper` container and image. It serves as a cleanup utility to purge project-specific Docker resources from the local environment.",
+      "lines": 3
+    },
+    "docker/docker_client/start.sh": {
+      "hash": "2228e537c911fb6488c68c99aa3decdb0c866b9e90bab2b1b60d56bf6f487de6",
+      "summary": "This script initializes the Tor service and executes `client_main.py` to launch the scraper client, serving as the primary entry point for the `docker_client` container.",
+      "lines": 14
+    }
+  }
+}

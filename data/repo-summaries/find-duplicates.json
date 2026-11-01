@@ -1,0 +1,38 @@
+{
+  "repository": "find-duplicates",
+  "updatedAt": "2026-11-01T07:21:23.328Z",
+  "filesCount": 6,
+  "directories": {},
+  "files": {
+    "LICENSE.md": {
+      "hash": "4bb0bc09c8257a2a599a732173648b35ebe43dd8222c2e9b7dcb918348434408",
+      "summary": "`LICENSE.md` defines the MIT License terms for the project, granting users permission to use, modify, and distribute the software. It exports no code.",
+      "lines": 22
+    },
+    "examine_log.sh": {
+      "hash": "94326a3adced3619bd9e3521226ae2582f4a186e42e337429313f02726851833",
+      "summary": "`examine_log.sh` is a utility script that displays the `screenlog.0` file using `less -r +G`. It serves as a quick shortcut for developers to view real-time terminal session logs.",
+      "lines": 2
+    },
+    "README.md": {
+      "hash": "43f14fecd29e028782eaa583639ee855347d02ebc04539278daf1edfe9e8a581",
+      "summary": "This documentation file describes `find_duplicates.py`, a script that replaces duplicate files in a destination path with links to source files. It serves as the user guide for the duplicate-linking utility.",
+      "lines": 49
+    },
+    "read_log_extended.sh": {
+      "hash": "c24b5363d9bd30d74cfc3016928050cd50c5c49b143d97f8c34a4ee185690a23",
+      "summary": "`read_log_extended.sh` is a shell script that filters and extracts key summary lines from `screenlog.0`. It acts as a utility tool for reviewing execution logs.",
+      "lines": 6
+    },
+    "read_log.sh": {
+      "hash": "673dbf2adef14dc8705de91b493b3c3f260d5f38aa396d443f85ddda14cedeed",
+      "summary": "This shell script parses `screenlog.0` using `grep` to extract dry-run summaries and completion statuses. It aids local project monitoring by quickly reviewing duplicate-finder log outputs.",
+      "lines": 6
+    },
+    "find_duplicates.py": {
+      "hash": "d8568cddb1231ce9d94afa3975e56db88e8e39fad876fcad002f598438b0e98c",
+      "summary": "`find_duplicates.py` identifies duplicate files by hashing and replaces destination files with links. It exports `migrate_database` and `main`, serving as the project's primary CLI utility for deduplication.",
+      "lines": 399
+    }
+  }
+}

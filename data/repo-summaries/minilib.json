@@ -1,0 +1,71 @@
+{
+  "repository": "minilib",
+  "updatedAt": "2026-11-01T07:22:52.969Z",
+  "filesCount": 12,
+  "directories": {
+    "script": "Contains 1 module files (createLinesplot.py)",
+    "src/main/java/net/legendofwar/minilib/lib": "Contains 9 module files (DumpMethods.java, FileIO.java, FieldUtils.java, MeasureTime.java)"
+  },
+  "files": {
+    "deploy.sh": {
+      "hash": "65cfaa9a7b251e31401b99446d8efa57865d7582c3241264d30f0d6ac823dee7",
+      "summary": "`deploy.sh` automates the build, packaging, and distribution of JAR files to various Minecraft server directories. It executes `mvn clean install` and handles remote or local file synchronization.",
+      "lines": 42
+    },
+    "script/createLinesplot.py": {
+      "hash": "f90c21f9cbb35021f4a8651682d4cb8333b102feab4097ad3de468b34aac7669",
+      "summary": "`script/createLinesplot.py` processes user-inputted performance data and generates a matplotlib line plot. It exports `get_user_input` and `plot_data` to visualize gametick and scheduled metrics.",
+      "lines": 41
+    },
+    "README.md": {
+      "hash": "5b4872c3c2f9bd229bf7fe300cdc92e5e66e003d930b277cb5dd6bc7df134be4",
+      "summary": "`README.md` documents Minilib’s features and usage, including packet handling, image maps, advancements, commands, and persistent data. It identifies `Minilib.getMinilib()` as the access point and `sendPacket()` as an",
+      "lines": 44
+    },
+    "src/main/java/net/legendofwar/minilib/lib/DumpMethods.java": {
+      "hash": "ba1ed4347c85ecedcd0b2c2a2279e600a78e81e7c8b4af3938a1270a328934da",
+      "summary": "`DumpMethods` provides the `dump(Class)` utility to generate boilerplate wrapper code for a given class, facilitating the creation of proxy or wrapper classes within the project.",
+      "lines": 53
+    },
+    "src/main/java/net/legendofwar/minilib/lib/FileIO.java": {
+      "hash": "1f63e4fc9f172f5fcf8f52224c9050d77b6b49d74aa15c8054736fe082f856a9",
+      "summary": "`FileIO` provides utility methods `readFile` and `writeInFile` for basic file read/write operations, serving as a foundational I/O helper class within the project.",
+      "lines": 34
+    },
+    "src/main/java/net/legendofwar/minilib/lib/FieldUtils.java": {
+      "hash": "73ad367293e302bc43435ccfb7fc71b7652acf2c7ae98a748ac6e9d3ac46f872",
+      "summary": "`FieldUtils` provides reflection-based utilities to bypass access modifiers using `sun.misc.Unsafe`. It exports `setFinalStatic`, `getFinalStatic`, `getFinalPrivate`, and `setFinalNonStatic` to manipulate private or final fields at runtime.",
+      "lines": 51
+    },
+    "src/main/java/net/legendofwar/minilib/lib/MeasureTime.java": {
+      "hash": "0249e884dac84103d368bbf184001949db0290389114f88ef380c33f2a062ba1",
+      "summary": "`MeasureTime` benchmarks execution duration and logs results. It exports `measure` and `formatDuration`, serving as a performance-tracking utility for the project.",
+      "lines": 45
+    },
+    "src/main/java/net/legendofwar/minilib/lib/Healthbar.java": {
+      "hash": "d9220b25f4bddefc67cdc4b330f1bf95f8b8407c30cf693d1f90eb6dc644f11b",
+      "summary": "`Healthbar` generates stylized, color-coded health bars for the project. It exports `getColor` and `getHealthbar` to provide visual health representations based on current and maximum health values.",
+      "lines": 52
+    },
+    "src/main/java/net/legendofwar/minilib/lib/LGS.java": {
+      "hash": "58417c0a1dda40c0f6978237583e2eb69f122e6613198662189051753123467a",
+      "summary": "`LGS` provides numerical methods to solve linear equation systems. It exports `solve` and `pivot` to perform Gaussian elimination with partial pivoting for matrix calculations within the project.",
+      "lines": 55
+    },
+    "src/main/java/net/legendofwar/minilib/lib/ReadProperties.java": {
+      "hash": "4e189e29f8de716fa995fe55dfe038cb0530dfb1cbc8d9663b24197c2d924fe9",
+      "summary": "`ReadProperties` loads and extracts configuration values from Java property files. It exports the `readProperties` method to provide essential configuration loading for the project.",
+      "lines": 21
+    },
+    "src/main/java/net/legendofwar/minilib/lib/Tool.java": {
+      "hash": "942d65d79f2cb253140e296fa738bdff30c8b3e47c423fd3879878d4bdf900ad",
+      "summary": "`Tool` provides utility methods for null-safety, specifically the `requireNonNullElse` function. It serves as a lightweight helper library for common object validation tasks within the project.",
+      "lines": 18
+    },
+    "src/main/java/net/legendofwar/minilib/lib/TextWidth.java": {
+      "hash": "f67c0443e5864ca6668ced44d0044af787cbd365472204169687b0e4f4d99fc8",
+      "summary": "`TextWidth` loads character width data from JSON to calculate visual text dimensions. It provides utility methods to retrieve character widths for UI rendering within the project.",
+      "lines": 111
+    }
+  }
+}

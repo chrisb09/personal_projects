@@ -1,0 +1,28 @@
+{
+  "repository": "qbmanage",
+  "updatedAt": "2026-11-01T07:25:03.468Z",
+  "filesCount": 4,
+  "directories": {},
+  "files": {
+    "config.yml": {
+      "hash": "a07776b540944b664fe072eff6298b8f68882214a5f39582db13ffcf0b84b79e",
+      "summary": "`config.yml` defines the qBittorrent host, port, username, and password. It supplies connection settings for the project; it exports no functions or classes.",
+      "lines": 5
+    },
+    "qbmanage.py": {
+      "hash": "a22d53c262694afe785ba11ac326fa71e7ac254f41cddeb1f024891eeccb8fb5",
+      "summary": "`qbmanage.py` provides qBittorrent management utilities: `load_config` and `connect_qbit` configure access, while `",
+      "lines": 764
+    },
+    "README.md": {
+      "hash": "30ec9421c2f78b1f9989b0d9c320fd1d903b31e85cdd9640a2f0dda7e21da250",
+      "summary": "`README.md` documents `qbmanage`, a command-line tool for auditing and cleaning up qBittorrent instances; it explains the inspection-first workflow, deletion safeguards, and hardlink assumptions.",
+      "lines": 126
+    },
+    "requirements.txt": {
+      "hash": "d75d14466deadfd06f93d23c5c6522a3d72f55726dca4aafc7d50c12f9672765",
+      "summary": "`requirements.txt` declares the project’s runtime dependencies: `qbittorrent-api`, `PyYAML`, and `pandas`; it helps install the libraries the project relies on.",
+      "lines": 3
+    }
+  }
+}

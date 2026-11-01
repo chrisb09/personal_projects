@@ -1,0 +1,71 @@
+{
+  "repository": "mklib",
+  "updatedAt": "2026-11-01T07:23:05.566Z",
+  "filesCount": 12,
+  "directories": {
+    "script": "Contains 1 module files (createLinesplot.py)",
+    "src/main/java/net/legendofwar/mklib": "Contains 10 module files (BukkitSerialization.java, CooldownManager.java, CustomTag.java, ClaimUtil.java)"
+  },
+  "files": {
+    "script/createLinesplot.py": {
+      "hash": "f90c21f9cbb35021f4a8651682d4cb8333b102feab4097ad3de468b34aac7669",
+      "summary": "`script/createLinesplot.py` processes user-inputted performance data and generates a matplotlib line plot. It exports `get_user_input` and `plot_data` to visualize gametick and scheduled metrics.",
+      "lines": 41
+    },
+    "deploy.sh": {
+      "hash": "d933a759b1bcd51e4197f2b490f39927186e54c7370c24703fe5bf4976576660",
+      "summary": "`deploy.sh` automates the Maven build, packaging, and deployment of Minecraft plugin JARs to local and remote server directories. It serves as the project's primary deployment and distribution script.",
+      "lines": 40
+    },
+    "src/main/java/net/legendofwar/mklib/BukkitSerialization.java": {
+      "hash": "7b13be2a260e528c535434319cb0fe850949cfeb68d6b65530c7eef0b508e42b",
+      "summary": "`BukkitSerialization` provides `toBase64` and `fromBase64` to convert Bukkit `Inventory` objects to and from Base64 strings, facilitating persistent storage of player inventories within the project.",
+      "lines": 80
+    },
+    "src/main/java/net/legendofwar/mklib/CooldownManager.java": {
+      "hash": "97ccc4e194287cb8cf50910006b46de03c34fb5d7ff17702b78520db8083fe7d",
+      "summary": "`CooldownManager` tracks and manages player-specific ability cooldowns. It provides `init(Plugin)` to initialize the background task that processes and updates active cooldown states across the project.",
+      "lines": 204
+    },
+    "src/main/java/net/legendofwar/mklib/CustomTag.java": {
+      "hash": "6ec53a6a234e0bd147903f641fac2b2555bd98ba82b5539c8816365ec909fb6e",
+      "summary": "`CustomTag` implements the `Tag` interface to manage custom collections of `Keyed` objects. It provides static methods like `getOrCreate` and `createNew` for registry-based tag management.",
+      "lines": 166
+    },
+    "src/main/java/net/legendofwar/mklib/ClaimUtil.java": {
+      "hash": "90f0144301909de5a23373b47c6125fef73624f64006dc7921168b8cb2a8f917",
+      "summary": "`ClaimUtil` provides `getItemStackClaimInfo` to generate formatted `ItemStack` representations for auction claims. It serves as a utility for displaying claim details within the project's UI.",
+      "lines": 43
+    },
+    "src/main/java/net/legendofwar/mklib/InventoryMenu.java": {
+      "hash": "513fccbe02a1d458f595bbf20e2c1fc408256088c882610c17b7b7cfcee0de90",
+      "summary": "`InventoryMenu` manages custom GUI interactions for players. It provides `isSameInventory` and `init` to handle inventory events, serving as the core framework for interactive menus in the project.",
+      "lines": 557
+    },
+    "src/main/java/net/legendofwar/mklib/ItemBuilder.java": {
+      "hash": "5c8ee2c1a624f8e7e5edea89ff3c864cef93ebff8d696e4798f3eb662ef6a122",
+      "summary": "`ItemBuilder` provides a fluent API for creating and modifying Bukkit `ItemStack` objects. It serves as a utility class to simplify complex item customization throughout the project.",
+      "lines": 403
+    },
+    "src/main/java/net/legendofwar/mklib/Holo.java": {
+      "hash": "1c44a88c4cb1448bc8b39c30ee5bfb069c5a920192dec5e703bdcedfdbc80dd3",
+      "summary": "`Holo` manages persistent holographic `ArmorStand` entities. It provides `init()` to register a global update scheduler that handles entity lifecycle, gravity, and custom tick logic for all active holograms.",
+      "lines": 252
+    },
+    "src/main/java/net/legendofwar/mklib/MCMethods.java": {
+      "hash": "2d93290261b84655a93a9029038a358ea11fa01b6a46f67812c66681e5db2b43",
+      "summary": "`MCMethods` provides utility functions for Minecraft development, including `healthBalkenJSON` for UI rendering and `bukkitToNMS` for item conversion, serving as a core helper class for cross-version compatibility.",
+      "lines": 349
+    },
+    "src/main/java/net/legendofwar/mklib/NMSHelper.java": {
+      "hash": "07e447767a199323887415affcaf2c09f5062282692bffee3bdd4453cd9e7360",
+      "summary": "`NMSHelper` provides utility methods like `getTags` and `addElementToTag` to manipulate Minecraft registries and tags via reflection, facilitating low-level NMS operations within the project.",
+      "lines": 187
+    },
+    "src/main/java/net/legendofwar/mklib/Mklib.java": {
+      "hash": "5136175725af00df301eb383557681877147d6166148fb8905c42a3868a6ad86",
+      "summary": "`Mklib` is the main entry point for the `mklib` plugin, initializing core systems like custom enchantments, GUIs, and packet handlers to extend Minecraft server functionality.",
+      "lines": 238
+    }
+  }
+}

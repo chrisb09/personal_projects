@@ -1,0 +1,72 @@
+{
+  "repository": "pvpgameplaytest",
+  "updatedAt": "2026-11-01T07:24:56.426Z",
+  "filesCount": 12,
+  "directories": {
+    "src/main/java/net/legendofwar/pvpgameplaytest": "Contains 7 module files (AdminChestManager.java, HMIScreenVolkSelection.java, CaptureManager.java, ArenaBorder.java)",
+    "src/main/java/net/legendofwar/pvpgameplaytest/eventhandler": "Contains 1 module files (PhoenixPlayerDiedEventHanlder.java)",
+    "src/main/java/net/legendofwar/pvpgameplaytest/commands": "Contains 2 module files (SpawnCaptureNPCCommand.java, CommandHandler.java)"
+  },
+  "files": {
+    "deploy.sh": {
+      "hash": "f4530257dd66a4ec83acadb4ef67d378fd5ad546b60ba675c8e3a1e195896a17",
+      "summary": "This Bash script automates the Maven build, packaging, and deployment process for a Minecraft plugin, handling local or remote server distribution depending on the active user.",
+      "lines": 39
+    },
+    "README.md": {
+      "hash": "57e752c1e141ccdea491193105a47c96894f0290e6cf8b8b3834d90414293e35",
+      "summary": "`PvPGamePlayTest` serves as a testing project for evaluating multiplayer features like items and factions. It contains no exported functions or classes and acts as the project's root documentation.",
+      "lines": 7
+    },
+    "src/main/java/net/legendofwar/pvpgameplaytest/AdminChestManager.java": {
+      "hash": "551c8671f29c8a2461b9cb953c55f88e3130aafc01a3dc7dee0bf2b44cbb37b4",
+      "summary": "`AdminChestManager` initializes and manages",
+      "lines": 252
+    },
+    "src/main/java/net/legendofwar/pvpgameplaytest/HMIScreenVolkSelection.java": {
+      "hash": "f2919d543cad33e82a1e89f0b9310aba83c3455fbab9eaf1f8b9cc3def930435",
+      "summary": "Source module implementing HMIScreenVolkSelection.java logic.",
+      "lines": 254
+    },
+    "src/main/java/net/legendofwar/pvpgameplaytest/CaptureManager.java": {
+      "hash": "8cf6242c4b76eafbaf9bad18b05f83873c67532967127f8b9ace86229f703280",
+      "summary": "`CaptureManager` initializes capture points and schedules recurring checks and updates through `init`; it coordinates capture-point behavior for the PvP gameplay project.",
+      "lines": 260
+    },
+    "src/main/java/net/legendofwar/pvpgameplaytest/ArenaBorder.java": {
+      "hash": "9d69043187e8934914c3a3d22b43556adf5042a2ed9ea55ec26f01d778b37b2c",
+      "summary": "`ArenaBorder` stores PvP arena boundary data and provides `scanPvPA",
+      "lines": 281
+    },
+    "src/main/java/net/legendofwar/pvpgameplaytest/ShopItem.java": {
+      "hash": "8dd7e98dbbfd129e0dc79cab84fd30fe7ebc2191ad0f3235aa194cdc3405f794",
+      "summary": "`ShopItem` represents a purchasable shop entry, adds it to an `InventoryMenu` via `setItem`, and handles purchases through `checkBuy`, charging the player and granting a generated item. It connects the project’s shop UI with player wallets and item creation.",
+      "lines": 46
+    },
+    "src/main/java/net/legendofwar/pvpgameplaytest/PvPGameplayTest.java": {
+      "hash": "ea8f7dd289113eb2af5e1e00731f2f966e409845ef26b8dbd7d060149fef1d2a",
+      "summary": "Source module implementing PvPGameplayTest.java logic.",
+      "lines": 134
+    },
+    "src/main/java/net/legendofwar/pvpgameplaytest/ProtectWorldEvents.java": {
+      "hash": "0e45f14c64ffcccd27db57e38b1b67cdd786ed63148b1ab167943e1350554225",
+      "summary": "Source module implementing ProtectWorldEvents.java logic.",
+      "lines": 160
+    },
+    "src/main/java/net/legendofwar/pvpgameplaytest/eventhandler/PhoenixPlayerDiedEventHanlder.java": {
+      "hash": "fc161265f5388668f825edc1f98227e2bf89456290ba92b59939c6e515b71fc6",
+      "summary": "`PhoenixPlayerDiedEventHanlder` is a Bukkit",
+      "lines": 235
+    },
+    "src/main/java/net/legendofwar/pvpgameplaytest/commands/SpawnCaptureNPCCommand.java": {
+      "hash": "b371b5ec200c5b4c437bb9629a4f5f89bacdab541ece9ac427ea79925f19dc0c",
+      "summary": "`SpawnCaptureNPCCommand` registers `/spawncapturenpc`, with aliases and an optional count, and uses `execute` to spawn capture manager NPCs at a player’s location. Its `register` function integrates this permission-gated command into the project.",
+      "lines": 60
+    },
+    "src/main/java/net/legendofwar/pvpgameplaytest/commands/CommandHandler.java": {
+      "hash": "aceafb66cf69bae13b6094e6a1fe25adda0f60b1238c8aa8def371f601e4cfad",
+      "summary": "`CommandHandler.init()` registers command handlers during Paper’s command lifecycle, including `SpawnCaptureNPCCommand`. `CommandHandler` initializes the project’s command registration.",
+      "lines": 22
+    }
+  }
+}
