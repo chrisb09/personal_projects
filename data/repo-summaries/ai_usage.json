@@ -1,0 +1,75 @@
+{
+  "repository": "ai_usage",
+  "updatedAt": "2026-11-01T08:57:53.629Z",
+  "filesCount": 12,
+  "directories": {
+    "integrations/plasma5": "Contains 2 module files (README.md, install.sh)",
+    "integrations/plasma5/ai-usage": "Contains 2 module files (README.md, metadata.json)",
+    "docs": "Contains 1 module files (API.md)",
+    "integrations/plasma5/ai-usage/scripts": "Contains 1 module files (setup-kwallet.sh)",
+    "integrations/plasma5/ai-usage/contents/code": "Contains 1 module files (usage.js)",
+    "src": "Contains 1 module files (api.ts)"
+  },
+  "files": {
+    "Dockerfile": {
+      "hash": "c2b1d0238869b28b785e26c9291e22e02288adf156a5cd1a0722176b1709614b",
+      "summary": "This `Dockerfile` builds, packages, and runs the application in a lightweight production container. It serves as the project's deployment manifest for containerized environments.",
+      "lines": 44
+    },
+    "README.md": {
+      "hash": "8feeac1e9b58ec4229db6a928de0ba9cfa4c89962a1c2f77feb0b5fd247c3d9b",
+      "summary": "`README.md` documents the AI Usage project, providing an overview of its quota dashboard, JSON API, features, and supported providers. It serves as the primary user and developer guide for the repository.",
+      "lines": 525
+    },
+    "compose.yaml": {
+      "hash": "948441639ad4637847b588415854c31495990b409d7715935e4de37e156d64cc",
+      "summary": "This Docker Compose configuration file defines and orchestrates the `ai-usage` service. It manages container builds, environment variables, data volumes, port mappings, and health checks for the project.",
+      "lines": 42
+    },
+    "integrations/plasma5/README.md": {
+      "hash": "4c19d90ce31cb0426b927f72b6c0fb4be45db6f01cce27a7c1c2b24ce6080c27",
+      "summary": "This documentation file explains how to install and configure the native KDE Plasma 5 panel widget for the AI Usage dashboard using `install.sh` and `setup-kwallet.sh`.",
+      "lines": 13
+    },
+    "integrations/plasma5/ai-usage/README.md": {
+      "hash": "1e08d2eebd517d1b5f0ba199b7ad5c452702e097c3cd654a046733a91df28206",
+      "summary": "This file documents the Plasma 5 panel widget for the self-hosted AI usage dashboard. It guides users through requirements, installation, and credential setup.",
+      "lines": 136
+    },
+    "docs/API.md": {
+      "hash": "fab4ee24a87aa9642a2ecfd2d7e2bbf73019260a2d2f4e9e886a0129a950e1cb",
+      "summary": "`docs/API.md` documents the project's JSON HTTP API endpoints, response formats, and reverse proxy authentication. It serves as the primary integration reference for consumers of the service.",
+      "lines": 269
+    },
+    "integrations/plasma5/ai-usage/scripts/setup-kwallet.sh": {
+      "hash": "39ba86a904157073f7c7c6130d1fc22d9b045ebcf93c241ff3e8f4b6186dca24",
+      "summary": "This bash script configures secure credential storage in KWallet using `secret-tool` for the Plasma 5 AI Usage widget integration.",
+      "lines": 36
+    },
+    "integrations/plasma5/ai-usage/metadata.json": {
+      "hash": "e2c9ffc4eeaae13f83fc33dd8fd16b54ad73b79f01c16333c58dbae0613879af",
+      "summary": "This metadata file defines the KDE Plasma 5 `org.chrisb09.aiusage` applet plugin, configuring its main UI script and system information category to display AI quota usage.",
+      "lines": 19
+    },
+    "integrations/plasma5/ai-usage/contents/code/usage.js": {
+      "hash": "dd1916c145fba3bcec510db8af1489ae7176d4c0bd05e539782362be4977b4b1",
+      "summary": "This QML library provides utility functions like `windowSec`, `elapsedFraction`, and `status` to calculate and format AI usage quotas for the Plasma 5 integration.",
+      "lines": 507
+    },
+    "integrations/plasma5/install.sh": {
+      "hash": "c16833f5a6e0d95d324fbf9bfd9b19ccc1ce0d683733efac0ddd1c4bb07045ac",
+      "summary": "This shell script installs or updates the `org.chrisb09.aiusage` Plasma applet using `kpackagetool5`. It serves as the deployment script for the KDE Plasma 5 integration.",
+      "lines": 23
+    },
+    "src/api.ts": {
+      "hash": "02e876dd92da13a3168afdf3c4cad05fc79e3282e985fe6281f0ae96b8489f0b",
+      "summary": "`src/api.ts` defines the Fastify-based HTTP API routes for querying usage history and triggering data refreshes. It serves as the primary external interface for the application server.",
+      "lines": 362
+    },
+    "package.json": {
+      "hash": "49423c7a865ba40cf481f1ef32788b68c6c401343f0c43aab43628f566b09ca5",
+      "summary": "This `package.json` file configures project metadata, dependencies, workspaces, and scripts like `dev`, `build`, and `test`. It serves as the root manifest for managing the `ai-usage` monorepo.",
+      "lines": 40
+    }
+  }
+}

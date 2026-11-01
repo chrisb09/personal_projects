@@ -1,0 +1,71 @@
+{
+  "repository": "opencode-observatory",
+  "updatedAt": "2026-11-01T08:58:05.355Z",
+  "filesCount": 12,
+  "directories": {
+    "apps/server": "Contains 1 module files (package.json)",
+    "apps/server/src": "Contains 9 module files (analytics.ts, app.ts, admin.ts, db.ts)"
+  },
+  "files": {
+    "README.md": {
+      "hash": "8dfae942f0fe4cd346a4a4c34268be587ac7cb03d221065cc29b68511503980e",
+      "summary": "`README.md` serves as the primary project documentation for OpenCode Observatory, outlining its self-hosted telemetry, dashboard, and Model Context Protocol (MCP) server capabilities.",
+      "lines": 322
+    },
+    "apps/server/package.json": {
+      "hash": "1d0d520704518b0afae2a1d60deddb57adb4c542943d89d894daa33aae5d2013",
+      "summary": "This file defines the dependencies, build scripts, and metadata for the `@observatory/server` package. It manages the backend Fastify server infrastructure and administration utilities within the project.",
+      "lines": 7
+    },
+    "Dockerfile": {
+      "hash": "432a7d438039a356cac3d61c8f39975435763d2c783a61cb17b74728c77a9062",
+      "summary": "This `Dockerfile` builds the project and packages it into a production-ready container. It serves as the project's containerization script, installing Git and running the compiled server.",
+      "lines": 24
+    },
+    "apps/server/src/analytics.ts": {
+      "hash": "53f0c4524cb3710e56a45c8fdc8739c5497fb731cbb8ad9836d8569b9212f60c",
+      "summary": "This file powers analytics data retrieval and processing by querying, caching, and normalizing tenant usage records. It exports internal helper functions like `facts` and `groupIdentity` to support server-side analytics rollups and reporting.",
+      "lines": 334
+    },
+    "apps/server/src/app.ts": {
+      "hash": "397f25b96e5685a0810f9e1c134fde3a3e91495cc5f21d78c111498bf0a2936a",
+      "summary": "`apps/server/src/app.ts` initializes and configures the Fastify server instance. Its primary exported function is `buildApp`, serving as the core backend entry point for routing and middleware.",
+      "lines": 151
+    },
+    "apps/server/src/admin.ts": {
+      "hash": "1a80b75b377e2e638a32b5a6710fcf479b3025245b95ecf04e91681771ea75cf",
+      "summary": "This file handles administrative account provisioning and password resets via CLI prompts or environment variables. It runs as a database setup script without exporting any functions.",
+      "lines": 21
+    },
+    "apps/server/src/db.ts": {
+      "hash": "1718993e8606addac6dcbdcfd524b217cb477328a33db126bf5ec13fe40d53eb",
+      "summary": "This file manages the PostgreSQL database connection and migrations for the server. It exports `pool`, `tenant`, and `migrate` to handle database operations and transaction scopes.",
+      "lines": 171
+    },
+    "apps/server/src/bucket-analytics.ts": {
+      "hash": "1051c0673eb977b4aa506af6c1b2945d64d72eb36ee5bf5f8f7ac5a3ac4de417",
+      "summary": "`apps/server/src/bucket-analytics.ts` processes usage data into time-series buckets and grouped analytics. Its primary exported function is `bucketAnalytics`, which powers server-side metrics reporting.",
+      "lines": 47
+    },
+    "apps/server/src/cache.ts": {
+      "hash": "68d79d0c9b7bfda6646c8a834b150a99dbedfc6d62a37691a7f768fb92aae2d6",
+      "summary": "This file provides an in-memory caching layer with tenant and generation-based invalidation for the server. It exports `cached` for memoizing async operations and `invalidateAnalytics` to clear user cache entries.",
+      "lines": 18
+    },
+    "apps/server/src/mcp.ts": {
+      "hash": "f7b0fc02fb5e96af373a5423e39bc46860c9880b8b5c6d8a980c8c0713ffbbff",
+      "summary": "This file initializes and configures the Model Context Protocol (MCP) server via `registerMcp`. It exposes analytics, memory, and vault tools over a secure HTTP transport in the Fastify backend.",
+      "lines": 48
+    },
+    "apps/server/src/ingest.ts": {
+      "hash": "664d388f1d3a76444278fbadfceebc0d1819e39825374ae631e442fe9317f182",
+      "summary": "This file processes and validates telemetry event batches, persisting them into tenant databases. It exports the `ingest` function, serving as the core data ingestion pipeline for the server.",
+      "lines": 37
+    },
+    "apps/server/src/index.ts": {
+      "hash": "9a0c8b9f4fd7c609bbac09522d4b23acc3c1c9ddbde1362c25fba254dd85711e",
+      "summary": "This file serves as the backend entry point, orchestrating database migrations, admin bootstrapping, and server startup via `buildApp`. It initializes the application and manages graceful shutdown signals.",
+      "lines": 9
+    }
+  }
+}

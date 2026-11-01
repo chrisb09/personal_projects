@@ -116,6 +116,95 @@ export const projects: Project[] = [
     "screenshots": []
   },
   {
+    "id": "ai-usage",
+    "name": "AI Usage",
+    "tagline": "Self-hosted AI quota and credit dashboard with adaptive collection",
+    "year": "2026",
+    "category": "fullstack",
+    "status": "active",
+    "projectType": "software-project",
+    "role": "main-author",
+    "sourceType": "open-source",
+    "aiUsage": "full",
+    "aiUtilization": "no-ai",
+    "description": "A self-hosted quota dashboard and JSON API for AI provider accounts. Collectors read Google Antigravity, OpenCode Go, Codex, OneProvider, OpenRouter and Google Cloud billing data; every observation is stored in SQLite; and a React dashboard plus HTTP and MCP APIs expose remaining quota, reset times and API credit balances.\n\nThe scheduler backs off from 10 minutes to 6 hours when nothing changes, schedules checks around known reset times, and tracks state per account so one provider does not force a refresh of every other provider. The deployment also includes a public read-only view, per-account history charts, hidden-provider filtering, a Plasma 5 panel widget, and Docker Compose packaging.",
+    "purpose": "To see remaining quota and API credit across several AI providers in one place without repeatedly polling every provider or exposing credentials.",
+    "technologies": [
+      "TypeScript",
+      "React",
+      "Fastify",
+      "SQLite",
+      "Docker Compose",
+      "QML / Plasma 5",
+      "MCP"
+    ],
+    "dependencies": [
+      "Node.js 22.5+",
+      "Fastify 5",
+      "better-sqlite3",
+      "React 19",
+      "Recharts",
+      "Provider credential files"
+    ],
+    "expertise": [
+      "Provider API Integration",
+      "Adaptive Scheduling & Backoff",
+      "Time-Series Storage",
+      "Dashboard Design",
+      "KDE Plasma Widgets",
+      "Credential Isolation"
+    ],
+    "strengths": [
+      "Collects quota and credit data from six provider sources, including Google Cloud billing exports",
+      "Adapts refresh intervals from 10 minutes to 6 hours and schedules around known resets",
+      "Schedules each account independently and serves cached data while refreshing in the background",
+      "Stores every successful observation in SQLite with per-account and per-quota history charts",
+      "Pools quota bars by type and marks the average time remaining",
+      "Ships a public read-only view, an MCP endpoint and a native Plasma 5 panel widget",
+      "Keeps provider files read-only except for atomic Codex token rotation"
+    ],
+    "limitations": [
+      "Provider collectors depend on undocumented or provider-specific endpoints and can break",
+      "Requires local credential files plus a reverse proxy for authentication; the app has no built-in login",
+      "The public view exposes masked account labels and quota data unless providers are hidden",
+      "Google Cloud credit estimates depend on delayed BigQuery billing exports",
+      "No license file is present in the repository yet"
+    ],
+    "installation": "git clone https://github.com/chrisb09/ai_usage.git\ncd ai_usage\ncp .env.example .env\nmkdir -p data secrets/opencode secrets/opencode-data secrets/codex\n# Populate the credential directories and set AI_USAGE_UID / AI_USAGE_GID\ndocker compose up -d --build\n\n# Open http://127.0.0.1:7694",
+    "usage": "# Read cached usage\nget /api/usage\n\n# Force a manual check\nPOST /api/refresh\n\n# Use the MCP endpoint from OpenCode\n{\n  \"mcp\": {\n    \"servers\": {\n      \"ai-usage\": {\n        \"type\": \"remote\",\n        \"url\": \"https://usage.example.com/mcp\",\n        \"headers\": { \"Authorization\": \"Basic {env:AI_USAGE_BASIC}\" }\n      }\n    }\n  }\n}",
+    "roadmap": [
+      "Keep provider collectors current as quota endpoints change",
+      "Improve long-term history and credit-expiry tracking",
+      "Expand deployment and authentication examples for multi-user setups",
+      "Add more native desktop integrations beyond the Plasma 5 widget"
+    ],
+    "demoUrl": "https://usage.christian-f-brinkmann.de/public",
+    "repos": [
+      {
+        "name": "ai_usage",
+        "url": "https://github.com/chrisb09/ai_usage",
+        "type": "github"
+      }
+    ],
+    "mirrors": [],
+    "relatedProjects": [
+      {
+        "name": "OpenCode Model Router",
+        "relation": "Primary API consumer for routing decisions",
+        "projectId": "opencode-model-router"
+      },
+      {
+        "name": "OpenCode Observatory",
+        "relation": "Session-level telemetry; complementary to provider quota tracking",
+        "projectId": "opencode-observatory"
+      }
+    ],
+    "screenshots": [
+      "/images/projects/ai-usage/account-cards.webp",
+      "/images/projects/ai-usage/usage-history.webp"
+    ]
+  },
+  {
     "id": "cpp-ml-interface",
     "name": "CPP-ML-Interface",
     "tagline": "C++ interface linking CFD solvers to machine-learning backends",
@@ -203,6 +292,31 @@ export const projects: Project[] = [
         "name": "smartsim_playground",
         "relation": "Workspace repository containing integration test suites and playgrounds",
         "url": "https://github.com/chrisb09/smartsim_playground"
+      },
+      {
+        "name": "terrain_solver",
+        "relation": "MPI terrain mini-app used for solver/ML coupling experiments",
+        "url": "https://github.com/chrisb09/terrain_solver"
+      },
+      {
+        "name": "affinity_test",
+        "relation": "CPU/GPU affinity and interconnect benchmark suite",
+        "url": "https://github.com/chrisb09/affinity_test"
+      },
+      {
+        "name": "aix_p2p_benchmark",
+        "relation": "AIxeleratorService communication and controller benchmark",
+        "url": "https://github.com/chrisb09/aix_p2p_benchmark"
+      },
+      {
+        "name": "key_loadbalancing",
+        "relation": "Key-based load-balancing experiments for coupled inference",
+        "url": "https://github.com/chrisb09/key_loadbalancing"
+      },
+      {
+        "name": "module_test",
+        "relation": "Module resolver test harness for the CPP-ML-Interface rewrite",
+        "url": "https://github.com/chrisb09/module_test"
       }
     ]
   },
@@ -1465,6 +1579,177 @@ export const projects: Project[] = [
     ]
   },
   {
+    "id": "opencode-model-router",
+    "name": "OpenCode Model Router",
+    "tagline": "Quota-aware subagent routing and local workflow tracing for OpenCode",
+    "year": "2026",
+    "category": "devops-infrastructure",
+    "status": "active",
+    "projectType": "software-project",
+    "role": "main-author",
+    "sourceType": "open-source",
+    "aiUsage": "full",
+    "aiUtilization": "ai-powered",
+    "description": "A local, deterministic router for OpenCode 2.x. It wraps the existing subagent tool and selects a model per invocation from seven specialist roles, four difficulty tiers, importance, context size and modality, while keeping Plan and Build on their normal primary models. Quota comes from the existing AI Usage service instead of a second provider poller.\n\nThe router records durable SQLite reservations, enforces per-account and global concurrency limits, applies cooldowns, and fails closed when quota, identity or context checks cannot be satisfied. It also provides an authenticated local API, read-only MCP tools, a user systemd service, and workflow tracing with redacted JSON/Mermaid exports and a static HTML/SVG lifeline timeline. Paid Opus and Kimi dispatch remain locked behind a separate approval mechanism.",
+    "purpose": "To delegate work across multiple model providers without oversubscribing subscription quotas, leaking credentials or silently changing the user's primary model.",
+    "technologies": [
+      "TypeScript",
+      "Bun",
+      "Node.js",
+      "SQLite",
+      "MCP",
+      "OpenCode Plugin API",
+      "systemd"
+    ],
+    "dependencies": [
+      "OpenCode 2.x",
+      "Bun 1.3.14+",
+      "@opencode/plugin 2.2.5",
+      "AI Usage service"
+    ],
+    "expertise": [
+      "Quota-Aware Scheduling",
+      "Concurrency Control",
+      "Plugin Architecture",
+      "Local Persistence",
+      "Workflow Tracing"
+    ],
+    "strengths": [
+      "Selects models per subagent call using role, tier, importance, context size and modality",
+      "Checks every applicable quota window separately and fails closed on unknown, stale or exhausted quotas",
+      "Uses durable SQLite reservations, per-account concurrency caps, cooldowns and a global limit",
+      "Reuses the AI Usage collector for authoritative quota instead of polling providers twice",
+      "Enforces critic family independence and original-session provenance for reviews",
+      "Exposes read-only MCP tools plus redacted JSON, Mermaid and static timeline exports",
+      "Installs additively and includes a tested disable/rollback path"
+    ],
+    "limitations": [
+      "OpenCode 2.x-specific; runtime validation used OpenCode 2.2.1",
+      "The SQLite ledger coordinates managed tasks on one machine, not a cluster",
+      "Subscription reservations are estimated percentage points, not exact token capacity",
+      "Paid Opus and Kimi dispatch are intentionally locked in this release",
+      "Depends on the AI Usage service for fresh quota observations"
+    ],
+    "installation": "# Install dependencies and the additive local integration\nbun install\nnpm run install:local\n\n# Start the user service\nsystemctl --user start opencode-model-router.service\nsystemctl --user status opencode-model-router.service",
+    "usage": "# Inspect routing state\nbun src/cli.ts status\n\n# Delegate with optional routing metadata\n{\n  \"agent\": \"reviewer\",\n  \"description\": \"Review transaction handling\",\n  \"routing\": {\n    \"tier\": \"HARD\",\n    \"importance\": \"high\",\n    \"inputTokens\": 30000,\n    \"outputTokens\": 8000\n  }\n}\n\n# Export a recorded workflow timeline\nbun src/cli.ts workflow <sessionID> --timeline --out ~/.local/share/opencode-model-router/exports/timeline.html",
+    "roadmap": [
+      "Add a trusted approval and monetary reservation mechanism for paid models",
+      "Improve tokenizer integration to reduce conservative input rejection",
+      "Expand measured performance data beyond short diagnostic probes",
+      "Harden coordination beyond the local single-host ledger"
+    ],
+    "repos": [
+      {
+        "name": "opencode-model-router",
+        "url": "https://github.com/chrisb09/opencode-model-router",
+        "type": "github"
+      }
+    ],
+    "mirrors": [],
+    "relatedProjects": [
+      {
+        "name": "AI Usage",
+        "relation": "Authoritative quota source for routing decisions",
+        "projectId": "ai-usage"
+      },
+      {
+        "name": "OpenCode Observatory",
+        "relation": "Complementary session telemetry and analytics",
+        "projectId": "opencode-observatory"
+      }
+    ]
+  },
+  {
+    "id": "opencode-observatory",
+    "name": "OpenCode Observatory",
+    "tagline": "Self-hosted, metadata-only telemetry and analytics for OpenCode",
+    "year": "2026",
+    "category": "devops-infrastructure",
+    "status": "active",
+    "projectType": "software-project",
+    "role": "main-author",
+    "sourceType": "open-source",
+    "aiUsage": "full",
+    "aiUtilization": "ai-enhanced",
+    "description": "A self-hosted observability stack for OpenCode. A plugin captures token, model, latency, tool and error metadata; a collector stores it in PostgreSQL; and a React dashboard and read-only MCP server expose usage across machines and tenants. Prompt text, responses, code and provider credentials are excluded by default, with opt-in transcript capture that is scrubbed client-side before anything leaves the process.\n\nThe server implements tenant isolation through PostgreSQL row-level security, hourly rollups maintained by statement triggers, an offline SQLite outbox in the plugin, and a historical importer for legacy sessions without double counting. The MCP surface exposes usage summaries, time series, model comparisons, session transcripts and a bitemporal knowledge vault built from summarized sessions.",
+    "purpose": "To answer where tokens, time and money go across multiple OpenCode machines and accounts without uploading prompts, code or provider credentials to a third party.",
+    "technologies": [
+      "TypeScript",
+      "React",
+      "Fastify",
+      "PostgreSQL",
+      "SQLite",
+      "Docker Compose",
+      "MCP",
+      "OpenCode Plugin API"
+    ],
+    "dependencies": [
+      "Node.js 22+",
+      "Bun 1.3+",
+      "PostgreSQL",
+      "Fastify 5",
+      "React 19",
+      "Recharts",
+      "OpenCode 1.x / 2.x"
+    ],
+    "expertise": [
+      "Observability & Telemetry",
+      "Multi-Tenant Data Isolation",
+      "Event Queues & Offline Delivery",
+      "PostgreSQL Analytics",
+      "MCP Server Design"
+    ],
+    "strengths": [
+      "Captures metadata only by default and scrubs opt-in transcripts for tokens, keys and .env assignments before storage",
+      "Partitions every tenant query through PostgreSQL row-level security",
+      "Uses a durable SQLite outbox so telemetry never blocks or slows inference streams",
+      "Normalizes provider token counters and reports prompt-cache reuse and estimated API savings",
+      "Combines hourly rollups with exact boundary facts for charts from one hour to several months",
+      "Exposes usage, session, error and knowledge-vault queries through read-only MCP tools",
+      "Imports legacy sessions with transactional checkpoints and no double counting",
+      "Ships a Docker Compose deployment with persistent PostgreSQL and vault volumes"
+    ],
+    "limitations": [
+      "Self-hosted and OpenCode-specific; there is no public demo instance",
+      "Requires PostgreSQL plus a separately built plugin and web/server stack",
+      "Transcript capture and model-generated summaries are opt-in and depend on available models",
+      "Pricing catalogs need maintenance as providers release or rename models",
+      "Tenant isolation depends on a correctly configured reverse proxy and deployment"
+    ],
+    "installation": "# Build the monorepo and generate local secrets\nnpm install\nnpm run build\nnpm run setup:env\n\n# Set ADMIN_EMAIL and ADMIN_PASSWORD in .env, then start PostgreSQL and the app\ndocker compose up -d --build\n\n# Open http://localhost:7692, sign in and create a telemetry API key (obs_...)",
+    "usage": "# Add the plugin to ~/.config/opencode/opencode.json\n{\n  \"$schema\": \"https://opencode.ai/config.json\",\n  \"plugin\": [\"github:chrisb09/opencode-observatory#v0.2.0\"]\n}\n\n# Or connect from inside an OpenCode session:\n# \"Connect to Observatory at http://localhost:7692 with key obs_...\"\n\n# Query usage from the MCP tools: usage_summary, usage_timeseries, list_sessions",
+    "roadmap": [
+      "Expand provider pricing coverage and audit models without a market-rate match",
+      "Continue hardening multi-tenant deployment, backups and reverse-proxy defaults",
+      "Improve session-memory and vault extraction quality",
+      "Add more deployment examples for LAN and hosted setups"
+    ],
+    "repos": [
+      {
+        "name": "opencode-observatory",
+        "url": "https://github.com/chrisb09/opencode-observatory",
+        "type": "github"
+      }
+    ],
+    "mirrors": [],
+    "relatedProjects": [
+      {
+        "name": "OpenCode Model Router",
+        "relation": "Routes subagent work while Observatory records the resulting usage",
+        "projectId": "opencode-model-router"
+      },
+      {
+        "name": "AI Usage",
+        "relation": "Provider quota and credit dashboard; complementary to session telemetry",
+        "projectId": "ai-usage"
+      }
+    ],
+    "screenshots": [
+      "/images/projects/opencode-observatory/dashboard.webp"
+    ],
+    "logo": "/images/projects/opencode-observatory/logo.webp"
+  },
+  {
     "id": "opencode-oneprovider",
     "name": "opencode-oneprovider",
     "tagline": "OneProvider model configuration and API-key handling for OpenCode",
@@ -1516,7 +1801,11 @@ export const projects: Project[] = [
       {
         "name": "opencode-oneprovider",
         "url": "https://github.com/chrisb09/opencode-oneprovider",
-        "type": "github"
+        "type": "github",
+        "ignoreDirectories": [
+          "data",
+          "plots"
+        ]
       }
     ],
     "mirrors": [],
@@ -1531,6 +1820,82 @@ export const projects: Project[] = [
         "name": "opencode-kiconnect",
         "relation": "Another OpenCode provider plugin",
         "projectId": "opencode-kiconnect"
+      }
+    ]
+  },
+  {
+    "id": "opencode-wait",
+    "name": "opencode-wait",
+    "tagline": "Zero-CPU waiting for OpenCode agents on HPC login nodes",
+    "year": "2026",
+    "category": "utility",
+    "status": "active",
+    "projectType": "software-project",
+    "role": "fork-maintainer",
+    "sourceType": "open-source",
+    "aiUsage": "contributed",
+    "aiUtilization": "no-ai",
+    "description": "A maintained fork of the opencode-wait plugin that lets OpenCode agents pause without burning CPU. It combines a zero-CPU HTTP listener, sentinel-file watching and kernel-level sleeps so an agent can wait for a Slurm job, a remote completion signal or a new user message on an HPC login node without tripping cgroup or runaway-process watchdogs.\n\nThe fork adds HTTP wake-up with token authentication and payload return, sentinel-file completion with optional content read and cleanup, abort-controller cancellation, live progress metadata and predictable per-session ports. The upstream timer-based plugin is preserved, and the fork is released as v0.2.0.",
+    "purpose": "To let coding agents wait for long-running external jobs without polling, burning CPU or being killed by login-node watchdogs.",
+    "technologies": [
+      "TypeScript",
+      "Bun",
+      "Node.js",
+      "Linux epoll",
+      "HTTP",
+      "OpenCode Plugin API"
+    ],
+    "dependencies": [
+      "OpenCode 1.x+",
+      "Node.js 24+",
+      "Linux (epoll/inotify)"
+    ],
+    "expertise": [
+      "Event-Driven I/O",
+      "Kernel-Level Waiting",
+      "HPC / Slurm Integration",
+      "OpenCode Plugin Design"
+    ],
+    "strengths": [
+      "Consumes 0.00% CPU while waiting by using epoll/inotify and true kernel sleep",
+      "Opens a predictable per-session port (40000 + hash(sessionID) % 4096) with token authentication",
+      "Accepts a simple curl wake-up from a compute node and returns exit codes or results to the model",
+      "Watches sentinel files on NFS/Lustre and can read or delete their content on completion",
+      "Cancels the wait and frees sockets immediately through OpenCode's abort controller",
+      "Reports a live progress bar, elapsed and remaining time, and the bound port",
+      "Preserves the upstream timer-based wait while adding the new wake-up paths"
+    ],
+    "limitations": [
+      "Linux-specific: relies on epoll/inotify and will not run unchanged on macOS or Windows",
+      "HTTP wake-up requires network reachability from the compute node to the login node",
+      "The repository carries upstream history and is maintained as a fork, not a clean-room implementation",
+      "There is no separate UI beyond OpenCode's metadata bar"
+    ],
+    "installation": "# Install the plugin in OpenCode\n{\n  \"plugin\": [\"opencode-wait\"]\n}\n\n# Or build from source\nbun install\nbun run build",
+    "usage": "# Ask OpenCode to wait for a Slurm job\n{\n  \"seconds\": 3600,\n  \"reason\": \"Waiting for Slurm job 5251529\",\n  \"port\": \"auto\"\n}\n\n# Wake the waiting session from the job script\ncurl -s -X POST \"http://${OPENCODE_HOST}:${OPENCODE_PORT}/wake\" \\\n  -H \"Content-Type: application/json\" \\\n  -d \"{\\\"token\\\":\\\"${OPENCODE_SESSION}\\\",\\\"exitCode\\\":0}\"",
+    "roadmap": [
+      "Keep the fork synchronized with upstream releases",
+      "Add more completion transports for batch systems beyond HTTP and sentinel files",
+      "Improve portability beyond Linux where the underlying primitives allow it"
+    ],
+    "repos": [
+      {
+        "name": "opencode-wait",
+        "url": "https://github.com/chrisb09/opencode-wait",
+        "type": "github"
+      }
+    ],
+    "mirrors": [],
+    "relatedProjects": [
+      {
+        "name": "opencode-wait upstream",
+        "relation": "Upstream project this fork extends",
+        "url": "https://github.com/jiwangyihao/opencode-wait"
+      },
+      {
+        "name": "CPP-ML-Interface",
+        "relation": "HPC workflow context for long-running Slurm jobs",
+        "projectId": "cpp-ml-interface"
       }
     ]
   },

@@ -1,0 +1,86 @@
+{
+  "id": "opencode-observatory",
+  "name": "OpenCode Observatory",
+  "tagline": "Self-hosted, metadata-only telemetry and analytics for OpenCode",
+  "year": "2026",
+  "category": "devops-infrastructure",
+  "status": "active",
+  "projectType": "software-project",
+  "role": "main-author",
+  "sourceType": "open-source",
+  "aiUsage": "full",
+  "aiUtilization": "ai-enhanced",
+  "description": "A self-hosted observability stack for OpenCode. A plugin captures token, model, latency, tool and error metadata; a collector stores it in PostgreSQL; and a React dashboard and read-only MCP server expose usage across machines and tenants. Prompt text, responses, code and provider credentials are excluded by default, with opt-in transcript capture that is scrubbed client-side before anything leaves the process.\n\nThe server implements tenant isolation through PostgreSQL row-level security, hourly rollups maintained by statement triggers, an offline SQLite outbox in the plugin, and a historical importer for legacy sessions without double counting. The MCP surface exposes usage summaries, time series, model comparisons, session transcripts and a bitemporal knowledge vault built from summarized sessions.",
+  "purpose": "To answer where tokens, time and money go across multiple OpenCode machines and accounts without uploading prompts, code or provider credentials to a third party.",
+  "technologies": [
+    "TypeScript",
+    "React",
+    "Fastify",
+    "PostgreSQL",
+    "SQLite",
+    "Docker Compose",
+    "MCP",
+    "OpenCode Plugin API"
+  ],
+  "dependencies": [
+    "Node.js 22+",
+    "Bun 1.3+",
+    "PostgreSQL",
+    "Fastify 5",
+    "React 19",
+    "Recharts",
+    "OpenCode 1.x / 2.x"
+  ],
+  "expertise": [
+    "Observability & Telemetry",
+    "Multi-Tenant Data Isolation",
+    "Event Queues & Offline Delivery",
+    "PostgreSQL Analytics",
+    "MCP Server Design"
+  ],
+  "strengths": [
+    "Captures metadata only by default and scrubs opt-in transcripts for tokens, keys and .env assignments before storage",
+    "Partitions every tenant query through PostgreSQL row-level security",
+    "Uses a durable SQLite outbox so telemetry never blocks or slows inference streams",
+    "Normalizes provider token counters and reports prompt-cache reuse and estimated API savings",
+    "Combines hourly rollups with exact boundary facts for charts from one hour to several months",
+    "Exposes usage, session, error and knowledge-vault queries through read-only MCP tools",
+    "Imports legacy sessions with transactional checkpoints and no double counting",
+    "Ships a Docker Compose deployment with persistent PostgreSQL and vault volumes"
+  ],
+  "limitations": [
+    "Self-hosted and OpenCode-specific; there is no public demo instance",
+    "Requires PostgreSQL plus a separately built plugin and web/server stack",
+    "Transcript capture and model-generated summaries are opt-in and depend on available models",
+    "Pricing catalogs need maintenance as providers release or rename models",
+    "Tenant isolation depends on a correctly configured reverse proxy and deployment"
+  ],
+  "installation": "# Build the monorepo and generate local secrets\nnpm install\nnpm run build\nnpm run setup:env\n\n# Set ADMIN_EMAIL and ADMIN_PASSWORD in .env, then start PostgreSQL and the app\ndocker compose up -d --build\n\n# Open http://localhost:7692, sign in and create a telemetry API key (obs_...)",
+  "usage": "# Add the plugin to ~/.config/opencode/opencode.json\n{\n  \"$schema\": \"https://opencode.ai/config.json\",\n  \"plugin\": [\"github:chrisb09/opencode-observatory#v0.2.0\"]\n}\n\n# Or connect from inside an OpenCode session:\n# \"Connect to Observatory at http://localhost:7692 with key obs_...\"\n\n# Query usage from the MCP tools: usage_summary, usage_timeseries, list_sessions",
+  "roadmap": [
+    "Expand provider pricing coverage and audit models without a market-rate match",
+    "Continue hardening multi-tenant deployment, backups and reverse-proxy defaults",
+    "Improve session-memory and vault extraction quality",
+    "Add more deployment examples for LAN and hosted setups"
+  ],
+  "repos": [
+    {
+      "name": "opencode-observatory",
+      "url": "https://github.com/chrisb09/opencode-observatory",
+      "type": "github"
+    }
+  ],
+  "mirrors": [],
+  "relatedProjects": [
+    {
+      "name": "OpenCode Model Router",
+      "relation": "Routes subagent work while Observatory records the resulting usage",
+      "projectId": "opencode-model-router"
+    },
+    {
+      "name": "AI Usage",
+      "relation": "Provider quota and credit dashboard; complementary to session telemetry",
+      "projectId": "ai-usage"
+    }
+  ]
+}

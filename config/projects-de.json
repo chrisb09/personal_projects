@@ -1,42 +1,49 @@
 {
   "firecord": {
     "name": "Firecord",
-    "tagline": "Virtuelle, verteilte Objektspeicher- und Cache-Kohärenz-Bibliothek für Java- und Minecraft-Server",
-    "description": "Ein experimentelles, virtuelles, verteiltes System für gemeinsam genutzten Objektspeicher (DSM) für Java. Es kombiniert Redis als Backing Store mit einem invalidate-basierten Cache-Kohärenz-Protokoll über Redis Pub/Sub, wodurch mehrere unabhängige Prozesse oder Minecraft-Server mit synchronisierten Objekten interagieren können, als wären sie lokale Referenzen. Feld-Updates und Referenzänderungen werden mithilfe von AspectJ Compile-Time Bytecode Weaving automatisch abgefangen und übertragen.",
-    "purpose": "Bereitstellung einer Latenzarmen Zustandssynchronisierungsschicht für Minecraft-Serverumgebungen (Spigot/Paper) und Proxies (Velocity), bei denen Tick-Zeiten auf 50 ms beschränkt sind, wobei der Serialisierungs-Overhead herkömmlicher ORMs oder expliziter Map-/List-Updates von Redisson umgangen wird.",
+    "tagline": "Virtueller verteilter Objektspeicher und Cache-Kohärenz-Bibliothek für Java und Minecraft-Server",
+    "description": "Ein experimentelles virtuelles verteiltes Shared-Object-Memory-System für Java. Es kombiniert Redis als Backing-Store mit einem invalidierungsbasierten Cache-Kohärenz-Protokoll über Redis Pub/Sub, wodurch mehrere unabhängige Prozesse oder Minecraft-Server mit synchronisierten Objekten interagieren können, als handele es sich um lokale Referenzen. Aktualisierungen auf Feldebene sowie Referenzänderungen werden mithilfe von AspectJ-Compile-Time-Bytecode-Weaving automatisch abgefangen und übertragen.",
+    "purpose": "Bereitstellung einer latenzarmen Zustandssynchronisationsschicht für Minecraft-Serverumgebungen (Spigot/Paper) und Proxys (Velocity), bei denen die Tick-Zeiten auf 50 ms begrenzt sind, unter Umgehung des Serialisierungs-Overheads herkömmlicher ORMs oder der expliziten Map-/List-Updates von Redisson.",
     "strengths": [
-      "Transparenter, verteilter, gemeinsam genutzter Objektbereich unter Verwendung von AspectJ Compile-Time Weaving zum Abfangen von Feldzuweisungen",
-      "Äußerst effiziente, inkrementelle Updates auf Feldebene anstelle der Voll-Objekt-Serialisierung",
-      "Native Spigot-, Paper- und Velocity-Integration für performante Minecraft-Multi-Server-Netzwerke",
-      "Redis-Pub/Sub-Invalidierungsprotokoll zur Aufrechterhaltung der Cache-Kohärenz über mehrere Knoten hinweg",
-      "Eigenständiger Konsolenmodus mit JLine für interaktive, verteilte Tests"
+      "Transparenter, verteilter, gemeinsam genutzter Objektbereich unter Verwendung von AspectJ Compile-Time Weaving zum Abfangen von Feld-Updates",
+      "Invalidierungsbasiertes Cache-Kohärenz-Protokoll über Redis Pub/Sub",
+      "Referenzbasierte API – verteilte Objekte verhalten sich wie lokale Referenzen ohne explizite Serialisierungsaufrufe",
+      "Unterstützung für verschachtelte Objekte, Listen, Maps und Sets",
+      "Zuverlässige, geordnete Zustellung mit Bestätigungen, Neuübertragung und herzschlagbasierter Knotenmitgliedschaft",
+      "Referenzzählende Garbage Collection und score-geordnete RSortedSet-Sammlungen auf Basis von Redis ZSETs",
+      "Eigenständiger Konsolenmodus mit JLine für interaktives verteiltes Testen"
     ],
     "limitations": [
       "Erfordert AspectJ Compile-Time-Weaving-Plugins, die in der Build-Pipeline des Projekts konfiguriert sind",
       "Erhöhter Speicherverbrauch durch Objekt-Caching auf allen Knoten",
-      "Prototyp-Status ohne ausgereifte verteilte Funktionen wie Garbage Collection, Unterstützung für sortierte Mengen oder Elternreferenzen"
+      "Experimenteller Prototyp ohne die Produktionsreife, das Sharding oder die Betriebswerkzeuge etablierter Alternativen wie Redisson",
+      "Eltern-Kind-Beziehungsverfolgung und einige Fehlerwiederherstellungsszenarien erfordern noch weitere Arbeit"
     ],
     "expertise": [
       "Distributed Shared Memory",
       "Cache-Kohärenz-Protokolle",
-      "Bytecode-Instrumentierung und -Weaving",
-      "Spigot- und Velocity-Plugin-Entwicklung",
+      "Bytecode-Instrumentierung & -Weaving",
+      "Spigot- & Velocity-Plugin-Entwicklung",
       "Pub/Sub-Messaging-Architekturen"
     ],
     "roadmap": [
-      "Implementierung einer verteilten Garbage Collection für abgelaufene Speicherschlüssel",
-      "Unterstützung für die Synchronisierung sortierter Mengen (ZSET)",
-      "Optimierung der AspectJ-Aspekte zur Reduzierung des Laufzeit-Speicher-Overheads",
-      "Hinzufügen von Unterstützung für die Verfolgung von Eltern-Kind-Beziehungen in geschachtelten Objekten"
+      "Zuverlässige Zustellung und Fehlerwiederherstellung bei Knoten- und Netzwerkausfällen stärken",
+      "AspectJ-Aspekte optimieren, um den Laufzeit-Speicher-Overhead zu reduzieren",
+      "Unterstützung für Eltern-Kind-Beziehungsverfolgung in verschachtelten Objekten hinzufügen",
+      "Integrationstests und Betriebsdokumentation ausbauen"
     ],
     "relatedProjects": [
       {
         "index": 0,
-        "relation": "Inspiration und Alternative zu"
+        "relation": "Primärer Anwendungsfall und motivierendes Minecraft-Server-Netzwerk"
       },
       {
         "index": 1,
-        "relation": "Aufgebaut auf"
+        "relation": "Inspiration und Alternative zu"
+      },
+      {
+        "index": 2,
+        "relation": "Baut auf auf"
       }
     ],
     "repos": [
@@ -306,26 +313,26 @@
     "description": "Masterarbeit an der RWTH Aachen zur Neugestaltung einer solver-spezifischen C++-Schnittstelle zu einer modularen, generischen Kopplungsschicht. Verbindet CFD-Solver über eine einheitliche, konfigurationsgesteuerte API mit Machine-Learning-Backends (SmartSim/SmartRedis, PhyDLL, AIxeleratorService).\n\nGebenchmarkt auf dem Claix23-Supercomputer hinsichtlich CPU- und GPU-Inferenz, Thread-Balancing und Slurm-Core-Affinity. Beinhaltet einen automatisierten Clang-AST-Registrierungsgenerator und Integrationstests zur Kopplung des MMCP-Transformers mit dem m-aia-Solver.",
     "purpose": "CFD-Solver mit Machine-Learning-Modellen verbinden, ohne jeden Solver an ein einzelnes Kommunikations-Backend zu binden.",
     "strengths": [
-      "Von solverspezifischem Code zu einer hochgradig generischen, modularen Header-only-Schnittstelle umgestaltet",
+      "Neukonzeptionierung von solverspezifischem Code zu einem hochgradig generischen, modularen Header-only-Interface",
       "Integriert heterogene Kopplungsbibliotheken (SmartSim, PhyDLL, AIxeleratorService) unter einer konfigurationsbasierten Schicht",
-      "Unterstützt reflexionsfreie Subklassen-Registrierung über ein automatisches python-clang-Parsing-Registry-Skript",
-      "Evaluiert kritisch die hardwarenahe parallele CPU-Ausführung (Intra/Inter-Op-Threads, OpenMP, Core-Affinität)"
+      "Unterstützt reflexionsfreie Subklassen-Registrierung über ein automatisches Registry-Skript auf Basis von python-clang",
+      "Kritische Evaluierung hardwarenaher paralleler CPU-Ausführung (Intra-/Inter-Op-Threads, OpenMP, Kernaffinität)"
     ],
     "limitations": [
-      "Derzeit auf PyTorch-Backend-Implementierungen (TorchScript) beschränkt",
-      "Performance ist durch zugrundeliegende Bibliotheks-Interconnects limitiert (z. B. Redis-Datenbank-Roundtrips in SmartSim)",
-      "Erfordert kompatible Compiler-/Clang-Versionen für das Registry-Generator-Skript"
+      "Derzeit auf PyTorch- (TorchScript-) Backend-Implementierungen beschränkt",
+      "Leistung ist an die Interconnects der zugrunde liegenden Bibliotheken gebunden (z. B. Redis-Datenbank-Roundtrips in SmartSim)",
+      "Erfordert passende Compiler-/Clang-Versionen für das Registry-Generator-Skript"
     ],
     "expertise": [
       "HPC-Architektur & MPI",
       "Low-Latency-Middleware-Design",
-      "Parallele Inferenz-Optimierung",
-      "Multithreaded CPU-Binding & -Affinität"
+      "Optimierung paralleler Inferenz",
+      "Multithreaded CPU-Binding & Kernaffinität"
     ],
     "roadmap": [
       "Integration des generischen Prototyps in das MMCP-Simulationsprojekt zur Kopplung von MMCP_transformer und m-aia",
-      "Evaluation von Zero-Copy-Shared-Memory-Kopplungsimplementierungen zur Umgehung des TCP-Overheads",
-      "Unterstützung für ONNX-Runtime- und TensorFlow-C++-Backends hinzufügen"
+      "Evaluierung von Zero-Copy-Shared-Memory-Kopplungsimplementierungen zur Umgehung des TCP-Overheads",
+      "Unterstützung für ONNX Runtime und TensorFlow C++-Backends hinzufügen"
     ],
     "relatedProjects": [
       {
@@ -338,15 +345,35 @@
       },
       {
         "index": 2,
-        "relation": "Benchmarking-Tool für Inferenz und Core-Affinität"
+        "relation": "Benchmarking-Tool für Inferenz und Kernaffinität"
       },
       {
         "index": 3,
-        "relation": "Z3-basiertes HPC-Modul-Resolver-Skript"
+        "relation": "Z3-basiertes Skript zur Auflösung von HPC-Modulen"
       },
       {
         "index": 4,
-        "relation": "Workspace-Repository mit Integrationstest-Suites und Playgrounds"
+        "relation": "Workspace-Repository mit Integrationstest-Suites und Testumgebungen"
+      },
+      {
+        "index": 5,
+        "relation": "MPI-Terrain-Mini-App für Experimente zur Solver/ML-Kopplung"
+      },
+      {
+        "index": 6,
+        "relation": "Benchmark-Suite für CPU-/GPU-Affinität und Interconnects"
+      },
+      {
+        "index": 7,
+        "relation": "Kommunikations- und Controller-Benchmark für AIxeleratorService"
+      },
+      {
+        "index": 8,
+        "relation": "Key-basierte Load-Balancing-Experimente für gekoppelte Inferenz"
+      },
+      {
+        "index": 9,
+        "relation": "Testumgebung des Modul-Resolvers für den CPP-ML-Interface-Rewrite"
       }
     ],
     "repos": [
@@ -523,6 +550,36 @@
       {
         "index": 1,
         "relation": "Ausrichtender Lehrstuhl des Praktikums"
+      }
+    ],
+    "repos": [
+      {
+        "index": 0,
+        "description": ""
+      },
+      {
+        "index": 1,
+        "description": ""
+      },
+      {
+        "index": 2,
+        "description": ""
+      },
+      {
+        "index": 3,
+        "description": ""
+      },
+      {
+        "index": 4,
+        "description": ""
+      },
+      {
+        "index": 5,
+        "description": ""
+      },
+      {
+        "index": 6,
+        "description": ""
       }
     ]
   },
@@ -793,34 +850,40 @@
   },
   "minecraft-chat-translator": {
     "name": "Minecraft Chat Translator",
-    "tagline": "Fine-getuntes 0.5B LLM für die Echtzeit-EN↔DE-Gaming-Chat-Übersetzung mit persistentem KV Cache",
-    "description": "Eine komplette Fine-Tuning-Pipeline und Inferenz-Engine, die ein kleines Sprachmodell mit 0.5B Parametern (Qwen2.5-0.5B-Instruct) darauf trainiert, bidirektionale Englisch↔Deutsch-Chat-Übersetzungen in Echtzeit anhand authentischer Minecraft-Server-Protokolle durchzuführen. Das Training wurde vollständig auf einer CPU (AMD Zen 4 / AVX-512 BF16) mit ~245 Token/Sek. über 7 Stunden und 34 Minuten durchgeführt, wodurch eine Reduzierung des Validierungsverlusts von 1,1972 auf 0,1005 (91,6 %) erreicht wurde.\n\nDas Projekt umfasst eine asynchrone Multi-LLM-Datensatz-Übersetzungspipeline (Gemini + OpenRouter), einen ChatML-Trainingsdatensynthesizer mit 4 linguistischen Szenarien und 65,9 Mio. Benutzernamen-Permutationen, eine FastAPI-Inferenz-Engine mit persistentem Pro-Session-KV-Cache für eine TTFT von unter 15 ms sowie ein Side-by-Side-Benchmark-Tool, das das fine-getunte Modell mit dem Basismodell Qwen 0.5B, Nemotron 3.5 Lightning 30B, Stealth ox-alpha und Gemini 3.5 Flash Lite vergleicht.",
-    "purpose": "Ermöglichung einer transparenten Echtzeit-Übersetzung zwischen englischen und deutschen Spielern auf einem sprachgemischten Minecraft-Server, lokal ausgeführt auf Consumer-Hardware ohne Cloud-Inferenzkosten, mit strenger Protokolleinhaltung und Bewusstsein für das Gaming-Domain-Glossar.",
+    "tagline": "Fine-getuntes 0,5B-LLM für bidirektionale EN↔DE-Gaming-Chat-Übersetzung in Echtzeit mit persistentem KV cache",
+    "description": "Eine vollständige Fine-Tuning-Pipeline und Inferenz-Engine, die ein kleines Sprachmodell mit 0,5 Mrd. Parametern (Qwen2.5-0.5B-Instruct) darauf trainiert, bidirektionale Englisch↔Deutsch-Chat-Übersetzungen auf Basis authentischer Minecraft-Server-Logs in Echtzeit durchzuführen. Das Training fand vollständig auf der CPU (AMD Zen 4 / AVX-512 BF16) bei ~245 Tokens/Sek. über 7 Stunden und 34 Minuten statt und erzielte eine Reduzierung des Validation Loss von 1,1972 auf 0,1005 (91,6 %).\n\nDas Projekt umfasst eine asynchrone Multi-LLM-Pipeline zur Dataset-Übersetzung (Gemini + OpenRouter), einen ChatML-Trainingsdatensynthesizer mit 4 linguistischen Szenarien und 65,9 Mio. Benutzername-Permutationen, eine FastAPI-Inferenz-Engine mit persistentem Session-basiertem KV cache für eine TTFT von unter 15 ms sowie ein Side-by-Side-Benchmark-Tool zum Vergleich des fine-getunten Modells mit der Qwen-0.5B-Basis, Nemotron 3.5 Lightning 30B, Stealth ox-alpha und Gemini 3.5 Flash Lite.",
+    "purpose": "Ermöglichung einer nahtlosen Echtzeit-Übersetzung zwischen englisch- und deutschsprachigen Spielern auf einem gemischtsprachigen Minecraft-Server, die lokal auf Consumer-Hardware ohne Cloud-Inferenzkosten läuft, bei strikter Protokolltreue und Berücksichtigung eines fachspezifischen Gaming-Glossars.",
     "strengths": [
-      "100 % Protokolleinhaltung nach dem Fine-Tuning im Vergleich zum vollständigen Versagen des Basismodells im Zero-Shot-Betrieb",
-      "Domain-Glossar-Mapping: „Ansturm“ → „Rush“, „LoW“ → „Legend of War“, „LK“ → „Leistungskurs“",
-      "Verarbeitet echte Chat-Tippfehler (schwimsmt, vlt, gehn) ohne Vorverarbeitung",
-      "Persistenter KV Cache liefert konstante ~54 ms TTFT unabhängig von der Gesprächslänge",
-      "Gesamte Pipeline (Daten → Training → Evaluierung) aus Open-Source-Skripten reproduzierbar",
-      "Training auf Consumer-CPU-Hardware abgeschlossen — keine GPU erforderlich"
+      "100 % Protokolltreue nach dem Fine-Tuning im Vergleich zum vollständigen Scheitern des Basismodells bei Zero-Shot",
+      "Domain-spezifisches Glossar-Mapping: 'Ansturm' → 'Rush', 'LoW' → 'Legend of War', 'LK' → 'Leistungskurs'",
+      "Verarbeitet reale Chat-Tippfehler (schwimsmt, vlt, gehn) ohne Vorverarbeitung",
+      "Persistenter KV cache sorgt für eine konstante TTFT von ~54 ms unabhängig von der Konversationslänge",
+      "Gesamte Pipeline (Daten → Training → Eval) über Open-Source-Skripte reproduzierbar",
+      "Training vollständig auf Consumer-CPU-Hardware abgeschlossen – keine GPU erforderlich"
     ],
     "limitations": [
-      "Modellgröße (0.5B) limitiert Nuancen bei komplexen literarischen oder stark mehrdeutigen Texten",
-      "Trainingsdaten sind domänenspezifisch (Minecraft / Gaming); lässt sich schlecht auf formelle Register übertragen",
-      "Rohes Trainingskorpus (Server-Chat-Protokolle) zum Schutz der Privatsphäre der Benutzer nicht veröffentlicht"
+      "Modellgröße (0,5B) schränkt Nuancen bei komplexen literarischen oder stark mehrdeutigen Texten ein",
+      "Trainingsdaten sind domänenspezifisch (Minecraft / Gaming); generalisiert schlecht auf formelle Sprachebenen",
+      "Rohes Trainingskorpus (Server-Chat-Logs) wird zum Schutz der Privatsphäre der Nutzer nicht veröffentlicht"
     ],
     "expertise": [
       "LLM Fine-Tuning",
       "CPU-basiertes Training (BF16 / AVX-512)",
-      "Inferenz-Optimierung für den KV Cache",
+      "KV-Cache-Inferenzoptimierung",
       "Asynchrone Multi-LLM-Datenpipelines",
-      "Modell-Evaluierung & Benchmarking"
+      "Modellevaluation & Benchmarking"
     ],
     "roadmap": [
       "Evaluierung von Qwen2.5-1.5B als Drop-in-Upgrade für verbesserte linguistische Nuancen",
       "Hinzufügen von Streaming-WebSocket-Ausgaben zur FastAPI-Engine",
       "Veröffentlichung des gefilterten/anonymisierten Trainingsdatensatzes auf Hugging Face Datasets",
-      "Ausweitung auf weitere Sprachpaare (EN↔FR, EN↔PL)"
+      "Erweiterung auf zusätzliche Sprachpaare (EN↔FR, EN↔PL)"
+    ],
+    "relatedProjects": [
+      {
+        "index": 0,
+        "relation": "Minecraft-Netzwerk, das die Übersetzungs- und Ingame-Assistentendienste integriert"
+      }
     ],
     "repos": [
       {
@@ -831,7 +894,7 @@
     "modelReleases": [
       {
         "index": 0,
-        "description": "Eigenständige, zusammengeführte FP16-Gewichte auf Hugging Face"
+        "description": "Eigenständige gemergte FP16-Gewichte auf Hugging Face"
       },
       {
         "index": 1,
@@ -1150,6 +1213,291 @@
       {
         "index": 0,
         "description": ""
+      }
+    ]
+  },
+  "the-legend-of-war": {
+    "name": "The Legend of War",
+    "tagline": "Langjähriges Minecraft-Total-Conversion-Netzwerk mit verteilter Serverarchitektur und eigenen Spielsystemen",
+    "description": "The Legend of War ist ein Minecraft-PvP-Netzwerk mit vier Völkern, das 2012 gemeinsam mit Freunden gegründet wurde. Nach der ursprünglichen Serverära wurde das Projekt ab 2016 sporadisch weiterentwickelt: 2018 entstand eine Redis-basierte Architekturphase, 2023 folgte ein koordinierter GitLab-Neustart. Der aktuelle Phoenix-Relaunch versteht den Server als Total Conversion statt als herkömmliches Minecraft-Setup.\n\nChristian gründete das Projekt und verantwortet Game- und Systemdesign, Architektur und Infrastruktur. Tim ist Lead-Entwickler für das Gameplay, während Moritz durch Bauen, Gameplay-Tests und Balancing-Feedback beiträgt.\n\nDas moderne Java-21-Netzwerk verbindet Paper-Gameserver mit einem Velocity-Proxy und Redis-basiertem Zustand. Firecord, als separates Open-Source-Projekt veröffentlicht, übernimmt die verteilte Objektsynchronisation. Cinder, mklib und npclib stellen gemeinsame Dienste, Item- und Kampfwerte sowie paketbasierte NPCs bereit; Phoenix setzt darauf die Völker-, Quest- und Kampfsysteme. Weitere Plugins decken graphenbasierte Wege, sich regenerierende Farmwelten, Lobby- und PvP-Testumgebungen, Weltverwaltung und Server-Telemetrie ab.\n\nDie umgebende Plattform umfasst eine öffentliche BlueMap mit Volksterritorien und Wegen, einen zweisprachigen Flask-Aufgabentracker, dessen REST-API Discord und den Ingame-Befehl /todo verbindet, sowie LLM-gestützte Chatübersetzung und Hilfefunktionen. Die Entwicklung verläuft weiterhin in unregelmäßigen Phasen: Website und Karte sind online, der vollständige Phoenix-Relaunch befindet sich jedoch noch in Entwicklung und Balancing.",
+    "purpose": "Aus einem langjährigen Community-Minecraft-Server ein modulares Mehrspieler-Spiel mit eigenständigen Völkern, eigenem Kampf- und Fortschrittssystem, netzwerkweit persistentem Zustand, automatisierten Weltsystemen sowie integrierter Web- und Community-Infrastruktur entwickeln.",
+    "strengths": [
+      "Einen 2012 gegründeten Community-Server mit vier Völkern zu einer modularen Total-Conversion-Architektur weiterentwickelt",
+      "Kommunikation, gemeinsame Bibliotheken, Gameplay und serverspezifische Plugins in fokussierte Java-Repositories aufgeteilt",
+      "Netzwerkweiten Zustand und Integrationen auf Basis von Redis, Firecord, Paper und Velocity aufgebaut",
+      "Im Team eigene Kampfgrundlagen, Volksfähigkeiten, Quests, paketbasierte NPCs und automatische Farmwelt-Regeneration umgesetzt",
+      "Graphenbasierte Ingame-Wege und Volksterritorien mit einer öffentlichen interaktiven BlueMap verbunden",
+      "Einen zweisprachigen Aufgabentracker mit REST-API, Discord-Benachrichtigungen und Ingame-Befehlen integriert",
+      "Historische Screenshots, Karten, Designdokumente und Entwicklungsgeschichte neben dem modernen Codebestand bewahrt"
+    ],
+    "limitations": [
+      "Die Entwicklung verläuft seit 2016 in unregelmäßigen Phasen; der vollständige saisonale Phoenix-Relaunch wurde noch nicht veröffentlicht",
+      "Im Projekt-Snapshot vom September 2026 war der interne PvP-Balancing-Test noch der nächste große Meilenstein",
+      "Die meisten Implementierungsrepositories sind privat; Firecord und die öffentlichen Webangebote sind die wichtigsten extern einsehbaren Artefakte",
+      "Vor 2023 ist keine Versionshistorie verfügbar, daher decken die Repository-Statistiken nur den modernen Neustart ab",
+      "Mehrere fortgeschrittene Stadt-, Wirtschafts-, Sicht- und Saison-Fortschrittssysteme sind bislang Entwürfe und keine veröffentlichten Funktionen"
+    ],
+    "expertise": [
+      "Multi-Server-Spielearchitektur",
+      "Verteilte Statussynchronisation",
+      "Minecraft-Plugin- und NMS-Entwicklung",
+      "Systemdesign für Multiplayer-Spiele",
+      "Räumliche Datenstrukturen und Pathfinding",
+      "Infrastruktur- und Service-Integration",
+      "REST-API-Design",
+      "Modernisierung langlebiger Projekte",
+      "Community- und Live-Service-Betrieb"
+    ],
+    "roadmap": [
+      "Den internen PvP-Test durchführen und Kampf, Fähigkeiten und Keystones anhand der Ergebnisse abstimmen",
+      "Die Gameplay-Schleifen für Städte, Landansprüche und Wirtschaft fertigstellen",
+      "Den saisonalen Phoenix-Relaunch und das Onboarding vorbereiten",
+      "Einen neuen Entwicklungsbericht mit aktuellem Gameplay und Weltfortschritt veröffentlichen"
+    ],
+    "relatedProjects": [
+      {
+        "index": 0,
+        "relation": "Vom Netzwerk genutzte verteilte Objekt-Speicherschicht"
+      },
+      {
+        "index": 1,
+        "relation": "In den Ingame-Chat integrierter, feinabgestimmter Übersetzungsdienst"
+      },
+      {
+        "index": 2,
+        "relation": "Historische Trailer und aktuelle Entwickler-Logs"
+      }
+    ],
+    "repos": [
+      {
+        "index": 0,
+        "description": ""
+      },
+      {
+        "index": 1,
+        "description": ""
+      },
+      {
+        "index": 2,
+        "description": ""
+      },
+      {
+        "index": 3,
+        "description": ""
+      },
+      {
+        "index": 4,
+        "description": ""
+      },
+      {
+        "index": 5,
+        "description": ""
+      },
+      {
+        "index": 6,
+        "description": ""
+      },
+      {
+        "index": 7,
+        "description": ""
+      },
+      {
+        "index": 8,
+        "description": ""
+      },
+      {
+        "index": 9,
+        "description": ""
+      },
+      {
+        "index": 10,
+        "description": ""
+      },
+      {
+        "index": 11,
+        "description": ""
+      },
+      {
+        "index": 12,
+        "description": ""
+      }
+    ]
+  },
+  "ai-usage": {
+    "name": "AI Usage",
+    "tagline": "Selbst gehostetes Dashboard für KI-Kontingente und Guthaben mit adaptiver Erfassung",
+    "description": "Ein selbst gehostetes Kontingent-Dashboard und eine JSON-API für KI-Provider-Konten. Collector lesen Daten von Google Antigravity, OpenCode Go, Codex, OneProvider, OpenRouter und Google Cloud Billing; jede Beobachtung wird in SQLite gespeichert; ein React-Dashboard sowie HTTP- und MCP-APIs zeigen verbleibende Kontingente, Reset-Zeiten und API-Guthaben.\n\nDer Scheduler geht in Schritten von 10 Minuten bis 6 Stunden zurück, wenn sich nichts ändert, plant Prüfungen um bekannte Reset-Zeiten und verfolgt den Zustand pro Konto, sodass ein Anbieter nicht die Aktualisierung aller anderen erzwingt. Zum Deployment gehören eine öffentliche, schreibgeschützte Ansicht, Verlaufsdiagramme pro Konto, Filter für ausgeblendete Anbieter, ein Plasma-5-Panel-Widget und Docker-Compose-Paketierung.",
+    "purpose": "Verbleibende Kontingente und API-Guthaben mehrerer KI-Anbieter an einem Ort sehen, ohne jeden Anbieter wiederholt abzufragen oder Zugangsdaten offenzulegen.",
+    "strengths": [
+      "Erfasst Kontingent- und Guthabendaten aus sechs Anbieterquellen, einschließlich Google-Cloud-Billing-Exporten",
+      "Passt Aktualisierungsintervalle zwischen 10 Minuten und 6 Stunden an und plant um bekannte Resets",
+      "Plant jedes Konto unabhängig und liefert zwischengespeicherte Daten, während im Hintergrund aktualisiert wird",
+      "Speichert jede erfolgreiche Beobachtung in SQLite mit Verlaufsdiagrammen pro Konto und Kontingent",
+      "Fasst Kontingentbalken nach Typ zusammen und markiert die durchschnittliche Restzeit",
+      "Bietet eine öffentliche schreibgeschützte Ansicht, einen MCP-Endpunkt und ein natives Plasma-5-Panel-Widget",
+      "Hält Provider-Dateien schreibgeschützt, außer der atomaren Codex-Token-Rotation"
+    ],
+    "limitations": [
+      "Provider-Collector hängen von undokumentierten oder anbieterspezifischen Endpunkten ab und können brechen",
+      "Benötigt lokale Zugangsdateien und einen Reverse-Proxy für die Authentifizierung; die App hat keine eigene Anmeldung",
+      "Die öffentliche Ansicht zeigt maskierte Kontobezeichnungen und Kontingentdaten, sofern Anbieter nicht ausgeblendet werden",
+      "Schätzungen für Google-Cloud-Guthaben hängen von verzögerten BigQuery-Billing-Exporten ab",
+      "Im Repository liegt noch keine Lizenzdatei"
+    ],
+    "expertise": [
+      "Provider-API-Integration",
+      "Adaptives Scheduling & Backoff",
+      "Time-Series-Speicherung",
+      "Dashboard-Design",
+      "KDE Plasma-Widgets",
+      "Credential-Isolierung"
+    ],
+    "roadmap": [
+      "Provider-Collector aktuell halten, wenn sich Kontingent-Endpunkte ändern",
+      "Langzeitverlauf und Verfolgung ablaufender Guthaben verbessern",
+      "Deployment- und Authentifizierungsbeispiele für Mehrbenutzer-Setups erweitern",
+      "Weitere native Desktop-Integrationen neben dem Plasma-5-Widget ergänzen"
+    ],
+    "relatedProjects": [
+      {
+        "index": 0,
+        "relation": "Primärer API-Konsument für Routing-Entscheidungen"
+      },
+      {
+        "index": 1,
+        "relation": "Telemetrie auf Sitzungsebene; ergänzt die Kontingentverfolgung der Anbieter"
+      }
+    ],
+    "repos": [
+      {
+        "index": 0,
+        "description": ""
+      }
+    ]
+  },
+  "opencode-observatory": {
+    "name": "OpenCode Observatory",
+    "tagline": "Selbst gehostete, metadatenbasierte Telemetrie und Analyse für OpenCode",
+    "description": "Ein selbst gehosteter Observability-Stack für OpenCode. Ein Plugin erfasst Metadaten zu Tokens, Modellen, Latenz, Werkzeugen und Fehlern; ein Collector speichert sie in PostgreSQL; ein React-Dashboard und ein schreibgeschützter MCP-Server machen die Nutzung über mehrere Rechner und Mandanten hinweg sichtbar. Prompt-Texte, Antworten, Code und Provider-Zugangsdaten bleiben standardmäßig ausgeschlossen; eine optionale Transkript-Erfassung wird bereits clientseitig bereinigt, bevor Daten den Prozess verlassen.\n\nDer Server isoliert Mandanten über PostgreSQL Row-Level Security, pflegt stündliche Rollups über Statement-Trigger, nutzt eine Offline-SQLite-Outbox im Plugin und importiert historische Sitzungen ohne Doppelzählung. Die MCP-Oberfläche bietet Nutzungsübersichten, Zeitreihen, Modellvergleiche, Sitzungstranskripte und einen bitemporalen Wissensspeicher aus zusammengefassten Sitzungen.",
+    "purpose": "Sichtbar machen, wohin Tokens, Zeit und Kosten über mehrere OpenCode-Rechner und -Konten fließen, ohne Prompts, Code oder Provider-Zugangsdaten an Dritte zu übertragen.",
+    "strengths": [
+      "Erfasst standardmäßig nur Metadaten und bereinigt optionale Transkripte vor der Speicherung um Tokens, Schlüssel und .env-Zuweisungen",
+      "Isoliert jede Mandantenabfrage über PostgreSQL Row-Level Security",
+      "Nutzt eine dauerhafte SQLite-Outbox, damit Telemetrie Inferenz-Streams nie blockiert oder verlangsamt",
+      "Normalisiert Provider-Tokenzähler und weist Prompt-Cache-Wiederverwendung sowie geschätzte API-Einsparungen aus",
+      "Kombiniert stündliche Rollups mit exakten Randfakten für Diagramme von einer Stunde bis zu mehreren Monaten",
+      "Stellt Abfragen zu Nutzung, Sitzungen, Fehlern und Wissensspeicher über schreibgeschützte MCP-Werkzeuge bereit",
+      "Importiert historische Sitzungen mit transaktionalen Checkpoints und ohne Doppelzählung",
+      "Liefert ein Docker-Compose-Deployment mit persistenten PostgreSQL- und Vault-Volumes"
+    ],
+    "limitations": [
+      "Selbst gehostet und OpenCode-spezifisch; es gibt keine öffentliche Demo-Instanz",
+      "Benötigt PostgreSQL sowie separat gebaute Plugin- und Web-/Server-Komponenten",
+      "Transkript-Erfassung und modellgestützte Zusammenfassungen sind optional und von verfügbaren Modellen abhängig",
+      "Preiskataloge müssen gepflegt werden, wenn Anbieter Modelle veröffentlichen oder umbenennen",
+      "Die Mandantentrennung hängt von einem korrekt konfigurierten Reverse-Proxy und Deployment ab"
+    ],
+    "roadmap": [
+      "Die Preisabdeckung der Anbieter erweitern und Modelle ohne Marktpreis prüfen",
+      "Multi-Tenant-Deployment, Backups und Reverse-Proxy-Standards weiter härten",
+      "Qualität der Sitzungserinnerung und der Vault-Extraktion verbessern",
+      "Weitere Deployment-Beispiele für LAN- und Hosting-Setups ergänzen"
+    ],
+    "relatedProjects": [
+      {
+        "index": 0,
+        "relation": "Leitet Subagenten-Aufgaben weiter, während Observatory die entstehende Nutzung erfasst"
+      },
+      {
+        "index": 1,
+        "relation": "Anbieter-Dashboard für Kontingente und Guthaben; ergänzt die Sitzungstelemetrie"
+      }
+    ]
+  },
+  "opencode-model-router": {
+    "name": "OpenCode Model Router",
+    "tagline": "Kontingentbewusstes Subagenten-Routing und lokales Workflow-Tracing für OpenCode",
+    "description": "Ein lokaler, deterministischer Router für OpenCode 2.x. Er umschließt das bestehende subagent-Werkzeug und wählt pro Aufruf ein Modell aus sieben spezialisierten Rollen, vier Schwierigkeitsstufen, Wichtigkeit, Kontextgröße und Modalität aus; Plan und Build behalten dabei ihre normalen Primärmodelle. Die Kontingente stammen aus dem bestehenden AI-Usage-Dienst statt aus einem zweiten Provider-Poller.\n\nDer Router führt dauerhafte SQLite-Reservierungen, begrenzt die Parallelität pro Konto und global, setzt Cooldowns und schlägt geschlossen fehl, wenn Kontingent-, Identitäts- oder Kontextprüfungen nicht erfüllt werden können. Zusätzlich bietet er eine authentifizierte lokale API, schreibgeschützte MCP-Werkzeuge, einen systemd-User-Dienst und Workflow-Tracing mit redigierten JSON-/Mermaid-Exporten sowie einer statischen HTML-/SVG-Zeitleiste. Kostenpflichtige Opus- und Kimi-Aufrufe bleiben hinter einem separaten Freigabemechanismus gesperrt.",
+    "purpose": "Arbeit über mehrere Modellanbieter delegieren, ohne Abonnement-Kontingente zu überziehen, Zugangsdaten offenzulegen oder das Primärmodell des Nutzers stillschweigend zu ändern.",
+    "strengths": [
+      "Wählt Modelle pro Subagenten-Aufruf anhand von Rolle, Stufe, Wichtigkeit, Kontextgröße und Modalität",
+      "Prüft jedes anwendbare Kontingentfenster separat und schlägt bei unbekannten, veralteten oder erschöpften Kontingenten geschlossen fehl",
+      "Nutzt dauerhafte SQLite-Reservierungen, Parallelitätsgrenzen pro Konto, Cooldowns und ein globales Limit",
+      "Verwendet den AI-Usage-Collector als maßgebliche Kontingentquelle, statt Provider doppelt abzufragen",
+      "Erzwingt die Unabhängigkeit der Critic-Modellfamilie und die Herkunft aus der ursprünglichen Sitzung",
+      "Bietet schreibgeschützte MCP-Werkzeuge sowie redigierte JSON-, Mermaid- und statische Zeitleisten-Exporte",
+      "Installiert additiv und enthält einen getesteten Deaktivierungs- und Rollback-Pfad"
+    ],
+    "limitations": [
+      "Spezifisch für OpenCode 2.x; die Laufzeitvalidierung erfolgte mit OpenCode 2.2.1",
+      "Das SQLite-Ledger koordiniert verwaltete Aufgaben auf einem Rechner, nicht in einem Cluster",
+      "Abonnement-Reservierungen sind geschätzte Prozentpunkte, keine exakte Tokenkapazität",
+      "Kostenpflichtige Opus- und Kimi-Aufrufe sind in dieser Version absichtlich gesperrt",
+      "Benötigt den AI-Usage-Dienst für frische Kontingentbeobachtungen"
+    ],
+    "expertise": [
+      "Quota-Aware Scheduling",
+      "Nebenläufigkeitssteuerung",
+      "Plugin-Architektur",
+      "Lokale Persistenz",
+      "Workflow-Tracing"
+    ],
+    "roadmap": [
+      "Einen vertrauenswürdigen Freigabe- und Geldreservierungsmechanismus für kostenpflichtige Modelle ergänzen",
+      "Die Tokenizer-Integration verbessern, um konservative Eingabeablehnungen zu reduzieren",
+      "Gemessene Leistungsdaten über kurze Diagnose-Probes hinaus erweitern",
+      "Die Koordination über das lokale Single-Host-Ledger hinaus härten"
+    ],
+    "relatedProjects": [
+      {
+        "index": 0,
+        "relation": "Maßgebliche Kontingentquelle für Routing-Entscheidungen"
+      },
+      {
+        "index": 1,
+        "relation": "Ergänzende Sitzungstelemetrie und Analyse"
+      }
+    ],
+    "repos": [
+      {
+        "index": 0,
+        "description": ""
+      }
+    ]
+  },
+  "opencode-wait": {
+    "name": "opencode-wait",
+    "tagline": "Warten ohne CPU-Last für OpenCode-Agenten auf HPC-Login-Knoten",
+    "description": "Ein gepflegter Fork des opencode-wait-Plugins, mit dem OpenCode-Agenten pausieren können, ohne CPU zu verbrennen. Er kombiniert einen CPU-freien HTTP-Listener, die Überwachung von Sentinel-Dateien und Sleeps auf Kernel-Ebene, damit ein Agent auf einem HPC-Login-Knoten auf einen Slurm-Job, ein entferntes Fertigstellungssignal oder eine neue Benutzernachricht warten kann, ohne cgroup- oder Runaway-Prozess-Watchdogs auszulösen.\n\nDer Fork ergänzt HTTP-Wake-up mit Token-Authentifizierung und Payload-Rückgabe, Sentinel-Datei-Abschluss mit optionalem Lesen und Löschen des Inhalts, Abbruch über den Abort-Controller, Live-Fortschrittsmetadaten und vorhersehbare Ports pro Sitzung. Das ursprüngliche zeitbasierte Plugin bleibt erhalten; der Fork wird als v0.2.0 veröffentlicht.",
+    "purpose": "Codierende Agenten auf lang laufende externe Jobs warten lassen, ohne Polling, CPU-Last oder das Risiko, von Login-Knoten-Watchdogs beendet zu werden.",
+    "strengths": [
+      "Verbraucht beim Warten 0,00 % CPU durch epoll/inotify und echten Kernel-Sleep",
+      "Öffnet einen vorhersehbaren Port pro Sitzung (40000 + hash(sessionID) % 4096) mit Token-Authentifizierung",
+      "Nimmt einen einfachen curl-Wake-up vom Compute-Knoten an und gibt Exit-Codes oder Ergebnisse an das Modell zurück",
+      "Überwacht Sentinel-Dateien auf NFS/Lustre und kann deren Inhalt bei Abschluss lesen oder löschen",
+      "Bricht das Warten über den Abort-Controller von OpenCode sofort ab und gibt Sockets frei",
+      "Zeigt einen Live-Fortschrittsbalken, verstrichene und verbleibende Zeit sowie den gebundenen Port",
+      "Behält das zeitbasierte Warten des Upstream-Projekts bei und ergänzt die neuen Aufwachpfade"
+    ],
+    "limitations": [
+      "Linux-spezifisch: setzt epoll/inotify voraus und läuft nicht unverändert unter macOS oder Windows",
+      "HTTP-Wake-up erfordert Netzwerkerreichbarkeit vom Compute-Knoten zum Login-Knoten",
+      "Das Repository enthält Upstream-Historie und wird als Fork gepflegt, nicht als Neuimplementierung",
+      "Es gibt keine separate Oberfläche außer der Metadatenleiste von OpenCode"
+    ],
+    "roadmap": [
+      "Den Fork mit Upstream-Releases synchron halten",
+      "Weitere Abschluss-Transporte für Batch-Systeme neben HTTP und Sentinel-Dateien ergänzen",
+      "Die Portabilität über Linux hinaus verbessern, soweit die zugrunde liegenden Primitive es zulassen"
+    ],
+    "relatedProjects": [
+      {
+        "index": 0,
+        "relation": "Upstream-Projekt, das dieser Fork erweitert"
+      },
+      {
+        "index": 1,
+        "relation": "HPC-Workflow-Kontext für lang laufende Slurm-Jobs"
       }
     ]
   }

@@ -1,0 +1,73 @@
+{
+  "repository": "opencode-model-router",
+  "updatedAt": "2026-11-01T08:58:02.349Z",
+  "filesCount": 12,
+  "directories": {
+    "config": "Contains 1 module files (policy.json)",
+    "docs": "Contains 4 module files (routing-policy.md, workflow.md, workflow-tracing-proposal.md, validation.md)",
+    "plugin": "Contains 3 module files (guard.ts, index.ts, workflow.ts)",
+    "scripts": "Contains 2 module files (bind-credentials.ts, concurrency-probe.ts)"
+  },
+  "files": {
+    "config/policy.json": {
+      "hash": "792bca8791747b6a55819cca8a9717012f46c537098afc65d6860da80a6dc31d",
+      "summary": "This configuration file defines model routing policies, aliases, role-based model assignments, and execution limits. It manages model selection and fallback behavior across the project.",
+      "lines": 45
+    },
+    "docs/routing-policy.md": {
+      "hash": "c67f6ca0b0194b543006feee3c0141ea5b173fdf819e9b1bd0593c18486023bb",
+      "summary": "This documentation file defines the subagent routing policy and model tiers for delegated tasks. It serves as the authoritative specification for project-wide subagent model selection.",
+      "lines": 83
+    },
+    "README.md": {
+      "hash": "cb41a360cafee928489d2efc16b221c141542ff8487966f3f5f255e6df26715b",
+      "summary": "This project documentation file outlines the OpenCode quota-aware subagent router for OpenCode 2.x. It details system components, routing policies, and local MCP tools used to manage subagent execution and quotas.",
+      "lines": 377
+    },
+    "docs/workflow.md": {
+      "hash": "d283f2b92acbef3aeb7f860b32dbe4410b59fe8b432253eedc9f397ea8d974b6",
+      "summary": "`docs/workflow.md` documents local workflow tracing, its recorded metadata, privacy limits, and task semantics. It defines no exported functions or classes; it guides local inspection of router workflow data.",
+      "lines": 211
+    },
+    "docs/workflow-tracing-proposal.md": {
+      "hash": "f5d5c46fd428240f64791c0aa54c5c2cda0da374d8f33a55a279a6f50b9fbae3",
+      "summary": "`docs/workflow-tracing-proposal.md` documents workflow tracing’s design goals, existing infrastructure, and proposed data model; it has no exported functions or classes and serves as a design reference.",
+      "lines": 136
+    },
+    "docs/validation.md": {
+      "hash": "37dc55e58446b6b7e063bd9ce949e45fc1fe3eb8d9daadebbde78b338f25b865",
+      "summary": "Documents local validation results for the router, Antigravity adapter, quota service, and Observatory, including tests, typechecks, builds, and audit findings. It records test-safety details and handoff context; it exports no functions or classes.",
+      "lines": 261
+    },
+    "package.json": {
+      "hash": "ff7364721bc01bd22e8b0a1225bdbca1b4023c9c0cd0975e56276c0ccd26799e",
+      "summary": "The `package.json` file defines project metadata, dependencies, and scripts for the `opencode-model-router` project. It configures the Bun runtime, TypeScript environment, and CLI entry points.",
+      "lines": 25
+    },
+    "plugin/guard.ts": {
+      "hash": "c3ec90c061327db99ddceec24ef71cb21e58bbe0107d3b379189292073279a0f",
+      "summary": "This file intercepts and validates AI SDK language model calls against active router executions. It exports `guardLanguage` to wrap and secure `LanguageModelV3` instances within the project.",
+      "lines": 83
+    },
+    "plugin/index.ts": {
+      "hash": "6513c8b48fd9e927051655ac2a459018aca996dee928fdbb578b55993286bd4e",
+      "summary": "This file defines the core OpenCode plugin entry point, exporting `routingSchema` and `subagentInput` to configure and register plugin workflows and routing parameters.",
+      "lines": 255
+    },
+    "scripts/bind-credentials.ts": {
+      "hash": "fc32fbf5f8792167b4db095400d73fbf48611da245678211be7db7fe041d74ea",
+      "summary": "This script binds approved OpenCode credentials to project configurations by updating `credentialBindings` with verified IDs and fingerprints. It serves as an administrative setup utility to secure local development credentials.",
+      "lines": 26
+    },
+    "plugin/workflow.ts": {
+      "hash": "c235a0c975d9a16417e9f7b6d3f23910e1bc35d1157157de21ffe647866dfe0a",
+      "summary": "`workflow.ts` defines `workflowTools`, which registers the `workflow_annotate` tool to asynchronously send workflow events to the router client. It integrates LLM agent sessions with backend workflows.",
+      "lines": 74
+    },
+    "scripts/concurrency-probe.ts": {
+      "hash": "ee533d7274e957c910dd0d734df876b627b08b95be392f4a223e59a124067285",
+      "summary": "`scripts/concurrency-probe.ts` is a local-only CLI script that probes execution concurrency by running test tasks across specified hierarchy levels. It acts as an internal diagnostic tool bypassing standard MCP routing.",
+      "lines": 243
+    }
+  }
+}

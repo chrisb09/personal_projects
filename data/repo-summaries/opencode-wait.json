@@ -1,0 +1,73 @@
+{
+  "repository": "opencode-wait",
+  "updatedAt": "2026-11-01T08:58:23.700Z",
+  "filesCount": 12,
+  "directories": {
+    "docs": "Contains 1 module files (publishing.md)",
+    ".github/workflows": "Contains 1 module files (release.yml)",
+    "src": "Contains 4 module files (file-watcher.ts, index.ts, wake-server.ts, wait-tool.ts)",
+    "test": "Contains 3 module files (plugin-entry.test.js, wait-tool.test.js, wait-features.test.js)"
+  },
+  "files": {
+    "README.md": {
+      "hash": "ca0d72ba93a48578191189cea674a51170da6350868d6e8b005cf33685f80d5d",
+      "summary": "`README.md` documents `opencode-wait`, a zero-CPU OpenCode plugin that enables agents to wait for HTTP signals, Slurm jobs, or sentinel files. It serves as the primary project guide and usage manual.",
+      "lines": 129
+    },
+    "docs/publishing.md": {
+      "hash": "dcdd6370ef7d69d4aabc328a87f93d9c6f36947344c4538fcc7734518b6a5247",
+      "summary": "This documentation file provides instructions for manually publishing the `opencode-wait` package to npm and configuring automated releases via GitHub Actions. It serves as the project's publishing guide.",
+      "lines": 37
+    },
+    ".github/workflows/release.yml": {
+      "hash": "4a693375d347d079e8578affd9eef91116360a30ba8da9589759c201050241c7",
+      "summary": "This GitHub Actions workflow automates the npm publishing process via OIDC trusted publishing whenever a new release is published.",
+      "lines": 60
+    },
+    "src/file-watcher.ts": {
+      "hash": "24b083897e7ce7a5eccbeb4bafb1965edf72af8629380bb03abaac0e0fb412bb",
+      "summary": "This file polls the filesystem for a specific sentinel file using `waitForFileSentinel`. It manages file reading and deletion to facilitate asynchronous process synchronization within the project.",
+      "lines": 79
+    },
+    "src/index.ts": {
+      "hash": "a99f70b11da98bc505f34bd749d7d374d73c463575b25861cf5bf5fdec24e8de",
+      "summary": "This file serves as the main plugin entry point, exporting `createWaitPlugin` and `WaitPlugin` to register the wait tool and handle chat message subscriptions.",
+      "lines": 67
+    },
+    "package.json": {
+      "hash": "245507405c82ad01a9c114ed186b09eaa74058e7c63b13095c404d64a51cbbdc",
+      "summary": "This `package.json` configures the `opencode-wait` plugin’s package exports (`index` and `wait-tool`), build and test scripts, dependencies, and publishing metadata for OpenCode integration.",
+      "lines": 56
+    },
+    "test/plugin-entry.test.js": {
+      "hash": "d1fcfa43a79b34ea6290fec34a85a7527290b36e1e7229b23b5068e985761191",
+      "summary": "This file tests the compiled plugin entry point, validating `WaitPlugin`, `WaitPlugin`, `createWaitPlugin`, and `createWaitTool` to ensure proper tool registration and execution.",
+      "lines": 123
+    },
+    "src/wake-server.ts": {
+      "hash": "0038be9b8d1518b3d5f3a230ebb66cb31cbf3634f29ec791aa065d6058bfbe5b",
+      "summary": "`src/wake-server.ts` implements a lightweight HTTP server for session-based wake notifications and authentication. It exports `computeSessionPort`, `WakeServerOptions`, and `WakeServerResult` to manage inter-process signaling.",
+      "lines": 256
+    },
+    "src/wait-tool.ts": {
+      "hash": "083fc337c7104cc5096fdd25be7c3970216e47419513da8f8bd31d929d68ed42",
+      "summary": "Source module implementing wait-tool.ts logic.",
+      "lines": 565
+    },
+    "tsconfig.build.json": {
+      "hash": "7011ff0c4acc878026d4a309b3a795ca746e2a4f51db5004a1c88a3e93e66e73",
+      "summary": "This configuration file extends `tsconfig.json` to compile the `src` directory for production builds, specifically generating type declaration files (`.d.ts`). It has no exports and serves as the dedicated TypeScript build configuration for the project.",
+      "lines": 12
+    },
+    "test/wait-tool.test.js": {
+      "hash": "c3db6616ff81e30b12f0b7be72022eeba40906f613f7b67643b00f2530f5b273",
+      "summary": "This file contains unit tests for `createWaitTool`, verifying its execution logic, input validation, and timing behavior to ensure the tool correctly handles background wait operations.",
+      "lines": 307
+    },
+    "test/wait-features.test.js": {
+      "hash": "35f5469aadbaa3f2244befc7ffe814551f4eeb021601fa6ca2525b2a74371048",
+      "summary": "This test file validates the `createWaitTool` and `createWaitPlugin` functionality by simulating a wait execution and verifying successful wake-up via HTTP requests.",
+      "lines": 209
+    }
+  }
+}

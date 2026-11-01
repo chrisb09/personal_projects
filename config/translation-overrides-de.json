@@ -208,6 +208,157 @@
           "relation": "Weiteres OpenCode-Provider-Plugin"
         }
       ]
+    },
+    "opencode-observatory": {
+      "name": "OpenCode Observatory",
+      "tagline": "Selbst gehostete, metadatenbasierte Telemetrie und Analyse für OpenCode",
+      "description": "Ein selbst gehosteter Observability-Stack für OpenCode. Ein Plugin erfasst Metadaten zu Tokens, Modellen, Latenz, Werkzeugen und Fehlern; ein Collector speichert sie in PostgreSQL; ein React-Dashboard und ein schreibgeschützter MCP-Server machen die Nutzung über mehrere Rechner und Mandanten hinweg sichtbar. Prompt-Texte, Antworten, Code und Provider-Zugangsdaten bleiben standardmäßig ausgeschlossen; eine optionale Transkript-Erfassung wird bereits clientseitig bereinigt, bevor Daten den Prozess verlassen.\n\nDer Server isoliert Mandanten über PostgreSQL Row-Level Security, pflegt stündliche Rollups über Statement-Trigger, nutzt eine Offline-SQLite-Outbox im Plugin und importiert historische Sitzungen ohne Doppelzählung. Die MCP-Oberfläche bietet Nutzungsübersichten, Zeitreihen, Modellvergleiche, Sitzungstranskripte und einen bitemporalen Wissensspeicher aus zusammengefassten Sitzungen.",
+      "purpose": "Sichtbar machen, wohin Tokens, Zeit und Kosten über mehrere OpenCode-Rechner und -Konten fließen, ohne Prompts, Code oder Provider-Zugangsdaten an Dritte zu übertragen.",
+      "strengths": [
+        "Erfasst standardmäßig nur Metadaten und bereinigt optionale Transkripte vor der Speicherung um Tokens, Schlüssel und .env-Zuweisungen",
+        "Isoliert jede Mandantenabfrage über PostgreSQL Row-Level Security",
+        "Nutzt eine dauerhafte SQLite-Outbox, damit Telemetrie Inferenz-Streams nie blockiert oder verlangsamt",
+        "Normalisiert Provider-Tokenzähler und weist Prompt-Cache-Wiederverwendung sowie geschätzte API-Einsparungen aus",
+        "Kombiniert stündliche Rollups mit exakten Randfakten für Diagramme von einer Stunde bis zu mehreren Monaten",
+        "Stellt Abfragen zu Nutzung, Sitzungen, Fehlern und Wissensspeicher über schreibgeschützte MCP-Werkzeuge bereit",
+        "Importiert historische Sitzungen mit transaktionalen Checkpoints und ohne Doppelzählung",
+        "Liefert ein Docker-Compose-Deployment mit persistenten PostgreSQL- und Vault-Volumes"
+      ],
+      "limitations": [
+        "Selbst gehostet und OpenCode-spezifisch; es gibt keine öffentliche Demo-Instanz",
+        "Benötigt PostgreSQL sowie separat gebaute Plugin- und Web-/Server-Komponenten",
+        "Transkript-Erfassung und modellgestützte Zusammenfassungen sind optional und von verfügbaren Modellen abhängig",
+        "Preiskataloge müssen gepflegt werden, wenn Anbieter Modelle veröffentlichen oder umbenennen",
+        "Die Mandantentrennung hängt von einem korrekt konfigurierten Reverse-Proxy und Deployment ab"
+      ],
+      "roadmap": [
+        "Die Preisabdeckung der Anbieter erweitern und Modelle ohne Marktpreis prüfen",
+        "Multi-Tenant-Deployment, Backups und Reverse-Proxy-Standards weiter härten",
+        "Qualität der Sitzungserinnerung und der Vault-Extraktion verbessern",
+        "Weitere Deployment-Beispiele für LAN- und Hosting-Setups ergänzen"
+      ],
+      "relatedProjects": [
+        {
+          "index": 0,
+          "relation": "Leitet Subagenten-Aufgaben weiter, während Observatory die entstehende Nutzung erfasst"
+        },
+        {
+          "index": 1,
+          "relation": "Anbieter-Dashboard für Kontingente und Guthaben; ergänzt die Sitzungstelemetrie"
+        }
+      ]
+    },
+    "opencode-model-router": {
+      "name": "OpenCode Model Router",
+      "tagline": "Kontingentbewusstes Subagenten-Routing und lokales Workflow-Tracing für OpenCode",
+      "description": "Ein lokaler, deterministischer Router für OpenCode 2.x. Er umschließt das bestehende subagent-Werkzeug und wählt pro Aufruf ein Modell aus sieben spezialisierten Rollen, vier Schwierigkeitsstufen, Wichtigkeit, Kontextgröße und Modalität aus; Plan und Build behalten dabei ihre normalen Primärmodelle. Die Kontingente stammen aus dem bestehenden AI-Usage-Dienst statt aus einem zweiten Provider-Poller.\n\nDer Router führt dauerhafte SQLite-Reservierungen, begrenzt die Parallelität pro Konto und global, setzt Cooldowns und schlägt geschlossen fehl, wenn Kontingent-, Identitäts- oder Kontextprüfungen nicht erfüllt werden können. Zusätzlich bietet er eine authentifizierte lokale API, schreibgeschützte MCP-Werkzeuge, einen systemd-User-Dienst und Workflow-Tracing mit redigierten JSON-/Mermaid-Exporten sowie einer statischen HTML-/SVG-Zeitleiste. Kostenpflichtige Opus- und Kimi-Aufrufe bleiben hinter einem separaten Freigabemechanismus gesperrt.",
+      "purpose": "Arbeit über mehrere Modellanbieter delegieren, ohne Abonnement-Kontingente zu überziehen, Zugangsdaten offenzulegen oder das Primärmodell des Nutzers stillschweigend zu ändern.",
+      "strengths": [
+        "Wählt Modelle pro Subagenten-Aufruf anhand von Rolle, Stufe, Wichtigkeit, Kontextgröße und Modalität",
+        "Prüft jedes anwendbare Kontingentfenster separat und schlägt bei unbekannten, veralteten oder erschöpften Kontingenten geschlossen fehl",
+        "Nutzt dauerhafte SQLite-Reservierungen, Parallelitätsgrenzen pro Konto, Cooldowns und ein globales Limit",
+        "Verwendet den AI-Usage-Collector als maßgebliche Kontingentquelle, statt Provider doppelt abzufragen",
+        "Erzwingt die Unabhängigkeit der Critic-Modellfamilie und die Herkunft aus der ursprünglichen Sitzung",
+        "Bietet schreibgeschützte MCP-Werkzeuge sowie redigierte JSON-, Mermaid- und statische Zeitleisten-Exporte",
+        "Installiert additiv und enthält einen getesteten Deaktivierungs- und Rollback-Pfad"
+      ],
+      "limitations": [
+        "Spezifisch für OpenCode 2.x; die Laufzeitvalidierung erfolgte mit OpenCode 2.2.1",
+        "Das SQLite-Ledger koordiniert verwaltete Aufgaben auf einem Rechner, nicht in einem Cluster",
+        "Abonnement-Reservierungen sind geschätzte Prozentpunkte, keine exakte Tokenkapazität",
+        "Kostenpflichtige Opus- und Kimi-Aufrufe sind in dieser Version absichtlich gesperrt",
+        "Benötigt den AI-Usage-Dienst für frische Kontingentbeobachtungen"
+      ],
+      "roadmap": [
+        "Einen vertrauenswürdigen Freigabe- und Geldreservierungsmechanismus für kostenpflichtige Modelle ergänzen",
+        "Die Tokenizer-Integration verbessern, um konservative Eingabeablehnungen zu reduzieren",
+        "Gemessene Leistungsdaten über kurze Diagnose-Probes hinaus erweitern",
+        "Die Koordination über das lokale Single-Host-Ledger hinaus härten"
+      ],
+      "relatedProjects": [
+        {
+          "index": 0,
+          "relation": "Maßgebliche Kontingentquelle für Routing-Entscheidungen"
+        },
+        {
+          "index": 1,
+          "relation": "Ergänzende Sitzungstelemetrie und Analyse"
+        }
+      ]
+    },
+    "ai-usage": {
+      "name": "AI Usage",
+      "tagline": "Selbst gehostetes Dashboard für KI-Kontingente und Guthaben mit adaptiver Erfassung",
+      "description": "Ein selbst gehostetes Kontingent-Dashboard und eine JSON-API für KI-Provider-Konten. Collector lesen Daten von Google Antigravity, OpenCode Go, Codex, OneProvider, OpenRouter und Google Cloud Billing; jede Beobachtung wird in SQLite gespeichert; ein React-Dashboard sowie HTTP- und MCP-APIs zeigen verbleibende Kontingente, Reset-Zeiten und API-Guthaben.\n\nDer Scheduler geht in Schritten von 10 Minuten bis 6 Stunden zurück, wenn sich nichts ändert, plant Prüfungen um bekannte Reset-Zeiten und verfolgt den Zustand pro Konto, sodass ein Anbieter nicht die Aktualisierung aller anderen erzwingt. Zum Deployment gehören eine öffentliche, schreibgeschützte Ansicht, Verlaufsdiagramme pro Konto, Filter für ausgeblendete Anbieter, ein Plasma-5-Panel-Widget und Docker-Compose-Paketierung.",
+      "purpose": "Verbleibende Kontingente und API-Guthaben mehrerer KI-Anbieter an einem Ort sehen, ohne jeden Anbieter wiederholt abzufragen oder Zugangsdaten offenzulegen.",
+      "strengths": [
+        "Erfasst Kontingent- und Guthabendaten aus sechs Anbieterquellen, einschließlich Google-Cloud-Billing-Exporten",
+        "Passt Aktualisierungsintervalle zwischen 10 Minuten und 6 Stunden an und plant um bekannte Resets",
+        "Plant jedes Konto unabhängig und liefert zwischengespeicherte Daten, während im Hintergrund aktualisiert wird",
+        "Speichert jede erfolgreiche Beobachtung in SQLite mit Verlaufsdiagrammen pro Konto und Kontingent",
+        "Fasst Kontingentbalken nach Typ zusammen und markiert die durchschnittliche Restzeit",
+        "Bietet eine öffentliche schreibgeschützte Ansicht, einen MCP-Endpunkt und ein natives Plasma-5-Panel-Widget",
+        "Hält Provider-Dateien schreibgeschützt, außer der atomaren Codex-Token-Rotation"
+      ],
+      "limitations": [
+        "Provider-Collector hängen von undokumentierten oder anbieterspezifischen Endpunkten ab und können brechen",
+        "Benötigt lokale Zugangsdateien und einen Reverse-Proxy für die Authentifizierung; die App hat keine eigene Anmeldung",
+        "Die öffentliche Ansicht zeigt maskierte Kontobezeichnungen und Kontingentdaten, sofern Anbieter nicht ausgeblendet werden",
+        "Schätzungen für Google-Cloud-Guthaben hängen von verzögerten BigQuery-Billing-Exporten ab",
+        "Im Repository liegt noch keine Lizenzdatei"
+      ],
+      "roadmap": [
+        "Provider-Collector aktuell halten, wenn sich Kontingent-Endpunkte ändern",
+        "Langzeitverlauf und Verfolgung ablaufender Guthaben verbessern",
+        "Deployment- und Authentifizierungsbeispiele für Mehrbenutzer-Setups erweitern",
+        "Weitere native Desktop-Integrationen neben dem Plasma-5-Widget ergänzen"
+      ],
+      "relatedProjects": [
+        {
+          "index": 0,
+          "relation": "Primärer API-Konsument für Routing-Entscheidungen"
+        },
+        {
+          "index": 1,
+          "relation": "Telemetrie auf Sitzungsebene; ergänzt die Kontingentverfolgung der Anbieter"
+        }
+      ]
+    },
+    "opencode-wait": {
+      "name": "opencode-wait",
+      "tagline": "Warten ohne CPU-Last für OpenCode-Agenten auf HPC-Login-Knoten",
+      "description": "Ein gepflegter Fork des opencode-wait-Plugins, mit dem OpenCode-Agenten pausieren können, ohne CPU zu verbrennen. Er kombiniert einen CPU-freien HTTP-Listener, die Überwachung von Sentinel-Dateien und Sleeps auf Kernel-Ebene, damit ein Agent auf einem HPC-Login-Knoten auf einen Slurm-Job, ein entferntes Fertigstellungssignal oder eine neue Benutzernachricht warten kann, ohne cgroup- oder Runaway-Prozess-Watchdogs auszulösen.\n\nDer Fork ergänzt HTTP-Wake-up mit Token-Authentifizierung und Payload-Rückgabe, Sentinel-Datei-Abschluss mit optionalem Lesen und Löschen des Inhalts, Abbruch über den Abort-Controller, Live-Fortschrittsmetadaten und vorhersehbare Ports pro Sitzung. Das ursprüngliche zeitbasierte Plugin bleibt erhalten; der Fork wird als v0.2.0 veröffentlicht.",
+      "purpose": "Codierende Agenten auf lang laufende externe Jobs warten lassen, ohne Polling, CPU-Last oder das Risiko, von Login-Knoten-Watchdogs beendet zu werden.",
+      "strengths": [
+        "Verbraucht beim Warten 0,00 % CPU durch epoll/inotify und echten Kernel-Sleep",
+        "Öffnet einen vorhersehbaren Port pro Sitzung (40000 + hash(sessionID) % 4096) mit Token-Authentifizierung",
+        "Nimmt einen einfachen curl-Wake-up vom Compute-Knoten an und gibt Exit-Codes oder Ergebnisse an das Modell zurück",
+        "Überwacht Sentinel-Dateien auf NFS/Lustre und kann deren Inhalt bei Abschluss lesen oder löschen",
+        "Bricht das Warten über den Abort-Controller von OpenCode sofort ab und gibt Sockets frei",
+        "Zeigt einen Live-Fortschrittsbalken, verstrichene und verbleibende Zeit sowie den gebundenen Port",
+        "Behält das zeitbasierte Warten des Upstream-Projekts bei und ergänzt die neuen Aufwachpfade"
+      ],
+      "limitations": [
+        "Linux-spezifisch: setzt epoll/inotify voraus und läuft nicht unverändert unter macOS oder Windows",
+        "HTTP-Wake-up erfordert Netzwerkerreichbarkeit vom Compute-Knoten zum Login-Knoten",
+        "Das Repository enthält Upstream-Historie und wird als Fork gepflegt, nicht als Neuimplementierung",
+        "Es gibt keine separate Oberfläche außer der Metadatenleiste von OpenCode"
+      ],
+      "roadmap": [
+        "Den Fork mit Upstream-Releases synchron halten",
+        "Weitere Abschluss-Transporte für Batch-Systeme neben HTTP und Sentinel-Dateien ergänzen",
+        "Die Portabilität über Linux hinaus verbessern, soweit die zugrunde liegenden Primitive es zulassen"
+      ],
+      "relatedProjects": [
+        {
+          "index": 0,
+          "relation": "Upstream-Projekt, das dieser Fork erweitert"
+        },
+        {
+          "index": 1,
+          "relation": "HPC-Workflow-Kontext für lang laufende Slurm-Jobs"
+        }
+      ]
     }
   }
 }

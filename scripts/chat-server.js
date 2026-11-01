@@ -995,9 +995,10 @@ function getProjectsSummary() {
               year: data.year || '',
               tagline: data.tagline || '',
               description: (data.description || '').slice(0, 200),
-              techStack: (data.techStack || []).slice(0, 15),
+              techStack: (data.technologies || data.techStack || []).slice(0, 15),
               status: data.status || '',
               aiUsage: data.aiUsage || '',
+              aiUtilization: data.aiUtilization || '',
               portfolioUrl: getProjectPortfolioUrl(data.id || ent.name),
             });
           } catch {

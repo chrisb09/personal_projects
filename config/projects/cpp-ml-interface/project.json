@@ -86,6 +86,31 @@
       "name": "smartsim_playground",
       "relation": "Workspace repository containing integration test suites and playgrounds",
       "url": "https://github.com/chrisb09/smartsim_playground"
+    },
+    {
+      "name": "terrain_solver",
+      "relation": "MPI terrain mini-app used for solver/ML coupling experiments",
+      "url": "https://github.com/chrisb09/terrain_solver"
+    },
+    {
+      "name": "affinity_test",
+      "relation": "CPU/GPU affinity and interconnect benchmark suite",
+      "url": "https://github.com/chrisb09/affinity_test"
+    },
+    {
+      "name": "aix_p2p_benchmark",
+      "relation": "AIxeleratorService communication and controller benchmark",
+      "url": "https://github.com/chrisb09/aix_p2p_benchmark"
+    },
+    {
+      "name": "key_loadbalancing",
+      "relation": "Key-based load-balancing experiments for coupled inference",
+      "url": "https://github.com/chrisb09/key_loadbalancing"
+    },
+    {
+      "name": "module_test",
+      "relation": "Module resolver test harness for the CPP-ML-Interface rewrite",
+      "url": "https://github.com/chrisb09/module_test"
     }
   ]
 }

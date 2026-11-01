@@ -28,7 +28,7 @@
   "roadmap": [],
   "installation": "Add \"opencode-oneprovider\" to the plugin array in your OpenCode configuration, then run `opencode auth login` and select OneProvider.",
   "repos": [
-    { "name": "opencode-oneprovider", "url": "https://github.com/chrisb09/opencode-oneprovider", "type": "github" }
+    { "name": "opencode-oneprovider", "url": "https://github.com/chrisb09/opencode-oneprovider", "type": "github", "ignoreDirectories": ["data", "plots"] }
   ],
   "mirrors": [],
   "screenshots": [],

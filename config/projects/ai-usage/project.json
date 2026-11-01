@@ -1,0 +1,85 @@
+{
+  "id": "ai-usage",
+  "name": "AI Usage",
+  "tagline": "Self-hosted AI quota and credit dashboard with adaptive collection",
+  "year": "2026",
+  "category": "fullstack",
+  "status": "active",
+  "projectType": "software-project",
+  "role": "main-author",
+  "sourceType": "open-source",
+  "aiUsage": "full",
+  "aiUtilization": "no-ai",
+  "description": "A self-hosted quota dashboard and JSON API for AI provider accounts. Collectors read Google Antigravity, OpenCode Go, Codex, OneProvider, OpenRouter and Google Cloud billing data; every observation is stored in SQLite; and a React dashboard plus HTTP and MCP APIs expose remaining quota, reset times and API credit balances.\n\nThe scheduler backs off from 10 minutes to 6 hours when nothing changes, schedules checks around known reset times, and tracks state per account so one provider does not force a refresh of every other provider. The deployment also includes a public read-only view, per-account history charts, hidden-provider filtering, a Plasma 5 panel widget, and Docker Compose packaging.",
+  "purpose": "To see remaining quota and API credit across several AI providers in one place without repeatedly polling every provider or exposing credentials.",
+  "technologies": [
+    "TypeScript",
+    "React",
+    "Fastify",
+    "SQLite",
+    "Docker Compose",
+    "QML / Plasma 5",
+    "MCP"
+  ],
+  "dependencies": [
+    "Node.js 22.5+",
+    "Fastify 5",
+    "better-sqlite3",
+    "React 19",
+    "Recharts",
+    "Provider credential files"
+  ],
+  "expertise": [
+    "Provider API Integration",
+    "Adaptive Scheduling & Backoff",
+    "Time-Series Storage",
+    "Dashboard Design",
+    "KDE Plasma Widgets",
+    "Credential Isolation"
+  ],
+  "strengths": [
+    "Collects quota and credit data from six provider sources, including Google Cloud billing exports",
+    "Adapts refresh intervals from 10 minutes to 6 hours and schedules around known resets",
+    "Schedules each account independently and serves cached data while refreshing in the background",
+    "Stores every successful observation in SQLite with per-account and per-quota history charts",
+    "Pools quota bars by type and marks the average time remaining",
+    "Ships a public read-only view, an MCP endpoint and a native Plasma 5 panel widget",
+    "Keeps provider files read-only except for atomic Codex token rotation"
+  ],
+  "limitations": [
+    "Provider collectors depend on undocumented or provider-specific endpoints and can break",
+    "Requires local credential files plus a reverse proxy for authentication; the app has no built-in login",
+    "The public view exposes masked account labels and quota data unless providers are hidden",
+    "Google Cloud credit estimates depend on delayed BigQuery billing exports",
+    "No license file is present in the repository yet"
+  ],
+  "installation": "git clone https://github.com/chrisb09/ai_usage.git\ncd ai_usage\ncp .env.example .env\nmkdir -p data secrets/opencode secrets/opencode-data secrets/codex\n# Populate the credential directories and set AI_USAGE_UID / AI_USAGE_GID\ndocker compose up -d --build\n\n# Open http://127.0.0.1:7694",
+  "usage": "# Read cached usage\nget /api/usage\n\n# Force a manual check\nPOST /api/refresh\n\n# Use the MCP endpoint from OpenCode\n{\n  \"mcp\": {\n    \"servers\": {\n      \"ai-usage\": {\n        \"type\": \"remote\",\n        \"url\": \"https://usage.example.com/mcp\",\n        \"headers\": { \"Authorization\": \"Basic {env:AI_USAGE_BASIC}\" }\n      }\n    }\n  }\n}",
+  "roadmap": [
+    "Keep provider collectors current as quota endpoints change",
+    "Improve long-term history and credit-expiry tracking",
+    "Expand deployment and authentication examples for multi-user setups",
+    "Add more native desktop integrations beyond the Plasma 5 widget"
+  ],
+  "demoUrl": "https://usage.christian-f-brinkmann.de/public",
+  "repos": [
+    {
+      "name": "ai_usage",
+      "url": "https://github.com/chrisb09/ai_usage",
+      "type": "github"
+    }
+  ],
+  "mirrors": [],
+  "relatedProjects": [
+    {
+      "name": "OpenCode Model Router",
+      "relation": "Primary API consumer for routing decisions",
+      "projectId": "opencode-model-router"
+    },
+    {
+      "name": "OpenCode Observatory",
+      "relation": "Session-level telemetry; complementary to provider quota tracking",
+      "projectId": "opencode-observatory"
+    }
+  ]
+}

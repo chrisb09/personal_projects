@@ -432,5 +432,45 @@
     "directories": [
       "docker/docker_client"
     ]
+  },
+  "ai_usage": {
+    "filesCount": 12,
+    "updatedAt": "2026-11-01T08:57:53.629Z",
+    "directories": [
+      "integrations/plasma5",
+      "integrations/plasma5/ai-usage",
+      "docs",
+      "integrations/plasma5/ai-usage/scripts",
+      "integrations/plasma5/ai-usage/contents/code",
+      "src"
+    ]
+  },
+  "opencode-model-router": {
+    "filesCount": 12,
+    "updatedAt": "2026-11-01T08:58:02.349Z",
+    "directories": [
+      "config",
+      "docs",
+      "plugin",
+      "scripts"
+    ]
+  },
+  "opencode-observatory": {
+    "filesCount": 12,
+    "updatedAt": "2026-11-01T08:58:05.355Z",
+    "directories": [
+      "apps/server",
+      "apps/server/src"
+    ]
+  },
+  "opencode-wait": {
+    "filesCount": 12,
+    "updatedAt": "2026-11-01T08:58:23.700Z",
+    "directories": [
+      "docs",
+      ".github/workflows",
+      "src",
+      "test"
+    ]
   }
 }
