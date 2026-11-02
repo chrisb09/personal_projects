@@ -1508,7 +1508,8 @@ export const projects: Project[] = [
       }
     ],
     "mirrors": [],
-    "screenshots": []
+    "screenshots": [],
+    "logo": "/images/projects/opencode-antigravity-auth/logo.webp"
   },
   {
     "id": "opencode-kiconnect",
@@ -1579,7 +1580,8 @@ export const projects: Project[] = [
         "relation": "Another OpenCode provider plugin",
         "projectId": "opencode-oneprovider"
       }
-    ]
+    ],
+    "logo": "/images/projects/opencode-kiconnect/logo.webp"
   },
   {
     "id": "opencode-model-router",
@@ -1825,7 +1827,8 @@ export const projects: Project[] = [
         "relation": "Another OpenCode provider plugin",
         "projectId": "opencode-kiconnect"
       }
-    ]
+    ],
+    "logo": "/images/projects/opencode-oneprovider/logo.webp"
   },
   {
     "id": "opencode-wait",
