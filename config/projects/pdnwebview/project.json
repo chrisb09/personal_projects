@@ -10,18 +10,20 @@
   "sourceType": "open-source",
   "aiUsage": "none",
   "aiUtilization": "no-ai",
-  "description": "A web viewer for Paint.NET .pdn files. A Python conversion step prepares the files; the browser view uses plain JavaScript, HTML and CSS.",
-  "purpose": "To make Paint.net project files accessible and shareable on the web, enabling artists to showcase their work and collaborate without requiring everyone to have Paint.net installed.",
+  "description": "Static browser viewer for Paint.NET .pdn projects. The offline pdnexport CLI flattens each file into a full preview, per-layer PNGs, hit-test masks and JSON metadata; the frontend renders those static assets with plain JavaScript, HTML, CSS and WebGL. No uploads and no server-side processing at runtime.",
+  "purpose": "To make Paint.NET project files viewable on the web without requiring viewers to install Paint.NET.",
   "technologies": [
     "JavaScript",
     "HTML",
     "CSS",
+    "WebGL",
     "Python"
   ],
   "dependencies": [
-    "pdnexport (custom tool)",
-    "pypdn (Paint.net format parser library)",
-    "Pillow"
+    "pdnexport (offline CLI exporter)",
+    "pypdn (Paint.NET format parser)",
+    "Pillow",
+    "Canvas2DtoWebGL (WebGL canvas emulation)"
   ],
   "expertise": [
     "Image Processing",
@@ -30,27 +32,26 @@
     "Frontend Design"
   ],
   "strengths": [
-    "Highly optimized vanilla implementation avoiding bloated JavaScript frameworks",
-    "Custom backend conversion pipeline (pdnexport) for rapid file processing",
-    "Clean, fast rendering of complex, multi-layered image projects in the browser"
+    "Static hosting with no runtime backend or database",
+    "Offline pdnexport pipeline for repeatable, cached exports",
+    "Vanilla JavaScript/WebGL renderer with layer visibility, zoom and pan"
   ],
   "limitations": [
     "Read-only (no editing capabilities)",
-    "Requires server-side processing for conversion",
-    "Limited to supported Paint.net features",
-    "Large files may take time to process"
+    "Requires a separate offline export step before a project can be viewed",
+    "Export is CPU- and memory-intensive for large multi-layer files",
+    "Layer blend modes are stored but rendered as normal",
+    "Limited to Paint.NET files supported by pypdn"
   ],
-  "installation": "# Clone the repository\ngit clone https://github.com/yourusername/pdnwebview.git\ncd pdnwebview\n\n# Install dependencies\npip install -r requirements.txt\n\n# Run the application\npython app.py",
-  "usage": "1. Upload your .pdn file through the web interface\n2. The server processes the file using pdnexport\n3. View the rendered project in your browser\n4. Share the generated URL with others\n\n// Or use the API directly\ncurl -X POST -F \"file=@project.pdn\" https://your-server.com/api/view",
+  "installation": "# 1. Viewer + WebGL submodule\ngit clone --recurse-submodules \\\n  https://github.com/chrisb09/pdnwebview.git\ncd pdnwebview\n\n# Already cloned without submodules?\ngit submodule update --init --recursive\n\n# 2. Offline exporter (not needed at runtime)\ngit clone https://gitlab.com/christianbrinkmann/pdnexport.git ../pdnexport\npython3 -m venv ../pdnexport/.venv\n../pdnexport/.venv/bin/pip install -r ../pdnexport/requirements.txt\n\n# 3. Local preview with the bundled test project\npython3 -m http.server 8000\n# open http://localhost:8000/?id=testimage",
+  "usage": "# Export a .pdn project (creates data/<name>/)\n../pdnexport/.venv/bin/python ../pdnexport/pdnexport.py \\\n  artwork.pdn data\n\n# Or export every .pdn in a folder\n../pdnexport/.venv/bin/python ../pdnexport/pdnexport.py \\\n  ~/paint-projects data --folder\n\n# Open one or more projects (id = exported folder name)\nhttp://localhost:8000/?id=artwork\nhttp://localhost:8000/?id=artwork&id=logo\n\n# Embed in another page\n<iframe src=\"https://example.com/paint/?id=artwork\" \\\n  style=\"width:1280px;height:720px;border:0\"></iframe>\n\n# Production: copy the viewer and data/ to any static webroot.\n# No Python/Node runtime is needed; there is no upload or API.",
   "roadmap": [
-    "Add layer visibility toggles",
     "Support for animation playback",
-    "Implement zoom and pan controls",
-    "Add export to PNG/JPEG options",
-    "Create browser extension for quick viewing",
-    "Support for newer Paint.net file formats"
+    "Create a browser extension for quick viewing",
+    "Support newer Paint.net file formats as pypdn adds them",
+    "Reproduce Paint.NET layer blend modes"
   ],
-  "demoUrl": "https://christian-f-brinkmann.de/pdn",
+  "demoUrl": "https://christian-f-brinkmann.de/paint/",
   "repos": [
     {
       "name": "pdnwebview",

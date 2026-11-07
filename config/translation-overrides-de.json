@@ -140,7 +140,26 @@
       "description": "Open-Source-Beitrag zu JDA-Chewtils, einer Java-Erweiterungsbibliothek für Discord-Bots. Beinhaltet Kompatibilitätspatches, Aktualisierungen des Event-Handlings und API-Anpassungen für JDA 6.1.1."
     },
     "pdnwebview": {
-      "description": "Ein Web-Viewer für Paint.NET-Dateien im .pdn-Format. Eine Python-Konvertierung bereitet die Dateien vor; die Browseransicht besteht aus JavaScript, HTML und CSS ohne Frontend-Framework."
+      "description": "Statischer Browser-Viewer für Paint.NET-Projekte im .pdn-Format. Das Offline-CLI pdnexport erzeugt eine Gesamtvorschau, Ebenen-PNGs, Hit-Test-Masken und JSON-Metadaten; die Oberfläche rendert diese statischen Dateien mit reinem JavaScript, HTML, CSS und WebGL. Zur Laufzeit gibt es keine Uploads und keine serverseitige Verarbeitung.",
+      "purpose": "Paint.NET-Projektdateien im Web anzeigen, ohne dass Betrachter Paint.NET installieren müssen.",
+      "strengths": [
+        "Statisches Hosting ohne Laufzeit-Backend oder Datenbank",
+        "Offline-Pipeline mit pdnexport für wiederholbare, gecachte Exporte",
+        "Vanilla-JavaScript-/WebGL-Renderer mit Ebenensichtbarkeit, Zoom und Pan"
+      ],
+      "limitations": [
+        "Nur lesen (keine Bearbeitungsfunktionen)",
+        "Erfordert einen separaten Offline-Export vor der Anzeige",
+        "Der Export ist bei großen mehrschichtigen Dateien CPU- und speicherintensiv",
+        "Ebenen-Mischmodi werden gespeichert, aber als Normal gerendert",
+        "Beschränkt auf die von pypdn unterstützten Paint.NET-Dateien"
+      ],
+      "roadmap": [
+        "Unterstützung für Animationswiedergabe",
+        "Browser-Erweiterung für die schnelle Ansicht erstellen",
+        "Neuere Paint.NET-Dateiformate unterstützen, sobald pypdn sie liest",
+        "Paint.NET-Ebenen-Mischmodi originalgetreu wiedergeben"
+      ]
     },
     "libretranslate-java": {
       "description": "Java-Client-Bibliothek für LibreTranslate-Instanzen mit Unterstützung für synchrone und asynchrone Übersetzungsanfragen, Modellverwaltung und Spracherkennung. Kontinuierlich gepflegt für Upstream-Kompatibilität.",

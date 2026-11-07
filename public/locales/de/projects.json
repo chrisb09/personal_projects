@@ -48,19 +48,20 @@
   },
   "pdnwebview": {
     "name": "pdnwebview",
-    "tagline": "Web-Viewer für Paint.net-Projektdateien",
-    "description": "Ein Web-Viewer für Paint.NET-Dateien im .pdn-Format. Eine Python-Konvertierung bereitet die Dateien vor; die Browseransicht besteht aus JavaScript, HTML und CSS ohne Frontend-Framework.",
-    "purpose": "Paint.net-Projektdateien im Web zugänglich und teilbar zu machen, damit Künstler ihre Arbeiten präsentieren und zusammenarbeiten können, ohne dass jeder Paint.net installiert haben muss.",
+    "tagline": "Web-Viewer für Paint.NET-Projektdateien",
+    "description": "Statischer Browser-Viewer für Paint.NET-Projekte im .pdn-Format. Das Offline-CLI pdnexport erzeugt eine Gesamtvorschau, Ebenen-PNGs, Hit-Test-Masken und JSON-Metadaten; die Oberfläche rendert diese statischen Dateien mit reinem JavaScript, HTML, CSS und WebGL. Zur Laufzeit gibt es keine Uploads und keine serverseitige Verarbeitung.",
+    "purpose": "Paint.NET-Projektdateien im Web anzeigen, ohne dass Betrachter Paint.NET installieren müssen.",
     "strengths": [
-      "Hervorragend optimierte Vanilla-Implementierung ohne aufgeblähte JavaScript-Frameworks",
-      "Benutzerdefinierte Backend-Konvertierungspipeline (pdnexport) zur schnellen Dateiverarbeitung",
-      "Saubere, schnelle Darstellung komplexer, mehrschichtiger Bildprojekte im Browser"
+      "Statisches Hosting ohne Laufzeit-Backend oder Datenbank",
+      "Offline-Pipeline mit pdnexport für wiederholbare, gecachte Exporte",
+      "Vanilla-JavaScript-/WebGL-Renderer mit Ebenensichtbarkeit, Zoom und Pan"
     ],
     "limitations": [
       "Nur lesen (keine Bearbeitungsfunktionen)",
-      "Erfordert serverseitige Verarbeitung für die Konvertierung",
-      "Beschränkt auf unterstützte Paint.net-Funktionen",
-      "Große Dateien benötigen möglicherweise etwas Zeit für die Verarbeitung"
+      "Erfordert einen separaten Offline-Export vor der Anzeige",
+      "Der Export ist bei großen mehrschichtigen Dateien CPU- und speicherintensiv",
+      "Ebenen-Mischmodi werden gespeichert, aber als Normal gerendert",
+      "Beschränkt auf die von pypdn unterstützten Paint.NET-Dateien"
     ],
     "expertise": [
       "Bildverarbeitung",
@@ -69,12 +70,10 @@
       "Frontend-Design"
     ],
     "roadmap": [
-      "Umschalter für Ebenensichtbarkeit hinzufügen",
       "Unterstützung für Animationswiedergabe",
-      "Zoom- und Schwenksteuerung implementieren",
-      "Optionen für den Export nach PNG/JPEG hinzufügen",
       "Browser-Erweiterung für die schnelle Ansicht erstellen",
-      "Unterstützung für neuere Paint.net-Dateiformate"
+      "Neuere Paint.NET-Dateiformate unterstützen, sobald pypdn sie liest",
+      "Paint.NET-Ebenen-Mischmodi originalgetreu wiedergeben"
     ],
     "relatedProjects": [
       {
@@ -83,7 +82,7 @@
       },
       {
         "index": 1,
-        "relation": "Abhängigkeit von pdnexport für das Parsing von Paint.net-Binärdateien"
+        "relation": "Abhängigkeit von pdnexport für das Parsen von Paint.NET-Binärdaten"
       },
       {
         "index": 2,

@@ -1,6 +1,6 @@
 {
   "repository": "pdnwebview",
-  "updatedAt": "2026-11-01T07:24:27.639Z",
+  "updatedAt": "2026-11-07T11:37:59.573Z",
   "filesCount": 11,
   "directories": {
     "data/testimage": "Contains 7 module files (0.json, 2.json, 3.json, 1.json)",
@@ -13,9 +13,9 @@
       "lines": 22
     },
     "README.md": {
-      "hash": "1ac1262306bce241ec2e9b5052d7a9336b6936143e53e2a737728143df6862b0",
-      "summary": "This `README.md` file documents project setup, installation, and usage instructions for rendering exported `pdnexport` paint.net projects in a web browser.",
-      "lines": 52
+      "hash": "0ffc8890729ecc1ec2e8eb4e58be7a10cf9307af1d5677a45f5ca6fcf2f4b6cf",
+      "summary": "The `README.md` file documents `pdnwebview`, a static browser-based viewer for Paint.NET `.pdn` projects. It serves as the project manual, explaining how to render pre-exported artwork folders using WebGL.",
+      "lines": 181
     },
     "data/testimage/0.json": {
       "hash": "b3ba41288cd6ee81832bb3b0565eb80c3797930993875854bc59d914ce245011",
