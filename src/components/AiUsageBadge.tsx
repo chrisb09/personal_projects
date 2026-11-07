@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { Bot, BrainCircuit, PenLine, Sparkles, Wand2, type LucideIcon } from 'lucide-react';
 import type { AIUsage } from '@/types/project';
 import { aiUsageColors, aiUsageDescriptions, aiUsageLabels } from '@/types/project';
+import { useCanHover } from '@/hooks/use-can-hover';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 
 export const aiUsageIcons: Record<AIUsage, LucideIcon> = {
@@ -19,15 +20,30 @@ export function AiUsageGlyph({ usage, className = 'size-4' }: { usage: AIUsage; 
 
 export function AiUsageBadge({ usage }: { usage: AIUsage }) {
   const { t } = useTranslation();
+  const canHover = useCanHover();
   const label = t(`ai_usage.${usage}`, aiUsageLabels[usage]);
   const description = t(`ai_usage_descriptions.${usage}`, aiUsageDescriptions[usage]);
+
+  // Touch devices: hover tooltips flash and dismiss on tap, and swallowing the
+  // tap would be a dead click. Render a static glyph instead; taps fall through
+  // to the card and open the modal, which shows the same information.
+  if (!canHover) {
+    return (
+      <span
+        role="img"
+        aria-label={label}
+        className={`inline-flex size-8 shrink-0 items-center justify-center rounded-full border ${aiUsageColors[usage]}`}
+      >
+        <AiUsageGlyph usage={usage} />
+      </span>
+    );
+  }
 
   return (
     <Tooltip>
       <TooltipTrigger asChild>
         <button
           type="button"
-          onClick={event => event.stopPropagation()}
           aria-label={`${label}: ${description}`}
           className={`inline-flex size-8 shrink-0 items-center justify-center rounded-full border transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${aiUsageColors[usage]}`}
         >

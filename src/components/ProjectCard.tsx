@@ -5,6 +5,7 @@ import { categoryLabels, roleLabels, statusLabels, languageColors } from '@/type
 import { Card, CardContent } from '@/components/ui/card';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { AiUsageBadge } from '@/components/AiUsageBadge';
+import { useCanHover } from '@/hooks/use-can-hover';
 import { ArrowUpRight, FolderGit2, Image as ImageIcon, Star } from 'lucide-react';
 
 interface ProjectCardProps {
@@ -15,6 +16,7 @@ interface ProjectCardProps {
 
 function LanguageChart({ data, total }: { data: Record<string, number>; total: number }) {
   const { t } = useTranslation();
+  const canHover = useCanHover();
   const entries = Object.entries(data).filter(([, count]) => count > 0).sort((a, b) => b[1] - a[1]);
   const displayed = entries.slice(0, 3);
   const segments = displayed.map(([name, count]) => ({ name, count, color: languageColors[name] || '#8893a3' }));
@@ -22,19 +24,30 @@ function LanguageChart({ data, total }: { data: Record<string, number>; total: n
   if (remainder > 0) segments.push({ name: t('card.other', 'Other'), count: remainder, color: '#8893a3' });
 
   let offset = 0;
+  const chart = (
+    <svg viewBox="0 0 40 40" className="size-10 -rotate-90" aria-hidden="true">
+      <circle cx="20" cy="20" r="15" fill="none" stroke="hsl(var(--muted))" strokeWidth="7" />
+      {segments.map(({ name, count, color }) => {
+        const length = count / total * 94.25;
+        const position = offset;
+        offset += length;
+        return <circle key={name} cx="20" cy="20" r="15" fill="none" stroke={color} strokeWidth="7" strokeDasharray={`${length} ${94.25 - length}`} strokeDashoffset={-position} />;
+      })}
+    </svg>
+  );
+
+  // Touch devices: hover tooltips flash and dismiss on tap, and swallowing the
+  // tap would be a dead click. Render the chart statically; taps fall through
+  // to the card and open the modal, which shows the full breakdown.
+  if (!canHover) {
+    return <span className="inline-flex shrink-0 rounded-full p-1">{chart}</span>;
+  }
+
   return (
     <Tooltip>
       <TooltipTrigger asChild>
         <button type="button" onClick={event => event.stopPropagation()} className="shrink-0 rounded-full p-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" aria-label={t('modal.loc_breakdown', 'Language breakdown')}>
-          <svg viewBox="0 0 40 40" className="size-10 -rotate-90" aria-hidden="true">
-            <circle cx="20" cy="20" r="15" fill="none" stroke="hsl(var(--muted))" strokeWidth="7" />
-            {segments.map(({ name, count, color }) => {
-              const length = count / total * 94.25;
-              const position = offset;
-              offset += length;
-              return <circle key={name} cx="20" cy="20" r="15" fill="none" stroke={color} strokeWidth="7" strokeDasharray={`${length} ${94.25 - length}`} strokeDashoffset={-position} />;
-            })}
-          </svg>
+          {chart}
         </button>
       </TooltipTrigger>
       <TooltipContent side="top" className="min-w-40 space-y-1.5 p-3">
