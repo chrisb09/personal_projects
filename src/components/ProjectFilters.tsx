@@ -33,6 +33,8 @@ import {
   sourceTypeLabels,
   aiUsageLabels,
   aiUtilizationLabels,
+  aiUsageDotColors,
+  aiUtilizationDotColors,
   languageColors,
 } from '@/types/project';
 import {
@@ -550,6 +552,7 @@ export function ProjectFilters({
                               checked={isSelected}
                               onCheckedChange={() => update({ aiUtilization: toggleItem(filters.aiUtilization, id) })}
                             />
+                            <span className={`size-2 shrink-0 rounded-full ${aiUtilizationDotColors[id]}`} aria-hidden="true" />
                             <span>{t(`ai_utilization.${id}`, aiUtilizationLabels[id])}</span>
                           </div>
                           <span className="text-[10px] text-muted-foreground tabular-nums">{count}</span>
@@ -579,6 +582,7 @@ export function ProjectFilters({
                               checked={isSelected}
                               onCheckedChange={() => update({ aiUsage: toggleItem(filters.aiUsage, id) })}
                             />
+                            <span className={`size-2 shrink-0 rounded-full ${aiUsageDotColors[id]}`} aria-hidden="true" />
                             <span>{t(`ai_usage.${id}`, aiUsageLabels[id])}</span>
                           </div>
                           <span className="text-[10px] text-muted-foreground tabular-nums">{count}</span>

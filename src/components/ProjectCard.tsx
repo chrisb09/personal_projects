@@ -4,6 +4,7 @@ import type { Project } from '@/types/project';
 import { categoryLabels, roleLabels, statusLabels, languageColors } from '@/types/project';
 import { Card, CardContent } from '@/components/ui/card';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
+import { AiUsageBadge } from '@/components/AiUsageBadge';
 import { ArrowUpRight, FolderGit2, Image as ImageIcon, Star } from 'lucide-react';
 
 interface ProjectCardProps {
@@ -70,7 +71,10 @@ export function ProjectCard({ project: rawProject, onClick, onMediaClick }: Proj
               <p className="mt-0.5 text-xs text-muted-foreground">{t(`roles.${project.role}`, roleLabels[project.role])} · {project.year}</p>
             </div>
           </div>
-          {Boolean(project.loc?.total && project.loc.byLanguage) && <LanguageChart data={project.loc!.byLanguage!} total={project.loc!.total!} />}
+          <div className="flex shrink-0 items-center gap-1.5">
+            <AiUsageBadge usage={project.aiUsage} />
+            {Boolean(project.loc?.total && project.loc.byLanguage) && <LanguageChart data={project.loc!.byLanguage!} total={project.loc!.total!} />}
+          </div>
         </div>
 
         <p className="line-clamp-3 text-sm leading-relaxed text-card-foreground/85">{project.description}</p>

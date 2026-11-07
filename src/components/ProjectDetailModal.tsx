@@ -10,7 +10,9 @@ import {
   categoryColors, 
   aiUsageLabels, 
   aiUsageDescriptions,
+  aiUsageColors,
   aiUtilizationLabels,
+  aiUtilizationDotColors,
   languageColors,
 } from '@/types/project';
 import {
@@ -21,6 +23,7 @@ import {
 } from '@/components/ui/dialog';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { AiUsageGlyph } from '@/components/AiUsageBadge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Separator } from '@/components/ui/separator';
 import { 
@@ -636,12 +639,20 @@ export function ProjectDetailModal({ project: rawProject, isOpen, onClose, onPro
                     </div>
                     <div className="border-t border-border pt-4">
                       <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">{t('filters.ai_usage', 'AI used in development')}</p>
-                      <p className="mt-1 font-medium">{t(`ai_usage.${project.aiUsage}`, aiUsageLabels[project.aiUsage])}</p>
+                      <div className="mt-1.5 flex items-center gap-2">
+                        <span className={`inline-flex size-6 shrink-0 items-center justify-center rounded-full border ${aiUsageColors[project.aiUsage]}`}>
+                          <AiUsageGlyph usage={project.aiUsage} className="size-3.5" />
+                        </span>
+                        <p className="font-medium">{t(`ai_usage.${project.aiUsage}`, aiUsageLabels[project.aiUsage])}</p>
+                      </div>
                       <p className="mt-1 text-xs leading-relaxed text-muted-foreground">{t(`ai_usage_descriptions.${project.aiUsage}`, aiUsageDescriptions[project.aiUsage])}</p>
                     </div>
                     <div>
                       <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">{t('filters.ai_utilization', 'AI features in project')}</p>
-                      <p className="mt-1 font-medium">{t(`ai_utilization.${project.aiUtilization}`, aiUtilizationLabels[project.aiUtilization])}</p>
+                      <div className="mt-1.5 flex items-center gap-2">
+                        <span className={`size-2.5 shrink-0 rounded-full ${aiUtilizationDotColors[project.aiUtilization]}`} aria-hidden="true" />
+                        <p className="font-medium">{t(`ai_utilization.${project.aiUtilization}`, aiUtilizationLabels[project.aiUtilization])}</p>
+                      </div>
                     </div>
                   </aside>
                 </TabsContent>

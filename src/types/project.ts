@@ -202,18 +202,34 @@ export const sourceTypeColors: Record<ProjectSourceType, string> = {
   'closed-source': 'bg-red-500/10 text-red-600 border-red-500/20 dark:text-red-400',
 };
 
+// Build-time AI involvement: green = human-made, yellow/orange = assisted,
+// red = AI-generated with human supervision, purple = primarily AI-built.
 export const aiUsageColors: Record<AIUsage, string> = {
-  none: 'bg-slate-100 dark:bg-slate-900/40 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-800',
-  minor: 'bg-sky-50 dark:bg-sky-950/30 text-sky-600 dark:text-sky-400 border-sky-200 dark:border-sky-900/50',
-  contributed: 'bg-indigo-50 dark:bg-indigo-950/30 text-indigo-600 dark:text-indigo-400 border-indigo-200 dark:border-indigo-900/50',
-  major: 'bg-violet-50 dark:bg-violet-950/30 text-violet-600 dark:text-violet-400 border-violet-200 dark:border-violet-900/50',
-  full: 'bg-fuchsia-50 dark:bg-fuchsia-950/30 text-fuchsia-600 dark:text-fuchsia-400 border-fuchsia-200 dark:border-fuchsia-900/50',
+  none: 'bg-green-500/10 text-green-700 border-green-500/25 dark:text-green-400 dark:border-green-500/30',
+  minor: 'bg-yellow-500/10 text-yellow-700 border-yellow-500/25 dark:text-yellow-400 dark:border-yellow-500/30',
+  contributed: 'bg-orange-500/10 text-orange-700 border-orange-500/25 dark:text-orange-400 dark:border-orange-500/30',
+  major: 'bg-red-500/10 text-red-700 border-red-500/25 dark:text-red-400 dark:border-red-500/30',
+  full: 'bg-purple-500/10 text-purple-700 border-purple-500/25 dark:text-purple-400 dark:border-purple-500/30',
+};
+
+export const aiUsageDotColors: Record<AIUsage, string> = {
+  none: 'bg-green-500',
+  minor: 'bg-yellow-500',
+  contributed: 'bg-orange-500',
+  major: 'bg-red-500',
+  full: 'bg-purple-500',
 };
 
 export const aiUtilizationColors: Record<AIUtilization, string> = {
   'ai-powered': 'bg-orange-50 dark:bg-orange-950/30 text-orange-600 dark:text-orange-400 border-orange-200 dark:border-orange-900/50',
   'ai-enhanced': 'bg-amber-50 dark:bg-amber-950/30 text-amber-600 dark:text-amber-400 border-amber-200 dark:border-amber-900/50',
   'no-ai': 'bg-slate-100 dark:bg-slate-900/40 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-800',
+};
+
+export const aiUtilizationDotColors: Record<AIUtilization, string> = {
+  'ai-powered': 'bg-orange-500',
+  'ai-enhanced': 'bg-amber-500',
+  'no-ai': 'bg-slate-400',
 };
 
 // Language colors for LOC charts
