@@ -3,9 +3,8 @@ import { useLocalizedProject } from '@/lib/localizeProject';
 import type { Project } from '@/types/project';
 import { categoryLabels, roleLabels, statusLabels, languageColors } from '@/types/project';
 import { Card, CardContent } from '@/components/ui/card';
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { AiUsageBadge } from '@/components/AiUsageBadge';
-import { useCanHover } from '@/hooks/use-can-hover';
+import { HoverClickPopup } from '@/components/HoverClickPopup';
 import { ArrowUpRight, FolderGit2, Image as ImageIcon, Star } from 'lucide-react';
 
 interface ProjectCardProps {
@@ -16,7 +15,6 @@ interface ProjectCardProps {
 
 function LanguageChart({ data, total }: { data: Record<string, number>; total: number }) {
   const { t } = useTranslation();
-  const canHover = useCanHover();
   const entries = Object.entries(data).filter(([, count]) => count > 0).sort((a, b) => b[1] - a[1]);
   const displayed = entries.slice(0, 3);
   const segments = displayed.map(([name, count]) => ({ name, count, color: languageColors[name] || '#8893a3' }));
@@ -36,30 +34,25 @@ function LanguageChart({ data, total }: { data: Record<string, number>; total: n
     </svg>
   );
 
-  // Touch devices: hover tooltips flash and dismiss on tap, and swallowing the
-  // tap would be a dead click. Render the chart statically; taps fall through
-  // to the card and open the modal, which shows the full breakdown.
-  if (!canHover) {
-    return <span className="inline-flex shrink-0 rounded-full p-1">{chart}</span>;
-  }
-
   return (
-    <Tooltip>
-      <TooltipTrigger asChild>
-        <button type="button" onClick={event => event.stopPropagation()} className="shrink-0 rounded-full p-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" aria-label={t('modal.loc_breakdown', 'Language breakdown')}>
-          {chart}
-        </button>
-      </TooltipTrigger>
-      <TooltipContent side="top" className="min-w-40 space-y-1.5 p-3">
-        <p className="text-xs font-semibold">{t('modal.loc_breakdown', 'Language breakdown')}</p>
-        {segments.map(({ name, count, color }) => (
-          <div key={name} className="flex items-center justify-between gap-6 text-xs">
-            <span className="flex items-center gap-2"><span className="size-2 rounded-full" style={{ backgroundColor: color }} />{name}</span>
-            <span className="tabular-nums text-muted-foreground">{Math.round(count / total * 100)}%</span>
-          </div>
-        ))}
-      </TooltipContent>
-    </Tooltip>
+    <HoverClickPopup
+      ariaLabel={t('modal.loc_breakdown', 'Language breakdown')}
+      triggerClassName="shrink-0 rounded-full p-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+      contentClassName="min-w-40 space-y-1.5 p-3"
+      content={
+        <>
+          <p className="text-xs font-semibold">{t('modal.loc_breakdown', 'Language breakdown')}</p>
+          {segments.map(({ name, count, color }) => (
+            <div key={name} className="flex items-center justify-between gap-6 text-xs">
+              <span className="flex items-center gap-2"><span className="size-2 rounded-full" style={{ backgroundColor: color }} />{name}</span>
+              <span className="tabular-nums text-muted-foreground">{Math.round(count / total * 100)}%</span>
+            </div>
+          ))}
+        </>
+      }
+    >
+      {chart}
+    </HoverClickPopup>
   );
 }
 
