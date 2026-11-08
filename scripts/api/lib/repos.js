@@ -83,8 +83,8 @@ function isPathInside(parentPath, childPath) {
 
 function findRepoPath(repoName) {
   if (!repoName || typeof repoName !== 'string') return null;
-  const clean = path.basename(repoName.trim());
-  if (!clean || clean === '.' || clean === '..') return null;
+  const clean = repoName.trim();
+  if (!clean || clean === '.' || clean === '..' || clean.includes('..') || /[\\/]/.test(clean)) return null;
 
   for (const root of [repoDir, extraRepoDir]) {
     if (!root || !fs.existsSync(root)) continue;
