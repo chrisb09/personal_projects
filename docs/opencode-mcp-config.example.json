@@ -1,0 +1,15 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+    "servers": {
+      "portfolio": {
+        "type": "remote",
+        "url": "https://projects.christian-f-brinkmann.de/mcp",
+        "oauth": false,
+        "headers": {
+          "Authorization": "Basic {env:PORTFOLIO_MCP_BASIC}"
+        }
+      }
+    }
+  }
+}

@@ -11,6 +11,34 @@ services:
     depends_on:
       - portfolio-builder
       - portfolio-chat
+      - portfolio-api
+
+  portfolio-api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    container_name: portfolio-api
+    volumes:
+      # Read-only project metadata, published documents/images and stats
+      - /container/config/personal_projects/config:/app/config:ro
+      - /container/data/personal_projects/public:/app/public:ro
+      # Read-only private repositories and personal context documents
+      - /container/data/personal_projects/repos:/app/repos:ro
+      - ./extra-repos:/app/extra-repos:ro
+      - /container/data/personal_projects/context:/app/context:ro
+      - ./data/repo-summaries:/app/data/repo-summaries:ro
+    environment:
+      - PORTFOLIO_API_PORT=3002
+      - PORTFOLIO_API_HOST=0.0.0.0
+      - PORTFOLIO_API_PUBLIC_BASE_URL=${PORTFOLIO_API_PUBLIC_BASE_URL:-https://projects.christian-f-brinkmann.de}
+      - PORTFOLIO_API_USERS=${PORTFOLIO_API_USERS:-}
+      - PORTFOLIO_API_USER=${PORTFOLIO_API_USER:-}
+      - PORTFOLIO_API_PASSWORD=${PORTFOLIO_API_PASSWORD:-}
+      - PORTFOLIO_API_RATE_LIMIT_PUBLIC=${PORTFOLIO_API_RATE_LIMIT_PUBLIC:-300}
+      - PORTFOLIO_API_RATE_LIMIT_PRIVATE=${PORTFOLIO_API_RATE_LIMIT_PRIVATE:-600}
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped
 
   portfolio-chat:
     build:

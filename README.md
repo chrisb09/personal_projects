@@ -73,4 +73,17 @@ Configure these in your environment or directly inside `docker-compose.yml`:
 * `GITHUB_TOKEN`: GitHub personal access token to query private repositories and increase API rate limits.
 * `GITLAB_TOKEN`: GitLab personal access token.
 * `STATS_UPDATE_INTERVAL_HOURS`: How often (in hours) the statistics updater runs. Defaults to `6`.
+* `PORTFOLIO_API_USER` / `PORTFOLIO_API_PASSWORD`: Basic-auth credentials for the read-only API/MCP service.
+
+---
+
+## Read-only API and MCP
+
+The `portfolio-api` service exposes the project catalog, documents, media, statistics, private repositories and personal context documents over REST and the Model Context Protocol.
+
+* **REST base:** `https://projects.christian-f-brinkmann.de/api/portfolio/v1`
+* **MCP endpoint:** `https://projects.christian-f-brinkmann.de/mcp`
+* **Authentication:** HTTP Basic
+
+See [docs/portfolio-api.md](docs/portfolio-api.md) for endpoints, MCP tools, OpenCode configuration and deployment details.
 

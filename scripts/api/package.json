@@ -1,0 +1,15 @@
+{
+  "name": "portfolio-api",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Read-only REST and MCP adapter for the personal projects portfolio",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node test/smoke.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.32.2",
+    "zod": "^4.3.5"
+  }
+}
