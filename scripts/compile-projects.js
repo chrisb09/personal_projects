@@ -4,6 +4,7 @@ const path = require('path');
 const projectsDir = path.join(__dirname, '../config/projects');
 const outputTsPath = path.join(__dirname, '../src/config/projects.ts');
 const publicImagesDir = path.join(__dirname, '../public/images/projects');
+const publicDocumentsDir = path.join(__dirname, '../public/documents/projects');
 const localesSrcDir = path.join(__dirname, '../src/locales');
 const publicLocalesDir = path.join(__dirname, '../public/locales');
 
@@ -110,6 +111,42 @@ function compileProjects() {
         console.log(`Copied logo for ${projectId} to ${logoDestPath}`);
         
         projectData.logo = webLogoPath;
+      }
+
+      // Handle project documents (PDF, Markdown, ...)
+      const documentsDir = path.join(itemPath, 'documents');
+      if (fs.existsSync(documentsDir)) {
+        const destDocumentsDir = path.join(publicDocumentsDir, projectId);
+
+        // Clean existing target dir if it exists
+        if (fs.existsSync(destDocumentsDir)) {
+          fs.rmSync(destDocumentsDir, { recursive: true, force: true });
+        }
+
+        copyDirSync(documentsDir, destDocumentsDir);
+        console.log(`Copied documents for ${projectId} to public/documents/projects/${projectId}/`);
+
+        if (Array.isArray(projectData.documents)) {
+          projectData.documents = projectData.documents.map(doc => ({
+            ...doc,
+            files: (doc.files || [])
+              .map(file => {
+                const sourcePath = path.join(documentsDir, file.file);
+                if (!fs.existsSync(sourcePath)) {
+                  console.warn(`Missing document file for ${projectId}: ${file.file}`);
+                  return null;
+                }
+                return {
+                  ...file,
+                  file: `/documents/projects/${projectId}/${file.file}`,
+                  size: fs.statSync(sourcePath).size,
+                };
+              })
+              .filter(Boolean),
+          }));
+        }
+      } else if (Array.isArray(projectData.documents) && projectData.documents.length > 0) {
+        console.warn(`Project ${projectId} declares documents but has no documents/ folder`);
       }
 
       compiledProjects.push(projectData);

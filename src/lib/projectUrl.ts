@@ -1,6 +1,6 @@
 import type { Project } from '@/types/project';
 
-export type ProjectTab = 'overview' | 'technical' | 'usage' | 'stats' | 'repositories' | 'media';
+export type ProjectTab = 'overview' | 'technical' | 'usage' | 'stats' | 'repositories' | 'documents' | 'media';
 
 const PROJECT_TABS: ProjectTab[] = [
   'overview',
@@ -8,6 +8,7 @@ const PROJECT_TABS: ProjectTab[] = [
   'usage',
   'stats',
   'repositories',
+  'documents',
   'media',
 ];
 
@@ -49,6 +50,10 @@ export function getProjectTabs(project: Project): ProjectTab[] {
     (project.modelReleases?.length ?? 0) > 0
   ) {
     tabs.push('repositories');
+  }
+
+  if ((project.documents?.length ?? 0) > 0) {
+    tabs.push('documents');
   }
 
   if ((project.screenshots?.length ?? 0) > 0 || (project.relatedProjects?.length ?? 0) > 0) {

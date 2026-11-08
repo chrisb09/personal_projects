@@ -75,6 +75,9 @@ export interface Project {
   docsUrl?: string;
   screenshots?: string[];
   logo?: string;
+
+  // Downloadable project documents (PDF, Markdown, ...)
+  documents?: ProjectDocument[];
   
   // Related projects (both external links and internal project IDs)
   relatedProjects?: {
@@ -97,6 +100,24 @@ export interface Project {
     total?: number;
     byLanguage?: Record<string, number>;
   };
+}
+
+export type DocumentFormat = 'pdf' | 'markdown' | 'docx' | 'other';
+
+export interface ProjectDocumentFile {
+  /** Web path, rewritten by the compile script. */
+  file: string;
+  format: DocumentFormat;
+  /** File size in bytes, computed by the compile script. */
+  size?: number;
+}
+
+export interface ProjectDocument {
+  title: string;
+  description?: string;
+  /** ISO date (YYYY-MM-DD) shown alongside the document. */
+  date?: string;
+  files: ProjectDocumentFile[];
 }
 
 export type ProjectCategory = Project['category'];

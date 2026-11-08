@@ -582,6 +582,74 @@ export const projects: Project[] = [
         "url": "https://learntech.rwth-aachen.de/"
       }
     ],
+    "documents": [
+      {
+        "title": "Requirements Document",
+        "description": "Scope, user classes and the mandatory teacher and student requirements for the green LMS checkpoint workflow.",
+        "date": "2025-05-15",
+        "files": [
+          {
+            "file": "/documents/projects/exam-system-backend/requirements.pdf",
+            "format": "pdf",
+            "size": 181878
+          },
+          {
+            "file": "/documents/projects/exam-system-backend/requirements.md",
+            "format": "markdown",
+            "size": 21250
+          }
+        ]
+      },
+      {
+        "title": "Database Schema v4",
+        "description": "New and modified PostgreSQL tables for checkpoints, question slots, answers, prompts and grading.",
+        "date": "2025-07-19",
+        "files": [
+          {
+            "file": "/documents/projects/exam-system-backend/database-schema.pdf",
+            "format": "pdf",
+            "size": 198374
+          },
+          {
+            "file": "/documents/projects/exam-system-backend/database-schema.md",
+            "format": "markdown",
+            "size": 23825
+          }
+        ]
+      },
+      {
+        "title": "Technical Documentation",
+        "description": "Student and teacher UI components, gateway endpoints, database changes and automatic evaluation.",
+        "files": [
+          {
+            "file": "/documents/projects/exam-system-backend/technical-documentation.pdf",
+            "format": "pdf",
+            "size": 1645193
+          },
+          {
+            "file": "/documents/projects/exam-system-backend/technical-documentation.md",
+            "format": "markdown",
+            "size": 262628
+          }
+        ]
+      },
+      {
+        "title": "Teacher-Side Documentation",
+        "description": "Teacher workflow for checkpoint creation, question and section management, evaluation, filtering and statistics.",
+        "files": [
+          {
+            "file": "/documents/projects/exam-system-backend/teacher-side-documentation.pdf",
+            "format": "pdf",
+            "size": 1865391
+          },
+          {
+            "file": "/documents/projects/exam-system-backend/teacher-side-documentation.md",
+            "format": "markdown",
+            "size": 3109339
+          }
+        ]
+      }
+    ],
     "logo": "/images/projects/exam-system-backend/logo.png"
   },
   {

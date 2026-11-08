@@ -1026,7 +1026,7 @@ const TOOL_DECLARATIONS = [
   },
   {
     name: 'get_project_details',
-    description: 'Retrieves complete metadata for a specific project (purpose, strengths, limitations, expertise gained, roadmap, repo links). Also returns the project logo and screenshot URLs for display in the chat.',
+    description: 'Retrieves complete metadata for a specific project (purpose, strengths, limitations, expertise gained, roadmap, repo links, downloadable documents). Also returns the project logo and screenshot URLs for display in the chat.',
     parameters: {
       type: 'object',
       properties: {

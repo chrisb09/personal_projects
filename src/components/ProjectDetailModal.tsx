@@ -50,8 +50,19 @@ import {
   ChevronLeft,
   ChevronRight,
   Lock,
-  X
+  X,
+  FileText,
+  FileCode2,
+  FileType,
+  File,
+  Download
 } from 'lucide-react';
+
+function formatBytes(bytes: number): string {
+  if (bytes < 1024) return `${bytes} B`;
+  if (bytes < 1024 * 1024) return `${Math.round(bytes / 1024)} KB`;
+  return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+}
 
 interface ProjectDetailModalProps {
   project: Project | null;
@@ -378,6 +389,7 @@ export function ProjectDetailModal({ project: rawProject, isOpen, onClose, onPro
 
   const hasScreenshots = project.screenshots && project.screenshots.length > 0;
   const hasRelatedProjects = project.relatedProjects && project.relatedProjects.length > 0;
+  const hasDocuments = project.documents && project.documents.length > 0;
   const hasStats = project.stats && Object.keys(project.stats).length > 0;
   const hasLOC = Boolean(project.loc?.total && project.loc.byLanguage);
   const hasRepos = project.repos && project.repos.length > 0;
@@ -554,6 +566,14 @@ export function ProjectDetailModal({ project: rawProject, isOpen, onClose, onPro
                       : hasModelReleases
                       ? `${t('modal.code_models', 'Code & Models')} (${totalRepoCount + totalModelCount})`
                       : `${t('modal.repositories', 'Repositories')} (${totalRepoCount})`}
+                  </TabsTrigger>
+                )}
+                {hasDocuments && (
+                  <TabsTrigger 
+                    value="documents" 
+                    className="flex-none px-1 pb-3 pt-3 rounded-none text-sm font-semibold border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-primary data-[state=active]:!bg-transparent data-[state=active]:!shadow-none data-[state=inactive]:text-muted-foreground hover:text-foreground transition-all whitespace-nowrap bg-transparent shadow-none border-t-0 border-x-0 focus-visible:ring-0 focus-visible:outline-none focus:outline-none focus-visible:border-b-primary focus-visible:text-primary"
+                  >
+                    {t('modal.documents', 'Documents')} ({project.documents!.length})
                   </TabsTrigger>
                 )}
                 {(hasScreenshots || hasRelatedProjects) && (
@@ -917,6 +937,41 @@ export function ProjectDetailModal({ project: rawProject, isOpen, onClose, onPro
                   </TabsContent>
                 )}
  
+                {/* Documents Tab */}
+                {hasDocuments && (
+                  <TabsContent value="documents" className="mt-0 space-y-3 focus-visible:outline-none">
+                    {project.documents!.map((doc, i) => {
+                      const firstFormat = doc.files[0]?.format;
+                      const DocIcon = firstFormat === 'markdown' ? FileCode2 : firstFormat === 'pdf' ? FileText : firstFormat === 'docx' ? FileType : File;
+                      return (
+                        <div key={i} className="rounded-lg border border-border/40 bg-muted/20 p-3.5 sm:p-4">
+                          <div className="flex items-start gap-3">
+                            <div className="w-9 h-9 rounded-lg bg-primary/10 text-primary flex items-center justify-center shrink-0">
+                              <DocIcon className="w-4 h-4" />
+                            </div>
+                            <div className="min-w-0 flex-1">
+                              <p className="font-medium text-sm text-foreground">{doc.title}</p>
+                              {doc.description && <p className="text-xs text-muted-foreground mt-0.5 leading-relaxed">{doc.description}</p>}
+                              <div className="flex flex-wrap items-center gap-1.5 mt-2">
+                                {doc.files.map(file => (
+                                  <Button key={file.file} size="sm" variant="outline" className="h-7 text-xs gap-1.5" asChild>
+                                    <a href={file.file} download onClick={event => event.stopPropagation()}>
+                                      <Download className="w-3 h-3" />
+                                      {file.format === 'pdf' ? 'PDF' : file.format === 'markdown' ? 'Markdown' : file.format === 'docx' ? 'DOCX' : 'File'}
+                                      {typeof file.size === 'number' && <span className="text-muted-foreground">· {formatBytes(file.size)}</span>}
+                                    </a>
+                                  </Button>
+                                ))}
+                                {doc.date && <span className="text-[10px] text-muted-foreground ml-1">{doc.date}</span>}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </TabsContent>
+                )}
+
                 {/* Media Tab */}
                 {(hasScreenshots || hasRelatedProjects) && (
                   <TabsContent value="media" className="mt-0 space-y-4 focus-visible:outline-none">

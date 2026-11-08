@@ -128,5 +128,41 @@
       "relation": "Hosting chair of the practical lab",
       "url": "https://learntech.rwth-aachen.de/"
     }
+  ],
+  "documents": [
+    {
+      "title": "Requirements Document",
+      "description": "Scope, user classes and the mandatory teacher and student requirements for the green LMS checkpoint workflow.",
+      "date": "2025-05-15",
+      "files": [
+        { "file": "requirements.pdf", "format": "pdf" },
+        { "file": "requirements.md", "format": "markdown" }
+      ]
+    },
+    {
+      "title": "Database Schema v4",
+      "description": "New and modified PostgreSQL tables for checkpoints, question slots, answers, prompts and grading.",
+      "date": "2025-07-19",
+      "files": [
+        { "file": "database-schema.pdf", "format": "pdf" },
+        { "file": "database-schema.md", "format": "markdown" }
+      ]
+    },
+    {
+      "title": "Technical Documentation",
+      "description": "Student and teacher UI components, gateway endpoints, database changes and automatic evaluation.",
+      "files": [
+        { "file": "technical-documentation.pdf", "format": "pdf" },
+        { "file": "technical-documentation.md", "format": "markdown" }
+      ]
+    },
+    {
+      "title": "Teacher-Side Documentation",
+      "description": "Teacher workflow for checkpoint creation, question and section management, evaluation, filtering and statistics.",
+      "files": [
+        { "file": "teacher-side-documentation.pdf", "format": "pdf" },
+        { "file": "teacher-side-documentation.md", "format": "markdown" }
+      ]
+    }
   ]
 }
