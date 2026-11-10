@@ -10,7 +10,7 @@
   "sourceType": "open-source",
   "aiUsage": "minor",
   "aiUtilization": "no-ai",
-  "description": "A Python command-line tool that helps clean up KeePassXC databases. It scans all entries and groups potential duplicates by a composite key built from the entry URL or app ID, username, and password.\n\nIt provides an interactive deduplication flow: for every set of duplicates it lists the matching entries with their internal paths and asks which entry to keep before saving the database. It can also report which custom properties exist across all entries, which helps to standardize and tidy up entries.",
+  "description": "A Python command-line tool that helps clean up KeePassXC databases. It scans all entries and groups potential duplicates by a composite key built from the entry URL or app ID, username, and password.\n\nIt provides an interactive deduplication flow: for every set of duplicates it lists the matching entries with their internal paths and asks which entry to keep before saving the database. It can also report which custom properties exist across all entries, which helps standardize and tidy up entries.",
   "purpose": "To keep KeePassXC databases tidy and secure by detecting redundant entries, letting users safely remove duplicates after review, and highlighting inconsistent custom property usage.",
   "technologies": [
     "Python",

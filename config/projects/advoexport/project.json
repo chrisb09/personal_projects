@@ -32,7 +32,7 @@
     "Successfully mapped and migrated thousands of legal documents with zero data loss",
     "Handles complex string cleaning, space-escaped directory paths, and legacy encoding issues",
     "Maintains data integrity and structure across deep, nested file systems",
-    "Lightweight and framework-free implementation optimized for localized execution"
+    "Lightweight and framework-free implementation optimized for local execution"
   ],
   "limitations": [],
   "roadmap": [],

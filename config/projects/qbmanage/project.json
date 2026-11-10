@@ -10,7 +10,7 @@
   "sourceType": "open-source",
   "aiUsage": "minor",
   "aiUtilization": "no-ai",
-  "description": "A Python-based command-line utility for auditing and cleaning up torrents and files in a qBittorrent instance. It features tracker status checking, finding orphaned/unused files on disk, and identifying unlinked hardlinks to automate cleaning leftovers safely with dry-run protection.",
+  "description": "A Python-based command-line utility for auditing and cleaning up torrents and files in a qBittorrent instance. It features tracker status checking, finding orphaned/unused files on disk, and identifying files no longer hardlinked elsewhere, with dry-run protection for cleanup.",
   "purpose": "To manage qBittorrent instances, especially in setups where downloads are hardlinked to media folders, by cleaning dead tracker torrents and orphaned download files.",
   "technologies": [
     "Python",

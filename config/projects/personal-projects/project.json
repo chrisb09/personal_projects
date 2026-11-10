@@ -11,7 +11,7 @@
   "aiUsage": "full",
   "aiUtilization": "no-ai",
   "description": "Interactive developer portfolio showcasing personal and research projects with faceted search, dynamic filters, contribution activity heatmaps, and repository telemetry synced from local Git trees and APIs.",
-  "purpose": "To showcase personal software development work, utilities, and IT projects with actual, verifiably tracked LOC and commit statistics directly gathered from local repositories.",
+  "purpose": "To showcase personal software development work, utilities, and IT projects with verifiable LOC and commit statistics gathered from local repositories.",
   "technologies": [
     "React",
     "TypeScript",
@@ -46,7 +46,6 @@
   "installation": "git clone git@github.com:chrisb09/personal_projects.git\ncd personal_projects\nnpm install",
   "usage": "# Run development server:\nnpm run dev\n\n# Compile project data:\nnpm run compile-projects\n\n# Update local git repository stats:\nnpm run update-stats -- --force\n\n# Build production bundle:\nnpm run build",
   "roadmap": [
-    "Add interactive git commit activity heatmaps",
     "Support automated remote repo cloning via API"
   ],
   "repos": [

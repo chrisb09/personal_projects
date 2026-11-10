@@ -10,7 +10,7 @@
   "sourceType": "closed-source",
   "aiUsage": "contributed",
   "aiUtilization": "no-ai",
-  "description": "Bespoke Bash-based control plane coordinating service lifecycles, Git synchronization, process management, and log auditing across distributed Linux machines. Features image-backed per-service storage isolation and automated health checks.",
+  "description": "A Bash-based control toolkit coordinating service lifecycles, Git synchronization, process management, and log auditing across distributed Linux machines. It provides image-backed per-service storage isolation and automated health checks.",
   "purpose": "Automated deployments, service orchestration, and storage isolation across Linux server infrastructure.",
   "technologies": ["Bash", "Linux", "Redis", "Maven", "Git"],
   "dependencies": ["screen", "jq", "curl", "lsof", "procps"],
@@ -26,7 +26,7 @@
     "Engineered asynchronous parallel task execution using background subshells and dynamic PID tracking arrays for concurrent Git operations",
     "Designed automated storage virtualization and isolation by generating 10GB raw images, formatting ext4 filesystems, and loop-mounting to prevent host disk exhaustion",
     "Built a real-time watchdog system monitoring log capacities, process utilization, and dynamic ports with automated Discord webhook notifications via structured JSON payloads",
-    "Advanced utilization of Bash 4+ associative arrays to map multi-layered application states, dependencies, and dynamic routing profiles",
+    "Uses Bash 4+ associative arrays to map multi-layered application states, dependencies, and dynamic routing profiles",
     "Created text-processing pipelines using sed, awk, and grep for custom dynamic string multiplexing and multi-criteria server/plugin selection logic"
   ],
   "limitations": [
@@ -36,7 +36,7 @@
   ],
   "roadmap": [
     "Abstract the terminal multiplexer layer to support systemd slices or lightweight cgroups directly",
-    "Migrate the procedural bash architecture toward a compiled, typed platform utility (Go/Rust)",
+    "Migrate the procedural Bash architecture toward a compiled, typed platform utility (Go/Rust)",
     "Integrate Prometheus exposition endpoints for structured telemetry collection"
   ],
   "repos": [],

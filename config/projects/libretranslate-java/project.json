@@ -10,7 +10,7 @@
   "sourceType": "open-source",
   "aiUsage": "minor",
   "aiUtilization": "no-ai",
-  "description": "Java client library for LibreTranslate instances, supporting synchronous and asynchronous translation requests, model management, and language detection. Maintained with upstream compatibility updates.",
+  "description": "Java client library for LibreTranslate instances, supporting synchronous and asynchronous translation requests, model management, and language detection. Contributed compatibility updates for changes in the LibreTranslate API.",
   "purpose": "To use LibreTranslate from Java applications against self-hosted or public instances.",
   "technologies": [
     "Java",
@@ -37,9 +37,9 @@
     "Well-documented with examples"
   ],
   "limitations": [
-    "Requires running LibreTranslate instance",
+    "Requires a running LibreTranslate instance",
     "Translation quality depends on the instance",
-    "Rate limits on public instances",
+    "Subject to rate limits on public instances",
     "Limited to supported languages"
   ],
   "installation": "// Maven Repository\n<repository>\n    <id>dynomakeRepository</id>\n    <url>https://maven.dynomake.it/releases</url>\n</repository>\n\n// Maven Dependency\n<dependency>\n    <groupId>space.dynomake</groupId>\n    <artifactId>libretranslate-java</artifactId>\n    <version>1.0.9</version>\n</dependency>\n\n// Gradle Repository\nrepositories {\n    maven {\n        name = 'dynomakeRepository'\n        url = uri('https://maven.dynomake.it/releases')\n    }\n}\n\n// Gradle Dependency\nimplementation 'space.dynomake:libretranslate-java:1.0.9'",

@@ -1,7 +1,7 @@
 {
   "id": "pdnwebview",
   "name": "pdnwebview",
-  "tagline": "Web Viewer for Paint.net Project Files",
+  "tagline": "Web Viewer for Paint.NET Project Files",
   "year": "2022",
   "category": "frontend",
   "status": "active",
@@ -40,7 +40,7 @@
     "Read-only (no editing capabilities)",
     "Requires a separate offline export step before a project can be viewed",
     "Export is CPU- and memory-intensive for large multi-layer files",
-    "Layer blend modes are stored but rendered as normal",
+    "Layer blend modes are stored but rendered using the Normal blend mode",
     "Limited to Paint.NET files supported by pypdn"
   ],
   "installation": "# 1. Viewer + WebGL submodule\ngit clone --recurse-submodules \\\n  https://github.com/chrisb09/pdnwebview.git\ncd pdnwebview\n\n# Already cloned without submodules?\ngit submodule update --init --recursive\n\n# 2. Offline exporter (not needed at runtime)\ngit clone https://gitlab.com/christianbrinkmann/pdnexport.git ../pdnexport\npython3 -m venv ../pdnexport/.venv\n../pdnexport/.venv/bin/pip install -r ../pdnexport/requirements.txt\n\n# 3. Local preview with the bundled test project\npython3 -m http.server 8000\n# open http://localhost:8000/?id=testimage",
@@ -48,7 +48,7 @@
   "roadmap": [
     "Support for animation playback",
     "Create a browser extension for quick viewing",
-    "Support newer Paint.net file formats as pypdn adds them",
+    "Support newer Paint.NET file formats as pypdn adds them",
     "Reproduce Paint.NET layer blend modes"
   ],
   "demoUrl": "https://christian-f-brinkmann.de/paint/",
@@ -73,11 +73,11 @@
     },
     {
       "name": "pypdn",
-      "relation": "Dependency of pdnexport for Paint.net binary parsing",
+      "relation": "Dependency of pdnexport for Paint.NET binary parsing",
       "url": "https://github.com/addisonElliott/pypdn/"
     },
     {
-      "name": "Paint.net",
+      "name": "Paint.NET",
       "relation": "File format support for",
       "url": "https://www.getpaint.net/"
     }

@@ -42,7 +42,7 @@
     "Adapts refresh intervals from 10 minutes to 6 hours and schedules around known resets",
     "Schedules each account independently and serves cached data while refreshing in the background",
     "Stores every successful observation in SQLite with per-account and per-quota history charts",
-    "Pools quota bars by type and marks the average time remaining",
+    "Pools quota bars by type and shows the average time remaining",
     "Ships a public read-only view, an MCP endpoint and a native Plasma 5 panel widget",
     "Keeps provider files read-only except for atomic Codex token rotation"
   ],
@@ -54,7 +54,7 @@
     "No license file is present in the repository yet"
   ],
   "installation": "git clone https://github.com/chrisb09/ai_usage.git\ncd ai_usage\ncp .env.example .env\nmkdir -p data secrets/opencode secrets/opencode-data secrets/codex\n# Populate the credential directories and set AI_USAGE_UID / AI_USAGE_GID\ndocker compose up -d --build\n\n# Open http://127.0.0.1:7694",
-  "usage": "# Read cached usage\nget /api/usage\n\n# Force a manual check\nPOST /api/refresh\n\n# Use the MCP endpoint from OpenCode\n{\n  \"mcp\": {\n    \"servers\": {\n      \"ai-usage\": {\n        \"type\": \"remote\",\n        \"url\": \"https://usage.example.com/mcp\",\n        \"headers\": { \"Authorization\": \"Basic {env:AI_USAGE_BASIC}\" }\n      }\n    }\n  }\n}",
+  "usage": "# Read cached usage\nGET /api/usage\n\n# Force a manual check\nPOST /api/refresh\n\n# Use the MCP endpoint from OpenCode\n{\n  \"mcp\": {\n    \"servers\": {\n      \"ai-usage\": {\n        \"type\": \"remote\",\n        \"url\": \"https://usage.example.com/mcp\",\n        \"headers\": { \"Authorization\": \"Basic {env:AI_USAGE_BASIC}\" }\n      }\n    }\n  }\n}",
   "roadmap": [
     "Keep provider collectors current as quota endpoints change",
     "Improve long-term history and credit-expiry tracking",

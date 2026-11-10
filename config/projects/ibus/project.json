@@ -1,7 +1,7 @@
 {
   "id": "ibus",
   "name": "Ibus",
-  "tagline": "Java Tool to Encode Files into ARGB Images for Unlimited Cloud Storage",
+  "tagline": "Java tool for encoding files as images for photo storage",
   "year": "2019",
   "category": "utility",
   "status": "archived",
@@ -10,8 +10,8 @@
   "sourceType": "open-source",
   "aiUsage": "none",
   "aiUtilization": "no-ai",
-  "description": "A Java-based CLI utility that encodes files into ARGB pixels of PNG images and decodes them back to their original state. By representing files as images, it enables using unlimited photo cloud storage services (like Google Photos or Amazon Photos) as a backup destination.",
-  "purpose": "To bypass file-hosting limitations on cloud providers by translating binary files and directory structures into visual image files.",
+  "description": "A Java-based CLI utility that encodes files into ARGB pixels of PNG images and decodes them back to their original state. This archived experiment represented files as images to use photo cloud storage as a backup destination, including via former Google Photos features that no longer work.",
+  "purpose": "To bypass file-hosting limitations on cloud providers by translating binary files and directory structures into image files.",
   "technologies": [
     "Java",
     "Cryptography (AES)"
@@ -31,7 +31,7 @@
     "Splits large files automatically across multiple image sequences"
   ],
   "limitations": [
-    "Google/Amazon Photos API restrictions limit automated cloud integration",
+    "The former Google Photos storage features this experiment relied on no longer work; provider API restrictions also limit automated integration",
     "Memory-bound and single-threaded encoding",
     "Losing the AES key results in permanent data loss"
   ],

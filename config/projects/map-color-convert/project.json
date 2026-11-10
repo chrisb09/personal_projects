@@ -33,7 +33,7 @@
     "Very fast in-memory execution within the Paint.NET UI"
   ],
   "limitations": [
-    "Requires Paint.NET installed on Windows to run the plugin",
+    "Requires an installed copy of Paint.NET on Windows to run the plugin",
     "Does not handle image resizing (Minecraft maps are 128x128 pixels)",
     "Limited to the predefined color palette"
   ],

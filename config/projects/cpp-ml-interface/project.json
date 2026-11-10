@@ -11,7 +11,7 @@
   "sourceType": "open-source",
   "aiUsage": "contributed",
   "aiUtilization": "ai-powered",
-  "description": "Master's thesis project at RWTH Aachen redesigning a solver-specific C++ interface into a modular, generic coupling layer. Connects CFD solvers to machine-learning backends (SmartSim/SmartRedis, PhyDLL, AIxeleratorService) via a unified configuration-driven API.\n\nBenchmarked on the Claix23 supercomputing cluster for CPU and GPU inference performance, thread balancing, and Slurm core affinity. Includes an automated Clang AST registry generator and integration tests for coupling the MMCP transformer with the m-aia solver.",
+  "description": "A master's thesis project at RWTH Aachen that redesigns a solver-specific C++ interface into a modular, generic coupling layer. Connects CFD solvers to machine-learning backends (SmartSim/SmartRedis, PhyDLL, AIxeleratorService) via a unified configuration-driven API.\n\nBenchmarked on the Claix23 supercomputing cluster for CPU and GPU inference performance, thread balancing, and Slurm core affinity. Includes an automated Clang AST registry generator and integration tests for coupling the MMCP transformer with the m-aia solver.",
   "purpose": "To connect CFD solvers to machine-learning models without tying each solver to a single communication backend.",
   "technologies": [
     "C++",
@@ -35,14 +35,14 @@
     "Multi-threaded CPU Binding & Affinity"
   ],
   "strengths": [
-    "Redesigned from solver-specific code into a highly generic, modular header-only interface",
+    "Redesigned from solver-specific code into a generic, modular header-only interface",
     "Integrates heterogeneous coupling libraries (SmartSim, PhyDLL, AIxeleratorService) under a configuration-based layer",
     "Supports reflection-free subclass registration via an automatic python-clang parsing registry script",
     "Critically evaluates low-level CPU parallel execution (intra/inter-op threads, OpenMP, core affinity)"
   ],
   "limitations": [
     "Currently restricted to PyTorch (TorchScript) backend implementations",
-    "Performance is bound by underlying library interconnects (e.g. Redis database roundtrips in SmartSim)",
+    "Performance is bound by underlying library interconnects (e.g. Redis round trips in SmartSim)",
     "Requires matching compiler/Clang versions for the registry generator script"
   ],
   "installation": "# Setup the cluster environment (modules for compiler, python, clang, etc.).\n# A cluster-specific 'install.sh' is provided for Claix23/RWTH, but manual\n# configuration is needed on other systems.\n# \n# Note: Building and compiling the external submodules/dependencies\n# (SmartSim, PhyDLL, AIxeleratorService) is required and exceeds the scope\n# of this quick start page.\n\n# Clone the repository and submodules:\ngit clone --recursive git@github.com:chrisb09/CPP-ML-Interface.git\ncd CPP-ML-Interface\n\n# Install python dependencies for registry generation:\npip install -r requirements.txt\n\n# Run your system/cluster build wrapper script:\n./build.sh",

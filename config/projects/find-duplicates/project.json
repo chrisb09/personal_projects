@@ -11,7 +11,7 @@
   "aiUsage": "minor",
   "aiUtilization": "no-ai",
   "description": "A Python command-line script that crawls source and destination directories to detect duplicate files by hashing. It can automatically delete target duplicates and replace them with symlinks or hardlinks, optimizing disk space while preserving file organization.",
-  "purpose": "To free up storage space (e.g. seeding torrents while maintaining files in library folders on different drives) without duplicating file contents.",
+  "purpose": "To free up storage space without duplicating file contents, for example when seeding torrents while keeping the same files in library folders on different drives.",
   "technologies": [
     "Python",
     "Bash"
@@ -25,15 +25,15 @@
     "Storage Management"
   ],
   "strengths": [
-    "Uses speculative caching (filename+size) for extremely fast subsequent runs",
+    "Caches hashes keyed by (filename, size) to skip recomputation, making subsequent runs extremely fast",
     "Supports dry-run mode by default to preview changes safely",
     "Generates clean links (symlinks or hardlinks) without duplicating files",
     "Zero external dependencies (uses Python standard library only)"
   ],
   "limitations": [
     "Hardlinks cannot span across different physical drives",
-    "Speculative caching might mismatch files with identical name/size but different content",
-    "File system operations modify target files directly (recommends backup)"
+    "The (filename, size) hash cache can reuse an incorrect hash when different files share a name and size, or when a file's content changes without its name or size changing",
+    "File system operations modify target files directly, so backing up beforehand is recommended"
   ],
   "installation": "git clone git@github.com:chrisb09/find-duplicates.git\ncd find-duplicates\nchmod +x find_duplicates.py",
   "usage": "# Perform a dry-run check:\npython3 find_duplicates.py /path/to/source /path/to/destination\n\n# Create symlinks for duplicates:\npython3 find_duplicates.py --softlink /path/to/source /path/to/destination",

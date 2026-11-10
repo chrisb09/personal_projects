@@ -1,7 +1,7 @@
 {
   "id": "cycling-power-estimator",
   "name": "Cycling Power Estimator & 3D Visualizer",
-  "tagline": "Full-stack web application to retroactively calculate and visualize cycling power from GPX files",
+  "tagline": "Estimate and visualize cycling power from GPX rides, with charts and a 3D map",
   "year": "2026",
   "category": "fullstack",
   "status": "active",
@@ -11,7 +11,7 @@
   "aiUsage": "full",
   "aiUtilization": "no-ai",
   "description": "Upload a GPX track to estimate cycling power from route data and view the results in charts and a 3D map. A FastAPI backend handles the calculations; the React frontend displays the ride.",
-  "purpose": "To democratize cycling analytics by reverse-engineering power output without expensive physical power meters, and providing a highly engaging 3D visualization of rides.",
+  "purpose": "To estimate cycling power from recorded ride data without a physical power meter and visualize rides in 3D.",
   "technologies": [
     "React",
     "FastAPI",
@@ -40,7 +40,7 @@
     "Physics modeling (gravity, rolling resistance, aerodynamic drag, kinetic energy)",
     "3D digital elevation model (DEM) map tracking and path animations",
     "Interactive synchronized charts (speed, power, elevation)",
-    "Bike configurations and user weight/CdA biological profiles support"
+    "Support for bike configurations and rider weight/CdA profiles"
   ],
   "limitations": [
     "Aero drag calculations assume static environmental wind conditions",

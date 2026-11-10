@@ -10,8 +10,8 @@
   "sourceType": "open-source",
   "aiUsage": "contributed",
   "aiUtilization": "no-ai",
-  "description": "Open-source contribution to JDA-Chewtils, a Java command and menu extension suite for Discord bots. Implemented core compatibility patches, event handling updates, and API adaptations for JDA 6.1.1.",
-  "purpose": "To simplify Java-based Discord bot development by providing reusable structures for command registering and UI menus.",
+  "description": "Open-source contributions to JDA-Chewtils, a Java command and menu extension suite for Discord bots. Contributed core compatibility patches, event handling updates, and API adaptations for JDA 6.1.1.",
+  "purpose": "To simplify Java-based Discord bot development by providing reusable structures for command registration and UI menus.",
   "technologies": [
     "Java",
     "Gradle",
@@ -29,7 +29,7 @@
     "Modular library design allowing developers to import only required features",
     "Provides fully customizable paginated menu systems",
     "Actively maintained to support modern JDA versions",
-    "Simplifies slash command registration and permissions handling"
+    "Simplifies slash command registration and permission handling"
   ],
   "limitations": [
     "Tightly coupled to DV8FromTheWorld/JDA API updates",

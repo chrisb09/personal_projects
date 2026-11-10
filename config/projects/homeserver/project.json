@@ -10,7 +10,7 @@
   "sourceType": "closed-source",
   "aiUsage": "minor",
   "aiUtilization": "no-ai",
-  "description": "Production-grade, zero-downtime private Linux server infrastructure operating continuously since 2018. Manages 100+ TB of ZFS storage, containerized Docker services, automated off-site backups, and encrypted WireGuard networking serving around 20 users.",
+  "description": "Private Linux server infrastructure operated and maintained since 2018. It manages 100+ TB of ZFS storage, Docker services, off-site backups for selected scripts and configuration files, and encrypted WireGuard networking for around 20 users.",
   "purpose": "To create a privacy-focused, self-controlled alternative to commercial cloud services, providing reliable hosting for personal data and applications.",
   "technologies": [
     "Docker",
@@ -36,7 +36,7 @@
     "Network Security & VPNs"
   ],
   "strengths": [
-    "8 years of continuous uptime and infrastructure maintenance",
+    "Operating and maintaining the infrastructure since 2018",
     "Architected robust storage pools using openZFS for enterprise-grade data integrity",
     "Automated deployment of web, cloud, and AI applications via Docker Compose and nginx",
     "Secure network routing and remote access configured via WireGuard"
@@ -51,7 +51,7 @@
   "installation": "# Server setup overview\n# 1. Install Ubuntu Server LTS\n# 2. Configure openZFS storage pools\n# 3. Set up Docker and Docker Compose\n# 4. Configure nginx reverse proxy\n# 5. Set up WireGuard VPN\n# 6. Deploy services via Docker Compose\n\n# Example docker-compose.yml structure\nversion: '3.8'\nservices:\n  nextcloud:\n    image: nextcloud:latest\n    # ... configuration\n  jellyfin:\n    image: jellyfin/jellyfin\n    # ... configuration",
   "usage": "# Access services via VPN\nwg-quick up homeserver\n\n# Web services accessible at:\n# https://cloud.yourdomain.com\n# https://media.yourdomain.com\n\n# Monitor system\nhtop\ndocker stats\nzfs list",
   "roadmap": [
-    "Implement automated backup to offsite storage",
+    "Expand automated off-site backups beyond selected scripts and configuration files",
     "Add monitoring and alerting (Prometheus/Grafana)",
     "Set up high availability for critical services",
     "Expand AI/ML service offerings",

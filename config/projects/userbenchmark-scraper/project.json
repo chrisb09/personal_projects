@@ -42,7 +42,7 @@
     "Custom Tor library (torpy) modifications supporting SocksServer control, exit node selection, and dynamic port allocation",
     "Tor network exit node manipulation to rotate IP addresses by country code to bypass rate limiting",
     "Lightweight TCP socket-based communication protocol for job distribution",
-    "Lightweight raw SQLite database integration with thread-safe transactional queueing",
+    "Raw SQLite storage with thread-safe transactional queueing",
     "Containerized client deployment using Docker for simple scale-out"
   ],
   "limitations": [

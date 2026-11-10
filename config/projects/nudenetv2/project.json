@@ -36,8 +36,8 @@
     "Fully functional classifier and detector restored from the broken original NudeNet v2 branch",
     "ONNX models hosted reliably on GitLab raw storage for direct downloads",
     "Added support for custom model directories via constructor parameter or NUDENET_MODEL_DIR environment variable",
-    "Cleaned codebase of indecent images in documentation",
-    "Easy installation and PyPI publication packaging"
+    "Removed indecent images from the documentation",
+    "Packaged for installation via PyPI"
   ],
   "limitations": [
     "Deep learning model accuracy depends on pre-trained NudeNet weights",

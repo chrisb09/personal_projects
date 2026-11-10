@@ -1,7 +1,7 @@
 {
   "id": "opencode-wait",
   "name": "opencode-wait",
-  "tagline": "Zero-CPU waiting for OpenCode agents on HPC login nodes",
+  "tagline": "Near-Zero-CPU waiting for OpenCode agents on HPC login nodes",
   "year": "2026",
   "category": "utility",
   "status": "active",
@@ -10,7 +10,7 @@
   "sourceType": "open-source",
   "aiUsage": "contributed",
   "aiUtilization": "no-ai",
-  "description": "A maintained fork of the opencode-wait plugin that lets OpenCode agents pause without burning CPU. It combines a zero-CPU HTTP listener, sentinel-file watching and kernel-level sleeps so an agent can wait for a Slurm job, a remote completion signal or a new user message on an HPC login node without tripping cgroup or runaway-process watchdogs.\n\nThe fork adds HTTP wake-up with token authentication and payload return, sentinel-file completion with optional content read and cleanup, abort-controller cancellation, live progress metadata and predictable per-session ports. The upstream timer-based plugin is preserved, and the fork is released as v0.2.0.",
+  "description": "A maintained fork of the opencode-wait plugin that lets OpenCode agents pause without burning CPU. It combines a near-zero-CPU HTTP listener, sentinel-file watching and kernel-level sleeps so an agent can wait for a Slurm job, a remote completion signal or a new user message on an HPC login node without tripping cgroup or runaway-process watchdogs.\n\nThe fork adds HTTP wake-up with token authentication and payload return, sentinel-file completion with optional content read and cleanup, abort-controller cancellation, live progress metadata and predictable per-session ports. The upstream timer-based plugin is preserved, and the fork is released as v0.2.0.",
   "purpose": "To let coding agents wait for long-running external jobs without polling, burning CPU or being killed by login-node watchdogs.",
   "technologies": [
     "TypeScript",
@@ -32,7 +32,7 @@
     "OpenCode Plugin Design"
   ],
   "strengths": [
-    "Consumes 0.00% CPU while waiting by using epoll/inotify and true kernel sleep",
+    "Consumes virtually no measurable CPU while waiting by using epoll/inotify and true kernel sleep",
     "Opens a predictable per-session port (40000 + hash(sessionID) % 4096) with token authentication",
     "Accepts a simple curl wake-up from a compute node and returns exit codes or results to the model",
     "Watches sentinel files on NFS/Lustre and can read or delete their content on completion",

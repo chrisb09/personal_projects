@@ -10,8 +10,8 @@
   "sourceType": "open-source",
   "aiUsage": "minor",
   "aiUtilization": "no-ai",
-  "description": "A single-file Python 3 utility to split and backup a Redis database into multiple base64 URL-safe text files, making backups git-friendly and easily restorable.",
-  "purpose": "To create incremental, text-based, and human-readable backups of Redis data keys and values (handling binary data cleanly via base64) instead of monolithic binary RDB dumps.",
+  "description": "A single-file Python 3 utility to split and back up a Redis database into multiple URL-safe base64 text files, making backups git-friendly and easily restorable.",
+  "purpose": "To create incremental, text-based backups of Redis keys and values (handling binary data cleanly via base64) instead of monolithic binary RDB dumps.",
   "technologies": [
     "Python",
     "Redis",
@@ -29,7 +29,7 @@
     "Stores database keys as individual base64 URL-safe files",
     "Great for version control (git) tracking changes incrementally",
     "Supports string, list, set, zset, hash, and stream types",
-    "Restores TTL and expiration times relative to restore time"
+    "Restores TTLs relative to restore time"
   ],
   "limitations": [
     "Inefficient storage size due to base64 encoding",

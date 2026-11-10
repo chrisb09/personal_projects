@@ -10,7 +10,7 @@
   "sourceType": "open-source",
   "aiUsage": "none",
   "aiUtilization": "no-ai",
-  "description": "A multithreaded Python downloader utility that automates fetching files from Mega.nz using Megatools. It routes requests through a local Tor SOCKS5 proxy, dynamically monitoring download progress and automatically rotating Tor circuits to bypass Mega's IP-based download bandwidth limits.",
+  "description": "A multithreaded Python downloader utility that automates fetching files from Mega.nz using Megatools. It routes requests through a local Tor SOCKS5 proxy, monitoring download progress and automatically rotating Tor circuits to bypass Mega's IP-based download bandwidth limits.",
   "purpose": "To allow continuous and automated downloading of large datasets from Mega.nz without being blocked or throttled by IP bandwidth quotas.",
   "technologies": [
     "Python",
@@ -33,7 +33,7 @@
     "Circumvents Mega.nz bandwidth limits via Tor circuit rotation",
     "Multithreaded queue-based download manager",
     "PHP-based web dashboard to monitor download progress and speeds in real-time",
-    "Detailed speed/IP log tracking and timeout validation"
+    "Detailed speed and IP logging with timeout validation"
   ],
   "limitations": [
     "Download speed is limited by Tor network bandwidth",

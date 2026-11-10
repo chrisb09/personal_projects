@@ -41,7 +41,7 @@
   "installation": "python3 -m pip install Pillow\n# Install GStreamer and PyGObject bindings depending on system packaging\npython3 main.py <source_dir> <target_dir>",
   "usage": "# Run with source and target directories:\npython3 main.py --source=/path/to/source --target=/path/to/target\n\n# Key bindings:\n# ENTER - Accept renaming\n# DELETE - Delete file\n# SPACE - Pause/resume video or GIF\n# F11 - Toggle fullscreen\n# ESC - Exit application",
   "roadmap": [
-    "Superceded by CrystalBatch (rewritten for broader file renaming capabilities)"
+    "Superseded by CrystalBatch (rewritten for broader file renaming capabilities)"
   ],
   "repos": [
     {

@@ -13,7 +13,7 @@ export const projects: Project[] = [
     "sourceType": "open-source",
     "aiUsage": "contributed",
     "aiUtilization": "no-ai",
-    "description": "Maintained fork of JMusicBot, a self-hosted Discord music bot. Upgraded to JDA 6 with Discord voice encryption (DAVE) support, optional YouTube account login, per-channel playback status, SQLite playback analytics, and containerized Docker deployment.",
+    "description": "Maintained fork of JMusicBot, a self-hosted Discord music bot. Upgraded to JDA 6 with Discord voice encryption (DAVE) support, optional YouTube account login, per-channel playback status, SQLite playback analytics, and Docker deployment.",
     "purpose": "To keep JMusicBot operational on modern Discord API standards while expanding it with database-backed statistics and native container support.",
     "technologies": [
       "Java",
@@ -40,7 +40,7 @@ export const projects: Project[] = [
       "Docker image and Compose configuration"
     ],
     "limitations": [
-      "Subject to ongoing changes in YouTube and Discord API structures",
+      "Affected by ongoing changes to the YouTube and Discord APIs",
       "Requires manual Google account login config for restricted content",
       "Requires Docker or Java 8+ environment to self-host"
     ],
@@ -101,7 +101,7 @@ export const projects: Project[] = [
       "Successfully mapped and migrated thousands of legal documents with zero data loss",
       "Handles complex string cleaning, space-escaped directory paths, and legacy encoding issues",
       "Maintains data integrity and structure across deep, nested file systems",
-      "Lightweight and framework-free implementation optimized for localized execution"
+      "Lightweight and framework-free implementation optimized for local execution"
     ],
     "limitations": [],
     "roadmap": [],
@@ -159,7 +159,7 @@ export const projects: Project[] = [
       "Adapts refresh intervals from 10 minutes to 6 hours and schedules around known resets",
       "Schedules each account independently and serves cached data while refreshing in the background",
       "Stores every successful observation in SQLite with per-account and per-quota history charts",
-      "Pools quota bars by type and marks the average time remaining",
+      "Pools quota bars by type and shows the average time remaining",
       "Ships a public read-only view, an MCP endpoint and a native Plasma 5 panel widget",
       "Keeps provider files read-only except for atomic Codex token rotation"
     ],
@@ -171,7 +171,7 @@ export const projects: Project[] = [
       "No license file is present in the repository yet"
     ],
     "installation": "git clone https://github.com/chrisb09/ai_usage.git\ncd ai_usage\ncp .env.example .env\nmkdir -p data secrets/opencode secrets/opencode-data secrets/codex\n# Populate the credential directories and set AI_USAGE_UID / AI_USAGE_GID\ndocker compose up -d --build\n\n# Open http://127.0.0.1:7694",
-    "usage": "# Read cached usage\nget /api/usage\n\n# Force a manual check\nPOST /api/refresh\n\n# Use the MCP endpoint from OpenCode\n{\n  \"mcp\": {\n    \"servers\": {\n      \"ai-usage\": {\n        \"type\": \"remote\",\n        \"url\": \"https://usage.example.com/mcp\",\n        \"headers\": { \"Authorization\": \"Basic {env:AI_USAGE_BASIC}\" }\n      }\n    }\n  }\n}",
+    "usage": "# Read cached usage\nGET /api/usage\n\n# Force a manual check\nPOST /api/refresh\n\n# Use the MCP endpoint from OpenCode\n{\n  \"mcp\": {\n    \"servers\": {\n      \"ai-usage\": {\n        \"type\": \"remote\",\n        \"url\": \"https://usage.example.com/mcp\",\n        \"headers\": { \"Authorization\": \"Basic {env:AI_USAGE_BASIC}\" }\n      }\n    }\n  }\n}",
     "roadmap": [
       "Keep provider collectors current as quota endpoints change",
       "Improve long-term history and credit-expiry tracking",
@@ -218,7 +218,7 @@ export const projects: Project[] = [
     "sourceType": "open-source",
     "aiUsage": "contributed",
     "aiUtilization": "ai-powered",
-    "description": "Master's thesis project at RWTH Aachen redesigning a solver-specific C++ interface into a modular, generic coupling layer. Connects CFD solvers to machine-learning backends (SmartSim/SmartRedis, PhyDLL, AIxeleratorService) via a unified configuration-driven API.\n\nBenchmarked on the Claix23 supercomputing cluster for CPU and GPU inference performance, thread balancing, and Slurm core affinity. Includes an automated Clang AST registry generator and integration tests for coupling the MMCP transformer with the m-aia solver.",
+    "description": "A master's thesis project at RWTH Aachen that redesigns a solver-specific C++ interface into a modular, generic coupling layer. Connects CFD solvers to machine-learning backends (SmartSim/SmartRedis, PhyDLL, AIxeleratorService) via a unified configuration-driven API.\n\nBenchmarked on the Claix23 supercomputing cluster for CPU and GPU inference performance, thread balancing, and Slurm core affinity. Includes an automated Clang AST registry generator and integration tests for coupling the MMCP transformer with the m-aia solver.",
     "purpose": "To connect CFD solvers to machine-learning models without tying each solver to a single communication backend.",
     "technologies": [
       "C++",
@@ -242,14 +242,14 @@ export const projects: Project[] = [
       "Multi-threaded CPU Binding & Affinity"
     ],
     "strengths": [
-      "Redesigned from solver-specific code into a highly generic, modular header-only interface",
+      "Redesigned from solver-specific code into a generic, modular header-only interface",
       "Integrates heterogeneous coupling libraries (SmartSim, PhyDLL, AIxeleratorService) under a configuration-based layer",
       "Supports reflection-free subclass registration via an automatic python-clang parsing registry script",
       "Critically evaluates low-level CPU parallel execution (intra/inter-op threads, OpenMP, core affinity)"
     ],
     "limitations": [
       "Currently restricted to PyTorch (TorchScript) backend implementations",
-      "Performance is bound by underlying library interconnects (e.g. Redis database roundtrips in SmartSim)",
+      "Performance is bound by underlying library interconnects (e.g. Redis round trips in SmartSim)",
       "Requires matching compiler/Clang versions for the registry generator script"
     ],
     "installation": "# Setup the cluster environment (modules for compiler, python, clang, etc.).\n# A cluster-specific 'install.sh' is provided for Claix23/RWTH, but manual\n# configuration is needed on other systems.\n# \n# Note: Building and compiling the external submodules/dependencies\n# (SmartSim, PhyDLL, AIxeleratorService) is required and exceeds the scope\n# of this quick start page.\n\n# Clone the repository and submodules:\ngit clone --recursive git@github.com:chrisb09/CPP-ML-Interface.git\ncd CPP-ML-Interface\n\n# Install python dependencies for registry generation:\npip install -r requirements.txt\n\n# Run your system/cluster build wrapper script:\n./build.sh",
@@ -334,7 +334,7 @@ export const projects: Project[] = [
     "sourceType": "closed-source",
     "aiUsage": "contributed",
     "aiUtilization": "no-ai",
-    "description": "Bespoke Bash-based control plane coordinating service lifecycles, Git synchronization, process management, and log auditing across distributed Linux machines. Features image-backed per-service storage isolation and automated health checks.",
+    "description": "A Bash-based control toolkit coordinating service lifecycles, Git synchronization, process management, and log auditing across distributed Linux machines. It provides image-backed per-service storage isolation and automated health checks.",
     "purpose": "Automated deployments, service orchestration, and storage isolation across Linux server infrastructure.",
     "technologies": [
       "Bash",
@@ -362,7 +362,7 @@ export const projects: Project[] = [
       "Engineered asynchronous parallel task execution using background subshells and dynamic PID tracking arrays for concurrent Git operations",
       "Designed automated storage virtualization and isolation by generating 10GB raw images, formatting ext4 filesystems, and loop-mounting to prevent host disk exhaustion",
       "Built a real-time watchdog system monitoring log capacities, process utilization, and dynamic ports with automated Discord webhook notifications via structured JSON payloads",
-      "Advanced utilization of Bash 4+ associative arrays to map multi-layered application states, dependencies, and dynamic routing profiles",
+      "Uses Bash 4+ associative arrays to map multi-layered application states, dependencies, and dynamic routing profiles",
       "Created text-processing pipelines using sed, awk, and grep for custom dynamic string multiplexing and multi-criteria server/plugin selection logic"
     ],
     "limitations": [
@@ -372,7 +372,7 @@ export const projects: Project[] = [
     ],
     "roadmap": [
       "Abstract the terminal multiplexer layer to support systemd slices or lightweight cgroups directly",
-      "Migrate the procedural bash architecture toward a compiled, typed platform utility (Go/Rust)",
+      "Migrate the procedural Bash architecture toward a compiled, typed platform utility (Go/Rust)",
       "Integrate Prometheus exposition endpoints for structured telemetry collection"
     ],
     "repos": [],
@@ -382,7 +382,7 @@ export const projects: Project[] = [
   {
     "id": "cycling-power-estimator",
     "name": "Cycling Power Estimator & 3D Visualizer",
-    "tagline": "Full-stack web application to retroactively calculate and visualize cycling power from GPX files",
+    "tagline": "Estimate and visualize cycling power from GPX rides, with charts and a 3D map",
     "year": "2026",
     "category": "fullstack",
     "status": "active",
@@ -392,7 +392,7 @@ export const projects: Project[] = [
     "aiUsage": "full",
     "aiUtilization": "no-ai",
     "description": "Upload a GPX track to estimate cycling power from route data and view the results in charts and a 3D map. A FastAPI backend handles the calculations; the React frontend displays the ride.",
-    "purpose": "To democratize cycling analytics by reverse-engineering power output without expensive physical power meters, and providing a highly engaging 3D visualization of rides.",
+    "purpose": "To estimate cycling power from recorded ride data without a physical power meter and visualize rides in 3D.",
     "technologies": [
       "React",
       "FastAPI",
@@ -421,7 +421,7 @@ export const projects: Project[] = [
       "Physics modeling (gravity, rolling resistance, aerodynamic drag, kinetic energy)",
       "3D digital elevation model (DEM) map tracking and path animations",
       "Interactive synchronized charts (speed, power, elevation)",
-      "Bike configurations and user weight/CdA biological profiles support"
+      "Support for bike configurations and rider weight/CdA profiles"
     ],
     "limitations": [
       "Aero drag calculations assume static environmental wind conditions",
@@ -459,7 +459,7 @@ export const projects: Project[] = [
     "sourceType": "closed-source",
     "aiUsage": "minor",
     "aiUtilization": "ai-enhanced",
-    "description": "Backend architecture, database schema, microservices, and Kubernetes deployment for a university digital exam platform. Features high-concurrency assessment delivery, automated evaluation pipelines, and integrated Azure OpenAI assistance for preliminary free-text grading.\n\nChristian co-led the backend of the exam platform and contributed to green LMS as part of its eight-person student team.\n\ngreen LMS is the result of the RWTH Aachen University practical lab „Advanced Web Technologies: Integration of AI approaches into an LMS“ (SS25), run by the Learning Technologies Research Group (Informatik 9) and supervised by Dr. Volodymyr Sokol. An eight-person student team was asked to rebuild the checkpoint and assessment workflow of the university's existing learning management system as a set of independently deployable microservices.\n\nThe system is split into a thin Express gateway and six domain services. The gateway terminates HTTP, handles sessions and permissions, validates payloads with Joi, and routes requests to the checkpoint, challenge, progress, assessment, file and statistics services. Services communicate asynchronously over NATS for events such as checkpoint publication and grading updates, cache hot state in Redis, and persist everything in a shared PostgreSQL schema modelled around subjects, branches, checkpoints, question slots, questions and marks.\n\nThe front end is a React 18 single-page application with role-aware routing for students and teachers, a checkpoint editor that assembles sections from question pools, drag-and-drop and multiple-choice question types, and a live progress view while a checkpoint is being worked on. Every repository carries a GitLab CI pipeline that built the service image and deployed it to the course Kubernetes cluster on merges to main.",
+    "description": "Backend architecture, database schema, microservices, and Kubernetes deployment for a university digital exam platform. Features high-concurrency assessment delivery, automated evaluation pipelines, and integrated Azure OpenAI assistance for preliminary free-text grading.\n\nChristian co-led the backend of the exam platform and contributed to green LMS as part of its eight-person student team.\n\ngreen LMS is the result of the RWTH Aachen University practical lab “Advanced Web Technologies: Integration of AI approaches into an LMS” (SS25), run by the Learning Technologies Research Group (Informatik 9) and supervised by Dr. Volodymyr Sokol. An eight-person student team was asked to rebuild the checkpoint and assessment workflow of the university's existing learning management system as a set of independently deployable microservices.\n\nThe system is split into a thin Express gateway and six domain services. The gateway terminates HTTP, handles sessions and permissions, validates payloads with Joi, and routes requests to the checkpoint, challenge, progress, assessment, file and statistics services. Services communicate asynchronously over NATS for events such as checkpoint publication and grading updates, cache hot state in Redis, and persist everything in a shared PostgreSQL schema modelled around subjects, branches, checkpoints, question slots, questions and marks.\n\nThe front end is a React 18 single-page application with role-aware routing for students and teachers, a checkpoint editor that assembles sections from question pools, drag-and-drop and multiple-choice question types, and a live progress view while a checkpoint is being worked on. Every repository had a GitLab CI pipeline that built the service image and deployed it to the course Kubernetes cluster on merges to main.",
     "purpose": "To add free-text questions and preliminary grading to an existing examination system for a Ukrainian university, and to rebuild the checkpoint and assessment workflow of the RWTH Aachen learning management system as independently deployable microservices.",
     "technologies": [
       "Kubernetes",
@@ -685,15 +685,15 @@ export const projects: Project[] = [
       "Responsive Frontend Architecture"
     ],
     "strengths": [
-      "Engineered a complete architectural overhaul by transitioning legacy HTML into a type-safe Next.js implementation utilizing Tailwind CSS v4",
+      "Migrated legacy HTML to a type-safe Next.js implementation using Tailwind CSS v4",
       "Optimized critical Core Web Vitals (FCP/LCP) by leveraging experimental native CSS inlining configurations inside the Next.js runtime",
       "Built a custom automated image processing pipeline converting graphic assets to highly compressed WebP formats for faster loading times",
       "Implemented automated Low-Quality Image Placeholders (LQIP) via blur placeholders to eliminate visual layout shifts (CLS) during image hydration",
       "Designed a robust hash-based gallery metadata system to synchronize media states dynamically and ensure correct asset descriptions",
-      "Architected an automated CI/CD deployment workflow via GitHub Actions with complex basePath mapping logic tailored for custom domains"
+      "Set up automated CI/CD deployment via GitHub Actions, including basePath handling for custom domains"
     ],
     "limitations": [
-      "Primarily static presentation architecture, limits dynamic server-side runtime operations",
+      "Primarily static presentation architecture, which limits dynamic server-side runtime operations",
       "Gallery updates depend on local script-based metadata generation before deployment"
     ],
     "roadmap": [
@@ -726,7 +726,7 @@ export const projects: Project[] = [
     "aiUsage": "minor",
     "aiUtilization": "no-ai",
     "description": "A Python command-line script that crawls source and destination directories to detect duplicate files by hashing. It can automatically delete target duplicates and replace them with symlinks or hardlinks, optimizing disk space while preserving file organization.",
-    "purpose": "To free up storage space (e.g. seeding torrents while maintaining files in library folders on different drives) without duplicating file contents.",
+    "purpose": "To free up storage space without duplicating file contents, for example when seeding torrents while keeping the same files in library folders on different drives.",
     "technologies": [
       "Python",
       "Bash"
@@ -740,15 +740,15 @@ export const projects: Project[] = [
       "Storage Management"
     ],
     "strengths": [
-      "Uses speculative caching (filename+size) for extremely fast subsequent runs",
+      "Caches hashes keyed by (filename, size) to skip recomputation, making subsequent runs extremely fast",
       "Supports dry-run mode by default to preview changes safely",
       "Generates clean links (symlinks or hardlinks) without duplicating files",
       "Zero external dependencies (uses Python standard library only)"
     ],
     "limitations": [
       "Hardlinks cannot span across different physical drives",
-      "Speculative caching might mismatch files with identical name/size but different content",
-      "File system operations modify target files directly (recommends backup)"
+      "The (filename, size) hash cache can reuse an incorrect hash when different files share a name and size, or when a file's content changes without its name or size changing",
+      "File system operations modify target files directly, so backing up beforehand is recommended"
     ],
     "installation": "git clone git@github.com:chrisb09/find-duplicates.git\ncd find-duplicates\nchmod +x find_duplicates.py",
     "usage": "# Perform a dry-run check:\npython3 find_duplicates.py /path/to/source /path/to/destination\n\n# Create symlinks for duplicates:\npython3 find_duplicates.py --softlink /path/to/source /path/to/destination",
@@ -778,7 +778,7 @@ export const projects: Project[] = [
     "sourceType": "open-source",
     "aiUsage": "minor",
     "aiUtilization": "no-ai",
-    "description": "An experimental virtual distributed shared object memory system for Java. It combines Redis as a backing store with an invalidation-based cache coherence protocol via Redis Pub/Sub, allowing multiple independent processes or Minecraft servers to interact with synchronized objects as if they were local references. Field-level updates and reference changes are intercepted and broadcasted automatically using AspectJ compile-time bytecode weaving.",
+    "description": "An experimental virtual distributed shared object memory system for Java. It combines Redis as a backing store with an invalidation-based cache coherence protocol via Redis Pub/Sub, allowing multiple independent processes or Minecraft servers to interact with synchronized objects as if they were local references. Field-level updates and reference changes are intercepted and broadcast automatically using AspectJ compile-time bytecode weaving.",
     "purpose": "To provide a low-latency state synchronization layer for Minecraft server environments (Spigot/Paper) and proxies (Velocity) where tick times are constrained to 50ms, bypassing the serialization overhead of traditional ORMs or Redisson's explicit map/list updates.",
     "technologies": [
       "Java",
@@ -817,7 +817,7 @@ export const projects: Project[] = [
       "Parent-child relationship tracking and some failure-recovery scenarios still require further work"
     ],
     "installation": "<!-- Add Firecord repository and dependency in pom.xml -->\n<dependency>\n    <groupId>net.legendofwar.firecord</groupId>\n    <artifactId>Firecord</artifactId>\n    <version>${firecord.version}</version>\n</dependency>\n\n<!-- Requires aspectj-maven-plugin configured for compile-time weaving -->\n<plugin>\n    <groupId>org.codehaus.mojo</groupId>\n    <artifactId>aspectj-maven-plugin</artifactId>\n    <version>${aspectj.plugin.version}</version>\n    <configuration>\n        <aspectLibraries>\n            <aspectLibrary>\n                <groupId>org.aspectj</groupId>\n                <artifactId>aspectjrt</artifactId>\n            </aspectLibrary>\n        </aspectLibraries>\n    </configuration>\n</plugin>",
-    "usage": "// 1. Initialize Firecord for Spigot or Standalone mode\nFirecord.init(NodeType.SPIGOT);\n\n// 2. Define a shared object extending AbstractObject\npublic final class PlayerData extends AbstractObject {\n    // Synchronized fields using R-types (or primitives woven by AspectJ)\n    private RInteger level = new RInteger(new Bytes(\"level\"));\n    private RString rank = new RString(new Bytes(\"rank\"));\n    \n    public PlayerData(Bytes key) {\n        super(key);\n    }\n}\n\n// 3. Load or create the object from the distributed memory\nPlayerData data = (PlayerData) AbstractData.create(new Bytes(\"player-123\"));\n\n// 4. Modify fields - changes are automatically woven and broadcasted to other nodes\ndata.getLevel().set(100);",
+    "usage": "// 1. Initialize Firecord for Spigot or Standalone mode\nFirecord.init(NodeType.SPIGOT);\n\n// 2. Define a shared object extending AbstractObject\npublic final class PlayerData extends AbstractObject {\n    // Synchronized fields using R-types (or primitives woven by AspectJ)\n    private RInteger level = new RInteger(new Bytes(\"level\"));\n    private RString rank = new RString(new Bytes(\"rank\"));\n    \n    public PlayerData(Bytes key) {\n        super(key);\n    }\n}\n\n// 3. Load or create the object from the distributed memory\nPlayerData data = (PlayerData) AbstractData.create(new Bytes(\"player-123\"));\n\n// 4. Modify fields - changes are automatically intercepted and broadcast to other nodes\ndata.getLevel().set(100);",
     "roadmap": [
       "Harden reliable delivery and failure recovery under node and network failures",
       "Optimize AspectJ aspects to reduce runtime memory overhead",
@@ -864,7 +864,7 @@ export const projects: Project[] = [
     "sourceType": "closed-source",
     "aiUsage": "minor",
     "aiUtilization": "no-ai",
-    "description": "Production-grade, zero-downtime private Linux server infrastructure operating continuously since 2018. Manages 100+ TB of ZFS storage, containerized Docker services, automated off-site backups, and encrypted WireGuard networking serving around 20 users.",
+    "description": "Private Linux server infrastructure operated and maintained since 2018. It manages 100+ TB of ZFS storage, Docker services, off-site backups for selected scripts and configuration files, and encrypted WireGuard networking for around 20 users.",
     "purpose": "To create a privacy-focused, self-controlled alternative to commercial cloud services, providing reliable hosting for personal data and applications.",
     "technologies": [
       "Docker",
@@ -890,7 +890,7 @@ export const projects: Project[] = [
       "Network Security & VPNs"
     ],
     "strengths": [
-      "8 years of continuous uptime and infrastructure maintenance",
+      "Operating and maintaining the infrastructure since 2018",
       "Architected robust storage pools using openZFS for enterprise-grade data integrity",
       "Automated deployment of web, cloud, and AI applications via Docker Compose and nginx",
       "Secure network routing and remote access configured via WireGuard"
@@ -905,7 +905,7 @@ export const projects: Project[] = [
     "installation": "# Server setup overview\n# 1. Install Ubuntu Server LTS\n# 2. Configure openZFS storage pools\n# 3. Set up Docker and Docker Compose\n# 4. Configure nginx reverse proxy\n# 5. Set up WireGuard VPN\n# 6. Deploy services via Docker Compose\n\n# Example docker-compose.yml structure\nversion: '3.8'\nservices:\n  nextcloud:\n    image: nextcloud:latest\n    # ... configuration\n  jellyfin:\n    image: jellyfin/jellyfin\n    # ... configuration",
     "usage": "# Access services via VPN\nwg-quick up homeserver\n\n# Web services accessible at:\n# https://cloud.yourdomain.com\n# https://media.yourdomain.com\n\n# Monitor system\nhtop\ndocker stats\nzfs list",
     "roadmap": [
-      "Implement automated backup to offsite storage",
+      "Expand automated off-site backups beyond selected scripts and configuration files",
       "Add monitoring and alerting (Prometheus/Grafana)",
       "Set up high availability for critical services",
       "Expand AI/ML service offerings",
@@ -936,7 +936,7 @@ export const projects: Project[] = [
   {
     "id": "ibus",
     "name": "Ibus",
-    "tagline": "Java Tool to Encode Files into ARGB Images for Unlimited Cloud Storage",
+    "tagline": "Java tool for encoding files as images for photo storage",
     "year": "2019",
     "category": "utility",
     "status": "archived",
@@ -945,8 +945,8 @@ export const projects: Project[] = [
     "sourceType": "open-source",
     "aiUsage": "none",
     "aiUtilization": "no-ai",
-    "description": "A Java-based CLI utility that encodes files into ARGB pixels of PNG images and decodes them back to their original state. By representing files as images, it enables using unlimited photo cloud storage services (like Google Photos or Amazon Photos) as a backup destination.",
-    "purpose": "To bypass file-hosting limitations on cloud providers by translating binary files and directory structures into visual image files.",
+    "description": "A Java-based CLI utility that encodes files into ARGB pixels of PNG images and decodes them back to their original state. This archived experiment represented files as images to use photo cloud storage as a backup destination, including via former Google Photos features that no longer work.",
+    "purpose": "To bypass file-hosting limitations on cloud providers by translating binary files and directory structures into image files.",
     "technologies": [
       "Java",
       "Cryptography (AES)"
@@ -966,7 +966,7 @@ export const projects: Project[] = [
       "Splits large files automatically across multiple image sequences"
     ],
     "limitations": [
-      "Google/Amazon Photos API restrictions limit automated cloud integration",
+      "The former Google Photos storage features this experiment relied on no longer work; provider API restrictions also limit automated integration",
       "Memory-bound and single-threaded encoding",
       "Losing the AES key results in permanent data loss"
     ],
@@ -1031,7 +1031,7 @@ export const projects: Project[] = [
     "installation": "python3 -m pip install Pillow\n# Install GStreamer and PyGObject bindings depending on system packaging\npython3 main.py <source_dir> <target_dir>",
     "usage": "# Run with source and target directories:\npython3 main.py --source=/path/to/source --target=/path/to/target\n\n# Key bindings:\n# ENTER - Accept renaming\n# DELETE - Delete file\n# SPACE - Pause/resume video or GIF\n# F11 - Toggle fullscreen\n# ESC - Exit application",
     "roadmap": [
-      "Superceded by CrystalBatch (rewritten for broader file renaming capabilities)"
+      "Superseded by CrystalBatch (rewritten for broader file renaming capabilities)"
     ],
     "repos": [
       {
@@ -1067,8 +1067,8 @@ export const projects: Project[] = [
     "sourceType": "open-source",
     "aiUsage": "contributed",
     "aiUtilization": "no-ai",
-    "description": "Open-source contribution to JDA-Chewtils, a Java command and menu extension suite for Discord bots. Implemented core compatibility patches, event handling updates, and API adaptations for JDA 6.1.1.",
-    "purpose": "To simplify Java-based Discord bot development by providing reusable structures for command registering and UI menus.",
+    "description": "Open-source contributions to JDA-Chewtils, a Java command and menu extension suite for Discord bots. Contributed core compatibility patches, event handling updates, and API adaptations for JDA 6.1.1.",
+    "purpose": "To simplify Java-based Discord bot development by providing reusable structures for command registration and UI menus.",
     "technologies": [
       "Java",
       "Gradle",
@@ -1086,7 +1086,7 @@ export const projects: Project[] = [
       "Modular library design allowing developers to import only required features",
       "Provides fully customizable paginated menu systems",
       "Actively maintained to support modern JDA versions",
-      "Simplifies slash command registration and permissions handling"
+      "Simplifies slash command registration and permission handling"
     ],
     "limitations": [
       "Tightly coupled to DV8FromTheWorld/JDA API updates",
@@ -1119,7 +1119,7 @@ export const projects: Project[] = [
     "sourceType": "open-source",
     "aiUsage": "minor",
     "aiUtilization": "no-ai",
-    "description": "A Python command-line tool that helps clean up KeePassXC databases. It scans all entries and groups potential duplicates by a composite key built from the entry URL or app ID, username, and password.\n\nIt provides an interactive deduplication flow: for every set of duplicates it lists the matching entries with their internal paths and asks which entry to keep before saving the database. It can also report which custom properties exist across all entries, which helps to standardize and tidy up entries.",
+    "description": "A Python command-line tool that helps clean up KeePassXC databases. It scans all entries and groups potential duplicates by a composite key built from the entry URL or app ID, username, and password.\n\nIt provides an interactive deduplication flow: for every set of duplicates it lists the matching entries with their internal paths and asks which entry to keep before saving the database. It can also report which custom properties exist across all entries, which helps standardize and tidy up entries.",
     "purpose": "To keep KeePassXC databases tidy and secure by detecting redundant entries, letting users safely remove duplicates after review, and highlighting inconsistent custom property usage.",
     "technologies": [
       "Python",
@@ -1174,7 +1174,7 @@ export const projects: Project[] = [
     "sourceType": "open-source",
     "aiUsage": "minor",
     "aiUtilization": "no-ai",
-    "description": "Java client library for LibreTranslate instances, supporting synchronous and asynchronous translation requests, model management, and language detection. Maintained with upstream compatibility updates.",
+    "description": "Java client library for LibreTranslate instances, supporting synchronous and asynchronous translation requests, model management, and language detection. Contributed compatibility updates for changes in the LibreTranslate API.",
     "purpose": "To use LibreTranslate from Java applications against self-hosted or public instances.",
     "technologies": [
       "Java",
@@ -1201,9 +1201,9 @@ export const projects: Project[] = [
       "Well-documented with examples"
     ],
     "limitations": [
-      "Requires running LibreTranslate instance",
+      "Requires a running LibreTranslate instance",
       "Translation quality depends on the instance",
-      "Rate limits on public instances",
+      "Subject to rate limits on public instances",
       "Limited to supported languages"
     ],
     "installation": "// Maven Repository\n<repository>\n    <id>dynomakeRepository</id>\n    <url>https://maven.dynomake.it/releases</url>\n</repository>\n\n// Maven Dependency\n<dependency>\n    <groupId>space.dynomake</groupId>\n    <artifactId>libretranslate-java</artifactId>\n    <version>1.0.9</version>\n</dependency>\n\n// Gradle Repository\nrepositories {\n    maven {\n        name = 'dynomakeRepository'\n        url = uri('https://maven.dynomake.it/releases')\n    }\n}\n\n// Gradle Dependency\nimplementation 'space.dynomake:libretranslate-java:1.0.9'",
@@ -1267,7 +1267,7 @@ export const projects: Project[] = [
       "Very fast in-memory execution within the Paint.NET UI"
     ],
     "limitations": [
-      "Requires Paint.NET installed on Windows to run the plugin",
+      "Requires an installed copy of Paint.NET on Windows to run the plugin",
       "Does not handle image resizing (Minecraft maps are 128x128 pixels)",
       "Limited to the predefined color palette"
     ],
@@ -1300,7 +1300,7 @@ export const projects: Project[] = [
     "sourceType": "open-source",
     "aiUsage": "none",
     "aiUtilization": "no-ai",
-    "description": "A multithreaded Python downloader utility that automates fetching files from Mega.nz using Megatools. It routes requests through a local Tor SOCKS5 proxy, dynamically monitoring download progress and automatically rotating Tor circuits to bypass Mega's IP-based download bandwidth limits.",
+    "description": "A multithreaded Python downloader utility that automates fetching files from Mega.nz using Megatools. It routes requests through a local Tor SOCKS5 proxy, monitoring download progress and automatically rotating Tor circuits to bypass Mega's IP-based download bandwidth limits.",
     "purpose": "To allow continuous and automated downloading of large datasets from Mega.nz without being blocked or throttled by IP bandwidth quotas.",
     "technologies": [
       "Python",
@@ -1323,7 +1323,7 @@ export const projects: Project[] = [
       "Circumvents Mega.nz bandwidth limits via Tor circuit rotation",
       "Multithreaded queue-based download manager",
       "PHP-based web dashboard to monitor download progress and speeds in real-time",
-      "Detailed speed/IP log tracking and timeout validation"
+      "Detailed speed and IP logging with timeout validation"
     ],
     "limitations": [
       "Download speed is limited by Tor network bandwidth",
@@ -1360,7 +1360,7 @@ export const projects: Project[] = [
     "sourceType": "open-source",
     "aiUsage": "full",
     "aiUtilization": "ai-powered",
-    "description": "A complete fine-tuning pipeline and inference engine that teaches a small 0.5B parameter language model (Qwen2.5-0.5B-Instruct) to perform real-time bidirectional English↔German chat translation on authentic Minecraft server logs. Training was done entirely on CPU (AMD Zen 4 / AVX-512 BF16) at ~245 tokens/sec over 7 hours 34 minutes, achieving a validation loss reduction from 1.1972 to 0.1005 (91.6%).\n\nThe project includes a multi-LLM async dataset translation pipeline (Gemini + OpenRouter), a ChatML training data synthesizer with 4 linguistic scenarios and 65.9M username permutations, a FastAPI inference engine with persistent per-session KV cache for sub-15ms TTFT, and a side-by-side benchmark tool comparing the fine-tuned model against base Qwen 0.5B, Nemotron 3.5 Lightning 30B, Stealth ox-alpha, and Gemini 3.5 Flash Lite.",
+    "description": "A complete fine-tuning pipeline and inference engine that teaches a small 0.5B parameter language model (Qwen2.5-0.5B-Instruct) to perform real-time bidirectional English↔German chat translation on authentic Minecraft server logs. Training was done entirely on CPU (AMD Zen 4 / AVX-512 BF16) at ~245 tokens/sec over 7 hours 34 minutes, achieving a validation loss reduction from 1.1972 to 0.1005 (91.6%).\n\nThe project includes a multi-LLM async dataset translation pipeline (Gemini + OpenRouter), a ChatML training data synthesizer with 4 linguistic scenarios and 65.9M username permutations, a FastAPI inference engine with persistent per-session KV cache and approximately 54 ms TTFT, and a side-by-side benchmark tool comparing the fine-tuned model against base Qwen 0.5B, Nemotron 3.5 Lightning 30B, Stealth ox-alpha, and Gemini 3.5 Flash Lite.",
     "purpose": "To enable real-time transparent translation between English and German players on a mixed-language Minecraft server, running locally on consumer hardware without cloud inference costs, with strict protocol adherence and gaming domain glossary awareness.",
     "technologies": [
       "Python",
@@ -1390,7 +1390,7 @@ export const projects: Project[] = [
       "Model Evaluation & Benchmarking"
     ],
     "strengths": [
-      "100% protocol adherence after fine-tuning vs. complete failure of base model zero-shot",
+      "100% protocol adherence after fine-tuning, versus complete zero-shot failure of the base model",
       "Domain glossary mapping: 'Ansturm' → 'Rush', 'LoW' → 'Legend of War', 'LK' → 'Leistungskurs'",
       "Handles real chat typos (schwimsmt, vlt, gehn) without preprocessing",
       "Persistent KV cache yields flat ~54ms TTFT regardless of conversation length",
@@ -1480,8 +1480,8 @@ export const projects: Project[] = [
       "Fully functional classifier and detector restored from the broken original NudeNet v2 branch",
       "ONNX models hosted reliably on GitLab raw storage for direct downloads",
       "Added support for custom model directories via constructor parameter or NUDENET_MODEL_DIR environment variable",
-      "Cleaned codebase of indecent images in documentation",
-      "Easy installation and PyPI publication packaging"
+      "Removed indecent images from the documentation",
+      "Packaged for installation via PyPI"
     ],
     "limitations": [
       "Deep learning model accuracy depends on pre-trained NudeNet weights",
@@ -1525,7 +1525,7 @@ export const projects: Project[] = [
     "sourceType": "open-source",
     "aiUsage": "full",
     "aiUtilization": "ai-powered",
-    "description": "A maintained fork of opencode-antigravity-auth, an authentication plugin for OpenCode that connects to Google Antigravity (Google's AI IDE) via OAuth. It enables developers to authenticate with standard Google accounts to access Claude (Opus 4.6 Thinking, Sonnet 4.6) and Gemini models under Antigravity rate limits and multi-account rotation.\n\nThis fork introduces full support for Gemini 3.8 Flash and 3.7 Flash with dynamic thinking-level mapping to Antigravity CLI tier backend models, fixes the CodeAssist onboarding payload and project discovery to prevent HTTP 400 errors, sends the official CLI User-Agent to resolve HTTP 404s on gated preview models, normalizes functionDeclarations tools for Gemini schema compatibility, and tracks pre-built dist/ artifacts for zero-build direct GitHub installation.",
+    "description": "A maintained fork of the upstream opencode-antigravity-auth authentication plugin for OpenCode that connects to Google Antigravity (Google's AI IDE) via OAuth. It enables developers to authenticate with standard Google accounts to access Claude (Opus 4.6 Thinking, Sonnet 4.6) and Gemini models within Antigravity rate limits, with multi-account rotation.\n\nThis fork introduces full support for Gemini 3.8 Flash and 3.7 Flash with dynamic thinking-level mapping to Antigravity CLI tier backend models, fixes the CodeAssist onboarding payload and project discovery to prevent HTTP 400 errors, sends the official CLI User-Agent to resolve HTTP 404s on gated preview models, normalizes functionDeclarations tools for Gemini schema compatibility, and ships pre-built dist/ artifacts for installation directly from GitHub without a local build.",
     "purpose": "To provide reliable, up-to-date access to the latest Gemini 3.7/3.8 Flash and Claude thinking models within OpenCode by fixing upstream protocol mismatches, User-Agent gating, and installation bottlenecks.",
     "technologies": [
       "TypeScript",
@@ -1599,7 +1599,7 @@ export const projects: Project[] = [
         "JSON": 68
       }
     },
-    "description": "An OpenCode plugin for models from KI:connect, the RWTH/NRW gateway. It configures locally hosted open-weight models and commercial models routed to external providers, using a KI:connect API key. It was built separately from opencode-antigravity-auth, which served as an integration reference.",
+    "description": "An OpenCode plugin for models from KI:connect, the RWTH/NRW gateway. It registers locally hosted open-weight models and commercial models routed to external providers, using a KI:connect API key for authentication. It was built separately from opencode-antigravity-auth, which served as an integration reference.",
     "purpose": "To access KI:connect models from OpenCode while keeping their hosting and quota differences visible.",
     "technologies": [
       "TypeScript",
@@ -1663,7 +1663,7 @@ export const projects: Project[] = [
     "sourceType": "open-source",
     "aiUsage": "full",
     "aiUtilization": "ai-powered",
-    "description": "A local, deterministic router for OpenCode 2.x. It wraps the existing subagent tool and selects a model per invocation from seven specialist roles, four difficulty tiers, importance, context size and modality, while keeping Plan and Build on their normal primary models. Quota comes from the existing AI Usage service instead of a second provider poller.\n\nThe router records durable SQLite reservations, enforces per-account and global concurrency limits, applies cooldowns, and fails closed when quota, identity or context checks cannot be satisfied. It also provides an authenticated local API, read-only MCP tools, a user systemd service, and workflow tracing with redacted JSON/Mermaid exports and a static HTML/SVG lifeline timeline. Paid Opus and Kimi dispatch remain locked behind a separate approval mechanism.",
+    "description": "A local, deterministic router for OpenCode 2.x. It wraps the existing subagent tool and selects a model per invocation based on seven specialist roles, four difficulty tiers, importance, context size and modality, while keeping Plan and Build on their normal primary models. Quota comes from the existing AI Usage service instead of a second provider poller.\n\nThe router records durable SQLite reservations, enforces per-account and global concurrency limits, applies cooldowns, and fails closed when quota, identity or context checks cannot be satisfied. It also provides an authenticated local API, read-only MCP tools, a systemd user service, and workflow tracing with redacted JSON/Mermaid exports and a static HTML/SVG lifeline timeline. Paid Opus and Kimi dispatch remain locked behind a separate approval mechanism.",
     "purpose": "To delegate work across multiple model providers without oversubscribing subscription quotas, leaking credentials or silently changing the user's primary model.",
     "technologies": [
       "TypeScript",
@@ -1703,7 +1703,7 @@ export const projects: Project[] = [
       "Paid Opus and Kimi dispatch are intentionally locked in this release",
       "Depends on the AI Usage service for fresh quota observations"
     ],
-    "installation": "# Install dependencies and the additive local integration\nbun install\nnpm run install:local\n\n# Start the user service\nsystemctl --user start opencode-model-router.service\nsystemctl --user status opencode-model-router.service",
+    "installation": "# Install dependencies and the additive local integration\nbun install\nnpm run install:local\n\n# Start the systemd user service\nsystemctl --user start opencode-model-router.service\nsystemctl --user status opencode-model-router.service",
     "usage": "# Inspect routing state\nbun src/cli.ts status\n\n# Delegate with optional routing metadata\n{\n  \"agent\": \"reviewer\",\n  \"description\": \"Review transaction handling\",\n  \"routing\": {\n    \"tier\": \"HARD\",\n    \"importance\": \"high\",\n    \"inputTokens\": 30000,\n    \"outputTokens\": 8000\n  }\n}\n\n# Export a recorded workflow timeline\nbun src/cli.ts workflow <sessionID> --timeline --out ~/.local/share/opencode-model-router/exports/timeline.html",
     "roadmap": [
       "Add a trusted approval and monetary reservation mechanism for paid models",
@@ -1901,7 +1901,7 @@ export const projects: Project[] = [
   {
     "id": "opencode-wait",
     "name": "opencode-wait",
-    "tagline": "Zero-CPU waiting for OpenCode agents on HPC login nodes",
+    "tagline": "Near-Zero-CPU waiting for OpenCode agents on HPC login nodes",
     "year": "2026",
     "category": "utility",
     "status": "active",
@@ -1910,7 +1910,7 @@ export const projects: Project[] = [
     "sourceType": "open-source",
     "aiUsage": "contributed",
     "aiUtilization": "no-ai",
-    "description": "A maintained fork of the opencode-wait plugin that lets OpenCode agents pause without burning CPU. It combines a zero-CPU HTTP listener, sentinel-file watching and kernel-level sleeps so an agent can wait for a Slurm job, a remote completion signal or a new user message on an HPC login node without tripping cgroup or runaway-process watchdogs.\n\nThe fork adds HTTP wake-up with token authentication and payload return, sentinel-file completion with optional content read and cleanup, abort-controller cancellation, live progress metadata and predictable per-session ports. The upstream timer-based plugin is preserved, and the fork is released as v0.2.0.",
+    "description": "A maintained fork of the opencode-wait plugin that lets OpenCode agents pause without burning CPU. It combines a near-zero-CPU HTTP listener, sentinel-file watching and kernel-level sleeps so an agent can wait for a Slurm job, a remote completion signal or a new user message on an HPC login node without tripping cgroup or runaway-process watchdogs.\n\nThe fork adds HTTP wake-up with token authentication and payload return, sentinel-file completion with optional content read and cleanup, abort-controller cancellation, live progress metadata and predictable per-session ports. The upstream timer-based plugin is preserved, and the fork is released as v0.2.0.",
     "purpose": "To let coding agents wait for long-running external jobs without polling, burning CPU or being killed by login-node watchdogs.",
     "technologies": [
       "TypeScript",
@@ -1932,7 +1932,7 @@ export const projects: Project[] = [
       "OpenCode Plugin Design"
     ],
     "strengths": [
-      "Consumes 0.00% CPU while waiting by using epoll/inotify and true kernel sleep",
+      "Consumes virtually no measurable CPU while waiting by using epoll/inotify and true kernel sleep",
       "Opens a predictable per-session port (40000 + hash(sessionID) % 4096) with token authentication",
       "Accepts a simple curl wake-up from a compute node and returns exit codes or results to the model",
       "Watches sentinel files on NFS/Lustre and can read or delete their content on completion",
@@ -1987,8 +1987,8 @@ export const projects: Project[] = [
     "sourceType": "open-source",
     "aiUsage": "minor",
     "aiUtilization": "no-ai",
-    "description": "Community package maintenance for Pacstall, the AUR-inspired package manager for Ubuntu and Debian. Focuses on maintaining clean, secure, and reproducible build scripts (pacscripts) within the distribution's official repository.",
-    "purpose": "To help maintain installable packages for Ubuntu and Debian users outside the distribution repositories.",
+    "description": "Community package maintenance for Pacstall, the AUR-inspired package manager for Ubuntu and Debian. Focuses on maintaining clean, secure, and reproducible build scripts (pacscripts) within Pacstall's official package repository.",
+    "purpose": "To help maintain installable packages for Ubuntu and Debian users outside the official Ubuntu and Debian repositories.",
     "technologies": [
       "Bash",
       "Linux",
@@ -2044,7 +2044,7 @@ export const projects: Project[] = [
   {
     "id": "pdnwebview",
     "name": "pdnwebview",
-    "tagline": "Web Viewer for Paint.net Project Files",
+    "tagline": "Web Viewer for Paint.NET Project Files",
     "year": "2022",
     "category": "frontend",
     "status": "active",
@@ -2083,7 +2083,7 @@ export const projects: Project[] = [
       "Read-only (no editing capabilities)",
       "Requires a separate offline export step before a project can be viewed",
       "Export is CPU- and memory-intensive for large multi-layer files",
-      "Layer blend modes are stored but rendered as normal",
+      "Layer blend modes are stored but rendered using the Normal blend mode",
       "Limited to Paint.NET files supported by pypdn"
     ],
     "installation": "# 1. Viewer + WebGL submodule\ngit clone --recurse-submodules \\\n  https://github.com/chrisb09/pdnwebview.git\ncd pdnwebview\n\n# Already cloned without submodules?\ngit submodule update --init --recursive\n\n# 2. Offline exporter (not needed at runtime)\ngit clone https://gitlab.com/christianbrinkmann/pdnexport.git ../pdnexport\npython3 -m venv ../pdnexport/.venv\n../pdnexport/.venv/bin/pip install -r ../pdnexport/requirements.txt\n\n# 3. Local preview with the bundled test project\npython3 -m http.server 8000\n# open http://localhost:8000/?id=testimage",
@@ -2091,7 +2091,7 @@ export const projects: Project[] = [
     "roadmap": [
       "Support for animation playback",
       "Create a browser extension for quick viewing",
-      "Support newer Paint.net file formats as pypdn adds them",
+      "Support newer Paint.NET file formats as pypdn adds them",
       "Reproduce Paint.NET layer blend modes"
     ],
     "demoUrl": "https://christian-f-brinkmann.de/paint/",
@@ -2118,11 +2118,11 @@ export const projects: Project[] = [
       },
       {
         "name": "pypdn",
-        "relation": "Dependency of pdnexport for Paint.net binary parsing",
+        "relation": "Dependency of pdnexport for Paint.NET binary parsing",
         "url": "https://github.com/addisonElliott/pypdn/"
       },
       {
-        "name": "Paint.net",
+        "name": "Paint.NET",
         "relation": "File format support for",
         "url": "https://www.getpaint.net/"
       }
@@ -2141,7 +2141,7 @@ export const projects: Project[] = [
     "aiUsage": "full",
     "aiUtilization": "no-ai",
     "description": "Interactive developer portfolio showcasing personal and research projects with faceted search, dynamic filters, contribution activity heatmaps, and repository telemetry synced from local Git trees and APIs.",
-    "purpose": "To showcase personal software development work, utilities, and IT projects with actual, verifiably tracked LOC and commit statistics directly gathered from local repositories.",
+    "purpose": "To showcase personal software development work, utilities, and IT projects with verifiable LOC and commit statistics gathered from local repositories.",
     "technologies": [
       "React",
       "TypeScript",
@@ -2176,7 +2176,6 @@ export const projects: Project[] = [
     "installation": "git clone git@github.com:chrisb09/personal_projects.git\ncd personal_projects\nnpm install",
     "usage": "# Run development server:\nnpm run dev\n\n# Compile project data:\nnpm run compile-projects\n\n# Update local git repository stats:\nnpm run update-stats -- --force\n\n# Build production bundle:\nnpm run build",
     "roadmap": [
-      "Add interactive git commit activity heatmaps",
       "Support automated remote repo cloning via API"
     ],
     "repos": [
@@ -2202,7 +2201,7 @@ export const projects: Project[] = [
     "sourceType": "open-source",
     "aiUsage": "full",
     "aiUtilization": "no-ai",
-    "description": "A single-file, self-hosted directory listing and file viewer written in PHP. It automatically generates customizable directory indexes featuring media metadata scans, concurrent background thumbnail generation (for videos, PDFs, and images), real-time path directory watching, and temporary, encrypted share-by-link functionality.",
+    "description": "A single-file, self-hosted directory listing and file viewer written in PHP. It automatically generates customizable directory indexes featuring media metadata scans, concurrent background thumbnail generation (for videos, PDFs, and images), real-time directory watching, and temporary, encrypted share-by-link functionality.",
     "purpose": "To serve a lightweight, dependency-free (frontend) directory index that is easy to deploy while providing a modern, rich media-browsing interface.",
     "technologies": [
       "PHP",
@@ -2227,9 +2226,9 @@ export const projects: Project[] = [
     ],
     "strengths": [
       "No external libraries or build step (entire interface is single-file PHP)",
-      "Concurrently limited background task runner for thumbnails and metadata scans",
+      "Background task runner with a concurrency limit for thumbnails and metadata scans",
       "On-hover thumbnail previews for images, video frames, and PDFs",
-      "Temporary encrypted share links that bypass basic authentication"
+      "Temporary encrypted share links let recipients access shared content without signing in"
     ],
     "limitations": [
       "High initial CPU utilization on large unindexed media folders",
@@ -2267,7 +2266,7 @@ export const projects: Project[] = [
     "sourceType": "open-source",
     "aiUsage": "minor",
     "aiUtilization": "no-ai",
-    "description": "A Python-based command-line utility for auditing and cleaning up torrents and files in a qBittorrent instance. It features tracker status checking, finding orphaned/unused files on disk, and identifying unlinked hardlinks to automate cleaning leftovers safely with dry-run protection.",
+    "description": "A Python-based command-line utility for auditing and cleaning up torrents and files in a qBittorrent instance. It features tracker status checking, finding orphaned/unused files on disk, and identifying files no longer hardlinked elsewhere, with dry-run protection for cleanup.",
     "purpose": "To manage qBittorrent instances, especially in setups where downloads are hardlinked to media folders, by cleaning dead tracker torrents and orphaned download files.",
     "technologies": [
       "Python",
@@ -2325,7 +2324,7 @@ export const projects: Project[] = [
     "aiUsage": "none",
     "aiUtilization": "no-ai",
     "description": "A command-line tool and Python module to dump Redis datasets into JSON files and restore them. Stream support allows handling large databases efficiently.",
-    "purpose": "To facilitate long-term storage, transfer, and version-controlling of Redis datasets in a clean, streaming-capable text format (JSON).",
+    "purpose": "To facilitate long-term storage, transfer, and version control of Redis datasets in a clean, streaming-capable text format (JSON).",
     "technologies": [
       "Python",
       "Redis",
@@ -2342,7 +2341,7 @@ export const projects: Project[] = [
     "strengths": [
       "Compatible with redis-dump",
       "Streams data to minimize memory usage",
-      "Preserves TTL and expiration times",
+      "Preserves key TTLs",
       "Can be used as a CLI utility or Python module"
     ],
     "limitations": [
@@ -2378,8 +2377,8 @@ export const projects: Project[] = [
     "sourceType": "open-source",
     "aiUsage": "minor",
     "aiUtilization": "no-ai",
-    "description": "A single-file Python 3 utility to split and backup a Redis database into multiple base64 URL-safe text files, making backups git-friendly and easily restorable.",
-    "purpose": "To create incremental, text-based, and human-readable backups of Redis data keys and values (handling binary data cleanly via base64) instead of monolithic binary RDB dumps.",
+    "description": "A single-file Python 3 utility to split and back up a Redis database into multiple URL-safe base64 text files, making backups git-friendly and easily restorable.",
+    "purpose": "To create incremental, text-based backups of Redis keys and values (handling binary data cleanly via base64) instead of monolithic binary RDB dumps.",
     "technologies": [
       "Python",
       "Redis",
@@ -2397,7 +2396,7 @@ export const projects: Project[] = [
       "Stores database keys as individual base64 URL-safe files",
       "Great for version control (git) tracking changes incrementally",
       "Supports string, list, set, zset, hash, and stream types",
-      "Restores TTL and expiration times relative to restore time"
+      "Restores TTLs relative to restore time"
     ],
     "limitations": [
       "Inefficient storage size due to base64 encoding",
@@ -2662,7 +2661,7 @@ export const projects: Project[] = [
       "Custom Tor library (torpy) modifications supporting SocksServer control, exit node selection, and dynamic port allocation",
       "Tor network exit node manipulation to rotate IP addresses by country code to bypass rate limiting",
       "Lightweight TCP socket-based communication protocol for job distribution",
-      "Lightweight raw SQLite database integration with thread-safe transactional queueing",
+      "Raw SQLite storage with thread-safe transactional queueing",
       "Containerized client deployment using Docker for simple scale-out"
     ],
     "limitations": [

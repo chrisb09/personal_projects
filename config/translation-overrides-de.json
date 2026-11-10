@@ -66,11 +66,17 @@
     "cpp-ml-interface": {
       "tagline": "C++-Schnittstelle zwischen CFD-Solvern und Machine-Learning-Backends",
       "description": "Masterarbeit an der RWTH Aachen zur Neugestaltung einer solver-spezifischen C++-Schnittstelle zu einer modularen, generischen Kopplungsschicht. Verbindet CFD-Solver über eine einheitliche, konfigurationsgesteuerte API mit Machine-Learning-Backends (SmartSim/SmartRedis, PhyDLL, AIxeleratorService).\n\nGebenchmarkt auf dem Claix23-Supercomputer hinsichtlich CPU- und GPU-Inferenz, Thread-Balancing und Slurm-Core-Affinity. Beinhaltet einen automatisierten Clang-AST-Registrierungsgenerator und Integrationstests zur Kopplung des MMCP-Transformers mit dem m-aia-Solver.",
-      "purpose": "CFD-Solver mit Machine-Learning-Modellen verbinden, ohne jeden Solver an ein einzelnes Kommunikations-Backend zu binden."
+      "purpose": "CFD-Solver mit Machine-Learning-Modellen verbinden, ohne jeden Solver an ein einzelnes Kommunikations-Backend zu binden.",
+      "strengths": [
+        "Neugestaltung von solverspezifischem Code zu einer generischen, modularen Header-only-Schnittstelle",
+        "Integriert heterogene Kopplungsbibliotheken (SmartSim, PhyDLL, AIxeleratorService) unter einer konfigurationsbasierten Schicht",
+        "Unterstützt reflexionsfreie Subklassen-Registrierung über ein automatisches python-clang-Parsing-Registry-Skript",
+        "Kritische Evaluierung hardwarenaher paralleler CPU-Ausführung (Intra/Inter-Op-Threads, OpenMP, Core-Affinity)"
+      ]
     },
     "exam-system-backend": {
       "tagline": "Im Team entwickeltes Prüfungs- und Lernplattform mit LLM-gestützter Bewertung und ereignisgesteuerten Microservices",
-      "description": "Backend-Architektur, Datenbankschema, Microservices und Kubernetes-Deployment für eine im Team entwickelte digitale Prüfungsplattform einer ukrainischen Universität. Entwickelt für hochgradig parallele Prüfungsdurchführungen, automatisierte Bewertungs-Pipelines und integrierte Azure-OpenAI-Unterstützung zur vorläufigen Freitext-Korrektur.\n\nChristian war Co-Lead des Backends der Prüfungsplattform und trug als Teil des achtköpfigen Studierendenteams zu green LMS bei.\n\ngreen LMS entstand im Rahmen des Praktikums „Advanced Web Technologies: Integration of AI approaches into an LMS“ (SS25) der RWTH Aachen University, durchgeführt von der Lehr- und Forschungsgruppe Learning Technologies (Informatik 9) unter der Betreuung von Dr. Volodymyr Sokol. Ein achtköpfiges Studierendenteam wurde beauftragt, den Checkpoint- und Bewertungsworkflow des bestehenden Lernmanagementsystems der Universität als Menge unabhängig deployBarer Microservices neu zu entwickeln.\n\nDas System besteht aus einem schlanken Express-Gateway und sechs Domänendiensten. Das Gateway übernimmt HTTP-Terminierung, Session- und Berechtigungsverwaltung, Payload-Validierung mit Joi sowie das Routing zu den Diensten für Checkpoints, Challenges, Fortschritt, Bewertung, Dateiverwaltung und Statistik. Die Dienste kommunizieren asynchron über NATS für Ereignisse wie Checkpoint-Veröffentlichungen und Bewertungsaktualisierungen, cachen heißen Zustand in Redis und persistieren alles in einem gemeinsamen PostgreSQL-Schema, das um Fächer, Branches, Checkpoints, Fragenslots, Fragen und Bewertungen modelliert ist.\n\nDas Frontend ist eine React-18-Single-Page-Anwendung mit rollenbasiertem Routing für Studierende und Lehrende, einem Checkpoint-Editor, der Abschnitte aus Fragepools zusammenstellt, Drag-and-Drop- und Multiple-Choice-Fragetypen sowie einer Live-Fortschrittsansicht während der Bearbeitung eines Checkpoints. Jedes Repository enthält eine GitLab-CI-Pipeline, die das Service-Image erstellt und bei Merges auf main im Kubernetes-Cluster des Kurses deployt.",
+      "description": "Backend-Architektur, Datenbankschema, Microservices und Kubernetes-Deployment für eine im Team entwickelte digitale Prüfungsplattform einer ukrainischen Universität. Entwickelt für hochgradig parallele Prüfungsdurchführungen, automatisierte Bewertungs-Pipelines und integrierte Azure-OpenAI-Unterstützung zur vorläufigen Freitext-Korrektur.\n\nChristian war Co-Lead des Backends der Prüfungsplattform und trug als Teil des achtköpfigen Studierendenteams zu green LMS bei.\n\ngreen LMS entstand im Rahmen des Praktikums „Advanced Web Technologies: Integration of AI approaches into an LMS“ (SS25) der RWTH Aachen University, durchgeführt von der Lehr- und Forschungsgruppe Learning Technologies (Informatik 9) unter der Betreuung von Dr. Volodymyr Sokol. Ein achtköpfiges Studierendenteam wurde beauftragt, den Checkpoint- und Bewertungsworkflow des bestehenden Lernmanagementsystems der Universität als Menge unabhängig deployBarer Microservices neu zu entwickeln.\n\nDas System besteht aus einem schlanken Express-Gateway und sechs Domänendiensten. Das Gateway übernimmt HTTP-Terminierung, Session- und Berechtigungsverwaltung, Payload-Validierung mit Joi sowie das Routing zu den Diensten für Checkpoints, Challenges, Fortschritt, Bewertung, Dateiverwaltung und Statistik. Die Dienste kommunizieren asynchron über NATS für Ereignisse wie Checkpoint-Veröffentlichungen und Bewertungsaktualisierungen, cachen heißen Zustand in Redis und persistieren alles in einem gemeinsamen PostgreSQL-Schema, das um Fächer, Branches, Checkpoints, Fragenslots, Fragen und Bewertungen modelliert ist.\n\nDas Frontend ist eine React-18-Single-Page-Anwendung mit rollenbasiertem Routing für Studierende und Lehrende, einem Checkpoint-Editor, der Abschnitte aus Fragepools zusammenstellt, Drag-and-Drop- und Multiple-Choice-Fragetypen sowie einer Live-Fortschrittsansicht während der Bearbeitung eines Checkpoints. Jedes Repository hatte eine GitLab-CI-Pipeline, die das Service-Image erstellte und bei Merges auf main im Kubernetes-Cluster des Kurses deployte.",
       "purpose": "Ein bestehendes Prüfungssystem für eine ukrainische Universität um Freitextfragen und eine vorläufige Bewertung erweitern und zugleich den Checkpoint- und Bewertungsworkflow des RWTH-Aachen-Lernmanagementsystems als unabhängig deploybare Microservices neu aufbauen.",
       "strengths": [
         "Anwendungsdienste mit Kubernetes bereitgestellt",
@@ -111,29 +117,63 @@
     },
     "pacstall-programs": {
       "tagline": "Beiträge zum Paketarchiv von Pacstall",
-      "description": "Paketpflege für Pacstall, den AUR-inspirierten Paketmanager für Ubuntu und Debian. Beinhaltet die Pflege sauberer, sicherer und reproduzierbarer Build-Skripte (Pacscripts) im offiziellen Repository der Distribution.",
-      "purpose": "Bei der Pflege installierbarer Pakete für Ubuntu- und Debian-Nutzer außerhalb der Distributions-Repositories mithelfen.",
+      "description": "Paketpflege für Pacstall, den AUR-inspirierten Paketmanager für Ubuntu und Debian. Beinhaltet die Pflege sauberer, sicherer und reproduzierbarer Build-Skripte (Pacscripts) im offiziellen Paket-Repository von Pacstall.",
+      "purpose": "Bei der Pflege installierbarer Pakete für Ubuntu und Debian außerhalb ihrer offiziellen Paket-Repositories mithelfen.",
       "strengths": []
     },
     "ferienw-am-meer-modernization": {
       "tagline": "Neubau einer Ferienwohnungs-Website mit Next.js und Bildverarbeitung",
       "description": "Modernisierung einer statischen Website für eine Ferienwohnung in eine performante Next.js- und TypeScript-Anwendung. Beinhaltet automatisierte Bildoptimierung, responsive Galerie-Layouts und kontinuierliche Deployment-Workflows über GitHub Actions.",
-      "purpose": "Fotos und Informationen auf dem Smartphone leichter zugänglich machen und Aktualisierungen der Website vereinfachen."
+      "purpose": "Fotos und Informationen auf dem Smartphone leichter zugänglich machen und Aktualisierungen der Website vereinfachen.",
+      "strengths": [
+        "Migration von Legacy-HTML zu einer typsicheren Next.js-Implementierung mit Tailwind CSS v4",
+        "Optimierung kritischer Core Web Vitals (FCP/LCP) durch Nutzung experimenteller nativer CSS-Inlining-Konfigurationen innerhalb der Next.js-Laufzeitumgebung",
+        "Entwicklung einer benutzerdefinierten automatisierten Bildverarbeitungspipeline, die Grafiken für schnellere Ladezeiten in stark komprimierte WebP-Formate konvertiert",
+        "Implementierung automatisierter Low-Quality Image Placeholders (LQIP) über Blur-Platzhalter zur Vermeidung visueller Layout-Verschiebungen (CLS) während der Image Hydration",
+        "Entwurf eines robusten, Hash-basierten Galerie-Metadatensystems zur dynamischen Synchronisierung von Medienzuständen und zur Gewährleistung korrekter Asset-Beschreibungen",
+        "Einrichtung eines automatisierten CI/CD-Deployments über GitHub Actions einschließlich basePath-Behandlung für eigene Domains"
+      ]
     },
     "cycling-power-estimator": {
-      "description": "Eine GPX-Strecke hochladen, die Radfahrleistung aus den Streckendaten schätzen und die Ergebnisse in Diagrammen und einer 3D-Karte ansehen. Ein FastAPI-Backend übernimmt die Berechnungen; das React-Frontend zeigt die Fahrt an."
+      "description": "Eine GPX-Strecke hochladen, die Radfahrleistung aus den Streckendaten schätzen und die Ergebnisse in Diagrammen und einer 3D-Karte ansehen. Ein FastAPI-Backend übernimmt die Berechnungen; das React-Frontend zeigt die Fahrt an.",
+      "tagline": "Radfahrleistung aus GPX-Fahrten schätzen und mit Diagrammen und 3D-Karte visualisieren",
+      "purpose": "Radfahrleistung aus aufgezeichneten Streckendaten ohne physischen Leistungsmesser schätzen und Fahrten in 3D visualisieren.",
+      "strengths": [
+        "Physikalische Modellierung (Gravitation, Rollwiderstand, aerodynamischer Luftwiderstand, kinetische Energie)",
+        "3D-Digitales-Höhenmodell (DEM) mit Kartentracking und Routenanimationen",
+        "Interaktive, synchronisierte Diagramme (Geschwindigkeit, Leistung, Höhe)",
+        "Unterstützung für Fahrradkonfigurationen sowie Profile mit Fahrergewicht und CdA"
+      ]
     },
     "personal-projects": {
-      "description": "Interaktives Entwickler-Portfolio mit facettierter Suche, dynamischen Filtern, Beitragsaktivitäts-Heatmaps und Repository-Telemetrie, die aus lokalen Git-Trees und APIs synchronisiert wird."
+      "description": "Interaktives Entwickler-Portfolio mit facettierter Suche, dynamischen Filtern, Beitragsaktivitäts-Heatmaps und Repository-Telemetrie, die aus lokalen Git-Trees und APIs synchronisiert wird.",
+      "purpose": "Präsentation eigener Softwareprojekte, Hilfsprogramme und IT-Projekte mit überprüfbaren LOC- und Commit-Statistiken, die direkt aus lokalen Repositories erfasst werden.",
+      "roadmap": [
+        "Unterstützung für automatisiertes Remote-Repo-Klonen über API"
+      ]
     },
     "custom-orchestration": {
       "tagline": "Bash-Skripte für Deployments und die Verwaltung von Diensten",
-      "description": "Maßgeschneiderte Bash-basierte Steuerungsebene zur Koordination von Service-Lebenszyklen, Git-Synchronisation, Prozessverwaltung und Log-Prüfung über verteilte Linux-Systeme hinweg. Bietet dateisystembasierte Speicherisolation und automatisierte Health-Checks.",
+      "description": "Bash-basiertes Steuerungswerkzeug zur Koordination von Service-Lebenszyklen, Git-Synchronisation, Prozessverwaltung und Log-Prüfung über verteilte Linux-Systeme hinweg. Bietet dateisystembasierte Speicherisolation und automatisierte Health-Checks.",
       "purpose": "Automatisierte Deployments, Service-Orchestrierung und Speicherisolation auf Linux-Serverinfrastrukturen."
     },
     "homeserver": {
       "tagline": "Selbst gehostete Speicher-, Medien- und Anwendungsdienste",
-      "description": "Private Linux-Serverinfrastruktur im Dauerbetrieb seit 2018. Verwaltet über 100 TB ZFS-Speicher, containerisierte Docker-Dienste, automatisierte Off-Site-Backups und verschlüsselte WireGuard-Netzwerke für rund 20 Nutzer."
+      "description": "Private Linux-Serverinfrastruktur, die seit 2018 betrieben und gewartet wird. Sie verwaltet über 100 TB ZFS-Speicher, Docker-Dienste, Off-Site-Backups für ausgewählte Skripte und Konfigurationsdateien sowie verschlüsselte WireGuard-Netzwerke für rund 20 Nutzer.",
+      "strengths": [
+        "Betrieb und Wartung der Infrastruktur seit 2018",
+        "Entwurf robuster Speicherpools mit openZFS für Datenintegrität auf Enterprise-Niveau",
+        "Automatisierte Bereitstellung von Web-, Cloud- und KI-Anwendungen über Docker Compose und nginx",
+        "Sicheres Netzwerk-Routing und Fernzugriff konfiguriert über WireGuard"
+      ],
+      "roadmap": [
+        "Automatisierte Off-Site-Backups über ausgewählte Skripte und Konfigurationsdateien hinaus erweitern",
+        "Monitoring und Alerting hinzufügen (Prometheus/Grafana)",
+        "Hochverfügbarkeit für kritische Dienste einrichten",
+        "KI/ML-Dienstangebote erweitern",
+        "Infrastructure as Code implementieren (Terraform)",
+        "Kubernetes für Container-Orchestrierung hinzufügen"
+      ]
     },
     "jda-chewtils": {
       "tagline": "Java-Hilfsfunktionen für Discord-Bot-Befehle und Menüs",
@@ -162,7 +202,7 @@
       ]
     },
     "libretranslate-java": {
-      "description": "Java-Client-Bibliothek für LibreTranslate-Instanzen mit Unterstützung für synchrone und asynchrone Übersetzungsanfragen, Modellverwaltung und Spracherkennung. Kontinuierlich gepflegt für Upstream-Kompatibilität.",
+      "description": "Java-Client-Bibliothek für LibreTranslate-Instanzen mit Unterstützung für synchrone und asynchrone Übersetzungsanfragen, Modellverwaltung und Spracherkennung. Kompatibilitätsanpassungen für Änderungen an der LibreTranslate-API beigesteuert.",
       "purpose": "LibreTranslate aus Java-Anwendungen heraus mit selbst gehosteten oder öffentlichen Instanzen verwenden."
     },
     "opencode-oneprovider": {
@@ -270,7 +310,7 @@
     "opencode-model-router": {
       "name": "OpenCode Model Router",
       "tagline": "Kontingentbewusstes Subagenten-Routing und lokales Workflow-Tracing für OpenCode",
-      "description": "Ein lokaler, deterministischer Router für OpenCode 2.x. Er umschließt das bestehende subagent-Werkzeug und wählt pro Aufruf ein Modell aus sieben spezialisierten Rollen, vier Schwierigkeitsstufen, Wichtigkeit, Kontextgröße und Modalität aus; Plan und Build behalten dabei ihre normalen Primärmodelle. Die Kontingente stammen aus dem bestehenden AI-Usage-Dienst statt aus einem zweiten Provider-Poller.\n\nDer Router führt dauerhafte SQLite-Reservierungen, begrenzt die Parallelität pro Konto und global, setzt Cooldowns und schlägt geschlossen fehl, wenn Kontingent-, Identitäts- oder Kontextprüfungen nicht erfüllt werden können. Zusätzlich bietet er eine authentifizierte lokale API, schreibgeschützte MCP-Werkzeuge, einen systemd-User-Dienst und Workflow-Tracing mit redigierten JSON-/Mermaid-Exporten sowie einer statischen HTML-/SVG-Zeitleiste. Kostenpflichtige Opus- und Kimi-Aufrufe bleiben hinter einem separaten Freigabemechanismus gesperrt.",
+      "description": "Ein lokaler, deterministischer Router für OpenCode 2.x. Er umschließt das bestehende subagent-Werkzeug und wählt pro Aufruf ein Modell anhand von sieben spezialisierten Rollen, vier Schwierigkeitsstufen, Wichtigkeit, Kontextgröße und Modalität aus; Plan und Build behalten dabei ihre normalen Primärmodelle. Die Kontingente stammen aus dem bestehenden AI-Usage-Dienst statt aus einem zweiten Provider-Poller.\n\nDer Router führt dauerhafte SQLite-Reservierungen, begrenzt die Parallelität pro Konto und global, setzt Cooldowns und schlägt geschlossen fehl, wenn Kontingent-, Identitäts- oder Kontextprüfungen nicht erfüllt werden können. Zusätzlich bietet er eine authentifizierte lokale API, schreibgeschützte MCP-Werkzeuge, einen systemd-User-Dienst und Workflow-Tracing mit redigierten JSON-/Mermaid-Exporten sowie einer statischen HTML-/SVG-Zeitleiste. Kostenpflichtige Opus- und Kimi-Aufrufe bleiben hinter einem separaten Freigabemechanismus gesperrt.",
       "purpose": "Arbeit über mehrere Modellanbieter delegieren, ohne Abonnement-Kontingente zu überziehen, Zugangsdaten offenzulegen oder das Primärmodell des Nutzers stillschweigend zu ändern.",
       "strengths": [
         "Wählt Modelle pro Subagenten-Aufruf anhand von Rolle, Stufe, Wichtigkeit, Kontextgröße und Modalität",
@@ -315,7 +355,7 @@
         "Passt Aktualisierungsintervalle zwischen 10 Minuten und 6 Stunden an und plant um bekannte Resets",
         "Plant jedes Konto unabhängig und liefert zwischengespeicherte Daten, während im Hintergrund aktualisiert wird",
         "Speichert jede erfolgreiche Beobachtung in SQLite mit Verlaufsdiagrammen pro Konto und Kontingent",
-        "Fasst Kontingentbalken nach Typ zusammen und markiert die durchschnittliche Restzeit",
+        "Fasst Kontingentbalken nach Typ zusammen und zeigt die durchschnittliche Restzeit an",
         "Bietet eine öffentliche schreibgeschützte Ansicht, einen MCP-Endpunkt und ein natives Plasma-5-Panel-Widget",
         "Hält Provider-Dateien schreibgeschützt, außer der atomaren Codex-Token-Rotation"
       ],
@@ -345,11 +385,11 @@
     },
     "opencode-wait": {
       "name": "opencode-wait",
-      "tagline": "Warten ohne CPU-Last für OpenCode-Agenten auf HPC-Login-Knoten",
-      "description": "Ein gepflegter Fork des opencode-wait-Plugins, mit dem OpenCode-Agenten pausieren können, ohne CPU zu verbrennen. Er kombiniert einen CPU-freien HTTP-Listener, die Überwachung von Sentinel-Dateien und Sleeps auf Kernel-Ebene, damit ein Agent auf einem HPC-Login-Knoten auf einen Slurm-Job, ein entferntes Fertigstellungssignal oder eine neue Benutzernachricht warten kann, ohne cgroup- oder Runaway-Prozess-Watchdogs auszulösen.\n\nDer Fork ergänzt HTTP-Wake-up mit Token-Authentifizierung und Payload-Rückgabe, Sentinel-Datei-Abschluss mit optionalem Lesen und Löschen des Inhalts, Abbruch über den Abort-Controller, Live-Fortschrittsmetadaten und vorhersehbare Ports pro Sitzung. Das ursprüngliche zeitbasierte Plugin bleibt erhalten; der Fork wird als v0.2.0 veröffentlicht.",
+      "tagline": "Warten mit nahezu keiner CPU-Last für OpenCode-Agenten auf HPC-Login-Knoten",
+      "description": "Ein gepflegter Fork des opencode-wait-Plugins, mit dem OpenCode-Agenten pausieren können, ohne CPU zu verbrennen. Er kombiniert einen HTTP-Listener mit nahezu keiner CPU-Last, die Überwachung von Sentinel-Dateien und Sleeps auf Kernel-Ebene, damit ein Agent auf einem HPC-Login-Knoten auf einen Slurm-Job, ein entferntes Fertigstellungssignal oder eine neue Benutzernachricht warten kann, ohne cgroup- oder Runaway-Prozess-Watchdogs auszulösen.\n\nDer Fork ergänzt HTTP-Wake-up mit Token-Authentifizierung und Payload-Rückgabe, Sentinel-Datei-Abschluss mit optionalem Lesen und Löschen des Inhalts, Abbruch über den Abort-Controller, Live-Fortschrittsmetadaten und vorhersehbare Ports pro Sitzung. Das ursprüngliche zeitbasierte Plugin bleibt erhalten; der Fork wird als v0.2.0 veröffentlicht.",
       "purpose": "Codierende Agenten auf lang laufende externe Jobs warten lassen, ohne Polling, CPU-Last oder das Risiko, von Login-Knoten-Watchdogs beendet zu werden.",
       "strengths": [
-        "Verbraucht beim Warten 0,00 % CPU durch epoll/inotify und echten Kernel-Sleep",
+        "Verbraucht beim Warten durch epoll/inotify und Kernel-Sleep praktisch keine messbare CPU-Leistung",
         "Öffnet einen vorhersehbaren Port pro Sitzung (40000 + hash(sessionID) % 4096) mit Token-Authentifizierung",
         "Nimmt einen einfachen curl-Wake-up vom Compute-Knoten an und gibt Exit-Codes oder Ergebnisse an das Modell zurück",
         "Überwacht Sentinel-Dateien auf NFS/Lustre und kann deren Inhalt bei Abschluss lesen oder löschen",
@@ -377,6 +417,73 @@
           "index": 1,
           "relation": "HPC-Workflow-Kontext für lang laufende Slurm-Jobs"
         }
+      ]
+    },
+    "minecraft-chat-translator": {
+      "description": "Eine vollständige Fine-Tuning-Pipeline und Inferenz-Engine, die ein kleines Sprachmodell mit 0,5 Mrd. Parametern (Qwen2.5-0.5B-Instruct) darauf trainiert, bidirektionale Englisch↔Deutsch-Chat-Übersetzungen auf Basis authentischer Minecraft-Server-Logs in Echtzeit durchzuführen. Das Training fand vollständig auf der CPU (AMD Zen 4 / AVX-512 BF16) bei ~245 Tokens/Sek. über 7 Stunden und 34 Minuten statt und erzielte eine Reduzierung des Validation Loss von 1,1972 auf 0,1005 (91,6 %).\n\nDas Projekt umfasst eine asynchrone Multi-LLM-Pipeline zur Dataset-Übersetzung (Gemini + OpenRouter), einen ChatML-Trainingsdatensynthesizer mit 4 linguistischen Szenarien und 65,9 Mio. Benutzername-Permutationen, eine FastAPI-Inferenz-Engine mit persistentem Session-basiertem KV cache und einer TTFT von ungefähr 54 ms sowie ein Side-by-Side-Benchmark-Tool zum Vergleich des fine-getunten Modells mit der Qwen-0.5B-Basis, Nemotron 3.5 Lightning 30B, Stealth ox-alpha und Gemini 3.5 Flash Lite."
+    },
+    "ibus": {
+      "tagline": "Java-Tool zum Kodieren von Dateien als Bilder für Fotospeicherdienste",
+      "description": "Ein Java-basiertes CLI-Programm, das Dateien in ARGB-Pixel von PNG-Bildern kodiert und wieder in ihren ursprünglichen Zustand dekodiert. Das archivierte Experiment stellte Dateien als Bilder dar, um Foto-Cloud-Speicher als Backup-Ziel zu nutzen, unter anderem über frühere Google-Photos-Funktionen, die nicht mehr funktionieren.",
+      "purpose": "Dateihosting-Beschränkungen bei Cloud-Anbietern umgehen, indem Binärdateien und Verzeichnisstrukturen in Bilddateien umgewandelt werden.",
+      "limitations": [
+        "Die früher genutzten Google-Photos-Speicherfunktionen funktionieren nicht mehr; API-Einschränkungen der Anbieter begrenzen außerdem die automatisierte Integration",
+        "Speichergebundene und Single-Threaded-Enkodierung",
+        "Der Verlust des AES-Schlüssels führt zu permanentem Datenverlust"
+      ]
+    },
+    "find-duplicates": {
+      "purpose": "Speicherplatz sparen, ohne Dateiinhalte zu duplizieren, etwa beim Seeden von Torrents und gleichzeitigem Bereithalten derselben Dateien in Bibliotheksordnern auf verschiedenen Laufwerken.",
+      "strengths": [
+        "Speichert Hashwerte anhand von Dateiname und Größe zwischen, um erneute Hashberechnungen zu vermeiden",
+        "Unterstützt standardmäßig den Testlaufmodus (Dry-Run), um Änderungen sicher in der Vorschau anzuzeigen",
+        "Erzeugt saubere Links (Symlinks oder Hardlinks) ohne Dateiduplizierung",
+        "Keine externen Abhängigkeiten (verwendet ausschließlich die Python-Standardbibliothek)"
+      ],
+      "limitations": [
+        "Hardlinks können sich nicht über verschiedene physische Laufwerke hinweg erstrecken",
+        "Der Hash-Cache für (Dateiname, Größe) kann einen falschen Hash wiederverwenden, wenn unterschiedliche Dateien denselben Namen und dieselbe Größe haben oder sich ihr Inhalt ändert, ohne dass sich Name oder Größe ändern",
+        "Dateisystemoperationen ändern Zieldateien direkt; ein vorheriges Backup wird empfohlen"
+      ]
+    },
+    "php-autoindexed-file-viewer": {
+      "strengths": [
+        "Keine externen Bibliotheken oder Build-Schritte (die gesamte Oberfläche besteht aus einer einzigen PHP-Datei)",
+        "Hintergrund-Task-Runner mit begrenzter Parallelität für Vorschaubilder und Metadatenscans",
+        "Vorschaubilder beim Hovern für Bilder, Videoframes und PDFs",
+        "Temporäre verschlüsselte Freigabelinks ermöglichen Empfängern den Zugriff auf freigegebene Inhalte ohne Anmeldung"
+      ]
+    },
+    "redis-load-store": {
+      "purpose": "Erstellung inkrementeller, textbasierter Backups von Redis-Datenschlüsseln und -werten (saubere Handhabung von Binärdaten über Base64) anstelle monolithischer binärer RDB-Dumps.",
+      "strengths": [
+        "Speichert Datenbank-Schlüssel als einzelne Base64-URL-sichere Dateien",
+        "Ideal für die Versionskontrolle (Git) zur inkrementellen Änderungserfassung",
+        "Unterstützt die Typen string, list, set, zset, hash und stream",
+        "Stellt TTLs relativ zum Wiederherstellungszeitpunkt wieder her"
+      ]
+    },
+    "redis-dump-load": {
+      "strengths": [
+        "Kompatibel mit redis-dump",
+        "Streamt Daten zur Minimierung der Speicherauslastung",
+        "Behält die TTLs der Schlüssel bei",
+        "Kann als CLI-Dienstprogramm oder Python-Modul verwendet werden"
+      ]
+    },
+    "opencode-antigravity-auth": {
+      "description": "Ein gewarteter Fork von opencode-antigravity-auth, einem Authentifizierungs-Plugin für OpenCode, das sich über OAuth mit Google Antigravity (Googles KI-IDE) verbindet. Es ermöglicht Entwicklern, sich mit Standard-Google-Konten zu authentifizieren, um auf Claude (Opus 4.6 Thinking, Sonnet 4.6) und Gemini-Modelle unter Einhaltung der Antigravity-Ratenlimits und mit Unterstützung für Multi-Konto-Rotation zuzugreifen.\n\nDieser Fork führt die vollständige Unterstützung für Gemini 3.8 Flash und 3.7 Flash mit dynamischer Zuordnung von Denk-Ebenen (Thinking-Level) zu Antigravity-CLI-Tier-Backend-Modellen ein, behebt den CodeAssist-Onboarding-Payload und die Projekterkennung zur Vermeidung von HTTP-400-Fehlern, sendet den offiziellen CLI-User-Agent zur Behebung von HTTP-404-Fehlern bei geschützten Vorschaudemodellen (Gated Preview Models), normalisiert functionDeclarations-Tools für die Gemini-Schema-Kompatibilität und liefert vorgebaute dist/-Artefakte für eine direkte GitHub-Installation ohne Build-Prozess."
+    },
+    "qbmanage": {
+      "description": "Ein Python-Kommandozeilenprogramm zum Überprüfen und Bereinigen von Torrents und Dateien in einer qBittorrent-Instanz. Es prüft Tracker-Status, findet verwaiste oder ungenutzte Dateien und erkennt Dateien, die nicht mehr an anderer Stelle per Hardlink verknüpft sind. Ein Testlauf schützt bei der Bereinigung."
+    },
+    "nudenetv2": {
+      "strengths": [
+        "Voll funktionsfähiger Klassifizierer und Detektor, wiederhergestellt aus dem defekten originalen NudeNet v2-Zweig",
+        "Zuverlässig auf GitLab Raw Storage gehostete ONNX-Modelle für direkte Downloads",
+        "Unterstützung für benutzerdefinierte Modellverzeichnisse über Konstruktorparameter oder die Umgebungsvariable NUDENET_MODEL_DIR hinzugefügt",
+        "Unangemessene Bilder aus der Dokumentation entfernt",
+        "Für die Installation über PyPI paketiert"
       ]
     }
   }

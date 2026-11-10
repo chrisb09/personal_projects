@@ -10,7 +10,7 @@
   "sourceType": "open-source",
   "aiUsage": "full",
   "aiUtilization": "ai-powered",
-  "description": "A local, deterministic router for OpenCode 2.x. It wraps the existing subagent tool and selects a model per invocation from seven specialist roles, four difficulty tiers, importance, context size and modality, while keeping Plan and Build on their normal primary models. Quota comes from the existing AI Usage service instead of a second provider poller.\n\nThe router records durable SQLite reservations, enforces per-account and global concurrency limits, applies cooldowns, and fails closed when quota, identity or context checks cannot be satisfied. It also provides an authenticated local API, read-only MCP tools, a user systemd service, and workflow tracing with redacted JSON/Mermaid exports and a static HTML/SVG lifeline timeline. Paid Opus and Kimi dispatch remain locked behind a separate approval mechanism.",
+  "description": "A local, deterministic router for OpenCode 2.x. It wraps the existing subagent tool and selects a model per invocation based on seven specialist roles, four difficulty tiers, importance, context size and modality, while keeping Plan and Build on their normal primary models. Quota comes from the existing AI Usage service instead of a second provider poller.\n\nThe router records durable SQLite reservations, enforces per-account and global concurrency limits, applies cooldowns, and fails closed when quota, identity or context checks cannot be satisfied. It also provides an authenticated local API, read-only MCP tools, a systemd user service, and workflow tracing with redacted JSON/Mermaid exports and a static HTML/SVG lifeline timeline. Paid Opus and Kimi dispatch remain locked behind a separate approval mechanism.",
   "purpose": "To delegate work across multiple model providers without oversubscribing subscription quotas, leaking credentials or silently changing the user's primary model.",
   "technologies": [
     "TypeScript",
@@ -50,7 +50,7 @@
     "Paid Opus and Kimi dispatch are intentionally locked in this release",
     "Depends on the AI Usage service for fresh quota observations"
   ],
-  "installation": "# Install dependencies and the additive local integration\nbun install\nnpm run install:local\n\n# Start the user service\nsystemctl --user start opencode-model-router.service\nsystemctl --user status opencode-model-router.service",
+  "installation": "# Install dependencies and the additive local integration\nbun install\nnpm run install:local\n\n# Start the systemd user service\nsystemctl --user start opencode-model-router.service\nsystemctl --user status opencode-model-router.service",
   "usage": "# Inspect routing state\nbun src/cli.ts status\n\n# Delegate with optional routing metadata\n{\n  \"agent\": \"reviewer\",\n  \"description\": \"Review transaction handling\",\n  \"routing\": {\n    \"tier\": \"HARD\",\n    \"importance\": \"high\",\n    \"inputTokens\": 30000,\n    \"outputTokens\": 8000\n  }\n}\n\n# Export a recorded workflow timeline\nbun src/cli.ts workflow <sessionID> --timeline --out ~/.local/share/opencode-model-router/exports/timeline.html",
   "roadmap": [
     "Add a trusted approval and monetary reservation mechanism for paid models",
