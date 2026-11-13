@@ -314,38 +314,45 @@ function App() {
     <TooltipProvider>
       <div className="min-h-screen bg-background">
         {/* Hero Section */}
-        <header className="relative overflow-hidden border-b border-border/50">
-          <div className="absolute inset-0 bg-gradient-to-br from-card via-background to-primary/5 pointer-events-none" />
-          
-          {/* Top bar with theme and language controls */}
-          <div className="relative flex items-center justify-end gap-1 px-4 sm:px-6 lg:px-8 pt-2 max-w-6xl mx-auto">
-            <LanguageSelector />
-            <ThemeToggle />
+        <header className="portfolio-hero relative overflow-hidden border-b border-border/60">
+          <div className="relative mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 pb-1 pt-4 sm:px-6 lg:px-8">
+            <a
+              href="https://christian-f-brinkmann.de/"
+              className="group inline-flex min-w-0 items-center gap-2.5"
+              aria-label="Christian F. Brinkmann"
+            >
+              <span className="portfolio-mark text-foreground transition-colors group-hover:text-primary" aria-hidden="true" />
+              <span className="truncate text-xs font-medium tracking-tight text-muted-foreground transition-colors group-hover:text-foreground">
+                {headerConfig.badgeText}
+              </span>
+            </a>
+            <div className="flex items-center gap-1">
+              <LanguageSelector />
+              <ThemeToggle />
+            </div>
           </div>
-          
-          <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-7 pt-2 md:pb-12 md:pt-5">
-            <div className="grid items-center gap-6 md:grid-cols-[minmax(0,1fr)_320px] md:gap-8 lg:grid-cols-[minmax(0,1fr)_430px]">
-              <div className="min-w-0 space-y-3">
-                <div className="flex items-center gap-1.5 text-muted-foreground">
-                  {(() => {
-                    const BadgeIcon = iconMap[headerConfig.badgeIcon] || Code2;
-                    return <BadgeIcon className="w-4 h-4" />;
-                  })()}
-                  <span className="text-xs font-medium">{headerConfig.badgeText}</span>
+
+          <div className="relative mx-auto max-w-6xl px-4 pb-8 pt-7 sm:px-6 md:pb-12 md:pt-10 lg:px-8">
+            <div className="grid items-center gap-7 md:grid-cols-[minmax(0,1fr)_320px] md:gap-9 lg:grid-cols-[minmax(0,1fr)_430px]">
+              <div className="min-w-0 space-y-4">
+                <div className="flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+                  <span className="h-px w-8 bg-gold/70" aria-hidden="true" />
+                  {t('header.eyebrow', 'Selected work')}
                 </div>
-                
-                <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight leading-tight">
+
+                <h1 className="max-w-3xl font-serif text-4xl font-normal leading-[1.05] tracking-tight md:text-5xl lg:text-6xl">
                   {t('header.title_prefix', headerConfig.titlePrefix)}{' '}
-                  <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
+                  <span className="text-primary">
                     {t('header.title_highlight', headerConfig.titleHighlight)}
+                    <span className="text-gold">.</span>
                   </span>
                 </h1>
-                
-                <p className="text-sm md:text-base text-muted-foreground max-w-2xl leading-relaxed">
+
+                <p className="max-w-2xl text-[15px] leading-relaxed text-muted-foreground md:text-base">
                   {t('header.description', headerConfig.description)}
                 </p>
 
-                <div className="flex flex-wrap gap-2 pt-2">
+                <div className="flex flex-wrap gap-2 pt-1">
                   {[...headerConfig.buttons].sort((a, b) => {
                     const order = ['Contact', 'GitHub', 'LinkedIn', 'GitLab', 'NRW GitLab'];
                     return order.indexOf(a.text) - order.indexOf(b.text);
@@ -353,14 +360,14 @@ function App() {
                     const BtnIcon = iconMap[btn.icon] || ExternalLink;
                     const btnLabel = t(`header.buttons.${btn.text.toLowerCase()}`, btn.text);
                     return (
-                      <Button 
+                      <Button
                         key={btn.text}
                         variant={btn.text === 'Contact' ? 'default' : 'outline'}
                         size="sm"
-                        className={`h-9 gap-2 text-xs ${['GitLab', 'NRW GitLab'].includes(btn.text) ? 'hidden sm:inline-flex' : ''}`}
+                        className={`h-9 gap-2 rounded-lg text-xs ${['GitLab', 'NRW GitLab'].includes(btn.text) ? 'hidden sm:inline-flex' : ''}`}
                         asChild
                       >
-                        <a href={btn.url} target="_blank" rel="noopener noreferrer">
+                        <a href={btn.url} target={btn.url.startsWith('mailto:') ? undefined : '_blank'} rel={btn.url.startsWith('mailto:') ? undefined : 'noopener noreferrer'}>
                           <BtnIcon className="w-3.5 h-3.5" />
                           {btnLabel}
                         </a>
@@ -369,18 +376,19 @@ function App() {
                   })}
                 </div>
               </div>
+
               <div className="min-w-0">
                 <div className="grid grid-cols-3 gap-2 sm:gap-3" aria-label={t('stats.overview', 'Portfolio statistics')}>
                   <div title={t('stats.maintained_stars_tooltip', 'Stars on projects I authored or maintain; other contributions are not included.')}>
-                    <p className="flex items-center gap-1 text-xl font-bold tabular-nums tracking-tight sm:text-2xl"><Star className="size-4 text-amber-500" />{aggregateStats.totalStars}</p>
+                    <p className="flex items-center gap-1 text-xl font-semibold tabular-nums tracking-tight sm:text-2xl"><Star className="size-4 text-gold" />{aggregateStats.totalStars}</p>
                     <p className="mt-0.5 text-[11px] text-muted-foreground">{t('stats.total_stars', 'Total Stars')}</p>
                   </div>
                   <div title={t('stats.commits_tooltip', 'Commits authored by me on the default branch of all tracked projects.')}>
-                    <p className="flex items-center gap-1 text-xl font-bold tabular-nums tracking-tight sm:text-2xl"><GitCommit className="size-4 text-primary" />{aggregateStats.totalCommits.toLocaleString()}</p>
+                    <p className="flex items-center gap-1 text-xl font-semibold tabular-nums tracking-tight sm:text-2xl"><GitCommit className="size-4 text-primary" />{aggregateStats.totalCommits.toLocaleString()}</p>
                     <p className="mt-0.5 text-[11px] text-muted-foreground">{t('stats.total_commits', 'Total Commits')}</p>
                   </div>
                   <div title={t('stats.loc_tooltip', 'Lines of code authored by me that are currently in the default branch.')}>
-                    <p className="flex items-center gap-1 text-xl font-bold tabular-nums tracking-tight sm:text-2xl"><Code className="size-4 text-primary" />{(aggregateStats.totalLOC / 1000).toFixed(1)}k</p>
+                    <p className="flex items-center gap-1 text-xl font-semibold tabular-nums tracking-tight sm:text-2xl"><Code className="size-4 text-primary" />{(aggregateStats.totalLOC / 1000).toFixed(1)}k</p>
                     <p className="mt-0.5 text-[11px] text-muted-foreground">{t('stats.total_loc', 'Total LOC')}</p>
                   </div>
                 </div>
@@ -408,7 +416,7 @@ function App() {
                 <button
                   type="button"
                   onClick={() => handleSearchChange('')}
-                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                  aria-label={t('filters.clear_search', 'Clear search')} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
                 >
                   <X className="w-3.5 h-3.5" />
                 </button>
@@ -423,13 +431,13 @@ function App() {
                 onClick={() => updateFiltersAndUrl({ ...filters, hasStars: !filters.hasStars })}
                 className={`px-2.5 py-1.5 rounded-md text-xs font-medium transition-all shrink-0 border flex items-center gap-1.5 ${
                   filters.hasStars
-                    ? 'bg-amber-500/10 border-amber-500/30 text-amber-600 dark:text-amber-400 shadow-xs'
+                    ? 'bg-gold/10 border-gold/30 text-gold shadow-xs'
                     : 'bg-muted/40 hover:bg-muted text-muted-foreground hover:text-foreground border-border/50'
                 }`}
               >
-                <Star className={`w-3.5 h-3.5 ${filters.hasStars ? 'text-amber-500 fill-amber-500' : 'text-amber-500'}`} />
+                <Star className={`w-3.5 h-3.5 ${filters.hasStars ? 'text-gold fill-gold' : 'text-gold'}`} />
                 <span>{t('filters.has_stars', 'Has Git Stars')}</span>
-                <span className={`text-[10px] tabular-nums ${filters.hasStars ? 'opacity-90' : 'opacity-60'}`}>
+                <span className="text-[10px] font-medium tabular-nums">
                   {starsCount}
                 </span>
               </button>
@@ -440,13 +448,13 @@ function App() {
                 onClick={() => updateFiltersAndUrl({ ...filters, hasMedia: !filters.hasMedia })}
                 className={`px-2.5 py-1.5 rounded-md text-xs font-medium transition-all shrink-0 border flex items-center gap-1.5 ${
                   filters.hasMedia
-                    ? 'bg-purple-500/10 border-purple-500/30 text-purple-600 dark:text-purple-400 shadow-xs'
+                    ? 'bg-primary/10 border-primary/30 text-primary shadow-xs'
                     : 'bg-muted/40 hover:bg-muted text-muted-foreground hover:text-foreground border-border/50'
                 }`}
               >
-                <ImageIcon className="w-3.5 h-3.5 text-purple-500" />
+                <ImageIcon className="w-3.5 h-3.5 text-primary" />
                 <span>{t('filters.has_media', 'Has Media')}</span>
-                <span className={`text-[10px] tabular-nums ${filters.hasMedia ? 'opacity-90' : 'opacity-60'}`}>
+                <span className="text-[10px] font-medium tabular-nums">
                   {mediaCount}
                 </span>
               </button>
@@ -457,13 +465,13 @@ function App() {
                 onClick={() => updateFiltersAndUrl({ ...filters, hasDemo: !filters.hasDemo })}
                 className={`px-2.5 py-1.5 rounded-md text-xs font-medium transition-all shrink-0 border flex items-center gap-1.5 ${
                   filters.hasDemo
-                    ? 'bg-blue-500/10 border-blue-500/30 text-blue-600 dark:text-blue-400 shadow-xs'
+                    ? 'bg-primary/10 border-primary/30 text-primary shadow-xs'
                     : 'bg-muted/40 hover:bg-muted text-muted-foreground hover:text-foreground border-border/50'
                 }`}
               >
-                <Globe className="w-3.5 h-3.5 text-blue-500" />
+                <Globe className="w-3.5 h-3.5 text-primary" />
                 <span>{t('filters.has_demo', 'Has Demo')}</span>
-                <span className={`text-[10px] tabular-nums ${filters.hasDemo ? 'opacity-90' : 'opacity-60'}`}>
+                <span className="text-[10px] font-medium tabular-nums">
                   {demoCount}
                 </span>
               </button>
@@ -474,13 +482,13 @@ function App() {
                 onClick={() => updateFiltersAndUrl({ ...filters, academicOnly: !filters.academicOnly })}
                 className={`px-2.5 py-1.5 rounded-md text-xs font-medium transition-all shrink-0 border flex items-center gap-1.5 ${
                   filters.academicOnly
-                    ? 'bg-teal-500/10 border-teal-500/30 text-teal-600 dark:text-teal-400 shadow-xs'
+                    ? 'bg-gold/10 border-gold/30 text-gold shadow-xs'
                     : 'bg-muted/40 hover:bg-muted text-muted-foreground hover:text-foreground border-border/50'
                 }`}
               >
-                <BookOpen className="w-3.5 h-3.5 text-teal-500" />
+                <BookOpen className="w-3.5 h-3.5 text-gold" />
                 <span>{t('filters.academic_only', 'Academic Projects')}</span>
-                <span className={`text-[10px] tabular-nums ${filters.academicOnly ? 'opacity-90' : 'opacity-60'}`}>
+                <span className="text-[10px] font-medium tabular-nums">
                   {academicCount}
                 </span>
               </button>
@@ -515,7 +523,7 @@ function App() {
                   <button
                     type="button"
                     onClick={() => handleSearchChange('')}
-                    className="ml-0.5 text-muted-foreground hover:text-foreground"
+                    aria-label={t('filters.remove_filter', 'Remove filter')} className="ml-0.5 text-muted-foreground hover:text-foreground"
                   >
                     <X className="w-3 h-3" />
                   </button>
@@ -536,7 +544,7 @@ function App() {
                       ...filters,
                       categories: filters.categories.filter(c => c !== cat)
                     })}
-                    className="ml-0.5 text-muted-foreground hover:text-foreground"
+                    aria-label={t('filters.remove_filter', 'Remove filter')} className="ml-0.5 text-muted-foreground hover:text-foreground"
                   >
                     <X className="w-3 h-3" />
                   </button>
@@ -557,7 +565,7 @@ function App() {
                       ...filters,
                       projectTypes: filters.projectTypes.filter(t => t !== type)
                     })}
-                    className="ml-0.5 text-muted-foreground hover:text-foreground"
+                    aria-label={t('filters.remove_filter', 'Remove filter')} className="ml-0.5 text-muted-foreground hover:text-foreground"
                   >
                     <X className="w-3 h-3" />
                   </button>
@@ -579,7 +587,7 @@ function App() {
                       ...filters,
                       languages: filters.languages.filter(l => l !== lang)
                     })}
-                    className="ml-0.5 text-muted-foreground hover:text-foreground"
+                    aria-label={t('filters.remove_filter', 'Remove filter')} className="ml-0.5 text-muted-foreground hover:text-foreground"
                   >
                     <X className="w-3 h-3" />
                   </button>
@@ -600,7 +608,7 @@ function App() {
                       ...filters,
                       technologies: filters.technologies.filter(t => t !== tech)
                     })}
-                    className="ml-0.5 text-muted-foreground hover:text-foreground"
+                    aria-label={t('filters.remove_filter', 'Remove filter')} className="ml-0.5 text-muted-foreground hover:text-foreground"
                   >
                     <X className="w-3 h-3" />
                   </button>
@@ -622,7 +630,7 @@ function App() {
                       ...filters,
                       aiUtilization: filters.aiUtilization.filter(u => u !== util)
                     })}
-                    className="ml-0.5 text-muted-foreground hover:text-foreground"
+                    aria-label={t('filters.remove_filter', 'Remove filter')} className="ml-0.5 text-muted-foreground hover:text-foreground"
                   >
                     <X className="w-3 h-3" />
                   </button>
@@ -644,7 +652,7 @@ function App() {
                       ...filters,
                       aiUsage: filters.aiUsage.filter(u => u !== usage)
                     })}
-                    className="ml-0.5 text-muted-foreground hover:text-foreground"
+                    aria-label={t('filters.remove_filter', 'Remove filter')} className="ml-0.5 text-muted-foreground hover:text-foreground"
                   >
                     <X className="w-3 h-3" />
                   </button>
@@ -665,7 +673,7 @@ function App() {
                       ...filters,
                       roles: filters.roles.filter(r => r !== role)
                     })}
-                    className="ml-0.5 text-muted-foreground hover:text-foreground"
+                    aria-label={t('filters.remove_filter', 'Remove filter')} className="ml-0.5 text-muted-foreground hover:text-foreground"
                   >
                     <X className="w-3 h-3" />
                   </button>
@@ -686,7 +694,7 @@ function App() {
                       ...filters,
                       sourceTypes: filters.sourceTypes.filter(s => s !== st)
                     })}
-                    className="ml-0.5 text-muted-foreground hover:text-foreground"
+                    aria-label={t('filters.remove_filter', 'Remove filter')} className="ml-0.5 text-muted-foreground hover:text-foreground"
                   >
                     <X className="w-3 h-3" />
                   </button>
@@ -707,7 +715,7 @@ function App() {
                       ...filters,
                       statuses: filters.statuses.filter(s => s !== st)
                     })}
-                    className="ml-0.5 text-muted-foreground hover:text-foreground"
+                    aria-label={t('filters.remove_filter', 'Remove filter')} className="ml-0.5 text-muted-foreground hover:text-foreground"
                   >
                     <X className="w-3 h-3" />
                   </button>
@@ -718,14 +726,14 @@ function App() {
               {filters.academicOnly && (
                 <Badge
                   variant="secondary"
-                  className="h-6 gap-1 px-2 text-[11px] font-normal border border-teal-500/30 text-teal-600 dark:text-teal-400 bg-teal-500/10"
+                  className="h-6 gap-1 px-2 text-[11px] font-normal border border-gold/30 text-gold bg-gold/10"
                 >
                   <BookOpen className="w-3 h-3" />
                   <span>{t('filters.academic_only', 'Academic Projects')}</span>
                   <button
                     type="button"
                     onClick={() => updateFiltersAndUrl({ ...filters, academicOnly: false })}
-                    className="ml-0.5 text-teal-600 hover:text-teal-800 dark:text-teal-400"
+                    aria-label={t('filters.remove_filter', 'Remove filter')} className="ml-0.5 text-gold hover:text-gold/80"
                   >
                     <X className="w-3 h-3" />
                   </button>
@@ -736,14 +744,14 @@ function App() {
               {filters.hasStars && (
                 <Badge
                   variant="secondary"
-                  className="h-6 gap-1 px-2 text-[11px] font-normal border border-amber-500/30 text-amber-600 dark:text-amber-400 bg-amber-500/10"
+                  className="h-6 gap-1 px-2 text-[11px] font-normal border border-gold/30 text-gold bg-gold/10"
                 >
-                  <Star className="w-3 h-3 text-amber-500 fill-amber-500" />
+                  <Star className="w-3 h-3 text-gold fill-gold" />
                   <span>{t('filters.has_stars', 'Has Git Stars')}</span>
                   <button
                     type="button"
                     onClick={() => updateFiltersAndUrl({ ...filters, hasStars: false })}
-                    className="ml-0.5 text-amber-600 hover:text-amber-800 dark:text-amber-400"
+                    aria-label={t('filters.remove_filter', 'Remove filter')} className="ml-0.5 text-gold hover:text-gold/80"
                   >
                     <X className="w-3 h-3" />
                   </button>
@@ -754,14 +762,14 @@ function App() {
               {filters.hasMedia && (
                 <Badge
                   variant="secondary"
-                  className="h-6 gap-1 px-2 text-[11px] font-normal border border-purple-500/30 text-purple-600 dark:text-purple-400 bg-purple-500/10"
+                  className="h-6 gap-1 px-2 text-[11px] font-normal border border-primary/30 text-primary bg-primary/10"
                 >
-                  <ImageIcon className="w-3 h-3 text-purple-500" />
+                  <ImageIcon className="w-3 h-3 text-primary" />
                   <span>{t('filters.has_media', 'Has Media')}</span>
                   <button
                     type="button"
                     onClick={() => updateFiltersAndUrl({ ...filters, hasMedia: false })}
-                    className="ml-0.5 text-purple-600 hover:text-purple-800 dark:text-purple-400"
+                    aria-label={t('filters.remove_filter', 'Remove filter')} className="ml-0.5 text-primary hover:text-primary/80"
                   >
                     <X className="w-3 h-3" />
                   </button>
@@ -772,14 +780,14 @@ function App() {
               {filters.hasDemo && (
                 <Badge
                   variant="secondary"
-                  className="h-6 gap-1 px-2 text-[11px] font-normal border border-blue-500/30 text-blue-600 dark:text-blue-400 bg-blue-500/10"
+                  className="h-6 gap-1 px-2 text-[11px] font-normal border border-primary/30 text-primary bg-primary/10"
                 >
-                  <Globe className="w-3 h-3 text-blue-500" />
+                  <Globe className="w-3 h-3 text-primary" />
                   <span>{t('filters.has_demo', 'Has Demo')}</span>
                   <button
                     type="button"
                     onClick={() => updateFiltersAndUrl({ ...filters, hasDemo: false })}
-                    className="ml-0.5 text-blue-600 hover:text-blue-800 dark:text-blue-400"
+                    aria-label={t('filters.remove_filter', 'Remove filter')} className="ml-0.5 text-primary hover:text-primary/80"
                   >
                     <X className="w-3 h-3" />
                   </button>
@@ -833,7 +841,7 @@ function App() {
                           <Separator className="opacity-40" />
                         </div>
                       )}
-                      <h2 className="text-base font-semibold tracking-tight text-foreground/90 mt-2">
+                      <h2 className="mt-2 font-serif text-lg font-semibold tracking-tight text-foreground/90">
                         {t(`project_types.${type}`, projectTypeLabels[type])}
                       </h2>
                        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -887,9 +895,9 @@ function App() {
                     <a 
                       key={i}
                       href={btn.url}
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="text-muted-foreground hover:text-foreground transition-colors"
+                      target={btn.url.startsWith('mailto:') ? undefined : '_blank'}
+                      rel={btn.url.startsWith('mailto:') ? undefined : 'noopener noreferrer'}
+                      className="text-muted-foreground hover:text-primary transition-colors"
                       title={btnLabel}
                     >
                       <BtnIcon className="w-5 h-5" />

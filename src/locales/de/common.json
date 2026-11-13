@@ -2,7 +2,7 @@
   "site": {
     "title": "Projekt-Portfolio",
     "description": "Eine Übersicht persönlicher und Open-Source-Projekte",
-    "footer": "Erstellt mit React, TypeScript & Tailwind CSS"
+    "footer": "Persönliche Projekte und Experimente."
   },
   "header": {
     "title_prefix": "Persönliche",
@@ -14,7 +14,8 @@
     "projects": "Projekten",
     "buttons": {
       "contact": "Kontakt"
-    }
+    },
+    "eyebrow": "Ausgewählte Arbeiten"
   },
   "card": {
     "details": "Details",
@@ -51,7 +52,9 @@
     "has_media": "Hat Medien",
     "has_demo": "Hat Demo",
     "ai_usage": "KI-Einsatz (Entwickelt mit)",
-    "ai_utilization": "KI-Funktionalität"
+    "ai_utilization": "KI-Funktionalität",
+    "remove_filter": "Filter entfernen",
+    "clear_search": "Suche löschen"
   },
   "project_types": {
     "software-project": "Projekte",

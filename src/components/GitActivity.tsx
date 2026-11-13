@@ -19,10 +19,10 @@ const dayMs = 24 * 60 * 60 * 1000;
 const cellStep = 8;
 const levelColors = [
   'bg-muted',
-  'bg-emerald-200 dark:bg-emerald-900',
-  'bg-emerald-400 dark:bg-emerald-700',
-  'bg-emerald-600 dark:bg-emerald-500',
-  'bg-emerald-800 dark:bg-emerald-300',
+  'bg-[#dbe6ca] dark:bg-[#24382d]',
+  'bg-[#a9c3a0] dark:bg-[#3c5a49]',
+  'bg-[#6f9278] dark:bg-[#6f9d82]',
+  'bg-[#2e5d49] dark:bg-[#9ac7ad]',
 ];
 
 function hostLabel(host: string) {

@@ -47,6 +47,11 @@ export function applyTheme(theme: Theme) {
     root.classList.remove('dark');
   }
 
+  const themeColor = document.querySelector('meta[name="theme-color"]');
+  if (themeColor) {
+    themeColor.setAttribute('content', resolved === 'dark' ? '#101f1b' : '#f8f7f2');
+  }
+
   setCookie(COOKIE_NAME, theme);
 }
 

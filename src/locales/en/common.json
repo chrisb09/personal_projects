@@ -2,7 +2,7 @@
   "site": {
     "title": "Project Portfolio",
     "description": "A showcase of personal and open source projects",
-    "footer": "Built with React, TypeScript & Tailwind CSS"
+    "footer": "Personal projects and experiments."
   },
   "header": {
     "title_prefix": "Personal",
@@ -14,7 +14,8 @@
     "projects": "projects",
     "buttons": {
       "contact": "Contact"
-    }
+    },
+    "eyebrow": "Selected work"
   },
   "card": {
     "details": "Details",
@@ -51,7 +52,9 @@
     "has_media": "Has Media",
     "has_demo": "Has Demo",
     "ai_usage": "AI Usage (Built With)",
-    "ai_utilization": "AI Utilization (Features)"
+    "ai_utilization": "AI Utilization (Features)",
+    "remove_filter": "Remove filter",
+    "clear_search": "Clear search"
   },
   "project_types": {
     "software-project": "Projects",

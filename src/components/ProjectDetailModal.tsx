@@ -120,7 +120,7 @@ function DonutChart({ data, total }: { data: Record<string, number>; total: numb
         </svg>
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="text-center">
-            <p className="text-lg font-bold">{(total / 1000).toFixed(1)}k</p>
+            <p className="font-serif text-lg font-semibold">{(total / 1000).toFixed(1)}k</p>
             <p className="text-xs text-muted-foreground">LOC</p>
           </div>
         </div>
@@ -422,7 +422,7 @@ export function ProjectDetailModal({ project: rawProject, isOpen, onClose, onPro
                 
                  <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap mb-0.5">
-                    <DialogTitle className="text-xl sm:text-2xl font-bold tracking-tight leading-snug">{project.name}</DialogTitle>
+                    <DialogTitle className="font-serif text-2xl sm:text-3xl font-semibold tracking-tight leading-snug">{project.name}</DialogTitle>
                   </div>
                   <p className="text-sm text-muted-foreground leading-relaxed max-w-2xl">{project.tagline}</p>
                   <div className="flex items-center gap-1.5 mt-1.5 flex-wrap">
@@ -435,7 +435,7 @@ export function ProjectDetailModal({ project: rawProject, isOpen, onClose, onPro
                     {project.academic && (
                       <Badge 
                         variant="outline" 
-                        className="bg-teal-500/10 text-teal-600 border-teal-500/20 dark:text-teal-400 text-[10px] px-1.5 py-0.5 leading-none font-medium"
+                        className="bg-gold/10 text-gold border-gold/20 text-[10px] px-1.5 py-0.5 leading-none font-medium"
                       >
                         {t('labels.academic', 'Academic')}
                       </Badge>
@@ -782,7 +782,7 @@ export function ProjectDetailModal({ project: rawProject, isOpen, onClose, onPro
                           </div>
                           <div className="flex items-center justify-between px-3 py-2 rounded-lg bg-muted/20 border border-border/30">
                             <div className="flex items-center gap-2">
-                              <GitCommit className="w-4 h-4 text-blue-500" />
+                              <GitCommit className="w-4 h-4 text-primary" />
                               <span className="text-xs font-medium">{t('stats.commits', 'Commits')}</span>
                             </div>
                             <span className="text-xs font-semibold">{project.stats?.commits}</span>
@@ -796,7 +796,7 @@ export function ProjectDetailModal({ project: rawProject, isOpen, onClose, onPro
                           </div>
                           <div className="flex items-center justify-between px-3 py-2 rounded-lg bg-muted/20 border border-border/30">
                             <div className="flex items-center gap-2">
-                              <Clock className="w-4 h-4 text-purple-500" />
+                              <Clock className="w-4 h-4 text-primary" />
                               <span className="text-xs font-medium">{t('stats.last_commit', 'Last Commit')}</span>
                             </div>
                             <span className="text-xs font-semibold truncate max-w-[150px]" title={project.stats?.lastCommit}>

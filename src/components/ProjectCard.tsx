@@ -64,16 +64,16 @@ export function ProjectCard({ project: rawProject, onClick, onMediaClick }: Proj
   return (
     <Card
       onClick={onClick}
-      className="group cursor-pointer gap-0 overflow-hidden border-border bg-card py-0 shadow-sm transition-colors hover:border-primary/60 hover:shadow-md focus-within:border-primary focus-within:ring-2 focus-within:ring-ring/40"
+      className="group cursor-pointer gap-0 overflow-hidden rounded-xl border-border/80 bg-card py-0 shadow-sm transition-all hover:-translate-y-0.5 hover:border-primary/60 hover:shadow-md focus-within:border-primary focus-within:ring-2 focus-within:ring-ring/40"
     >
       <CardContent className="flex min-h-[250px] flex-1 flex-col p-5 sm:p-6">
         <div className="mb-4 flex items-start justify-between gap-3">
           <div className="flex min-w-0 items-start gap-3">
-            <div className="flex size-11 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-border bg-muted/40">
+            <div className="flex size-11 shrink-0 items-center justify-center overflow-hidden rounded-lg border border-border/70 bg-secondary/60">
               {project.logo ? <img src={project.logo} alt="" className="size-full object-contain" /> : <FolderGit2 className="size-5 text-muted-foreground" />}
             </div>
             <div className="min-w-0">
-              <h3 className="text-base font-semibold leading-snug tracking-tight text-card-foreground group-hover:text-primary">{project.name}</h3>
+              <h3 className="font-serif text-lg font-semibold leading-snug tracking-tight text-card-foreground group-hover:text-primary">{project.name}</h3>
               <p className="mt-0.5 text-xs text-muted-foreground">{t(`roles.${project.role}`, roleLabels[project.role])} · {project.year}</p>
             </div>
           </div>
@@ -87,11 +87,11 @@ export function ProjectCard({ project: rawProject, onClick, onMediaClick }: Proj
 
         <div className="mt-auto pt-5">
           <div className="flex flex-wrap items-center gap-x-2 gap-y-1.5 text-xs text-muted-foreground">
-            <span className="font-medium text-foreground">{t(`categories.${project.category}`, categoryLabels[project.category])}</span>
+            <span className="font-medium text-primary">{t(`categories.${project.category}`, categoryLabels[project.category])}</span>
             <span aria-hidden="true">·</span>
-            {project.technologies.slice(0, 3).map(tech => <span key={tech} className="rounded-md bg-muted px-1.5 py-0.5">{tech}</span>)}
+            {project.technologies.slice(0, 3).map(tech => <span key={tech} className="rounded-md bg-secondary/70 px-1.5 py-0.5">{tech}</span>)}
           </div>
-          <div className="mt-4 flex items-center justify-between gap-2 border-t border-border/70 pt-3 text-xs">
+          <div className="mt-4 flex items-center justify-between gap-2 border-t border-border/60 pt-3 text-xs">
             <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-muted-foreground">
               <span>{t(`statuses.${project.status}`, statusLabels[project.status])}</span>
               {project.academic && <span>· {t('labels.academic', 'Academic')}</span>}

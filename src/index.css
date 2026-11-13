@@ -4,64 +4,66 @@
 
 @layer base {
   :root {
-    --background: 220 20% 97%;
-    --foreground: 222 28% 14%;
-    --card: 0 0% 100%;
-    --card-foreground: 222 28% 14%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222 28% 14%;
-    --primary: 215 65% 36%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 215 21% 93%;
-    --secondary-foreground: 222 28% 14%;
-    --muted: 215 21% 93%;
-    --muted-foreground: 218 12% 39%;
-    --accent: 213 30% 93%;
-    --accent-foreground: 222 28% 14%;
-    --destructive: 0 84.2% 60.2%;
+    --background: 48 33% 96%;
+    --foreground: 162 31% 18%;
+    --card: 45 40% 99%;
+    --card-foreground: 162 31% 18%;
+    --popover: 45 40% 99%;
+    --popover-foreground: 162 31% 18%;
+    --primary: 157 34% 27%;
+    --primary-foreground: 48 33% 96%;
+    --secondary: 100 16% 92%;
+    --secondary-foreground: 162 31% 18%;
+    --muted: 100 14% 93%;
+    --muted-foreground: 152 8% 38%;
+    --accent: 100 16% 92%;
+    --accent-foreground: 162 31% 18%;
+    --destructive: 0 55% 42%;
     --destructive-foreground: 0 0% 98%;
-    --border: 216 18% 86%;
-    --input: 216 18% 86%;
-    --ring: 215 65% 36%;
-    --radius: 0.625rem;
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --border: 100 12% 86%;
+    --input: 100 12% 86%;
+    --ring: 157 34% 27%;
+    --gold: 33 55% 32%;
+    --radius: 0.75rem;
+    --sidebar-background: 48 33% 96%;
+    --sidebar-foreground: 162 31% 18%;
+    --sidebar-primary: 157 34% 27%;
+    --sidebar-primary-foreground: 48 33% 96%;
+    --sidebar-accent: 100 16% 92%;
+    --sidebar-accent-foreground: 162 31% 18%;
+    --sidebar-border: 100 12% 86%;
+    --sidebar-ring: 157 34% 27%;
   }
 
   .dark {
-    --background: 220 15% 10%;
-    --foreground: 210 20% 94%;
-    --card: 220 14% 15%;
-    --card-foreground: 210 20% 94%;
-    --popover: 220 13% 19%;
-    --popover-foreground: 210 20% 94%;
-    --primary: 210 85% 72%;
-    --primary-foreground: 220 22% 12%;
-    --secondary: 218 13% 22%;
-    --secondary-foreground: 210 20% 94%;
-    --muted: 218 13% 22%;
-    --muted-foreground: 215 14% 69%;
-    --accent: 215 19% 26%;
-    --accent-foreground: 210 20% 94%;
-    --destructive: 0 62.8% 30.6%;
+    --background: 160 27% 8%;
+    --foreground: 60 20% 95%;
+    --card: 160 24% 12%;
+    --card-foreground: 60 20% 95%;
+    --popover: 160 22% 14%;
+    --popover-foreground: 60 20% 95%;
+    --primary: 146 27% 69%;
+    --primary-foreground: 160 30% 10%;
+    --secondary: 160 18% 17%;
+    --secondary-foreground: 60 20% 95%;
+    --muted: 160 18% 17%;
+    --muted-foreground: 135 8% 68%;
+    --accent: 160 18% 20%;
+    --accent-foreground: 60 20% 95%;
+    --destructive: 0 45% 45%;
     --destructive-foreground: 0 0% 98%;
-    --border: 215 12% 30%;
-    --input: 215 12% 30%;
-    --ring: 210 85% 72%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --border: 160 15% 22%;
+    --input: 160 15% 22%;
+    --ring: 146 27% 69%;
+    --gold: 40 59% 78%;
+    --sidebar-background: 160 27% 8%;
+    --sidebar-foreground: 60 20% 95%;
+    --sidebar-primary: 146 27% 69%;
+    --sidebar-primary-foreground: 160 30% 10%;
+    --sidebar-accent: 160 18% 20%;
+    --sidebar-accent-foreground: 60 20% 95%;
+    --sidebar-border: 160 15% 22%;
+    --sidebar-ring: 146 27% 69%;
   }
 }
 
@@ -71,6 +73,39 @@
   }
   body {
     @apply bg-background text-foreground antialiased;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+
+  h1, h2, h3 {
+    font-family: Georgia, "Times New Roman", serif;
+    letter-spacing: -0.025em;
+  }
+
+  ::selection {
+    background: hsl(100 32% 82%);
+    color: hsl(var(--foreground));
+  }
+
+  .dark ::selection {
+    background: hsl(146 27% 27%);
+    color: hsl(var(--foreground));
+  }
+}
+
+@layer components {
+  .portfolio-hero {
+    background:
+      radial-gradient(1000px 520px at 92% -18%, hsl(var(--accent) / 0.85), transparent 62%),
+      linear-gradient(180deg, hsl(var(--card)) 0%, hsl(var(--background)) 100%);
+  }
+
+  .portfolio-mark {
+    display: inline-block;
+    width: 42px;
+    aspect-ratio: 1153 / 815;
+    background: currentColor;
+    -webkit-mask: url("/monogram.svg") center / contain no-repeat;
+    mask: url("/monogram.svg") center / contain no-repeat;
   }
 }
 

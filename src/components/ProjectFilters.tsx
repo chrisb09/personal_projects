@@ -332,15 +332,15 @@ export function ProjectFilters({
                   onClick={() => update({ hasStars: !filters.hasStars })}
                   className={`flex items-center justify-between p-2 rounded-lg border text-xs text-left transition-all ${
                     filters.hasStars
-                      ? 'bg-amber-500/10 border-amber-500/30 text-amber-600 dark:text-amber-400 font-medium'
+                      ? 'bg-gold/10 border-gold/30 text-gold font-medium'
                       : 'bg-muted/30 border-border/40 hover:bg-muted/60 text-muted-foreground'
                   }`}
                 >
                   <div className="flex items-center gap-1.5">
-                    <Star className="w-3.5 h-3.5 text-amber-500" />
+                    <Star className="w-3.5 h-3.5 text-gold" />
                     <span>{t('filters.has_stars', 'Has Git Stars')}</span>
                   </div>
-                  <span className="text-[10px] opacity-75 tabular-nums">{starsCount}</span>
+                  <span className="text-[10px] font-medium tabular-nums">{starsCount}</span>
                 </button>
 
                 {/* Has Media */}
@@ -349,15 +349,15 @@ export function ProjectFilters({
                   onClick={() => update({ hasMedia: !filters.hasMedia })}
                   className={`flex items-center justify-between p-2 rounded-lg border text-xs text-left transition-all ${
                     filters.hasMedia
-                      ? 'bg-purple-500/10 border-purple-500/30 text-purple-600 dark:text-purple-400 font-medium'
+                      ? 'bg-primary/10 border-primary/30 text-primary font-medium'
                       : 'bg-muted/30 border-border/40 hover:bg-muted/60 text-muted-foreground'
                   }`}
                 >
                   <div className="flex items-center gap-1.5">
-                    <ImageIcon className="w-3.5 h-3.5 text-purple-500" />
+                    <ImageIcon className="w-3.5 h-3.5 text-primary" />
                     <span>{t('filters.has_media', 'Has Media')}</span>
                   </div>
-                  <span className="text-[10px] opacity-75 tabular-nums">{mediaCount}</span>
+                  <span className="text-[10px] font-medium tabular-nums">{mediaCount}</span>
                 </button>
 
                 {/* Has Demo */}
@@ -366,15 +366,15 @@ export function ProjectFilters({
                   onClick={() => update({ hasDemo: !filters.hasDemo })}
                   className={`flex items-center justify-between p-2 rounded-lg border text-xs text-left transition-all ${
                     filters.hasDemo
-                      ? 'bg-blue-500/10 border-blue-500/30 text-blue-600 dark:text-blue-400 font-medium'
+                      ? 'bg-primary/10 border-primary/30 text-primary font-medium'
                       : 'bg-muted/30 border-border/40 hover:bg-muted/60 text-muted-foreground'
                   }`}
                 >
                   <div className="flex items-center gap-1.5">
-                    <Globe className="w-3.5 h-3.5 text-blue-500" />
+                    <Globe className="w-3.5 h-3.5 text-primary" />
                     <span>{t('filters.has_demo', 'Has Demo')}</span>
                   </div>
-                  <span className="text-[10px] opacity-75 tabular-nums">{demoCount}</span>
+                  <span className="text-[10px] font-medium tabular-nums">{demoCount}</span>
                 </button>
 
                 {/* Academic Projects */}
@@ -383,15 +383,15 @@ export function ProjectFilters({
                   onClick={() => update({ academicOnly: !filters.academicOnly })}
                   className={`flex items-center justify-between p-2 rounded-lg border text-xs text-left transition-all ${
                     filters.academicOnly
-                      ? 'bg-teal-500/10 border-teal-500/30 text-teal-600 dark:text-teal-400 font-medium'
+                      ? 'bg-gold/10 border-gold/30 text-gold font-medium'
                       : 'bg-muted/30 border-border/40 hover:bg-muted/60 text-muted-foreground'
                   }`}
                 >
                   <div className="flex items-center gap-1.5">
-                    <GraduationCap className="w-3.5 h-3.5 text-teal-500" />
+                    <GraduationCap className="w-3.5 h-3.5 text-gold" />
                     <span>{t('filters.academic_only', 'Academic Projects')}</span>
                   </div>
-                  <span className="text-[10px] opacity-75 tabular-nums">{academicCount}</span>
+                  <span className="text-[10px] font-medium tabular-nums">{academicCount}</span>
                 </button>
               </div>
             )}
@@ -421,7 +421,7 @@ export function ProjectFilters({
                       }`}
                     >
                       <span>{t(`categories.${id}`, categoryLabels[id])}</span>
-                      <span className={`text-[10px] tabular-nums ${isSelected ? 'opacity-90' : 'opacity-60'}`}>
+                      <span className="text-[10px] font-medium tabular-nums">
                         {count}
                       </span>
                     </button>
@@ -457,7 +457,7 @@ export function ProjectFilters({
                     >
                       <span className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: color }} />
                       <span>{name}</span>
-                      <span className={`text-[10px] tabular-nums ${isSelected ? 'opacity-90' : 'opacity-60'}`}>
+                      <span className="text-[10px] font-medium tabular-nums">
                         {count}
                       </span>
                     </button>
@@ -511,7 +511,7 @@ export function ProjectFilters({
                         }`}
                       >
                         <span>{name}</span>
-                        <span className={`text-[9px] tabular-nums ${isSelected ? 'opacity-90' : 'opacity-60'}`}>
+                        <span className="text-[9px] font-medium tabular-nums">
                           {count}
                         </span>
                       </button>
@@ -623,7 +623,7 @@ export function ProjectFilters({
                           }`}
                         >
                           <span>{t(`source_types.${id}`, sourceTypeLabels[id])}</span>
-                          <span className={`text-[10px] tabular-nums ${isSelected ? 'opacity-90' : 'opacity-60'}`}>
+                          <span className="text-[10px] font-medium tabular-nums">
                             {count}
                           </span>
                         </button>
@@ -650,7 +650,7 @@ export function ProjectFilters({
                           }`}
                         >
                           <span>{t(`roles.${id}`, roleLabels[id])}</span>
-                          <span className={`text-[10px] tabular-nums ${isSelected ? 'opacity-90' : 'opacity-60'}`}>
+                          <span className="text-[10px] font-medium tabular-nums">
                             {count}
                           </span>
                         </button>
@@ -677,7 +677,7 @@ export function ProjectFilters({
                           }`}
                         >
                           <span>{t(`statuses.${id}`, statusLabels[id])}</span>
-                          <span className={`text-[10px] tabular-nums ${isSelected ? 'opacity-90' : 'opacity-60'}`}>
+                          <span className="text-[10px] font-medium tabular-nums">
                             {count}
                           </span>
                         </button>
@@ -704,7 +704,7 @@ export function ProjectFilters({
                           }`}
                         >
                           <span>{t(`project_types.${id}`, projectTypeLabels[id])}</span>
-                          <span className={`text-[10px] tabular-nums ${isSelected ? 'opacity-90' : 'opacity-60'}`}>
+                          <span className="text-[10px] font-medium tabular-nums">
                             {count}
                           </span>
                         </button>
