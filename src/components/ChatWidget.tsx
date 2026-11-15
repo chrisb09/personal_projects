@@ -359,21 +359,21 @@ function MarkdownContent({ content, onImageClick }: MarkdownContentProps) {
   return (
     <div
       ref={containerRef}
-      className="text-xs sm:text-sm leading-relaxed text-card-foreground break-words
-        [&_h1]:text-base [&_h1]:font-bold [&_h1]:mt-3.5 [&_h1]:mb-1.5 [&_h1]:text-indigo-500 dark:[&_h1]:text-indigo-400 [&_h1]:tracking-tight
-        [&_h2]:text-sm sm:[&_h2]:text-base [&_h2]:font-bold [&_h2]:mt-3 [&_h2]:mb-1 [&_h2]:text-indigo-500 dark:[&_h2]:text-indigo-400
-        [&_h3]:text-xs sm:[&_h3]:text-sm [&_h3]:font-semibold [&_h3]:mt-2.5 [&_h3]:mb-1 [&_h3]:text-indigo-500 dark:[&_h3]:text-indigo-400
-        [&_h4]:text-xs [&_h4]:font-semibold [&_h4]:mt-2 [&_h4]:mb-0.5 [&_h4]:text-indigo-500 dark:[&_h4]:text-indigo-400
+      className="text-sm leading-relaxed text-card-foreground break-words
+        [&_h1]:font-sans [&_h1]:text-lg [&_h1]:font-semibold [&_h1]:mt-4 [&_h1]:mb-2 [&_h1]:text-foreground
+        [&_h2]:font-sans [&_h2]:text-base [&_h2]:font-semibold [&_h2]:mt-4 [&_h2]:mb-2 [&_h2]:text-foreground
+        [&_h3]:font-sans [&_h3]:text-sm [&_h3]:font-semibold [&_h3]:mt-3 [&_h3]:mb-1 [&_h3]:text-foreground
+        [&_h4]:font-sans [&_h4]:text-sm [&_h4]:font-semibold [&_h4]:mt-2 [&_h4]:mb-1 [&_h4]:text-foreground
         [&_p]:my-1.5 [&_p]:leading-relaxed
         [&_ul]:list-disc [&_ul]:pl-4 [&_ul]:my-1.5 [&_ul]:space-y-1
         [&_ol]:list-decimal [&_ol]:pl-4 [&_ol]:my-1.5 [&_ol]:space-y-1
         [&_li]:my-0.5 [&_li]:leading-relaxed
-        [&_strong]:font-semibold [&_strong]:text-amber-500 dark:[&_strong]:text-amber-300
-        [&_b]:font-semibold [&_b]:text-amber-500 dark:[&_b]:text-amber-300
-        [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:mx-0.5 [&_code]:rounded-md [&_code]:bg-emerald-500/10 [&_code]:border [&_code]:border-emerald-500/25 [&_code]:text-emerald-600 dark:[&_code]:text-emerald-400 [&_code]:font-mono [&_code]:text-[11px] [&_code]:font-medium
+        [&_strong]:font-semibold [&_strong]:text-foreground
+        [&_b]:font-semibold [&_b]:text-foreground
+        [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:mx-0.5 [&_code]:rounded-md [&_code]:bg-muted [&_code]:text-foreground [&_code]:font-mono [&_code]:text-xs
         [&_pre]:my-2.5 [&_pre]:p-3.5 [&_pre]:rounded-xl [&_pre]:bg-neutral-950 [&_pre]:border [&_pre]:border-border [&_pre]:overflow-x-auto
         [&_pre_code]:bg-transparent [&_pre_code]:border-0 [&_pre_code]:p-0 [&_pre_code]:text-neutral-200 [&_pre_code]:text-xs
-        [&_a]:text-cyan-600 dark:[&_a]:text-cyan-400 [&_a]:underline [&_a]:underline-offset-2 [&_a]:font-medium hover:[&_a]:text-cyan-500 dark:hover:[&_a]:text-cyan-300 transition-colors
+        [&_a]:text-primary [&_a]:underline [&_a]:underline-offset-2 [&_a]:font-medium hover:[&_a]:opacity-80 transition-colors
         [&_hr]:my-3 [&_hr]:border-border/60
         [&_blockquote]:border-l-2 [&_blockquote]:border-primary/50 [&_blockquote]:pl-3 [&_blockquote]:italic [&_blockquote]:text-muted-foreground [&_blockquote]:my-2
         [&_table]:w-full [&_table]:table-fixed [&_table]:my-3 [&_table]:border-collapse [&_table]:rounded-xl [&_table]:overflow-hidden [&_table]:border [&_table]:border-border [&_table]:text-xs [&_table]:shadow-2xs
@@ -450,9 +450,14 @@ export const ChatWidget: React.FC = () => {
   useEffect(() => {
     if (isOpen) {
       scrollToBottom();
-      setTimeout(() => textareaRef.current?.focus(), 150);
     }
   }, [isOpen, messages, toolStatus, isEnlarged]);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const timer = setTimeout(() => textareaRef.current?.focus(), 150);
+    return () => clearTimeout(timer);
+  }, [isOpen]);
 
   // Escape key closes enlarge or closes chat
   useEffect(() => {
@@ -698,8 +703,8 @@ export const ChatWidget: React.FC = () => {
         <div 
           className={`fixed z-50 flex flex-col rounded-2xl bg-card text-card-foreground border border-border shadow-2xl overflow-hidden transition-all duration-300 animate-in fade-in ${
             isEnlarged
-              ? 'inset-3 sm:inset-6 md:inset-10 lg:inset-12 max-w-5xl mx-auto my-auto h-[calc(100vh-1.5rem)] sm:h-[calc(100vh-3rem)] md:h-[88vh]'
-              : 'inset-x-3 bottom-3 top-16 sm:top-auto sm:inset-x-auto sm:bottom-6 sm:right-6 sm:w-[440px] sm:h-[620px] sm:max-h-[85vh] slide-in-from-bottom-5'
+              ? 'inset-2 sm:inset-4'
+              : 'inset-x-3 bottom-3 top-16 sm:inset-x-[5vw] sm:top-[6dvh] sm:bottom-[6dvh] slide-in-from-bottom-5'
           }`}
           role="dialog"
           aria-modal="true"
@@ -713,7 +718,7 @@ export const ChatWidget: React.FC = () => {
                 <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-emerald-500 ring-2 ring-card" />
               </div>
               <div className="leading-tight">
-                <h3 className="text-sm font-semibold tracking-tight text-foreground flex items-center gap-1.5">
+                <h3 className="font-sans text-sm font-semibold tracking-tight text-foreground flex items-center gap-1.5">
                   {t('chat.title', "Christian's AI Assistant")}
                 </h3>
                 <p className="text-[11px] text-muted-foreground flex items-center gap-1">

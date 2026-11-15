@@ -1961,6 +1961,12 @@ function getFriendlyToolName(toolName, toolArgs) {
   }
 }
 
+const { readOpenAIStream, readGeminiStream } = require('./chat-stream');
+
+function providerSignal(req, timeout) {
+  return AbortSignal.any([req.chatAbort.signal, AbortSignal.timeout(timeout)]);
+}
+
 // =====================================================================
 // OpenRouter API Runner (Luna 6, High Effort)
 // =====================================================================
@@ -1991,9 +1997,12 @@ async function handleOpenRouterChatStream(req, res, userMessages, clientLang, ac
   }
 
   let toolCallsCount = 0;
+  let emptyResponses = 0;
+  let turns = 0;
   const maxToolCalls = 3;
 
   while (true) {
+    if (++turns > 8) return false;
     const isToolCallLimitReached = toolCallsCount >= maxToolCalls;
 
     const reqBody = {
@@ -2001,6 +2010,7 @@ async function handleOpenRouterChatStream(req, res, userMessages, clientLang, ac
       messages,
       temperature: 0.3,
       max_tokens: 4096,
+      stream: true,
       reasoning: { effort: 'high' },
       reasoning_effort: 'high',
     };
@@ -2021,9 +2031,10 @@ async function handleOpenRouterChatStream(req, res, userMessages, clientLang, ac
           'X-Title': 'Christian Brinkmann Portfolio',
         },
         body: JSON.stringify(reqBody),
-        signal: AbortSignal.timeout(35000),
+        signal: providerSignal(req, 120000),
       });
     } catch (err) {
+      if (req.chatAbort.signal.aborted) throw err;
       console.warn('[ChatServer] OpenRouter fetch error:', err.message);
       return false; // trigger fallback
     }
@@ -2034,18 +2045,15 @@ async function handleOpenRouterChatStream(req, res, userMessages, clientLang, ac
       return false; // trigger fallback
     }
 
-    const data = await resp.json();
-    const choice = data?.choices?.[0];
-    const message = choice?.message;
-    if (!message) return false;
-
-    // If reasoning was returned, stream preview as status event
-    if (message.reasoning) {
-      const cleanReasoning = message.reasoning.replace(/[*#_`]/g, '').trim().split(/\s+/).slice(0, 6).join(' ');
-      if (cleanReasoning) {
-        res.write(`data: ${JSON.stringify({ type: 'status', message: cleanReasoning })}\n\n`);
-      }
+    let data;
+    try {
+      data = await readOpenAIStream(resp, res);
+    } catch (err) {
+      if (res.answerStarted || req.chatAbort.signal.aborted) throw err;
+      console.warn('[ChatServer] Provider streaming error:', err.message);
+      return false;
     }
+    const message = data.message;
 
     // Check if tool_calls
     if (message.tool_calls && message.tool_calls.length > 0 && !isToolCallLimitReached) {
@@ -2077,14 +2085,7 @@ async function handleOpenRouterChatStream(req, res, userMessages, clientLang, ac
     // Got textual response! Stream in natural chunks
     const fullText = (message.content || '').trim();
     if (fullText) {
-      let firstTokenTime = null;
-      const chunkSize = 20;
-      for (let i = 0; i < fullText.length; i += chunkSize) {
-        if (!firstTokenTime) firstTokenTime = Date.now();
-        const slice = fullText.slice(i, i + chunkSize);
-        res.write(`data: ${JSON.stringify({ type: 'delta', text: slice })}\n\n`);
-        await new Promise(r => setTimeout(r, 12));
-      }
+      const firstTokenTime = data.firstTokenTime;
 
       // Send referenced sources event
       const sourcesList = Array.from(accessedSources.values()).slice(0, 5);
@@ -2133,7 +2134,8 @@ async function handleOpenRouterChatStream(req, res, userMessages, clientLang, ac
       };
     }
 
-    // Empty content fallback: prompt synthesis
+    // Bound empty responses to avoid an unending provider loop.
+    if (++emptyResponses > 1) return false;
     messages.push({
       role: 'user',
       content: 'Please summarize and present your final answer for the user now.',
@@ -2171,9 +2173,12 @@ async function handleCerebrasChatStream(req, res, userMessages, clientLang, acce
   }
 
   let toolCallsCount = 0;
+  let emptyResponses = 0;
+  let turns = 0;
   const maxToolCalls = 3;
 
   while (true) {
+    if (++turns > 8) return false;
     const isToolCallLimitReached = toolCallsCount >= maxToolCalls;
 
     const reqBody = {
@@ -2181,6 +2186,7 @@ async function handleCerebrasChatStream(req, res, userMessages, clientLang, acce
       messages,
       temperature: 0.3,
       max_tokens: 4096,
+      stream: true,
     };
 
     if (!isToolCallLimitReached) {
@@ -2198,9 +2204,10 @@ async function handleCerebrasChatStream(req, res, userMessages, clientLang, acce
           'User-Agent': 'PortfolioChat/1.0',
         },
         body: JSON.stringify(reqBody),
-        signal: AbortSignal.timeout(25000),
+        signal: providerSignal(req, 120000),
       });
     } catch (err) {
+      if (req.chatAbort.signal.aborted) throw err;
       console.warn('[ChatServer] Cerebras fetch error:', err.message);
       return false; // trigger fallback
     }
@@ -2211,10 +2218,15 @@ async function handleCerebrasChatStream(req, res, userMessages, clientLang, acce
       return false; // trigger fallback
     }
 
-    const data = await resp.json();
-    const choice = data?.choices?.[0];
-    const message = choice?.message;
-    if (!message) return false;
+    let data;
+    try {
+      data = await readOpenAIStream(resp, res);
+    } catch (err) {
+      if (res.answerStarted || req.chatAbort.signal.aborted) throw err;
+      console.warn('[ChatServer] Provider streaming error:', err.message);
+      return false;
+    }
+    const message = data.message;
 
     // Check if tool_calls
     if (message.tool_calls && message.tool_calls.length > 0 && !isToolCallLimitReached) {
@@ -2246,14 +2258,7 @@ async function handleCerebrasChatStream(req, res, userMessages, clientLang, acce
     // Got textual response! Stream in natural chunks
     const fullText = (message.content || '').trim();
     if (fullText) {
-      let firstTokenTime = null;
-      const chunkSize = 20;
-      for (let i = 0; i < fullText.length; i += chunkSize) {
-        if (!firstTokenTime) firstTokenTime = Date.now();
-        const slice = fullText.slice(i, i + chunkSize);
-        res.write(`data: ${JSON.stringify({ type: 'delta', text: slice })}\n\n`);
-        await new Promise(r => setTimeout(r, 12));
-      }
+      const firstTokenTime = data.firstTokenTime;
 
       // Send referenced sources event
       const sourcesList = Array.from(accessedSources.values()).slice(0, 5);
@@ -2302,7 +2307,8 @@ async function handleCerebrasChatStream(req, res, userMessages, clientLang, acce
       };
     }
 
-    // Empty content fallback: prompt synthesis
+    // Bound empty responses to avoid an unending provider loop.
+    if (++emptyResponses > 1) return false;
     messages.push({
       role: 'user',
       content: 'Please summarize and present your final answer for the user now.',
@@ -2338,9 +2344,12 @@ async function handleGeminiChatStream(req, res, userMessages, clientLang, access
   }
 
   let toolCallsCount = 0;
+  let emptyResponses = 0;
+  let turns = 0;
   const maxToolCalls = 3;
 
   while (true) {
+    if (++turns > 8) return false;
     const isToolCallLimitReached = toolCallsCount >= maxToolCalls;
 
     // Build request body
@@ -2363,6 +2372,7 @@ async function handleGeminiChatStream(req, res, userMessages, clientLang, access
 
     let responseData = null;
     let successfulModel = null;
+    let turnStartTime = Date.now();
     const maxAttempts = quotaTracker.models.length * quotaTracker.apiKeys.length;
 
     for (let attempt = 0; attempt < maxAttempts; attempt++) {
@@ -2373,15 +2383,15 @@ async function handleGeminiChatStream(req, res, userMessages, clientLang, access
       }
 
       const { model, key, release } = lease;
-      const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model.id)}:generateContent?key=${encodeURIComponent(key)}`;
-      const turnStartTime = Date.now();
+      const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model.id)}:streamGenerateContent?alt=sse&key=${encodeURIComponent(key)}`;
+      turnStartTime = Date.now();
 
       try {
         const resp = await fetch(apiUrl, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(requestBody),
-          signal: AbortSignal.timeout(20000),
+          signal: providerSignal(req, 120000),
         });
 
         if (resp.status === 429 || resp.status === 503) {
@@ -2405,11 +2415,12 @@ async function handleGeminiChatStream(req, res, userMessages, clientLang, access
           continue; // Retry with next key/model in attempt loop
         }
 
-        responseData = await resp.json();
+        responseData = await readGeminiStream(resp, res);
         successfulModel = model;
         release(true, false);
         break; // Successfully got response!
       } catch (err) {
+        if (res.answerStarted || req.chatAbort.signal.aborted) { release(false, false); throw err; }
         console.warn(`[ChatServer] Fetch error/timeout on model ${model.id}:`, err.message);
         const isTimeout = err.name === 'TimeoutError' || err.name === 'AbortError' || err.message?.includes('timeout');
         release(false, isTimeout, 1800);
@@ -2489,16 +2500,9 @@ async function handleGeminiChatStream(req, res, userMessages, clientLang, access
 
     // Model generated the textual answer! Stream final text tokens
     const textParts = parts.filter(p => p.text && !p.thought);
-    const fullText = textParts.map(p => p.text).join('\n').trim();
+    const fullText = textParts.map(p => p.text).join('').trim();
     if (fullText) {
-      let firstTokenTime = null;
-      const chunkSize = 20;
-      for (let i = 0; i < fullText.length; i += chunkSize) {
-        if (!firstTokenTime) firstTokenTime = Date.now();
-        const slice = fullText.slice(i, i + chunkSize);
-        res.write(`data: ${JSON.stringify({ type: 'delta', text: slice })}\n\n`);
-        await new Promise(r => setTimeout(r, 15)); // Smooth streaming cadence
-      }
+      const firstTokenTime = responseData.firstTokenTime;
 
       // Send referenced sources event if available
       const sourcesList = Array.from(accessedSources.values()).slice(0, 5);
@@ -2547,7 +2551,8 @@ async function handleGeminiChatStream(req, res, userMessages, clientLang, access
       };
     }
 
-    // Fallback: If fullText is empty and no functionCallPart, request final text synthesis
+    // Bound empty responses to avoid an unending provider loop.
+    if (++emptyResponses > 1) return false;
     contents.push({
       role: 'model',
       parts: parts,
@@ -2565,6 +2570,8 @@ async function handleGeminiChatStream(req, res, userMessages, clientLang, access
 // Order: OpenRouter (Luna 6) -> Gemini -> Cerebras (last resort)
 // =====================================================================
 async function handleChatStream(req, res, userMessages, clientLang = 'en', sessionId = null) {
+  req.chatAbort = new AbortController();
+  res.once('close', () => req.chatAbort.abort());
   const clientIp = getClientIp(req);
   const userAgent = req.headers['user-agent'] || 'Unknown';
   const effectiveSessionId = sessionId || `sess_${crypto.createHash('md5').update(clientIp).digest('hex').slice(0, 8)}_${new Date().toISOString().slice(0, 13)}`;
@@ -2917,7 +2924,8 @@ const server = http.createServer(async (req, res) => {
           res.writeHead(400, { 'Content-Type': 'application/json' });
           res.end(JSON.stringify({ error: 'Malformed JSON payload.' }));
         } else {
-          res.write(`data: ${JSON.stringify({ type: 'error', error: err.message })}\n\n`);
+          console.error('[ChatServer] Chat request failed:', err.message);
+          if (!res.destroyed) res.write(`data: ${JSON.stringify({ type: 'error', error: 'The assistant could not complete this response. Please try again.' })}\n\n`);
           res.end();
         }
       }
