@@ -63,6 +63,8 @@ async function readOpenAIStream(resp, res) {
   const { gate, firstTokenTime } = answerGate(res);
   const calls = new Map();
   let content = '', usage = null, finishReason = null, done = false;
+  const reasoningDetails = [];
+  let reasoning = '';
   for await (const event of readEvents(resp.body)) {
     if (event.error) throw new Error('Provider stream failed');
     if (event.usage) usage = event.usage;
@@ -70,6 +72,8 @@ async function readOpenAIStream(resp, res) {
     if (!choice) continue;
     if (choice.finish_reason) { finishReason = choice.finish_reason; done = true; }
     const delta = choice.delta || {};
+    if (Array.isArray(delta.reasoning_details)) reasoningDetails.push(...delta.reasoning_details);
+    if (typeof delta.reasoning === 'string') reasoning += delta.reasoning;
     if (delta.tool_calls?.length && gate.emitted) throw new Error('Provider mixed answer text and tool calls');
     for (const call of delta.tool_calls || []) {
       const current = calls.get(call.index) || { id: '', type: 'function', function: { name: '', arguments: '' } };
@@ -86,7 +90,7 @@ async function readOpenAIStream(resp, res) {
   if (!done) throw new Error('Provider stream ended before completion');
   if (finishReason === 'length' || finishReason === 'content_filter') throw new Error('Provider could not complete the answer');
   if (!calls.size && content) gate.finish();
-  return { message: { role: 'assistant', content: content || null, ...(calls.size ? { tool_calls: [...calls.values()] } : {}) }, usage, firstTokenTime: firstTokenTime() };
+  return { message: { role: 'assistant', content: content || null, ...(calls.size ? { tool_calls: [...calls.values()] } : {}), ...(reasoningDetails.length ? { reasoning_details: reasoningDetails } : reasoning ? { reasoning } : {}) }, usage, firstTokenTime: firstTokenTime() };
 }
 
 async function readGeminiStream(resp, res) {

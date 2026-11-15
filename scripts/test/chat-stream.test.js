@@ -54,6 +54,19 @@ test('OpenAI tool calls are reassembled without exposing arguments', async () =>
   assert.deepEqual(res.output, []);
 });
 
+test('OpenRouter preserves streamed reasoning details for tool continuation and captures usage', async () => {
+  const res = response();
+  const chunks = [
+    { choices: [{ delta: { reasoning_details: [{ type: 'reasoning.text', text: 'one', index: 0 }] } }] },
+    { choices: [{ delta: { tool_calls: [{ index: 0, id: 'c', function: { name: 'list_projects', arguments: '{}' } }], reasoning_details: [{ type: 'reasoning.text', text: 'two', index: 0 }] }, finish_reason: 'tool_calls' }] },
+    { choices: [], usage: { prompt_tokens: 10, completion_tokens: 4, cost: 0.00001 } },
+  ];
+  const result = await readOpenAIStream({ body: Readable.from(chunks.map(x => Buffer.from(frame(x)))) }, res);
+  assert.deepEqual(result.message.reasoning_details.map(x => x.text), ['one', 'two']);
+  assert.equal(result.usage.cost, 0.00001);
+  assert.deepEqual(res.output, []);
+});
+
 test('Gemini streams text and retains structured tool calls', async () => {
   const res = response();
   const chunks = [

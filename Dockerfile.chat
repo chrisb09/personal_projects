@@ -8,6 +8,8 @@ WORKDIR /app
 COPY package*.json ./
 COPY scripts/chat-server.js ./scripts/
 COPY scripts/chat-stream.js ./scripts/
+COPY scripts/chat-budget.js ./scripts/
+COPY scripts/chat-research.js ./scripts/
 
 # Create runtime directories
 RUN mkdir -p /app/data /app/config /app/repos /app/extra-repos /app/context
