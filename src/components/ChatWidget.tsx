@@ -423,6 +423,37 @@ export const ChatWidget: React.FC = () => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const abortControllerRef = useRef<AbortController | null>(null);
+  const chatWindowRef = useRef<HTMLDivElement>(null);
+  const nativeFullscreenRef = useRef(false);
+
+  const exitFullscreen = () => {
+    setIsEnlarged(false);
+    if (document.fullscreenElement === chatWindowRef.current) {
+      void document.exitFullscreen().catch(() => {});
+    }
+  };
+
+  const enterFullscreen = async () => {
+    setIsEnlarged(true);
+    const chatWindow = chatWindowRef.current;
+    if (chatWindow?.requestFullscreen && document.fullscreenEnabled) {
+      try {
+        await chatWindow.requestFullscreen();
+      } catch {
+        // The viewport-sized layout remains usable if the browser denies fullscreen.
+      }
+    }
+  };
+
+  useEffect(() => {
+    const syncFullscreen = () => {
+      const isNativeFullscreen = document.fullscreenElement === chatWindowRef.current;
+      if (nativeFullscreenRef.current && !isNativeFullscreen) setIsEnlarged(false);
+      nativeFullscreenRef.current = isNativeFullscreen;
+    };
+    document.addEventListener('fullscreenchange', syncFullscreen);
+    return () => document.removeEventListener('fullscreenchange', syncFullscreen);
+  }, []);
 
   // Sync starters with language change
   useEffect(() => {
@@ -463,9 +494,11 @@ export const ChatWidget: React.FC = () => {
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape' && isOpen && !lightboxImage) {
+        // The browser exits native fullscreen itself; fullscreenchange updates state.
+        if (document.fullscreenElement === chatWindowRef.current) return;
         setLightboxImage(null);
         if (isEnlarged) {
-          setIsEnlarged(false);
+          exitFullscreen();
         } else {
           setIsOpen(false);
         }
@@ -689,22 +722,14 @@ export const ChatWidget: React.FC = () => {
         </button>
       )}
 
-      {/* Outside Click Backdrop when Enlarged: collapses back to docked side */}
-      {isOpen && isEnlarged && (
-        <div
-          className="fixed inset-0 bg-black/50 backdrop-blur-xs z-40 transition-opacity animate-in fade-in duration-200 cursor-pointer"
-          onClick={() => setIsEnlarged(false)}
-          aria-hidden="true"
-        />
-      )}
-
       {/* Chat Window Container */}
       {isOpen && (
         <div 
-          className={`fixed z-50 flex flex-col rounded-2xl bg-card text-card-foreground border border-border shadow-2xl overflow-hidden transition-all duration-300 animate-in fade-in ${
+          ref={chatWindowRef}
+          className={`fixed z-50 flex flex-col bg-card text-card-foreground border border-border shadow-2xl overflow-hidden transition-all duration-300 animate-in fade-in ${
             isEnlarged
-              ? 'inset-2 sm:inset-4'
-              : 'inset-x-3 bottom-3 top-16 sm:inset-x-[5vw] sm:top-[6dvh] sm:bottom-[6dvh] slide-in-from-bottom-5'
+              ? 'inset-0 h-full w-full max-w-none rounded-none'
+              : 'rounded-2xl inset-x-3 bottom-3 top-16 sm:inset-x-[5vw] sm:top-[6dvh] sm:bottom-[6dvh] slide-in-from-bottom-5'
           }`}
           role="dialog"
           aria-modal="true"
@@ -741,30 +766,32 @@ export const ChatWidget: React.FC = () => {
                 </Button>
               )}
 
-              {/* Enlarge / Collapse Toggle Button */}
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => setIsEnlarged(!isEnlarged)}
-                title={isEnlarged ? t('chat.collapse', 'Collapse chat') : t('chat.enlarge', 'Enlarge chat')}
-                className="h-8 w-8 text-muted-foreground hover:text-foreground hidden sm:flex"
-              >
-                {isEnlarged ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
-              </Button>
-
               {/* Close Button */}
               <Button
                 variant="ghost"
                 size="icon"
                 onClick={() => {
                   setLightboxImage(null);
-                  setIsEnlarged(false);
+                  exitFullscreen();
                   setIsOpen(false);
                 }}
                 title={t('chat.close', 'Close chat')}
                 className="h-8 w-8 text-muted-foreground hover:text-foreground"
               >
                 <X className="w-4 h-4" />
+              </Button>
+
+              {/* Fullscreen / Exit Fullscreen, at the top-right corner */}
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => isEnlarged ? exitFullscreen() : void enterFullscreen()}
+                title={isEnlarged ? t('chat.collapse', 'Exit fullscreen') : t('chat.enlarge', 'Enter fullscreen')}
+                aria-label={isEnlarged ? t('chat.collapse', 'Exit fullscreen') : t('chat.enlarge', 'Enter fullscreen')}
+                aria-pressed={isEnlarged}
+                className="h-8 w-8 text-muted-foreground hover:text-foreground hidden sm:flex"
+              >
+                {isEnlarged ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
               </Button>
             </div>
           </div>
