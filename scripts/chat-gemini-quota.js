@@ -1,5 +1,6 @@
 'use strict';
 const fs = require('fs');
+const crypto = require('crypto');
 
 // Google documents daily Gemini limits as resetting at midnight Pacific time.
 function pacificDate(now = Date.now()) {
@@ -8,6 +9,8 @@ function pacificDate(now = Date.now()) {
   return `${get('year')}-${get('month')}-${get('day')}`;
 }
 
+// Gemini quotas are per model and per API key. Tracking one shared pool per
+// model made three keys behave like a single 20-request key.
 class ChatQuotaTracker {
   constructor(apiKeys, models, stateFile, now = () => Date.now()) {
     this.apiKeys = apiKeys;
@@ -20,41 +23,70 @@ class ChatQuotaTracker {
     this.disabled = false;
     this.load();
   }
+
   load() {
     try {
       if (!fs.existsSync(this.stateFile)) return;
       const data = JSON.parse(fs.readFileSync(this.stateFile, 'utf8'));
       this.paidTransactions = Array.isArray(data.paidTransactions) ? data.paidTransactions : [];
       const today = pacificDate(this.now());
-      if (data.version === 2) {
+      if (data.version === 3) {
         if (!data.models || typeof data.models !== 'object' || Array.isArray(data.models)) throw new Error('Invalid Gemini quota state');
         this.states = data.models;
-      } else if (Array.isArray(data.keys)) {
-        // Old records contain totals per key but no model dimension. Attribute
-        // all potentially current usage to every model until the next reset.
+        return;
+      }
+      if (data.version === 2) {
+        if (!data.models || typeof data.models !== 'object' || Array.isArray(data.models)) throw new Error('Invalid Gemini quota state');
+        const keyCount = Math.max(1, this.apiKeys.length);
+        for (const [modelId, global] of Object.entries(data.models)) {
+          if (!global || typeof global !== 'object') throw new Error('Invalid Gemini quota state');
+          const count = Number.isInteger(global.requestsToday) && global.requestsToday >= 0 ? global.requestsToday : 0;
+          // The old tracker rotated keys, so the global total was roughly
+          // evenly spread. Attribute the rounded-up share to every key.
+          const perKey = Math.ceil(count / keyCount);
+          this.states[modelId] = {};
+          for (let k = 0; k < keyCount; k++) {
+            this.states[modelId][k] = { date: global.date || today, requestsToday: perKey, window: [], cooldownUntil: 0 };
+          }
+        }
+        return;
+      }
+      if (Array.isArray(data.keys)) {
+        // Version 1 stored only per-key totals across all models. Preserve
+        // that conservative attribution for the remainder of the day.
         const current = data.updatedAt ? pacificDate(new Date(data.updatedAt)) === today : data.date === new Date(this.now()).toISOString().slice(0, 10);
-        const count = current ? data.keys.reduce((n, k) => n + Math.max(0, Number(k.requestsToday) || 0), 0) : 0;
-        for (const model of this.models) this.states[model.id] = { date: today, requestsToday: count, window: [], cooldownUntil: 0 };
+        for (const model of this.models) {
+          this.states[model.id] = {};
+          for (let k = 0; k < this.apiKeys.length; k++) {
+            const count = current ? Math.max(0, Number(data.keys[k]?.requestsToday) || 0) : 0;
+            this.states[model.id][k] = { date: today, requestsToday: count, window: [], cooldownUntil: 0 };
+          }
+        }
       }
     } catch (err) {
       console.error('[ChatServer] Invalid Gemini quota state; Gemini disabled:', err.message);
       this.disabled = true;
     }
   }
-  stateFor(model, now) {
+
+  stateFor(model, keyIdx, now) {
     const date = pacificDate(now);
-    let state = this.states[model.id];
-    if (!state) state = this.states[model.id] = { date, requestsToday: 0, window: [], cooldownUntil: 0 };
-    else if (state.date !== date) state = this.states[model.id] = { date, requestsToday: 0, window: state.window || [], cooldownUntil: state.cooldownUntil || 0 };
-    if (!Array.isArray(state.window) || !Number.isInteger(state.requestsToday) || state.requestsToday < 0 || state.window.some(x => !x || !Number.isFinite(x.time) || !Number.isFinite(x.tokens) || x.tokens < 0) || (state.cooldownUntil != null && (!Number.isFinite(state.cooldownUntil) || state.cooldownUntil < 0))) throw new Error('Invalid Gemini model quota state');
+    const byKey = this.states[model.id] || (this.states[model.id] = {});
+    let state = byKey[keyIdx];
+    if (!state) state = byKey[keyIdx] = { date, requestsToday: 0, window: [], cooldownUntil: 0 };
+    else if (state.date !== date) state = byKey[keyIdx] = { date, requestsToday: 0, window: state.window || [], cooldownUntil: state.cooldownUntil || 0 };
+    if (!Array.isArray(state.window) || !Number.isInteger(state.requestsToday) || state.requestsToday < 0 || state.window.some(x => !x || !Number.isFinite(x.time) || !Number.isFinite(x.tokens) || x.tokens < 0) || (state.cooldownUntil != null && (!Number.isFinite(state.cooldownUntil) || state.cooldownUntil < 0))) {
+      throw new Error('Invalid Gemini model quota state');
+    }
     state.window = state.window.filter(x => x.time > now - 60000);
     return state;
   }
+
   saveState() {
     if (this.disabled) return false;
     try {
       const tmp = `${this.stateFile}.tmp`;
-      fs.writeFileSync(tmp, JSON.stringify({ version: 2, models: this.states, paidTransactions: this.paidTransactions, updatedAt: new Date(this.now()).toISOString() }), { mode: 0o600 });
+      fs.writeFileSync(tmp, JSON.stringify({ version: 3, models: this.states, paidTransactions: this.paidTransactions, updatedAt: new Date(this.now()).toISOString() }), { mode: 0o600 });
       fs.renameSync(tmp, this.stateFile);
       return true;
     } catch (err) {
@@ -63,29 +95,42 @@ class ChatQuotaTracker {
       return false;
     }
   }
+
   selectModelAndKey(estimatedTokens = 1000, allowedModels = null) {
     if (this.disabled || !Number.isFinite(estimatedTokens) || estimatedTokens < 0 || !this.apiKeys.length) return null;
     const now = this.now();
     try {
       for (const model of this.models) {
         if (allowedModels && !allowedModels.includes(model.id)) continue;
-        const state = this.stateFor(model, now);
-        if ((state.cooldownUntil || 0) > now || state.requestsToday >= model.rpd || state.window.length >= model.rpm || state.window.reduce((n, x) => n + x.tokens, 0) + estimatedTokens > model.tpm) continue;
-        // Reserve an attempt before dispatch so parallel workers cannot all
-        // consume the same remaining local quota. External usage is unknown.
-        state.requestsToday++;
-        state.window.push({ time: now, tokens: estimatedTokens });
-        if (!this.saveState()) return null;
-        const keyIdx = this.lastUsedKeyIdx = (this.lastUsedKeyIdx + 1) % this.apiKeys.length;
-        return {
-          model, key: this.apiKeys[keyIdx], keyIdx,
-          release: (_success, cooldown, seconds) => {
-            if (cooldown) {
-              state.cooldownUntil = Math.max(state.cooldownUntil || 0, this.now() + Math.max(1, Number(seconds) || 60) * 1000);
+        for (let k = 0; k < this.apiKeys.length; k++) {
+          const keyIdx = (this.lastUsedKeyIdx + 1 + k) % this.apiKeys.length;
+          const state = this.stateFor(model, keyIdx, now);
+          if ((state.cooldownUntil || 0) > now) continue;
+          if (state.requestsToday >= model.rpd) continue;
+          if (state.window.length >= model.rpm) continue;
+          if (state.window.reduce((n, x) => n + x.tokens, 0) + estimatedTokens > model.tpm) continue;
+
+          // Reserve before dispatch so parallel workers cannot consume the
+          // same remaining quota. Failed non-billable requests are refunded.
+          const reservation = { time: now, tokens: estimatedTokens, id: crypto.randomUUID() };
+          state.requestsToday++;
+          state.window.push(reservation);
+          if (!this.saveState()) return null;
+          this.lastUsedKeyIdx = keyIdx;
+          return {
+            model, key: this.apiKeys[keyIdx], keyIdx,
+            release: (success, cooldown, seconds, refund = false) => {
+              if (refund) {
+                state.requestsToday = Math.max(0, state.requestsToday - 1);
+                state.window = state.window.filter(x => x.id !== reservation.id);
+              }
+              if (cooldown) {
+                state.cooldownUntil = Math.max(state.cooldownUntil || 0, this.now() + Math.max(1, Number(seconds) || 60) * 1000);
+              }
               this.saveState();
-            }
-          },
-        };
+            },
+          };
+        }
       }
     } catch (err) {
       this.disabled = true;

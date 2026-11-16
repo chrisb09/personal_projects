@@ -1834,9 +1834,10 @@ const OPENROUTER_PREFERENCES = {
 async function geminiRequest(req, body, res = null, allowedModels = null) {
   if (!quotaTracker) return null;
   const estimatedTokens = Buffer.byteLength(JSON.stringify(body), 'utf8') + 1024;
-  for (let attempt = 0; attempt < quotaTracker.models.length; attempt++) {
+  const maxAttempts = quotaTracker.models.length * quotaTracker.apiKeys.length;
+  for (let attempt = 0; attempt < maxAttempts; attempt++) {
     const lease = quotaTracker.selectModelAndKey(estimatedTokens, allowedModels);
-    if (!lease) return null;
+    if (!lease) break;
     const { model, key, release } = lease;
     const method = res ? 'streamGenerateContent?alt=sse' : 'generateContent';
     const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model.id)}:${method}`;
@@ -1855,7 +1856,9 @@ async function geminiRequest(req, body, res = null, allowedModels = null) {
       if (!resp.ok) {
         const retryAfter = Number.parseInt(resp.headers.get('retry-after'), 10);
         const seconds = resp.status === 404 ? 86400 : resp.status === 429 ? (Number.isFinite(retryAfter) && retryAfter > 0 ? retryAfter : 1800) : 60;
-        release(false, true, seconds);
+        // A 429 means the quota was actually consumed. Transient 5xx and
+        // rejected requests did not produce a completion, so refund them.
+        release(false, true, seconds, resp.status !== 429);
         await resp.body?.cancel().catch(() => {});
         console.warn(`[ChatServer] Gemini ${model.id} returned HTTP ${resp.status}; trying fallback.`);
         continue;
@@ -1865,7 +1868,7 @@ async function geminiRequest(req, body, res = null, allowedModels = null) {
       return { data, model };
     } catch (err) {
       if (req.chatAbort.signal.aborted || res?.answerStarted) { release(false, false); throw err; }
-      release(false, true, 60);
+      release(false, true, 60, true);
       console.warn(`[ChatServer] Gemini ${model.id} request failed; trying fallback:`, err.message);
     }
   }
