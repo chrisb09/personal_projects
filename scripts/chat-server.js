@@ -1835,7 +1835,7 @@ async function geminiRequest(req, body, res = null, allowedModels = null) {
   if (!quotaTracker) return null;
   const estimatedTokens = Buffer.byteLength(JSON.stringify(body), 'utf8') + 1024;
   const maxAttempts = quotaTracker.models.length * quotaTracker.apiKeys.length;
-  const deadline = Date.now() + 45000;
+  const deadline = Date.now() + 50000;
   for (let attempt = 0; attempt < maxAttempts; attempt++) {
     if (Date.now() > deadline) break;
     const lease = quotaTracker.selectModelAndKey(estimatedTokens, allowedModels);
@@ -1847,7 +1847,7 @@ async function geminiRequest(req, body, res = null, allowedModels = null) {
       // A stalled provider must not hold up the fallback chain indefinitely.
       // Once headers arrive, allow the existing longer timeout for streaming.
       const headerAbort = new AbortController();
-      const headerTimer = setTimeout(() => headerAbort.abort(), 15000);
+      const headerTimer = setTimeout(() => headerAbort.abort(), 12000);
       let resp;
       try {
         resp = await fetch(apiUrl, {
@@ -1869,10 +1869,13 @@ async function geminiRequest(req, body, res = null, allowedModels = null) {
       }
       const data = res ? await readGeminiStream(resp, res) : await resp.json();
       release(true, false);
+      console.log(`[ChatServer] Gemini answered with ${model.id}`);
       return { data, model };
     } catch (err) {
       if (req.chatAbort.signal.aborted || res?.answerStarted) { release(false, false); throw err; }
-      release(false, true, 60, true);
+      // A timeout is treated as model-wide: retrying every key would spend
+      // the whole fallback budget on one unavailable model.
+      release(false, true, 60, true, true);
       console.warn(`[ChatServer] Gemini ${model.id} request failed; trying fallback:`, err.message);
     }
   }
