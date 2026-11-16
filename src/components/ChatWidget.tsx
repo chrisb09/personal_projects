@@ -20,7 +20,10 @@ import {
   ExternalLink,
   ShieldCheck,
   Globe,
-  MessageSquare
+  MessageSquare,
+  Users,
+  CheckCircle2,
+  AlertCircle
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ImageLightbox } from '@/components/ImageLightbox';
@@ -57,6 +60,59 @@ interface ChatMessage {
   timestamp: number;
   meta?: ChatMessageMeta;
   sources?: ChatSource[];
+}
+
+type WorkerState = 'started' | 'working' | 'completed' | 'failed';
+
+interface ChatWorker {
+  id: string;
+  task: string;
+  state: WorkerState;
+  message?: string;
+  updatedAt: number;
+}
+
+const WORKER_STATES: ReadonlySet<string> = new Set(['started', 'working', 'completed', 'failed']);
+const WORKER_STATUS_FALLBACK: Record<WorkerState, string> = {
+  started: 'Started',
+  working: 'Working',
+  completed: 'Completed',
+  failed: 'Failed',
+};
+const MAX_WORKERS = 8;
+const MAX_WORKER_ID_LENGTH = 120;
+const MAX_WORKER_TASK_LENGTH = 300;
+const MAX_WORKER_MESSAGE_LENGTH = 500;
+
+function isTerminalWorkerState(state: WorkerState): boolean {
+  return state === 'completed' || state === 'failed';
+}
+
+// Worker events contain untrusted model-generated text. Keep it as plain
+// strings and bound the payload so a malformed event cannot break the UI.
+function parseWorkerEvent(event: unknown): ChatWorker | null {
+  if (!event || typeof event !== 'object') return null;
+  const record = event as Record<string, unknown>;
+  if (typeof record.id !== 'string') return null;
+  if (typeof record.state !== 'string' || !WORKER_STATES.has(record.state)) return null;
+
+  const id = record.id.trim().slice(0, MAX_WORKER_ID_LENGTH);
+  if (!id) return null;
+
+  const task = typeof record.task === 'string'
+    ? record.task.trim().slice(0, MAX_WORKER_TASK_LENGTH)
+    : '';
+  const message = typeof record.message === 'string'
+    ? record.message.trim().slice(0, MAX_WORKER_MESSAGE_LENGTH)
+    : undefined;
+
+  return {
+    id,
+    task,
+    state: record.state as WorkerState,
+    ...(message ? { message } : {}),
+    updatedAt: Date.now(),
+  };
 }
 
 const STORAGE_KEY = 'portfolio_chat_messages_v1';
@@ -412,6 +468,7 @@ export const ChatWidget: React.FC = () => {
   });
   const [isStreaming, setIsStreaming] = useState(false);
   const [toolStatus, setToolStatus] = useState<string | null>(null);
+  const [workers, setWorkers] = useState<ChatWorker[]>([]);
   const [errorBanner, setErrorBanner] = useState<string | null>(null);
   const [lightboxImage, setLightboxImage] = useState<{ src: string; alt: string } | null>(null);
 
@@ -423,6 +480,7 @@ export const ChatWidget: React.FC = () => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const abortControllerRef = useRef<AbortController | null>(null);
+  const streamTurnRef = useRef(0);
   const chatWindowRef = useRef<HTMLDivElement>(null);
   const nativeFullscreenRef = useRef(false);
 
@@ -482,7 +540,7 @@ export const ChatWidget: React.FC = () => {
     if (isOpen) {
       scrollToBottom();
     }
-  }, [isOpen, messages, toolStatus, isEnlarged]);
+  }, [isOpen, messages, toolStatus, workers, isEnlarged]);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -517,13 +575,40 @@ export const ChatWidget: React.FC = () => {
     }
   };
 
+  const handleWorkerEvent = (event: unknown) => {
+    const worker = parseWorkerEvent(event);
+    if (!worker) return;
+
+    setWorkers(prev => {
+      const index = prev.findIndex(item => item.id === worker.id);
+      if (index === -1) {
+        return [...prev, worker].slice(-MAX_WORKERS);
+      }
+
+      const existing = prev[index];
+      // Ignore late running updates after a worker has already finished.
+      if (isTerminalWorkerState(existing.state) && !isTerminalWorkerState(worker.state)) {
+        return prev;
+      }
+
+      const next = [...prev];
+      next[index] = {
+        ...existing,
+        ...worker,
+        task: worker.task || existing.task,
+      };
+      return next;
+    });
+  };
+
   const handleClearHistory = () => {
-    if (isStreaming && abortControllerRef.current) {
-      abortControllerRef.current.abort();
-      setIsStreaming(false);
-    }
+    streamTurnRef.current += 1;
+    abortControllerRef.current?.abort();
+    abortControllerRef.current = null;
+    setIsStreaming(false);
     setMessages([]);
     setToolStatus(null);
+    setWorkers([]);
     setErrorBanner(null);
     try {
       sessionStorage.removeItem(STORAGE_KEY);
@@ -533,11 +618,12 @@ export const ChatWidget: React.FC = () => {
   };
 
   const handleStop = () => {
-    if (abortControllerRef.current) {
-      abortControllerRef.current.abort();
-      setIsStreaming(false);
-      setToolStatus(null);
-    }
+    streamTurnRef.current += 1;
+    abortControllerRef.current?.abort();
+    abortControllerRef.current = null;
+    setIsStreaming(false);
+    setToolStatus(null);
+    setWorkers([]);
   };
 
   const sendMessage = async (userText: string) => {
@@ -566,9 +652,11 @@ export const ChatWidget: React.FC = () => {
     };
 
     const newHistory = [...messages, userMsg];
+    const turnId = ++streamTurnRef.current;
     setMessages([...newHistory, initialAssistantMsg]);
     setIsStreaming(true);
     setToolStatus(null);
+    setWorkers([]);
 
     const abortController = new AbortController();
     abortControllerRef.current = abortController;
@@ -584,10 +672,13 @@ export const ChatWidget: React.FC = () => {
         }),
         signal: abortController.signal,
       });
+      if (streamTurnRef.current !== turnId) return;
 
       if (res.status === 403) {
         setErrorBanner(t('chat.region_blocked', 'The AI assistant is not available in your region.'));
         setIsStreaming(false);
+        setToolStatus(null);
+        setWorkers([]);
         setMessages(prev => prev.filter(m => m.id !== assistantMsgId));
         return;
       }
@@ -595,6 +686,8 @@ export const ChatWidget: React.FC = () => {
       if (res.status === 429) {
         setErrorBanner(t('chat.rate_limited', 'The AI assistant is temporarily rate-limited. Please wait a moment.'));
         setIsStreaming(false);
+        setToolStatus(null);
+        setWorkers([]);
         setMessages(prev => prev.filter(m => m.id !== assistantMsgId));
         return;
       }
@@ -614,12 +707,17 @@ export const ChatWidget: React.FC = () => {
       while (true) {
         const { done, value } = await reader.read();
         if (done) break;
+        if (streamTurnRef.current !== turnId) {
+          await reader.cancel().catch(() => {});
+          break;
+        }
 
         buffer += decoder.decode(value, { stream: true });
         const lines = buffer.split('\n');
         buffer = lines.pop() || '';
 
         for (const line of lines) {
+          if (streamTurnRef.current !== turnId) break;
           const trimmedLine = line.trim();
           if (trimmedLine.startsWith('data: ')) {
             const rawJson = trimmedLine.slice(6);
@@ -628,6 +726,8 @@ export const ChatWidget: React.FC = () => {
 
               if (event.type === 'status') {
                 setToolStatus(event.message);
+              } else if (event.type === 'worker') {
+                handleWorkerEvent(event);
               } else if (event.type === 'delta') {
                 setToolStatus(null);
                 setMessages(prev => prev.map(m => {
@@ -668,10 +768,14 @@ export const ChatWidget: React.FC = () => {
               } else if (event.type === 'done') {
                 setToolStatus(null);
                 setIsStreaming(false);
+                // Keep finished workers visible as recent results, but never
+                // leave stale running entries behind when the turn ends.
+                setWorkers(prev => prev.filter(worker => isTerminalWorkerState(worker.state)));
               } else if (event.type === 'error') {
                 setErrorBanner(event.error);
                 setIsStreaming(false);
                 setToolStatus(null);
+                setWorkers([]);
               }
             } catch {
               // Ignore partial JSON
@@ -680,6 +784,8 @@ export const ChatWidget: React.FC = () => {
         }
       }
     } catch (err: unknown) {
+      if (streamTurnRef.current !== turnId) return;
+      setWorkers([]);
       if ((err as Error)?.name === 'AbortError') {
         // User aborted intentionally
       } else {
@@ -687,9 +793,12 @@ export const ChatWidget: React.FC = () => {
         setErrorBanner(t('chat.network_error', 'Failed to connect to the assistant service. Please check your connection.'));
       }
     } finally {
-      setIsStreaming(false);
-      setToolStatus(null);
-      abortControllerRef.current = null;
+      if (streamTurnRef.current === turnId) {
+        setIsStreaming(false);
+        setToolStatus(null);
+        setWorkers(prev => prev.filter(worker => isTerminalWorkerState(worker.state)));
+        abortControllerRef.current = null;
+      }
     }
   };
 
@@ -699,6 +808,8 @@ export const ChatWidget: React.FC = () => {
       sendMessage(input);
     }
   };
+
+  const activeWorkerCount = workers.filter(worker => !isTerminalWorkerState(worker.state)).length;
 
   return (
     <>
@@ -1029,6 +1140,41 @@ export const ChatWidget: React.FC = () => {
                   )}
                 </div>
               ))
+            )}
+
+            {/* Live research worker progress. Task and message text are
+                rendered as plain React text, never as HTML. */}
+            {workers.length > 0 && (
+              <section
+                aria-label={t('chat.workers_title', 'Research workers')}
+                aria-live="polite"
+                className="rounded-xl border border-border/70 bg-card/80 p-3 shadow-xs"
+              >
+                <div className="flex flex-wrap items-center justify-between gap-x-2 gap-y-1">
+                  <h4 className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+                    <Users className="w-3.5 h-3.5 text-primary" aria-hidden="true" />
+                    {t('chat.workers_title', 'Research workers')}
+                  </h4>
+                  <span className="text-[10px] font-medium text-muted-foreground">
+                    {activeWorkerCount > 0
+                      ? t('chat.workers_active', { count: activeWorkerCount })
+                      : t('chat.workers_recent', 'Recent')}
+                  </span>
+                </div>
+
+                <ul className="mt-2 space-y-1.5">
+                  {workers.map(worker => (
+                    <li key={worker.id} className="flex flex-wrap items-start gap-2 rounded-lg bg-muted/50 px-2.5 py-2 text-xs">
+                      {worker.state === 'completed' ? <CheckCircle2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-primary" aria-hidden="true" /> : worker.state === 'failed' ? <AlertCircle className="mt-0.5 h-3.5 w-3.5 shrink-0 text-destructive" aria-hidden="true" /> : <Loader2 className="mt-0.5 h-3.5 w-3.5 shrink-0 animate-spin text-primary" aria-hidden="true" />}
+                      <div className="min-w-0 flex-1 break-words">
+                        <p className="font-medium text-foreground">{worker.task || t('chat.workers_untitled', 'Research task')}</p>
+                        {worker.message && <p className="mt-0.5 text-muted-foreground">{t(`chat.worker_action_${worker.message}`, worker.message.replaceAll('_', ' '))}</p>}
+                      </div>
+                      <span className="text-[10px] font-medium text-muted-foreground">{t(`chat.workers_status_${worker.state}`, WORKER_STATUS_FALLBACK[worker.state])}</span>
+                    </li>
+                  ))}
+                </ul>
+              </section>
             )}
 
             {/* Error Banner */}
