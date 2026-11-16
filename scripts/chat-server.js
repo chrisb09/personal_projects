@@ -1794,9 +1794,42 @@ function getFriendlyToolName(toolName, toolArgs) {
 const { readOpenAIStream, readGeminiStream } = require('./chat-stream');
 const { RESEARCH_DECLARATION, researchPortfolio } = require('./chat-research');
 const { toGemini, fromGemini } = require('./chat-gemini-worker');
+const { OpenRouterAlertState, sendOpenRouterExhaustedAlert, fetchOpenRouterKeyStatus } = require('./chat-alerts');
+
+const openRouterAlert = new OpenRouterAlertState(path.join(stateDir, 'chat-openrouter-alert.json'));
 
 function providerSignal(req, timeout) {
   return AbortSignal.any([req.chatAbort.signal, AbortSignal.timeout(timeout)]);
+}
+
+async function alertOnOpenRouterExhausted() {
+  if (!DISCORD_WEBHOOK_URL || !openRouterAlert.needsNotification()) return;
+  try {
+    const result = await sendOpenRouterExhaustedAlert({
+      webhookUrl: DISCORD_WEBHOOK_URL,
+      key: openrouterKey,
+      state: openRouterAlert,
+    });
+    if (result.sent) console.log('[ChatServer] OpenRouter exhaustion alert sent.');
+    else if (result.reason !== 'already-notified') console.warn('[ChatServer] OpenRouter exhaustion alert not sent:', result.reason);
+  } catch (err) {
+    openRouterAlert.markFailed();
+    console.warn('[ChatServer] OpenRouter exhaustion alert failed:', err.message);
+  }
+}
+
+async function resetOpenRouterAlertIfCreditsAvailable() {
+  if (!openRouterAlert.isNotified()) return;
+  try {
+    const status = await fetchOpenRouterKeyStatus(openrouterKey);
+    const remaining = Number(status?.limit_remaining ?? status?.budgets?.find(b => b?.scope === 'key_limit')?.remaining_usd);
+    if (Number.isFinite(remaining) && remaining > 0) {
+      openRouterAlert.reset();
+      console.log('[ChatServer] OpenRouter credits available; exhaustion alert reset.');
+    }
+  } catch (err) {
+    console.warn('[ChatServer] Could not check OpenRouter credit reset:', err.message);
+  }
 }
 
 // Reserve before each paid request, including tool rounds and worker calls.
@@ -1814,12 +1847,16 @@ async function paidFetch(req, endpoint, body, headers, prices) {
     method: 'POST', headers, body: JSON.stringify(body),
     signal: providerSignal(req, 120000),
   });
+  if (resp.ok && endpoint.includes('openrouter.ai')) void resetOpenRouterAlertIfCreditsAvailable();
   // A known pre-generation key-limit rejection is not billable. Other errors
   // remain reserved because the provider may have generated partial output.
   if (resp.status === 403) {
     try {
       const error = await resp.clone().json();
-      if (/^Key limit exceeded\b/i.test(error?.error?.message || '')) settle(0);
+      if (/^Key limit exceeded\b/i.test(error?.error?.message || '')) {
+        settle(0);
+        void alertOnOpenRouterExhausted();
+      }
     } catch { /* Unknown failure: retain the reservation. */ }
   }
   return { resp, settle };

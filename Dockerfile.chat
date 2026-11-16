@@ -12,6 +12,7 @@ COPY scripts/chat-budget.js ./scripts/
 COPY scripts/chat-research.js ./scripts/
 COPY scripts/chat-gemini-quota.js ./scripts/
 COPY scripts/chat-gemini-worker.js ./scripts/
+COPY scripts/chat-alerts.js ./scripts/
 
 # Create runtime directories
 RUN mkdir -p /app/data /app/config /app/repos /app/extra-repos /app/context
