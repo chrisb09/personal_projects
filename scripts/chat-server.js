@@ -1841,10 +1841,17 @@ async function geminiRequest(req, body, res = null, allowedModels = null) {
     const method = res ? 'streamGenerateContent?alt=sse' : 'generateContent';
     const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model.id)}:${method}`;
     try {
-      const resp = await fetch(apiUrl, {
-        method: 'POST', headers: { 'Content-Type': 'application/json', 'x-goog-api-key': key },
-        body: JSON.stringify(body), signal: providerSignal(req, 120000),
-      });
+      // A stalled provider must not hold up the fallback chain indefinitely.
+      // Once headers arrive, allow the existing longer timeout for streaming.
+      const headerAbort = new AbortController();
+      const headerTimer = setTimeout(() => headerAbort.abort(), 15000);
+      let resp;
+      try {
+        resp = await fetch(apiUrl, {
+          method: 'POST', headers: { 'Content-Type': 'application/json', 'x-goog-api-key': key },
+          body: JSON.stringify(body), signal: AbortSignal.any([providerSignal(req, 120000), headerAbort.signal]),
+        });
+      } finally { clearTimeout(headerTimer); }
       if (!resp.ok) {
         const retryAfter = Number.parseInt(resp.headers.get('retry-after'), 10);
         const seconds = resp.status === 404 ? 86400 : resp.status === 429 ? (Number.isFinite(retryAfter) && retryAfter > 0 ? retryAfter : 1800) : 60;
