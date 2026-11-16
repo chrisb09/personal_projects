@@ -19,6 +19,7 @@ class ChatQuotaTracker {
     this.now = now;
     this.lastUsedKeyIdx = -1;
     this.states = {};
+    this.modelCooldowns = {};
     this.paidTransactions = [];
     this.disabled = false;
     this.load();
@@ -29,6 +30,10 @@ class ChatQuotaTracker {
       if (!fs.existsSync(this.stateFile)) return;
       const data = JSON.parse(fs.readFileSync(this.stateFile, 'utf8'));
       this.paidTransactions = Array.isArray(data.paidTransactions) ? data.paidTransactions : [];
+      if (data.modelCooldowns && typeof data.modelCooldowns === 'object' && !Array.isArray(data.modelCooldowns)) {
+        if (Object.values(data.modelCooldowns).some(x => !Number.isFinite(x) || x < 0)) throw new Error('Invalid Gemini model cooldown state');
+        this.modelCooldowns = data.modelCooldowns;
+      }
       const today = pacificDate(this.now());
       if (data.version === 3) {
         if (!data.models || typeof data.models !== 'object' || Array.isArray(data.models)) throw new Error('Invalid Gemini quota state');
@@ -86,7 +91,7 @@ class ChatQuotaTracker {
     if (this.disabled) return false;
     try {
       const tmp = `${this.stateFile}.tmp`;
-      fs.writeFileSync(tmp, JSON.stringify({ version: 3, models: this.states, paidTransactions: this.paidTransactions, updatedAt: new Date(this.now()).toISOString() }), { mode: 0o600 });
+      fs.writeFileSync(tmp, JSON.stringify({ version: 3, models: this.states, modelCooldowns: this.modelCooldowns, paidTransactions: this.paidTransactions, updatedAt: new Date(this.now()).toISOString() }), { mode: 0o600 });
       fs.renameSync(tmp, this.stateFile);
       return true;
     } catch (err) {
@@ -102,6 +107,7 @@ class ChatQuotaTracker {
     try {
       for (const model of this.models) {
         if (allowedModels && !allowedModels.includes(model.id)) continue;
+        if ((this.modelCooldowns[model.id] || 0) > now) continue;
         for (let k = 0; k < this.apiKeys.length; k++) {
           const keyIdx = (this.lastUsedKeyIdx + 1 + k) % this.apiKeys.length;
           const state = this.stateFor(model, keyIdx, now);
@@ -119,13 +125,15 @@ class ChatQuotaTracker {
           this.lastUsedKeyIdx = keyIdx;
           return {
             model, key: this.apiKeys[keyIdx], keyIdx,
-            release: (success, cooldown, seconds, refund = false) => {
+            release: (success, cooldown, seconds, refund = false, modelWide = false) => {
               if (refund) {
                 state.requestsToday = Math.max(0, state.requestsToday - 1);
                 state.window = state.window.filter(x => x.id !== reservation.id);
               }
               if (cooldown) {
-                state.cooldownUntil = Math.max(state.cooldownUntil || 0, this.now() + Math.max(1, Number(seconds) || 60) * 1000);
+                const until = this.now() + Math.max(1, Number(seconds) || 60) * 1000;
+                if (modelWide) this.modelCooldowns[model.id] = Math.max(this.modelCooldowns[model.id] || 0, until);
+                else state.cooldownUntil = Math.max(state.cooldownUntil || 0, until);
               }
               this.saveState();
             },

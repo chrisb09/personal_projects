@@ -1835,7 +1835,9 @@ async function geminiRequest(req, body, res = null, allowedModels = null) {
   if (!quotaTracker) return null;
   const estimatedTokens = Buffer.byteLength(JSON.stringify(body), 'utf8') + 1024;
   const maxAttempts = quotaTracker.models.length * quotaTracker.apiKeys.length;
+  const deadline = Date.now() + 45000;
   for (let attempt = 0; attempt < maxAttempts; attempt++) {
+    if (Date.now() > deadline) break;
     const lease = quotaTracker.selectModelAndKey(estimatedTokens, allowedModels);
     if (!lease) break;
     const { model, key, release } = lease;
@@ -1855,10 +1857,12 @@ async function geminiRequest(req, body, res = null, allowedModels = null) {
       } finally { clearTimeout(headerTimer); }
       if (!resp.ok) {
         const retryAfter = Number.parseInt(resp.headers.get('retry-after'), 10);
-        const seconds = resp.status === 404 ? 86400 : resp.status === 429 ? (Number.isFinite(retryAfter) && retryAfter > 0 ? retryAfter : 1800) : 60;
+        const seconds = resp.status === 404 ? 86400 : resp.status === 429 ? (Number.isFinite(retryAfter) && retryAfter > 0 ? retryAfter : 1800) : resp.status === 503 ? 120 : 60;
         // A 429 means the quota was actually consumed. Transient 5xx and
         // rejected requests did not produce a completion, so refund them.
-        release(false, true, seconds, resp.status !== 429);
+        // 503/404 affect the model as a whole, not just the selected key.
+        const modelWide = resp.status === 503 || resp.status === 404;
+        release(false, true, seconds, resp.status !== 429, modelWide);
         await resp.body?.cancel().catch(() => {});
         console.warn(`[ChatServer] Gemini ${model.id} returned HTTP ${resp.status}; trying fallback.`);
         continue;

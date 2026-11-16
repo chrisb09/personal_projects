@@ -46,6 +46,16 @@ test('transient provider failures are refunded rather than consuming daily quota
   assert.equal(tracker.selectModelAndKey(100).model.id, 'hydrogen');
 });
 
+test('a model-wide 503 cools every key and skips the model', t => {
+  const file = fixture(t); let clock = Date.parse('2026-11-16T20:00:00Z');
+  const tracker = new ChatQuotaTracker(['a', 'b'], models, file, () => clock);
+  tracker.selectModelAndKey(100).release(false, true, 120, true, true);
+  assert.equal(tracker.selectModelAndKey(100).model.id, 'flash');
+  assert.equal(tracker.modelCooldowns.hydrogen > clock, true);
+  clock += 121000;
+  assert.equal(tracker.selectModelAndKey(100).model.id, 'hydrogen');
+});
+
 test('legacy per-key totals are conservatively attributed to each model', t => {
   const file = fixture(t), time = Date.parse('2026-11-16T20:00:00Z');
   fs.writeFileSync(file, JSON.stringify({ keys: [{ requestsToday: 2 }, { requestsToday: 2 }], updatedAt: new Date(time).toISOString(), paidTransactions: [{ cost: 0.01 }] }));
