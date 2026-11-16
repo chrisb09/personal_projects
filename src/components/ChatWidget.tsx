@@ -8,7 +8,6 @@ import {
   Send, 
   Square, 
   Trash2, 
-  Bot, 
   Loader2,
   Maximize2,
   Minimize2,
@@ -28,6 +27,18 @@ import {
 import { Button } from '@/components/ui/button';
 import { ImageLightbox } from '@/components/ImageLightbox';
 import { hasChatConsent, grantChatConsent, revokeChatConsent } from '@/lib/chatConsent';
+
+function ChatIcon({ className = '' }: { className?: string }) {
+  return (
+    <img
+      src="/chat-icon.webp"
+      alt=""
+      aria-hidden="true"
+      draggable={false}
+      className={`object-contain dark:invert ${className}`}
+    />
+  );
+}
 
 // Configure marked for GitHub-Flavored Markdown
 marked.setOptions({
@@ -823,8 +834,8 @@ export const ChatWidget: React.FC = () => {
           aria-label={t('chat.button_aria', 'Open AI portfolio assistant')}
           className="fixed bottom-6 right-6 z-40 flex items-center gap-2.5 px-4 py-3 rounded-full bg-card hover:bg-accent text-card-foreground border border-border shadow-xl hover:shadow-2xl transition-all duration-200 group active:scale-95 cursor-pointer"
         >
-          <div className="relative flex items-center justify-center w-6 h-6 rounded-full bg-primary/10 text-primary group-hover:scale-110 transition-transform">
-            <Sparkles className="w-4 h-4 text-primary" />
+          <div className="relative flex items-center justify-center w-8 h-8 rounded-full bg-primary/10 text-primary group-hover:scale-110 transition-transform">
+            <ChatIcon className="w-7 h-7" />
             <span className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-emerald-500 ring-2 ring-card animate-pulse" />
           </div>
           <span className="text-sm font-medium tracking-tight">
@@ -849,8 +860,8 @@ export const ChatWidget: React.FC = () => {
           {/* Header */}
           <div className="flex items-center justify-between px-4 py-3 border-b border-border bg-card select-none">
             <div className="flex items-center gap-2.5">
-              <div className="relative flex items-center justify-center w-8 h-8 rounded-lg bg-primary/10 text-primary border border-primary/20">
-                <Bot className="w-4 h-4" />
+              <div className="relative flex items-center justify-center w-10 h-10 rounded-lg bg-primary/10 text-primary border border-primary/20">
+                <ChatIcon className="w-8 h-8" />
                 <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-emerald-500 ring-2 ring-card" />
               </div>
               <div className="leading-tight">
@@ -969,8 +980,8 @@ export const ChatWidget: React.FC = () => {
               </div>
             ) : messages.length === 0 ? (
               <div className="flex flex-col items-center justify-center text-center py-6 px-2 space-y-4 max-w-xl mx-auto">
-                <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary border border-primary/20 shadow-xs">
-                  <Sparkles className="w-6 h-6" />
+                <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center text-primary border border-primary/20 shadow-xs">
+                  <ChatIcon className="w-14 h-14" />
                 </div>
                 <div className="space-y-1">
                   <h4 className="font-semibold text-foreground text-sm sm:text-base">
@@ -1017,8 +1028,8 @@ export const ChatWidget: React.FC = () => {
                 >
                   <div className={`flex gap-2.5 max-w-[95%] sm:max-w-[88%] ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                     {msg.role === 'assistant' && (
-                      <div className="w-6 h-6 rounded-full bg-primary/10 text-primary flex items-center justify-center shrink-0 mt-0.5 border border-primary/20">
-                        <Bot className="w-3.5 h-3.5" />
+                      <div className="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center shrink-0 mt-0.5 border border-primary/20">
+                        <ChatIcon className="w-6 h-6" />
                       </div>
                     )}
 
