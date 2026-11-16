@@ -218,8 +218,15 @@ const loadedEnv = loadAiEnv();
 const quotaTracker = initQuotaTracker();
 const PRIMARY_PROVIDER = (process.env.LLM_PROVIDER || 'openrouter').toLowerCase().trim();
 
-// Chat-specific selection does not change the shared translation/summarizer config.
-const openrouterKey = (loadedEnv?.OPENROUTER_API_KEYS || '').split(',')[0].trim();
+// Chat-specific selection does not change the shared translation/summarizer
+// config. Prefer the dedicated singular key when present; the plural list is
+// kept for tools that rotate multiple keys.
+const openrouterKey = (
+  process.env.PORTFOLIO_CHAT_OPENROUTER_KEY ||
+  loadedEnv?.OPENROUTER_API_KEY ||
+  loadedEnv?.OPENROUTER_API_KEYS ||
+  ''
+).split(',')[0].trim();
 const openrouterModel = (process.env.PORTFOLIO_CHAT_OPENROUTER_MODEL || 'deepseek/deepseek-v4.1-flash-1017').trim();
 const openrouterConfigured = Boolean(openrouterKey);
 
