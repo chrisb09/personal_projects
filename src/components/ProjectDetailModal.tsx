@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocalizedProject } from '@/lib/localizeProject';
 import { isProjectTab, type ProjectTab } from '@/lib/projectUrl';
+import { domainUrl } from '@/lib/domainUrl';
 import type { Project } from '@/types/project';
 import { 
   categoryLabels, 
@@ -468,7 +469,7 @@ export function ProjectDetailModal({ project: rawProject, isOpen, onClose, onPro
             <div className="flex gap-2 mt-4 flex-wrap">
               {project.demoUrl && (
                 <Button size="sm" className="h-8 text-xs gap-2" variant="default" asChild>
-                  <a href={project.demoUrl} target="_blank" rel="noopener noreferrer">
+                  <a href={domainUrl(project.demoUrl)} target="_blank" rel="noopener noreferrer">
                     <ExternalLink className="w-3.5 h-3.5" />
                     Live Demo
                   </a>
@@ -476,11 +477,11 @@ export function ProjectDetailModal({ project: rawProject, isOpen, onClose, onPro
               )}
               {project.liveUrl && (
                 <Button size="sm" className="h-8 text-xs gap-2" variant="default" asChild>
-                  <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
+                  <a href={domainUrl(project.liveUrl)} target="_blank" rel="noopener noreferrer">
                     <ExternalLink className="w-3.5 h-3.5" />
                     {(() => {
                       try {
-                        return new URL(project.liveUrl).hostname;
+                        return new URL(domainUrl(project.liveUrl)).hostname;
                       } catch (e) {
                         return 'Website';
                       }
@@ -490,7 +491,7 @@ export function ProjectDetailModal({ project: rawProject, isOpen, onClose, onPro
               )}
               {project.oldUrl && (
                 <Button size="sm" className="h-8 text-xs gap-2" variant="outline" asChild>
-                  <a href={project.oldUrl} target="_blank" rel="noopener noreferrer">
+                  <a href={domainUrl(project.oldUrl)} target="_blank" rel="noopener noreferrer">
                     <ExternalLink className="w-3.5 h-3.5" />
                     {t('modal.legacy_version', 'Legacy Version')}
                   </a>

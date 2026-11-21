@@ -4,7 +4,7 @@ import { defineConfig } from "vite"
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: 'https://projects.christian-f-brinkmann.de/',
+  base: '/',
   plugins: [react()],
   resolve: {
     alias: {
@@ -14,7 +14,7 @@ export default defineConfig({
   server: {
     host: '0.0.0.0',
     port: 51073,
-    allowedHosts: ['projects.christian-f-brinkmann.de', 'christian-f-brinkmann.de'],
+    allowedHosts: ['projects.christian-f-brinkmann.de', 'christian-f-brinkmann.de', 'projects.chrisb09.de', 'chrisb09.de'],
     // Optionally use the running portfolio's freshly updated stats in local previews.
     proxy: {
       '/stats.json': {

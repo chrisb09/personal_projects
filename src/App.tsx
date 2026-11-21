@@ -2,6 +2,7 @@ import { useState, useMemo, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { projects } from '@/config/projects';
 import { useLocalizedProjects } from '@/lib/localizeProject';
+import { domainUrl } from '@/lib/domainUrl';
 import {
   buildProjectUrl,
   buildUrlWithoutProject,
@@ -317,7 +318,7 @@ function App() {
         <header className="portfolio-hero relative overflow-hidden border-b border-border/60">
           <div className="relative mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 pb-1 pt-4 sm:px-6 lg:px-8">
             <a
-              href="https://christian-f-brinkmann.de/"
+              href={domainUrl('https://christian-f-brinkmann.de/')}
               className="group inline-flex min-w-0 items-center gap-2.5"
               aria-label="Christian F. Brinkmann"
             >
