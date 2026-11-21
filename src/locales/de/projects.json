@@ -1376,7 +1376,7 @@
   "opencode-observatory": {
     "name": "OpenCode Observatory",
     "tagline": "Selbst gehostete, metadatenbasierte Telemetrie und Analyse für OpenCode",
-    "description": "Ein selbst gehosteter Observability-Stack für OpenCode. Ein Plugin erfasst Metadaten zu Tokens, Modellen, Latenz, Werkzeugen und Fehlern; ein Collector speichert sie in PostgreSQL; ein React-Dashboard und ein schreibgeschützter MCP-Server machen die Nutzung über mehrere Rechner und Mandanten hinweg sichtbar. Prompt-Texte, Antworten, Code und Provider-Zugangsdaten bleiben standardmäßig ausgeschlossen; eine optionale Transkript-Erfassung wird bereits clientseitig bereinigt, bevor Daten den Prozess verlassen.\n\nDer Server isoliert Mandanten über PostgreSQL Row-Level Security, pflegt stündliche Rollups über Statement-Trigger, nutzt eine Offline-SQLite-Outbox im Plugin und importiert historische Sitzungen ohne Doppelzählung. Die MCP-Oberfläche bietet Nutzungsübersichten, Zeitreihen, Modellvergleiche, Sitzungstranskripte und einen bitemporalen Wissensspeicher aus zusammengefassten Sitzungen.",
+    "description": "Ein selbst gehosteter Observability-Stack für OpenCode. Ein Plugin erfasst Metadaten zu Tokens, Modellen, Latenz, Werkzeugen und Fehlern; ein Collector speichert sie in PostgreSQL; ein React-Dashboard und ein schreibgeschützter MCP-Server machen die Nutzung über mehrere Rechner und Mandanten hinweg sichtbar. Prompt-Texte, Antworten, Code und Provider-Zugangsdaten bleiben standardmäßig ausgeschlossen; eine optionale Transkript-Erfassung wird bereits clientseitig bereinigt, bevor Daten den Prozess verlassen. Eine öffentliche, schreibgeschützte Demo läuft unter https://observatory.christian-f-brinkmann.de/public.\n\nDer Server isoliert Mandanten über PostgreSQL Row-Level Security, pflegt stündliche Rollups über Statement-Trigger, nutzt eine Offline-SQLite-Outbox im Plugin und importiert historische Sitzungen ohne Doppelzählung. Die MCP-Oberfläche bietet Nutzungsübersichten, Zeitreihen, Modellvergleiche, Sitzungstranskripte und einen bitemporalen Wissensspeicher aus zusammengefassten Sitzungen.",
     "purpose": "Sichtbar machen, wohin Tokens, Zeit und Kosten über mehrere OpenCode-Rechner und -Konten fließen, ohne Prompts, Code oder Provider-Zugangsdaten an Dritte zu übertragen.",
     "strengths": [
       "Erfasst standardmäßig nur Metadaten und bereinigt optionale Transkripte vor der Speicherung um Tokens, Schlüssel und .env-Zuweisungen",
@@ -1389,7 +1389,7 @@
       "Liefert ein Docker-Compose-Deployment mit persistenten PostgreSQL- und Vault-Volumes"
     ],
     "limitations": [
-      "Selbst gehostet und OpenCode-spezifisch; es gibt keine öffentliche Demo-Instanz",
+      "Selbst gehostet und OpenCode-spezifisch; die öffentliche Demo ist schreibgeschützt, und ihr Beispiel-Workspace verwendet fiktive Daten",
       "Benötigt PostgreSQL sowie separat gebaute Plugin- und Web-/Server-Komponenten",
       "Transkript-Erfassung und modellgestützte Zusammenfassungen sind optional und von verfügbaren Modellen abhängig",
       "Preiskataloge müssen gepflegt werden, wenn Anbieter Modelle veröffentlichen oder umbenennen",

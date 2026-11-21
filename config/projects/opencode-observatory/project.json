@@ -10,7 +10,7 @@
   "sourceType": "open-source",
   "aiUsage": "full",
   "aiUtilization": "ai-enhanced",
-  "description": "A self-hosted observability stack for OpenCode. A plugin captures token, model, latency, tool and error metadata; a collector stores it in PostgreSQL; and a React dashboard and read-only MCP server expose usage across machines and tenants. Prompt text, responses, code and provider credentials are excluded by default, with opt-in transcript capture that is scrubbed client-side before anything leaves the process.\n\nThe server implements tenant isolation through PostgreSQL row-level security, hourly rollups maintained by statement triggers, an offline SQLite outbox in the plugin, and a historical importer for legacy sessions without double counting. The MCP surface exposes usage summaries, time series, model comparisons, session transcripts and a bitemporal knowledge vault built from summarized sessions.",
+  "description": "A self-hosted observability stack for OpenCode. A plugin captures token, model, latency, tool and error metadata; a collector stores it in PostgreSQL; and a React dashboard and read-only MCP server expose usage across machines and tenants. Prompt text, responses, code and provider credentials are excluded by default, with opt-in transcript capture that is scrubbed client-side before anything leaves the process. A public, read-only demo runs at https://observatory.christian-f-brinkmann.de/public.\n\nThe server implements tenant isolation through PostgreSQL row-level security, hourly rollups maintained by statement triggers, an offline SQLite outbox in the plugin, and a historical importer for legacy sessions without double counting. The MCP surface exposes usage summaries, time series, model comparisons, session transcripts and a bitemporal knowledge vault built from summarized sessions.",
   "purpose": "To answer where tokens, time and money go across multiple OpenCode machines and accounts without uploading prompts, code or provider credentials to a third party.",
   "technologies": [
     "TypeScript",
@@ -49,7 +49,7 @@
     "Ships a Docker Compose deployment with persistent PostgreSQL and vault volumes"
   ],
   "limitations": [
-    "Self-hosted and OpenCode-specific; there is no public demo instance",
+    "Self-hosted and OpenCode-specific; the public demo is read-only, and its sample workspace uses fictional data",
     "Requires PostgreSQL plus a separately built plugin and web/server stack",
     "Transcript capture and model-generated summaries are opt-in and depend on available models",
     "Pricing catalogs need maintenance as providers release or rename models",
@@ -63,6 +63,7 @@
     "Improve session-memory and vault extraction quality",
     "Add more deployment examples for LAN and hosted setups"
   ],
+  "demoUrl": "https://observatory.christian-f-brinkmann.de/public",
   "repos": [
     {
       "name": "opencode-observatory",
