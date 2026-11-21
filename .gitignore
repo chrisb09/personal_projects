@@ -9,3 +9,13 @@ authors-report.txt
 *.env
 *.env.*
 data/translations/
+
+# Generated from config/projects/ and config/translation-overrides-de.json.
+# `npm run dev` and `npm run build` regenerate these through predev/prebuild.
+/src/config/projects.ts
+/src/locales/de/projects.json
+/config/projects-de.json
+/public/locales/
+/public/documents/
+/public/images/projects/
+/public/translations-cache.json

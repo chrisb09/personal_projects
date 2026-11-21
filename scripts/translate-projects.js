@@ -12,10 +12,11 @@ const publicLocalesDePath = path.join(__dirname, '../public/locales/de/projects.
 const configDeCatalogPath = path.join(__dirname, '../config/projects-de.json');
 const editorialOverridesPath = path.join(__dirname, '../config/translation-overrides-de.json');
 
-// Persistent cache paths (container volume first, then host fallback)
+// Persistent cache paths. The host path is listed first so a host build does
+// not pick up a stale container path; inside the builder only /app/data exists.
 const possibleCacheDirs = [
-  '/app/data/translations',
   '/container/data/personal_projects/translations',
+  '/app/data/translations',
   path.join(__dirname, '../data/translations'),
 ];
 
@@ -37,6 +38,13 @@ const isEditorialOnly = args.includes('--editorial-only');
 // Helper: Resolve Persistent Cache File
 // =====================================================================
 function resolveCachePath() {
+  // Never create an empty cache in a higher-priority directory when a valid
+  // cache already exists in a container or host path.
+  for (const dir of possibleCacheDirs) {
+    const cacheFile = path.join(dir, 'cache.json');
+    if (fs.existsSync(cacheFile)) return cacheFile;
+  }
+
   for (const dir of possibleCacheDirs) {
     try {
       if (!fs.existsSync(dir)) {
@@ -498,7 +506,7 @@ function updateHeaderInCommonJson(translation) {
             ...translation.buttons,
           },
         };
-        fs.writeFileSync(p, JSON.stringify(content, null, 2), 'utf8');
+        fs.writeFileSync(p, `${JSON.stringify(content, null, 2)}\n`, 'utf8');
       } catch (err) {
         console.warn(`[Translate] Could not update header in ${p}:`, err.message);
       }

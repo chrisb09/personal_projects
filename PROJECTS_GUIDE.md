@@ -75,7 +75,7 @@ Combines all project definitions, copies media files, and generates `src/config/
 ```bash
 npm run compile-projects
 ```
-> **Note**: This is automatically executed as part of `npm run build` so that production builds are always up to date.
+> **Note**: `npm run dev` and `npm run build` run both catalog generation steps automatically through `predev`/`prebuild`. The generated files (`src/config/projects.ts`, `config/projects-de.json`, `src/locales/de/projects.json`, `public/locales/`, `public/documents/`, and `public/images/projects/`) are intentionally untracked; `config/projects/` and `config/translation-overrides-de.json` are the source of truth, with the persistent translation cache supplying German copy for projects without overrides.
 
 ### B. Auto-Compiler Watcher
 Watches the `config/projects/` directory recursively. When a file is added, edited, or deleted, it schedules a compilation task **10 seconds** in the future. If another edit occurs during this 10-second window, the timer resets, preventing redundant rebuilds:

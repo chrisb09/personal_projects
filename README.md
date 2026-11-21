@@ -44,6 +44,7 @@ For details on the project metadata fields, see [PROJECTS_GUIDE.md](file:///home
 The project includes several utilities to compile data and pull external stats:
 
 * **Compile Projects (`npm run compile-projects`)**: Reads the `config/projects/` folder, processes images/logos, and builds the static configuration script in the code.
+* **Generated Files**: Project catalogs, German locale catalogs, and public copies of project media/documents are untracked. `npm run dev` and `npm run build` regenerate them from `config/projects/`, `config/translation-overrides-de.json`, and the persistent translation cache.
 * **Auto-Compiler Watcher (`npm run watch-projects`)**: Monitors the `config/projects/` folder for live edits and compiles changes automatically.
 * **Update Git Stats (`npm run update-stats`)**: Fetches stars, commit counts, branches, and lines of code breakdown from GitHub and GitLab APIs. 
   *(Configure `GITHUB_TOKEN` and `GITLAB_TOKEN` to query private repositories or bypass rate limits).*
