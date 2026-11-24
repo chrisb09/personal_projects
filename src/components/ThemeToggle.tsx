@@ -30,7 +30,7 @@ export function ThemeToggle() {
   const resolved = getResolvedTheme(theme);
 
   return (
-    <DropdownMenu>
+    <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" size="icon" className="h-9 w-9">
           {resolved === 'dark' ? (

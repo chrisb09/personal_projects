@@ -78,6 +78,32 @@ Configure these in your environment or directly inside `docker-compose.yml`:
 
 ---
 
+## AI Assistant Deep Links
+
+The floating AI assistant can be opened from a URL. The parameters are read when
+the page loads; they never send a message automatically.
+
+| Parameter | Accepted value | Behavior |
+| --- | --- | --- |
+| `chat` | `open` | Opens the assistant. Other values are ignored. |
+| `chatInput` | URL-encoded text | Pre-fills the message box. A non-empty value also opens the assistant. |
+
+Examples:
+
+```text
+/?chat=open
+/?chatInput=Which%20projects%20use%20C%2B%2B%3F
+/?q=python&chat=open&chatInput=Tell%20me%20about%20the%20Python%20projects
+```
+
+The chat parameters are independent of `project`, `tab`, filter and search
+parameters and can be combined with them. The privacy/consent gate still applies,
+and `chatInput` only prepares the composer for review; the visitor must send it.
+Closing the assistant removes the consumed `chat` and `chatInput` parameters from
+the address bar while preserving all other query parameters.
+URL parameters can appear in browser history and server logs, so do not include
+private or sensitive information in `chatInput`.
+
 ## Read-only API and MCP
 
 The `portfolio-api` service exposes the project catalog, documents, media, statistics, private repositories and personal context documents over REST and the Model Context Protocol.
@@ -87,4 +113,3 @@ The `portfolio-api` service exposes the project catalog, documents, media, stati
 * **Authentication:** HTTP Basic
 
 See [docs/portfolio-api.md](docs/portfolio-api.md) for endpoints, MCP tools, OpenCode configuration and deployment details.
-

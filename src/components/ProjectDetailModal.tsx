@@ -404,7 +404,7 @@ export function ProjectDetailModal({ project: rawProject, isOpen, onClose, onPro
       <Dialog open={isOpen} onOpenChange={(open) => { if (!open) onClose(); }}>
         <DialogContent 
           onOpenAutoFocus={(e) => e.preventDefault()}
-          className="w-screen max-w-none h-[100dvh] max-h-[100dvh] rounded-none border-0 bg-card p-0 gap-0 overflow-hidden shadow-2xl flex flex-col data-[state=open]:!animate-none data-[state=closed]:!animate-none sm:w-[calc(100vw-2rem)] sm:max-w-5xl sm:h-auto sm:max-h-[min(85dvh,850px)] sm:rounded-2xl sm:border sm:border-border"
+          className="w-screen max-w-none h-[100dvh] max-h-[100dvh] rounded-none border-0 bg-card p-0 gap-0 overflow-hidden shadow-2xl flex flex-col data-[state=open]:!animate-none data-[state=closed]:!animate-none sm:w-[calc(100vw-2rem)] sm:max-w-5xl sm:h-[min(85dvh,850px)] sm:rounded-2xl sm:border sm:border-border"
         >
           {/* Header */}
           <div className="relative border-b border-border bg-card px-5 pb-4 pt-5 pr-12 sm:px-8 sm:pb-5 sm:pt-7 sm:pr-14 shrink-0">

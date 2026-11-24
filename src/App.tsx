@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { projects } from '@/config/projects';
 import { useLocalizedProjects } from '@/lib/localizeProject';
 import { domainUrl } from '@/lib/domainUrl';
+import { CHAT_INPUT_PARAM, CHAT_OPEN_PARAM } from '@/lib/chatUrl';
 import {
   buildProjectUrl,
   buildUrlWithoutProject,
@@ -179,29 +180,35 @@ function App() {
     return () => window.removeEventListener('popstate', handlePopState);
   }, [localizedProjects]);
 
+  const filterUrl = (newFilters: FilterState, query: string) => {
+    const params = filtersToSearchParams(newFilters, query);
+    const currentParams = new URLSearchParams(window.location.search);
+    for (const key of [CHAT_OPEN_PARAM, CHAT_INPUT_PARAM]) {
+      for (const value of currentParams.getAll(key)) params.append(key, value);
+    }
+    const qs = params.toString();
+    return `${window.location.pathname}${qs ? `?${qs}` : ''}${window.location.hash}`;
+  };
+
   const updateFiltersAndUrl = (newFilters: FilterState) => {
     setFilters(newFilters);
-    const params = filtersToSearchParams(newFilters, searchQuery);
-    const qs = params.toString();
-    const newUrl = qs ? `${window.location.pathname}?${qs}` : window.location.pathname;
-    if (newUrl !== `${window.location.pathname}${window.location.search}`) {
+    const newUrl = filterUrl(newFilters, searchQuery);
+    if (newUrl !== `${window.location.pathname}${window.location.search}${window.location.hash}`) {
       window.history.pushState(null, '', newUrl);
     }
   };
 
   const handleSearchChange = (query: string) => {
     setSearchQuery(query);
-    const params = filtersToSearchParams(filters, query);
-    const qs = params.toString();
-    const newUrl = qs ? `${window.location.pathname}?${qs}` : window.location.pathname;
-    window.history.replaceState(null, '', newUrl);
+    window.history.replaceState(null, '', filterUrl(filters, query));
   };
 
   const handleResetFilters = () => {
     setFilters(defaultFilterState);
     setSearchQuery('');
-    if (window.location.search) {
-      window.history.pushState(null, '', window.location.pathname);
+    const newUrl = filterUrl(defaultFilterState, '');
+    if (newUrl !== `${window.location.pathname}${window.location.search}${window.location.hash}`) {
+      window.history.pushState(null, '', newUrl);
     }
   };
 
@@ -209,9 +216,12 @@ function App() {
 
   // Filter projects based on faceted filters and text search
   const filteredProjects = useMemo(() => {
-    const priority = ['MusicBot', 'cpp-ml-interface', 'exam-system-backend', 'pacstall-programs'];
+    const priority = [
+      'MusicBot', 'cpp-ml-interface', 'exam-system-backend', 'pacstall-programs',
+      'ferienw-am-meer-modernization', 'firecord', 'ai-usage', 'cycling-power-estimator',
+    ];
     const matches = localizedProjects.filter(project => matchesFilters(project, filters, searchQuery));
-    return hasActiveFilters ? matches : matches.sort((a, b) => {
+    return matches.sort((a, b) => {
       const aIndex = priority.indexOf(a.id);
       const bIndex = priority.indexOf(b.id);
       return (aIndex < 0 ? priority.length : aIndex) - (bIndex < 0 ? priority.length : bIndex);

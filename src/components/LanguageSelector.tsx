@@ -24,7 +24,7 @@ export function LanguageSelector() {
     || SUPPORTED_LANGUAGES[0];
 
   return (
-    <DropdownMenu>
+    <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" size="icon" className="h-9 w-9">
           <Globe className="h-4 w-4" />

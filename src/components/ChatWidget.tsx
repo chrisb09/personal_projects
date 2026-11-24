@@ -27,6 +27,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { ImageLightbox } from '@/components/ImageLightbox';
 import { hasChatConsent, grantChatConsent, revokeChatConsent } from '@/lib/chatConsent';
+import { clearChatRouteParams, parseChatRoute } from '@/lib/chatUrl';
 
 function ChatIcon({ className = '' }: { className?: string }) {
   return (
@@ -128,6 +129,13 @@ function parseWorkerEvent(event: unknown): ChatWorker | null {
 
 const STORAGE_KEY = 'portfolio_chat_messages_v1';
 const SESSION_ID_KEY = 'portfolio_chat_session_id_v1';
+const TEXTAREA_MAX_HEIGHT = 140;
+
+function resizeTextarea(textarea: HTMLTextAreaElement | null) {
+  if (!textarea) return;
+  textarea.style.height = 'auto';
+  textarea.style.height = `${Math.min(textarea.scrollHeight, TEXTAREA_MAX_HEIGHT)}px`;
+}
 
 function getOrCreateSessionId(): string {
   try {
@@ -465,10 +473,15 @@ function MarkdownContent({ content, onImageClick }: MarkdownContentProps) {
 
 export const ChatWidget: React.FC = () => {
   const { t, i18n } = useTranslation('common');
-  const [isOpen, setIsOpen] = useState(false);
+  const [initialChatRoute] = useState(() => (
+    typeof window === 'undefined'
+      ? { open: false, input: '' }
+      : parseChatRoute(window.location.search)
+  ));
+  const [isOpen, setIsOpen] = useState(initialChatRoute.open);
   const [isEnlarged, setIsEnlarged] = useState(false);
   const [consentGiven, setConsentGiven] = useState<boolean>(() => hasChatConsent());
-  const [input, setInput] = useState('');
+  const [input, setInput] = useState(initialChatRoute.input);
   const [messages, setMessages] = useState<ChatMessage[]>(() => {
     try {
       const stored = sessionStorage.getItem(STORAGE_KEY);
@@ -554,10 +567,17 @@ export const ChatWidget: React.FC = () => {
   }, [isOpen, messages, toolStatus, workers, isEnlarged]);
 
   useEffect(() => {
-    if (!isOpen) return;
-    const timer = setTimeout(() => textareaRef.current?.focus(), 150);
+    if (!isOpen || !consentGiven) return;
+    const timer = setTimeout(() => {
+      const textarea = textareaRef.current;
+      if (!textarea) return;
+      resizeTextarea(textarea);
+      textarea.focus();
+      const end = textarea.value.length;
+      textarea.setSelectionRange(end, end);
+    }, 150);
     return () => clearTimeout(timer);
-  }, [isOpen]);
+  }, [isOpen, consentGiven]);
 
   // Escape key closes enlarge or closes chat
   useEffect(() => {
@@ -569,6 +589,7 @@ export const ChatWidget: React.FC = () => {
         if (isEnlarged) {
           exitFullscreen();
         } else {
+          clearChatRouteParams();
           setIsOpen(false);
         }
       }
@@ -580,10 +601,7 @@ export const ChatWidget: React.FC = () => {
   // Adjust textarea height dynamically
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInput(e.target.value);
-    if (textareaRef.current) {
-      textareaRef.current.style.height = 'auto';
-      textareaRef.current.style.height = `${Math.min(textareaRef.current.scrollHeight, 140)}px`;
-    }
+    resizeTextarea(textareaRef.current);
   };
 
   const handleWorkerEvent = (event: unknown) => {
@@ -895,6 +913,7 @@ export const ChatWidget: React.FC = () => {
                 onClick={() => {
                   setLightboxImage(null);
                   exitFullscreen();
+                  clearChatRouteParams();
                   setIsOpen(false);
                 }}
                 title={t('chat.close', 'Close chat')}
@@ -966,6 +985,7 @@ export const ChatWidget: React.FC = () => {
                     variant="outline"
                     onClick={() => {
                       setLightboxImage(null);
+                      clearChatRouteParams();
                       setIsOpen(false);
                     }}
                     className="text-xs rounded-xl border-border hover:bg-muted text-muted-foreground hover:text-foreground cursor-pointer"
